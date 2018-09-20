@@ -1,20 +1,45 @@
-﻿//module Gentron {
-//    export class Package {
-//        public constructor() { }
-//    }
+﻿import Package from "./Package";
+import Project from "./Project";
 
-//    export class Project {
-//        public constructor() { }
-//    }
+export default class Gentron {
+    /*
+     *  Properties & Fields 
+     */
+    private _package: Package;
 
-//    export class Gentron {
-//        private _package: Package;
-//        public get Package(): Package { return this._package; }
-//        public get Package(_pack): Package { return this._package; }
+    public get Package(): Package {
+        return this._package;
+    }
+
+    public set Package(_package: Package) {
+        this._package = _package;
+    }
+
+    private _project: Project;
+
+    public get Project(): Project {
+        return this._project;
+    }
+
+    public set Project(_project: Project) {
+        this._project = _project;
+    }
 
 
-//        public Project: Project;
+    /*
+     *  Constructors
+     */
+    public constructor() { }
 
-//        public constructor() { }
-//    }
-//}
+
+    /*
+     *  Methods
+     */
+    public static fromJson(jsonStr: string): Gentron {
+        return JSON.parse(jsonStr) as Gentron;
+    }
+
+    public static toJson(gentronObj: Gentron): string {
+        return JSON.stringify(gentronObj);
+    }
+}
