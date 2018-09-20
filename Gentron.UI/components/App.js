@@ -12,7 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var NavView_1 = require("./NavView");
-var App = /** @class */ (function (_super) {
+var App = (function (_super) {
     __extends(App, _super);
     function App() {
         return _super.call(this, null) || this;

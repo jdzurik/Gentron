@@ -18,7 +18,7 @@ var ProjectSettings_1 = require("./ProjectSettings");
 var FileSources_1 = require("./FileSources");
 var DatabaseSources_1 = require("./DatabaseSources");
 var HttpSources_1 = require("./HttpSources");
-var NavViewContent = /** @class */ (function (_super) {
+var NavViewContent = (function (_super) {
     __extends(NavViewContent, _super);
     function NavViewContent() {
         var _this = _super.call(this, null) || this;

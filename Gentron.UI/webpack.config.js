@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/// <binding BeforeBuild='Run - Development' />
 var path = require("path");
 var webpack = require("webpack");
 var config = {

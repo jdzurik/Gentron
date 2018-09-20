@@ -13,7 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var metro_1 = require("./metro");
 var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
-var Home = /** @class */ (function (_super) {
+var Home = (function (_super) {
     __extends(Home, _super);
     function Home() {
         return _super.call(this, null) || this;

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Gentron.UI", "Gentron.UI\Gentron.UI.njsproj", "{A9D5C2AB-3338-4489-9CD1-27B12F745B65}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3FDD3DB4-DB93-4EEA-936D-66E74876BCEB} = {3FDD3DB4-DB93-4EEA-936D-66E74876BCEB}
+	EndProjectSection
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Gentron.Library", "Gentron.Library\Gentron.Library.njsproj", "{3FDD3DB4-DB93-4EEA-936D-66E74876BCEB}"
 EndProject

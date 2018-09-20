@@ -1,28 +1,33 @@
-﻿import Package from "./Package";
-import Project from "./Project";
+﻿import { PackageSettings, PackageSettingsState } from "./PackageSettings";
+import { ProjectSettings, ProjectSettingsState } from "./ProjectSettings";
 
-export default class Gentron {
+export interface GentronState {
+    PackageSettings: PackageSettingsState;
+    ProjectSettings: ProjectSettingsState;
+}
+
+export class Gentron {
     /*
      *  Properties & Fields 
      */
-    private _package: Package;
+    private _packageSettings: PackageSettingsState;
 
-    public get Package(): Package {
-        return this._package;
+    public get Package(): PackageSettingsState {
+        return this._packageSettings;
     }
 
-    public set Package(_package: Package) {
-        this._package = _package;
+    public set Package(value: PackageSettingsState) {
+        this._packageSettings = value;
     }
 
-    private _project: Project;
+    private _projectSettings: ProjectSettingsState;
 
-    public get Project(): Project {
-        return this._project;
+    public get Project(): ProjectSettingsState {
+        return this._projectSettings;
     }
 
-    public set Project(_project: Project) {
-        this._project = _project;
+    public set Project(value: ProjectSettingsState) {
+        this._projectSettings = value;
     }
 
 
@@ -35,11 +40,11 @@ export default class Gentron {
     /*
      *  Methods
      */
-    public static fromJson(jsonStr: string): Gentron {
-        return JSON.parse(jsonStr) as Gentron;
+    public static fromJson(jsonStr: string): GentronState {
+        return JSON.parse(jsonStr) as GentronState;
     }
 
-    public static toJson(gentronObj: Gentron): string {
+    public static toJson(gentronObj: GentronState): string {
         return JSON.stringify(gentronObj);
     }
 }

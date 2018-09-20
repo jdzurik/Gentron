@@ -5,6 +5,7 @@
     //"lib": [ "es5", "dom" ],
     "module": "commonjs",
     "noEmitOnError": true,
+    "removeComments": true,
     "sourceMap": false,
     "target": "es5"
   },

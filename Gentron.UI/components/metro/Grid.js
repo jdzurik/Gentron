@@ -20,7 +20,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 ;
-var Grid = /** @class */ (function (_super) {
+var Grid = (function (_super) {
     __extends(Grid, _super);
     function Grid(props) {
         return _super.call(this, props) || this;

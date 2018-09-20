@@ -12,7 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var metro_1 = require("./metro");
-var NavViewContentHeaderRow = /** @class */ (function (_super) {
+var NavViewContentHeaderRow = (function (_super) {
     __extends(NavViewContentHeaderRow, _super);
     function NavViewContentHeaderRow(props) {
         return _super.call(this, props) || this;

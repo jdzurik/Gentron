@@ -13,7 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var metro_1 = require("./metro");
 var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
-var FileSources = /** @class */ (function (_super) {
+var FileSources = (function (_super) {
     __extends(FileSources, _super);
     function FileSources() {
         return _super.call(this, null) || this;

@@ -1,34 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Gentron = /** @class */ (function () {
-    /*
-     *  Constructors
-     */
+var Gentron = (function () {
     function Gentron() {
     }
     Object.defineProperty(Gentron.prototype, "Package", {
         get: function () {
-            return this._package;
+            return this._packageSettings;
         },
-        set: function (_package) {
-            this._package = _package;
+        set: function (value) {
+            this._packageSettings = value;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(Gentron.prototype, "Project", {
         get: function () {
-            return this._project;
+            return this._projectSettings;
         },
-        set: function (_project) {
-            this._project = _project;
+        set: function (value) {
+            this._projectSettings = value;
         },
         enumerable: true,
         configurable: true
     });
-    /*
-     *  Methods
-     */
     Gentron.fromJson = function (jsonStr) {
         return JSON.parse(jsonStr);
     };
@@ -37,4 +31,4 @@ var Gentron = /** @class */ (function () {
     };
     return Gentron;
 }());
-exports.default = Gentron;
+exports.Gentron = Gentron;

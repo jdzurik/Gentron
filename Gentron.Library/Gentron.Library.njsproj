@@ -40,10 +40,13 @@
     <TypeScriptCompile Include="Gentron.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Package.ts">
+    <TypeScriptCompile Include="index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Project.ts">
+    <TypeScriptCompile Include="PackageSettings.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ProjectSettings.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>

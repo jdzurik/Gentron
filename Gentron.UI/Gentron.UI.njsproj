@@ -39,6 +39,12 @@
     </Content>
     <Content Include="package.json" />
     <Content Include="tsconfig.json" />
+    <TypeScriptCompile Include="actions\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="actions\ProjectSettings.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="components\App.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -84,16 +90,24 @@
     <TypeScriptCompile Include="components\ProjectSettings.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="constants\ActionNames.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="index.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="main.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="reducers\index.ts" />
+    <TypeScriptCompile Include="reducers\ProjectSettings.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="components\" />
     <Folder Include="components\metro\" />
+    <Folder Include="actions\" />
+    <Folder Include="constants\" />
+    <Folder Include="reducers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="webpack.config.ts">

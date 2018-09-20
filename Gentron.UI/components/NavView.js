@@ -14,7 +14,7 @@ var React = require("react");
 var react_router_dom_1 = require("react-router-dom");
 var NavViewContent_1 = require("./NavViewContent");
 var NavViewPane_1 = require("./NavViewPane");
-var NavView = /** @class */ (function (_super) {
+var NavView = (function (_super) {
     __extends(NavView, _super);
     function NavView() {
         return _super.call(this, null) || this;
