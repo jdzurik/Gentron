@@ -1,0 +1,27 @@
+{
+  "name": "gentron.ui",
+  "version": "0.0.0",
+  "description": "Gentron.UI",
+  "main": "app.js",
+  "author": {
+    "name": "Thomas Foley"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.87",
+    "@types/react": "^16.4.14",
+    "@types/react-dom": "^16.0.7",
+    "electron": "^2.0.9",
+    "metro4": "^4.2.22",
+    "monaco-editor": "^0.14.3",
+    "ts-loader": "^5.1.1"
+  },
+  "dependencies": {
+    "node": "^10.10.0",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "react-router-dom": "^4.3.1",
+    "typescript": "^3.0.3",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "gentron.library",
+  "version": "0.0.0",
+  "description": "Gentron.Library",
+  "main": "app.js",
+  "author": {
+    "name": "Thomas Foley"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.87"
+  }
+}

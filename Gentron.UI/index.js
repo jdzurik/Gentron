@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var $ = require("jquery");
+window.jQuery = $;
+window.$ = $;
+var metro4 = require("metro4");
+window.Metro = metro4;
+var React = require("react");
+var ReactDOM = require("react-dom");
+var App_1 = require("./components/App");
+var root = document.createElement("div");
+var rootId = "appRoot" + Date.now();
+root.id = rootId;
+root.className = "h-100 w-100";
+document.body.appendChild(root);
+ReactDOM.render(React.createElement(App_1.default, null), document.getElementById(rootId));
