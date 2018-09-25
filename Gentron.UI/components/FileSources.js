@@ -15,13 +15,14 @@ var metro_1 = require("./metro");
 var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
 var FileSources = (function (_super) {
     __extends(FileSources, _super);
-    function FileSources() {
-        return _super.call(this, null) || this;
+    function FileSources(props) {
+        return _super.call(this, props) || this;
     }
     FileSources.prototype.render = function () {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
-                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-drive", title: "File Sources" }))));
+                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-drive", title: "File Sources" }),
+                React.createElement("h1", null, this.props.match.params.id))));
     };
     return FileSources;
 }(React.Component));

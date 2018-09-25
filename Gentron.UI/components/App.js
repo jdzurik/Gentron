@@ -14,12 +14,12 @@ var React = require("react");
 var NavView_1 = require("./NavView");
 var App = (function (_super) {
     __extends(App, _super);
-    function App() {
-        return _super.call(this, null) || this;
+    function App(props) {
+        return _super.call(this, props) || this;
     }
     App.prototype.render = function () {
         return (React.createElement("div", { className: "h-100 w-100" },
-            React.createElement(NavView_1.default, null)));
+            React.createElement(NavView_1.default, { history: this.props.history })));
     };
     return App;
 }(React.PureComponent));

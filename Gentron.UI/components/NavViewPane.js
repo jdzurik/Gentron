@@ -14,8 +14,8 @@ var React = require("react");
 var react_router_dom_1 = require("react-router-dom");
 var NavViewPane = (function (_super) {
     __extends(NavViewPane, _super);
-    function NavViewPane() {
-        return _super.call(this, null) || this;
+    function NavViewPane(props) {
+        return _super.call(this, props) || this;
     }
     NavViewPane.prototype.render = function () {
         return (React.createElement("div", { className: "navview-pane h-100" },
@@ -42,6 +42,16 @@ var NavViewPane = (function (_super) {
                         React.createElement("span", { className: "icon" },
                             React.createElement("span", { className: "mif-database" })),
                         React.createElement("span", { className: "caption" }, "Database Sources"))),
+                React.createElement("li", null,
+                    React.createElement(react_router_dom_1.Link, { to: "/sources/db/1" },
+                        React.createElement("span", { className: "icon" },
+                            React.createElement("span", { className: "mif-database" })),
+                        React.createElement("span", { className: "caption" }, "Database 1"))),
+                React.createElement("li", null,
+                    React.createElement(react_router_dom_1.Link, { to: "/sources/db/2" },
+                        React.createElement("span", { className: "icon" },
+                            React.createElement("span", { className: "mif-database" })),
+                        React.createElement("span", { className: "caption" }, "Database 2"))),
                 React.createElement("li", null,
                     React.createElement(react_router_dom_1.Link, { to: "/sources/http" },
                         React.createElement("span", { className: "icon" },

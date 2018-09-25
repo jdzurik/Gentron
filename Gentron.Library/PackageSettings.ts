@@ -17,6 +17,7 @@ export class PackageSettings implements PackageSettingsState {
         this._packageName = value;
     }
 
+
     private _readMeText: string;
 
     public get ReadMeText(): string {

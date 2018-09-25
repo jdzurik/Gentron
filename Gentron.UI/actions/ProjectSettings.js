@@ -1,25 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ActionCreators = {
-    addOrUpdateLocalPackageFolder: function (localPackageFolder) { return function (dispatch, getState) {
-        console.log("addOrUpdateLocalPackageFolder: " + localPackageFolder);
+    addOrUpdateLocalPackageFolder: function (ev) {
         return {
-            localPackageFolder: localPackageFolder,
-            type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction
+            localPackageFolder: ev ? ev.target.value : "",
+            type: "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER"
         };
-    }; },
-    addOrUpdateOutputCodeFolder: function (outputCodeFolder) { return function (dispatch, getState) {
-        console.log("addOrUpdateOutputCodeFolder: " + outputCodeFolder);
+    },
+    addOrUpdateOutputCodeFolder: function (ev) {
         return {
-            outputCodeFolder: outputCodeFolder,
-            type: ProjectSettingsActionNames.AddOrUpdateOutputCodeFolderAction
+            outputCodeFolder: ev ? ev.target.value : "",
+            type: "ADD_OR_UPDATE_OUTPUT_CODE_FOLDER"
         };
-    }; },
-    addOrUpdateRemotePackageLocation: function (remotePackageLocation) { return function (dispatch, getState) {
-        console.log("addOrUpdateRemotePackageLocation: " + remotePackageLocation);
+    },
+    addOrUpdateRemotePackageLocation: function (ev) {
         return {
-            remotePackageLocation: remotePackageLocation,
-            type: ProjectSettingsActionNames.AddOrUpdateRemotePackageLocationAction
+            remotePackageLocation: ev ? ev.target.value : "",
+            type: "ADD_OR_UPDATE_REMOTE_PACKAGE_LOCATION"
         };
-    }; }
+    }
 };

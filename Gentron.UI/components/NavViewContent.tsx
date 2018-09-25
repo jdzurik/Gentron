@@ -8,7 +8,9 @@ import FileSources from './FileSources';
 import DatabaseSources from './DatabaseSources';
 import HttpSources from './HttpSources';
 
-export default class NavViewContent extends React.Component {
+type NavViewContentProps = {};
+
+export default class NavViewContent extends React.Component<NavViewContentProps> {
     private _displayBlock: React.CSSProperties = {
         display: `block`
     }
@@ -17,8 +19,8 @@ export default class NavViewContent extends React.Component {
         display: `none`
     }
 
-    public constructor() {
-        super(null);
+    public constructor(props: NavViewContentProps) {
+        super(props);
     }
 
     public render(): JSX.Element {

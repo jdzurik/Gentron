@@ -1,11 +1,14 @@
 ﻿import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { RouteComponentProps } from "react-router";
 import { Cell, Grid } from "./metro";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-export default class HttpSources extends React.Component {
-    public constructor() {
-        super(null);
+type HttpSourcesProps = RouteComponentProps<{ id: string }>;
+
+export default class HttpSources extends React.Component<HttpSourcesProps> {
+    public constructor(props: HttpSourcesProps) {
+        super(props);
     }
 
     public render(): JSX.Element {
@@ -13,6 +16,8 @@ export default class HttpSources extends React.Component {
             <Cell className={`h-100`}>
                 <Grid className={`w-100 h-100 p-3`}>
                     <NavViewContentHeaderRow iconClassName={`mif-earth`} title={`HTTP Sources`} />
+
+                    <h1>{this.props.match.params.id}</h1>
                 </Grid>
             </Cell>
         );

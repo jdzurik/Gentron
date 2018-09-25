@@ -1,6 +1,8 @@
 ﻿import { Action, Reducer } from 'redux';
 import { ProjectSettings, ProjectSettingsState } from "../../Gentron.Library";
 import * as ProjectSettingsActions from '../actions/ProjectSettings';
+import { ProjectSettingsActionNames } from "../constants/ActionNames";
+import { AddOrUpdateLocalPackageFolderAction, AddOrUpdateOutputCodeFolderAction, AddOrUpdateRemotePackageLocationAction } from '../actions/ProjectSettings';
 
 const _unloadedProjectSettingsState: ProjectSettingsState = new ProjectSettings();
 
@@ -8,25 +10,25 @@ export const reducer: Reducer<ProjectSettingsState> = (state: ProjectSettingsSta
     switch (action.type) {
         case ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction:
             return {
-                LocalPackageFolder: action.localPackageFolder,
+                LocalPackageFolder: (action as AddOrUpdateLocalPackageFolderAction).localPackageFolder,
                 OutputCodeFolder: state.OutputCodeFolder,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case ProjectSettingsActionNames.AddOrUpdateOutputCodeFolderAction:
             return {
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputCodeFolder: action.outputCodeFolder,
+                OutputCodeFolder: (action as AddOrUpdateOutputCodeFolderAction).outputCodeFolder,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case ProjectSettingsActionNames.AddOrUpdateRemotePackageLocationAction:
             return {
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputCodeFolder: state.OutputCodeFolder,
-                RemotePackageLocation: action.remotePackageLocation
+                RemotePackageLocation: (action as AddOrUpdateRemotePackageLocationAction).remotePackageLocation
             };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
-            const exhaustiveCheck: never = action;
+            const exhaustiveCheck: never = action as never;
     }
 
     // For unrecognized actions (or in cases where actions have no effect), must return the existing state

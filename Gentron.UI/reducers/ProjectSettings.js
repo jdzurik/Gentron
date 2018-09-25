@@ -4,19 +4,19 @@ var Gentron_Library_1 = require("../../Gentron.Library");
 var _unloadedProjectSettingsState = new Gentron_Library_1.ProjectSettings();
 exports.reducer = function (state, action) {
     switch (action.type) {
-        case ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction:
+        case "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER":
             return {
                 LocalPackageFolder: action.localPackageFolder,
                 OutputCodeFolder: state.OutputCodeFolder,
                 RemotePackageLocation: state.RemotePackageLocation
             };
-        case ProjectSettingsActionNames.AddOrUpdateOutputCodeFolderAction:
+        case "ADD_OR_UPDATE_OUTPUT_CODE_FOLDER":
             return {
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputCodeFolder: action.outputCodeFolder,
                 RemotePackageLocation: state.RemotePackageLocation
             };
-        case ProjectSettingsActionNames.AddOrUpdateRemotePackageLocationAction:
+        case "ADD_OR_UPDATE_REMOTE_PACKAGE_LOCATION":
             return {
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputCodeFolder: state.OutputCodeFolder,

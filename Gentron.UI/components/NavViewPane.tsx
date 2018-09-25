@@ -2,9 +2,11 @@
 import * as ReactDOM from "react-dom";
 import { Link } from 'react-router-dom'
 
-export default class NavViewPane extends React.Component {
-    public constructor() {
-        super(null);
+type NavVIewPaneProps = {};
+
+export default class NavViewPane extends React.Component<NavVIewPaneProps> {
+    public constructor(props: NavVIewPaneProps) {
+        super(props);
     }
 
     public render(): JSX.Element {
@@ -40,6 +42,20 @@ export default class NavViewPane extends React.Component {
                         <Link to="/sources/db">
                             <span className={`icon`}><span className={`mif-database`}></span></span>
                             <span className={`caption`}>Database Sources</span>
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link to="/sources/db/1">
+                            <span className={`icon`}><span className={`mif-database`}></span></span>
+                            <span className={`caption`}>Database 1</span>
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link to="/sources/db/2">
+                            <span className={`icon`}><span className={`mif-database`}></span></span>
+                            <span className={`caption`}>Database 2</span>
                         </Link>
                     </li>
 

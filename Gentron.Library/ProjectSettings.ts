@@ -18,6 +18,7 @@ export class ProjectSettings implements ProjectSettingsState {
         this._localPackageFolder = value;
     }
 
+
     private _outputCodeFolder: string;
 
     public get OutputCodeFolder(): string {
@@ -27,6 +28,7 @@ export class ProjectSettings implements ProjectSettingsState {
     public set OutputCodeFolder(value: string) {
         this._outputCodeFolder = value;
     }
+
 
     private _remotePackageLocation: string;
 

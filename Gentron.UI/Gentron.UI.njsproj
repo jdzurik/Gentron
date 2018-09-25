@@ -42,6 +42,9 @@
     <TypeScriptCompile Include="actions\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="actions\PackageSettings.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="actions\ProjectSettings.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -100,13 +103,20 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="reducers\index.ts" />
+    <TypeScriptCompile Include="reducers\PackageSettings.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="reducers\ProjectSettings.ts" />
+    <TypeScriptCompile Include="store\configureStore.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="components\" />
     <Folder Include="components\metro\" />
     <Folder Include="actions\" />
     <Folder Include="constants\" />
+    <Folder Include="store\" />
     <Folder Include="reducers\" />
   </ItemGroup>
   <ItemGroup>

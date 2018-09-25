@@ -3,9 +3,11 @@ import * as ReactDOM from "react-dom";
 import { Cell, Grid } from "./metro";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-export default class Home extends React.Component {
-    public constructor() {
-        super(null);
+type HomeProps = {};
+
+export default class Home extends React.Component<HomeProps> {
+    public constructor(props: HomeProps) {
+        super(props);
     }
 
     public render(): JSX.Element {

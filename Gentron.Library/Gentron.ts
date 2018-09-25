@@ -20,6 +20,7 @@ export class Gentron {
         this._packageSettings = value;
     }
 
+
     private _projectSettings: ProjectSettingsState;
 
     public get Project(): ProjectSettingsState {

@@ -28,3 +28,4 @@ electron_1.app.on('activate', function () {
         createWindow();
     }
 });
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';

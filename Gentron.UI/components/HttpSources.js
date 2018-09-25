@@ -15,13 +15,14 @@ var metro_1 = require("./metro");
 var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
 var HttpSources = (function (_super) {
     __extends(HttpSources, _super);
-    function HttpSources() {
-        return _super.call(this, null) || this;
+    function HttpSources(props) {
+        return _super.call(this, props) || this;
     }
     HttpSources.prototype.render = function () {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
-                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-earth", title: "HTTP Sources" }))));
+                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-earth", title: "HTTP Sources" }),
+                React.createElement("h1", null, this.props.match.params.id))));
     };
     return HttpSources;
 }(React.Component));

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var webpack = require("webpack");
 var config = {
+    mode: "development",
     entry: './index.js',
     output: {
         filename: './bundle.js',

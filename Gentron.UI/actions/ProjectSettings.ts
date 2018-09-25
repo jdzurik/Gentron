@@ -1,5 +1,7 @@
 ﻿import { Action, Reducer } from 'redux';
 import { AppThunkAction } from '.';
+import { ProjectSettingsActionNames } from "../constants/ActionNames";
+import { ChangeEvent } from 'react';
 
 export interface AddOrUpdateLocalPackageFolderAction {
     localPackageFolder: string;
@@ -19,24 +21,21 @@ export interface AddOrUpdateRemotePackageLocationAction {
 export type KnownProjectSettingsAction = AddOrUpdateLocalPackageFolderAction | AddOrUpdateOutputCodeFolderAction | AddOrUpdateRemotePackageLocationAction;
 
 export const ActionCreators = {
-    addOrUpdateLocalPackageFolder: (localPackageFolder: string): AppThunkAction<KnownProjectSettingsAction> => (dispatch, getState) => {
-        console.log("addOrUpdateLocalPackageFolder: " + localPackageFolder);
+    addOrUpdateLocalPackageFolder: (ev?: ChangeEvent<HTMLInputElement>)/*: AppThunkAction<KnownProjectSettingsAction> => (dispatch, getState)*/ => {
         return <AddOrUpdateLocalPackageFolderAction>{
-            localPackageFolder: localPackageFolder,
+            localPackageFolder: ev ? ev.target.value : "",
             type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction
         };
     },
-    addOrUpdateOutputCodeFolder: (outputCodeFolder: string): AppThunkAction<KnownProjectSettingsAction> => (dispatch, getState) => {
-        console.log("addOrUpdateOutputCodeFolder: " + outputCodeFolder);
+    addOrUpdateOutputCodeFolder: (ev?: ChangeEvent<HTMLInputElement>)/*: AppThunkAction<KnownProjectSettingsAction> => (dispatch, getState)*/ => {
         return <AddOrUpdateOutputCodeFolderAction>{
-            outputCodeFolder: outputCodeFolder,
+            outputCodeFolder: ev ? ev.target.value : "",
             type: ProjectSettingsActionNames.AddOrUpdateOutputCodeFolderAction
         };
     },
-    addOrUpdateRemotePackageLocation: (remotePackageLocation: string): AppThunkAction<KnownProjectSettingsAction> => (dispatch, getState) => {
-        console.log("addOrUpdateRemotePackageLocation: " + remotePackageLocation);
+    addOrUpdateRemotePackageLocation: (ev?: ChangeEvent<HTMLInputElement>)/*: AppThunkAction<KnownProjectSettingsAction> => (dispatch, getState)*/ => {
         return <AddOrUpdateRemotePackageLocationAction>{
-            remotePackageLocation: remotePackageLocation,
+            remotePackageLocation: ev ? ev.target.value : "",
             type: ProjectSettingsActionNames.AddOrUpdateRemotePackageLocationAction
         };
     }
