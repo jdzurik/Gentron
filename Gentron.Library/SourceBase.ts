@@ -1,9 +1,12 @@
-﻿export interface SourceBaseState {
+﻿export interface ISourceBase {
+    /*
+     *  Properties & Fields 
+     */
     IsActive: boolean;
     Name: string;
 }
 
-export abstract class SourceBase {
+export abstract class SourceBase implements ISourceBase {
     /*
      *  Properties & Fields 
      */
@@ -43,7 +46,11 @@ export abstract class SourceBase {
     /*
      *  Constructors
      */
-    public constructor() { }
+    public constructor() {
+        this._isActive = true;
+        this._name = "";
+        this._result = "";
+    }
 
 
     /*

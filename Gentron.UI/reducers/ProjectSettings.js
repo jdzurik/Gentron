@@ -6,18 +6,27 @@ exports.reducer = function (state, action) {
     switch (action.type) {
         case "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER":
             return {
+                DatabaseConnections: state.DatabaseConnections,
+                FileConnections: state.FileConnections,
+                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: action.localPackageFolder,
                 OutputCodeFolder: state.OutputCodeFolder,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case "ADD_OR_UPDATE_OUTPUT_CODE_FOLDER":
             return {
+                DatabaseConnections: state.DatabaseConnections,
+                FileConnections: state.FileConnections,
+                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputCodeFolder: action.outputCodeFolder,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case "ADD_OR_UPDATE_REMOTE_PACKAGE_LOCATION":
             return {
+                DatabaseConnections: state.DatabaseConnections,
+                FileConnections: state.FileConnections,
+                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputCodeFolder: state.OutputCodeFolder,
                 RemotePackageLocation: action.remotePackageLocation

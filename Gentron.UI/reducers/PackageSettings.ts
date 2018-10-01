@@ -1,12 +1,12 @@
 ﻿import { Action, Reducer } from 'redux';
-import { PackageSettings, PackageSettingsState } from "../../Gentron.Library";
+import { PackageSettings, IPackageSettings } from "../../Gentron.Library";
 import * as PackageSettingsActions from '../actions/PackageSettings';
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { AddOrUpdatePackageNameAction, AddOrUpdateReadMeTextAction } from '../actions/PackageSettings';
 
-const _unloadedPackageSettingsState: PackageSettingsState = new PackageSettings();
+const _unloadedPackageSettingsState: IPackageSettings = new PackageSettings();
 
-export const reducer: Reducer<PackageSettingsState> = (state: PackageSettingsState, action: PackageSettingsActions.KnownPackageSettingsAction) => {
+export const reducer: Reducer<IPackageSettings> = (state: IPackageSettings, action: PackageSettingsActions.KnownPackageSettingsAction) => {
     switch (action.type) {
         case PackageSettingsActionNames.AddOrUpdatePackageName:
             return {

@@ -2,7 +2,43 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var ProjectSettings = (function () {
     function ProjectSettings() {
+        this._databaseConnections = [];
+        this._fileConnections = [];
+        this._httpConnections = [];
+        this._localPackageFolder = "";
+        this._outputCodeFolder = "";
+        this._remotePackageLocation = "";
     }
+    Object.defineProperty(ProjectSettings.prototype, "DatabaseConnections", {
+        get: function () {
+            return this._databaseConnections;
+        },
+        set: function (value) {
+            this._databaseConnections = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ProjectSettings.prototype, "FileConnections", {
+        get: function () {
+            return this._fileConnections;
+        },
+        set: function (value) {
+            this._fileConnections = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ProjectSettings.prototype, "HttpConnections", {
+        get: function () {
+            return this._httpConnections;
+        },
+        set: function (value) {
+            this._httpConnections = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ProjectSettings.prototype, "LocalPackageFolder", {
         get: function () {
             return this._localPackageFolder;
@@ -33,11 +69,19 @@ var ProjectSettings = (function () {
         enumerable: true,
         configurable: true
     });
-    ProjectSettings.fromJson = function (jsonStr) {
-        return JSON.parse(jsonStr);
+    ProjectSettings.fromJson = function (obj) {
+        var ret = new ProjectSettings();
+        ret.LocalPackageFolder = obj.LocalPackageFolder;
+        ret.OutputCodeFolder = obj.OutputCodeFolder;
+        ret.RemotePackageLocation = obj.RemotePackageLocation;
+        return ret;
     };
     ProjectSettings.toJson = function (obj) {
-        return JSON.stringify(obj);
+        return {
+            LocalPackageFolder: obj.LocalPackageFolder,
+            OutputCodeFolder: obj.OutputCodeFolder,
+            RemotePackageLocation: obj.RemotePackageLocation
+        };
     };
     return ProjectSettings;
 }());

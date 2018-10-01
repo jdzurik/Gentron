@@ -1,12 +1,12 @@
-﻿import { Gentron, GentronState }from "./Gentron";
-import { PackageSettings, PackageSettingsState } from "./PackageSettings";
-import { ProjectSettings, ProjectSettingsState } from "./ProjectSettings";
+﻿import { Gentron, IGentron }from "./Gentron";
+import { PackageSettings, IPackageSettings } from "./PackageSettings";
+import { ProjectSettings, IProjectSettings } from "./ProjectSettings";
 
 export {
     Gentron,
-    GentronState,
+    IGentron,
     PackageSettings,
-    PackageSettingsState,
+    IPackageSettings,
     ProjectSettings,
-    ProjectSettingsState
+    IProjectSettings
 };

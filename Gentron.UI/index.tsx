@@ -8,13 +8,14 @@ import * as metro4 from "metro4";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { Provider } from 'react-redux';
-import { createMemoryHistory, MemoryHistory } from 'history';
-import { ApplicationState } from './actions';
-import configureStore from './store/configureStore';
-import { PackageSettings, ProjectSettings } from "../Gentron.Library";
-import App from "./components/App";
 import { AnyAction, Store } from "redux";
+import { ApplicationState } from './actions';
+import { createMemoryHistory, MemoryHistory } from 'history';
+import { Gentron } from "../Gentron.Library";
+import { Provider } from 'react-redux';
+import App from "./components/App";
+import configureStore from './store/configureStore';
+import setupMenu from "./electronMenu";
 
 type AppStore = Store<ApplicationState, AnyAction> & { dispatch: {} };
 
@@ -25,21 +26,13 @@ const syncHistoryWithStore = (store, history: MemoryHistory) => {
     }
 };
 
+setupMenu();
+
 // Create browser history to use in the Redux store
 const history: MemoryHistory = createMemoryHistory();
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
-const initialState: ApplicationState = ((window as any).initialReduxState) || {
-    PackageSettings: {
-        PackageName: "",
-        ReadMeText: ""
-    },
-    ProjectSettings: {
-        LocalPackageFolder: "",
-        OutputCodeFolder: "",
-        RemotePackageLocation: ""
-    } 
-} as ApplicationState;
+const initialState: ApplicationState = ((window as any).initialReduxState) || new Gentron() as ApplicationState;
 const store: AppStore = configureStore(history, initialState);
 syncHistoryWithStore(store, history);
 

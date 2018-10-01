@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var SourceBase = (function () {
     function SourceBase() {
+        this._isActive = true;
+        this._name = "";
+        this._result = "";
     }
     Object.defineProperty(SourceBase.prototype, "IsActive", {
         get: function () {

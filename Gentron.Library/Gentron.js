@@ -1,9 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Guid_1 = require("./utils/Guid");
+var PackageSettings_1 = require("./PackageSettings");
+var ProjectSettings_1 = require("./ProjectSettings");
 var Gentron = (function () {
     function Gentron() {
+        this._id = Guid_1.default.newCryptoGuid();
+        this._packageSettings = new PackageSettings_1.PackageSettings();
+        this._projectSettings = new ProjectSettings_1.ProjectSettings();
     }
-    Object.defineProperty(Gentron.prototype, "Package", {
+    Object.defineProperty(Gentron.prototype, "ID", {
+        get: function () {
+            return this._id;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Gentron.prototype, "PackageSettings", {
         get: function () {
             return this._packageSettings;
         },
@@ -13,7 +26,7 @@ var Gentron = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Gentron.prototype, "Project", {
+    Object.defineProperty(Gentron.prototype, "ProjectSettings", {
         get: function () {
             return this._projectSettings;
         },
@@ -23,11 +36,25 @@ var Gentron = (function () {
         enumerable: true,
         configurable: true
     });
-    Gentron.fromJson = function (jsonStr) {
-        return JSON.parse(jsonStr);
+    Gentron.fromJson = function (obj) {
+        var ret = new Gentron();
+        ret.ID = obj.ID;
+        ret.PackageSettings = PackageSettings_1.PackageSettings.fromJson(obj.PackageSettings);
+        ret.ProjectSettings = ProjectSettings_1.ProjectSettings.fromJson(obj.ProjectSettings);
+        return ret;
     };
-    Gentron.toJson = function (gentronObj) {
-        return JSON.stringify(gentronObj);
+    Gentron.toJson = function (obj) {
+        return {
+            ID: obj.ID,
+            PackageSettings: PackageSettings_1.PackageSettings.toJson(obj.PackageSettings),
+            ProjectSettings: ProjectSettings_1.ProjectSettings.toJson(obj.ProjectSettings),
+        };
+    };
+    Gentron.save = function () {
+    };
+    Gentron.saveAs = function () {
+    };
+    Gentron.open = function () {
     };
     return Gentron;
 }());

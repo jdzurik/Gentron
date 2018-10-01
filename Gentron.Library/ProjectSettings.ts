@@ -1,13 +1,54 @@
-﻿export interface ProjectSettingsState {
+﻿import { IConnectionGroup } from "./ConnectionGroup";
+import { IDatabaseConnection } from "./DatabaseConnection";
+import { IFileConnection } from "./FileConnection";
+import { IHttpConnection } from "./HttpConnection";
+
+export interface IProjectSettings {
+    /*
+     *  Properties & Fields 
+     */
+    DatabaseConnections: IConnectionGroup<IDatabaseConnection>[];
+    FileConnections: IConnectionGroup<IFileConnection>[];
+    HttpConnections: IConnectionGroup<IHttpConnection>[];
     LocalPackageFolder: string;
     OutputCodeFolder: string;
     RemotePackageLocation: string;
 }
 
-export class ProjectSettings implements ProjectSettingsState {
+export class ProjectSettings implements IProjectSettings {
     /*
      *  Properties & Fields 
      */
+    private _databaseConnections: IConnectionGroup<IDatabaseConnection>[];
+
+    public get DatabaseConnections(): IConnectionGroup<IDatabaseConnection>[] {
+        return this._databaseConnections;
+    }
+
+    public set DatabaseConnections(value: IConnectionGroup<IDatabaseConnection>[]) {
+        this._databaseConnections = value;
+    }
+
+    private _fileConnections: IConnectionGroup<IFileConnection>[];
+
+    public get FileConnections(): IConnectionGroup<IFileConnection>[] {
+        return this._fileConnections;
+    }
+
+    public set FileConnections(value: IConnectionGroup<IFileConnection>[]) {
+        this._fileConnections = value;
+    }
+
+    private _httpConnections: IConnectionGroup<IHttpConnection>[];
+
+    public get HttpConnections(): IConnectionGroup<IHttpConnection>[] {
+        return this._httpConnections;
+    }
+
+    public set HttpConnections(value: IConnectionGroup<IHttpConnection>[]) {
+        this._httpConnections = value;
+    }
+
     private _localPackageFolder: string;
 
     public get LocalPackageFolder(): string {
@@ -44,17 +85,34 @@ export class ProjectSettings implements ProjectSettingsState {
     /*
      *  Constructors
      */
-    public constructor() { }
+    public constructor() {
+        this._databaseConnections = [];
+        this._fileConnections = [];
+        this._httpConnections = [];
+        this._localPackageFolder = "";
+        this._outputCodeFolder = "";
+        this._remotePackageLocation = "";
+    }
 
 
     /*
      *  Methods
      */
-    public static fromJson(jsonStr: string): ProjectSettingsState {
-        return JSON.parse(jsonStr) as ProjectSettingsState;
+    public static fromJson(obj: any): IProjectSettings {
+        const ret: IProjectSettings = new ProjectSettings();
+
+        ret.LocalPackageFolder = obj.LocalPackageFolder;
+        ret.OutputCodeFolder = obj.OutputCodeFolder;
+        ret.RemotePackageLocation = obj.RemotePackageLocation;
+
+        return ret;
     }
 
-    public static toJson(obj: ProjectSettingsState): string {
-        return JSON.stringify(obj);
+    public static toJson(obj: IProjectSettings): any {
+        return {
+            LocalPackageFolder: obj.LocalPackageFolder,
+            OutputCodeFolder: obj.OutputCodeFolder,
+            RemotePackageLocation: obj.RemotePackageLocation
+        };
     }
 }

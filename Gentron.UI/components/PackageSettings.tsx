@@ -6,13 +6,12 @@ import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 import { ActionCreators } from "../actions/PackageSettings";
-import { PackageSettingsState } from "../../Gentron.Library";
+import { IPackageSettings } from "../../Gentron.Library";
 import { ApplicationState } from "../actions";
 
-type PackageSettingsProps = PackageSettingsState
+type PackageSettingsProps = IPackageSettings
     & typeof ActionCreators
-    & RouteComponentProps<{}>
-    & { fileInput1: React.Ref<HTMLInputElement>; fileInput2: React.Ref<HTMLInputElement> };
+    & RouteComponentProps<{}>;
 
 class PackageSettings extends React.Component<PackageSettingsProps, {}> {
     public constructor(props: PackageSettingsProps) {
@@ -68,7 +67,7 @@ class PackageSettings extends React.Component<PackageSettingsProps, {}> {
 }
 
 // Wire up the React component to the Redux store
-function mapStateToProps(state: ApplicationState): PackageSettingsState {
+function mapStateToProps(state: ApplicationState): IPackageSettings {
     return state.PackageSettings;
 }
 
@@ -76,7 +75,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(ActionCreators, dispatch);
 }
 
-export default connect<PackageSettingsState, {}, PackageSettingsProps>(
+export default connect<IPackageSettings, {}, PackageSettingsProps>(
     mapStateToProps,
     mapDispatchToProps
 )(PackageSettings) as typeof PackageSettings;

@@ -1,9 +1,12 @@
-﻿export interface PackageSettingsState {
+﻿export interface IPackageSettings {
+    /*
+     *  Properties & Fields 
+     */
     PackageName: string;
     ReadMeText: string;
 }
 
-export class PackageSettings implements PackageSettingsState {
+export class PackageSettings implements IPackageSettings {
     /*
      *  Properties & Fields 
      */
@@ -32,17 +35,28 @@ export class PackageSettings implements PackageSettingsState {
     /*
      *  Constructors
      */
-    public constructor() { }
+    public constructor() {
+        this._packageName = "";
+        this._readMeText = "";
+    }
 
 
     /*
      *  Methods
      */
-    public static fromJson(jsonStr: string): PackageSettingsState {
-        return JSON.parse(jsonStr) as PackageSettingsState;
+    public static fromJson(obj: any): IPackageSettings {
+        const ret: IPackageSettings = new PackageSettings();
+
+        ret.PackageName = obj.PackageName;
+        ret.ReadMeText = obj.ReadMeText;
+
+        return ret;
     }
 
-    public static toJson(obj: PackageSettingsState): string {
-        return JSON.stringify(obj);
+    public static toJson(obj: IPackageSettings): any {
+        return {
+            PackageName: obj.PackageName,
+            ReadMeText: obj.ReadMeText
+        };
     }
 }

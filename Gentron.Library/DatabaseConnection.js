@@ -10,25 +10,24 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var DatabaseConnection_1 = require("./DatabaseConnection");
-var SourceBase_1 = require("./SourceBase");
-var DatabaseSource = (function (_super) {
-    __extends(DatabaseSource, _super);
-    function DatabaseSource() {
+var ConnectionBase_1 = require("./ConnectionBase");
+var DatabaseConnection = (function (_super) {
+    __extends(DatabaseConnection, _super);
+    function DatabaseConnection() {
         var _this = _super.call(this) || this;
-        _this._activeConnection = new DatabaseConnection_1.DatabaseConnection();
+        _this._environment = "";
         return _this;
     }
-    Object.defineProperty(DatabaseSource.prototype, "ActiveConnection", {
+    Object.defineProperty(DatabaseConnection.prototype, "Environment", {
         get: function () {
-            return this._activeConnection;
+            return this._environment;
         },
         set: function (value) {
-            this._activeConnection = value;
+            this._environment = value;
         },
         enumerable: true,
         configurable: true
     });
-    return DatabaseSource;
-}(SourceBase_1.SourceBase));
-exports.DatabaseSource = DatabaseSource;
+    return DatabaseConnection;
+}(ConnectionBase_1.ConnectionBase));
+exports.DatabaseConnection = DatabaseConnection;

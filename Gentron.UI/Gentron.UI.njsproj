@@ -96,6 +96,9 @@
     <TypeScriptCompile Include="constants\ActionNames.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="electronMenu.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="index.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>

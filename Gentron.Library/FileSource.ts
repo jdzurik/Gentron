@@ -1,9 +1,9 @@
-﻿import { SourceBase, SourceBaseState } from "./SourceBase";
+﻿import { SourceBase, ISourceBase } from "./SourceBase";
 
-export interface FileSourceState extends SourceBaseState {
+export interface IFileSource extends ISourceBase {
 
 }
 
-export class FileSource extends SourceBase implements FileSourceState {
+export class FileSource extends SourceBase implements IFileSource {
 
 }

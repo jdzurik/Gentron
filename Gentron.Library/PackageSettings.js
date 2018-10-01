@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var PackageSettings = (function () {
     function PackageSettings() {
+        this._packageName = "";
+        this._readMeText = "";
     }
     Object.defineProperty(PackageSettings.prototype, "PackageName", {
         get: function () {
@@ -23,11 +25,17 @@ var PackageSettings = (function () {
         enumerable: true,
         configurable: true
     });
-    PackageSettings.fromJson = function (jsonStr) {
-        return JSON.parse(jsonStr);
+    PackageSettings.fromJson = function (obj) {
+        var ret = new PackageSettings();
+        ret.PackageName = obj.PackageName;
+        ret.ReadMeText = obj.ReadMeText;
+        return ret;
     };
     PackageSettings.toJson = function (obj) {
-        return JSON.stringify(obj);
+        return {
+            PackageName: obj.PackageName,
+            ReadMeText: obj.ReadMeText
+        };
     };
     return PackageSettings;
 }());

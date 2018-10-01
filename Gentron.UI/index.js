@@ -7,28 +7,21 @@ var metro4 = require("metro4");
 window.Metro = metro4;
 var React = require("react");
 var ReactDOM = require("react-dom");
-var react_redux_1 = require("react-redux");
 var history_1 = require("history");
-var configureStore_1 = require("./store/configureStore");
+var Gentron_Library_1 = require("../Gentron.Library");
+var react_redux_1 = require("react-redux");
 var App_1 = require("./components/App");
+var configureStore_1 = require("./store/configureStore");
+var electronMenu_1 = require("./electronMenu");
 var syncHistoryWithStore = function (store, history) {
     var routing = store.getState().routing;
     if (routing && routing.location) {
         history.replace(routing.location);
     }
 };
+electronMenu_1.default();
 var history = history_1.createMemoryHistory();
-var initialState = (window.initialReduxState) || {
-    PackageSettings: {
-        PackageName: "",
-        ReadMeText: ""
-    },
-    ProjectSettings: {
-        LocalPackageFolder: "",
-        OutputCodeFolder: "",
-        RemotePackageLocation: ""
-    }
-};
+var initialState = (window.initialReduxState) || new Gentron_Library_1.Gentron();
 var store = configureStore_1.default(history, initialState);
 syncHistoryWithStore(store, history);
 var root = document.createElement("div");

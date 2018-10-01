@@ -7,12 +7,11 @@ import { Cell, Grid, Row } from "./metro";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 import { ApplicationState } from "../actions";
 import { ActionCreators } from "../actions/ProjectSettings";
-import { ProjectSettingsState } from "../../Gentron.Library";
+import { IProjectSettings } from "../../Gentron.Library";
 
-type ProjectSettingsProps = ProjectSettingsState
+type ProjectSettingsProps = IProjectSettings
     & typeof ActionCreators
-    & RouteComponentProps<{}>
-    & { fileInput1: React.Ref<HTMLInputElement>; fileInput2: React.Ref<HTMLInputElement>};
+    & RouteComponentProps<{}>;
 
 class ProjectSettings extends React.Component<ProjectSettingsProps, {}> {
     public constructor(props: ProjectSettingsProps) {
@@ -133,7 +132,7 @@ class ProjectSettings extends React.Component<ProjectSettingsProps, {}> {
 }
 
 // Wire up the React component to the Redux store
-function mapStateToProps(state: ApplicationState): ProjectSettingsState {
+function mapStateToProps(state: ApplicationState): IProjectSettings {
     return state.ProjectSettings;
 }
 
@@ -141,7 +140,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(ActionCreators, dispatch);
 }
 
-export default connect<ProjectSettingsState, {}, ProjectSettingsProps>(
+export default connect<IProjectSettings, {}, ProjectSettingsProps>(
     mapStateToProps,
     mapDispatchToProps
 )(ProjectSettings) as typeof ProjectSettings;
