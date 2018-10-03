@@ -1,12 +1,13 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "allowJs": true,
-    //"lib": [ "es5", "dom" ],
+    "allowJs": false,
     "module": "commonjs",
     "noEmitOnError": true,
     "removeComments": true,
     "sourceMap": false,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
     "target": "es5"
   },
   "exclude": [

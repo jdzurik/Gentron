@@ -61,6 +61,7 @@
     <TypeScriptCompile Include="HttpSource.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="SerializeBase.ts" />
     <TypeScriptCompile Include="SourceBase.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
