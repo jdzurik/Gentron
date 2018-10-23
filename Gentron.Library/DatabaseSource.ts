@@ -1,25 +1,27 @@
-﻿import { DatabaseConnection, IDatabaseConnection } from "./DatabaseConnection";
+﻿import { IConnectionGroup, ConnectionGroup } from "./ConnectionGroup";
+import { IDatabaseConnection } from "./DatabaseConnection";
 import { SourceBase, ISourceBase } from "./SourceBase";
+import IJsonSerializable from "./interfaces/IJsonSerializable";
 
-export interface IDatabaseSource extends ISourceBase {
+export interface IDatabaseSource extends ISourceBase, IJsonSerializable {
     /*
      *  Properties & Fields 
      */
-    ActiveConnection: IDatabaseConnection;
+    ActiveConnectionGroup: IConnectionGroup<IDatabaseConnection>;
 }
 
 export class DatabaseSource extends SourceBase implements IDatabaseSource {
     /*
      *  Properties & Fields 
      */
-    private _activeConnection: IDatabaseConnection;
+    private _activeConnectionGroup: IConnectionGroup<IDatabaseConnection>;
 
-    public get ActiveConnection(): IDatabaseConnection {
-        return this._activeConnection;
+    public get ActiveConnectionGroup(): IConnectionGroup<IDatabaseConnection> {
+        return this._activeConnectionGroup;
     }
 
-    public set ActiveConnection(value: IDatabaseConnection) {
-        this._activeConnection = value;
+    public set ActiveConnectionGroup(value: IConnectionGroup<IDatabaseConnection>) {
+        this._activeConnectionGroup = value;
     }
 
 
@@ -28,11 +30,21 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
      */
     public constructor() {
         super();
-        this._activeConnection = new DatabaseConnection();
+        this._activeConnectionGroup = new ConnectionGroup<IDatabaseConnection>();
     }
 
 
     /*
      *  Methods
      */
+    public toJson(): any {
+        throw new Error("Method not implemented");
+    }
+
+    public update(databaseSource: IDatabaseSource): void {
+        this.ActiveConnectionGroup = databaseSource.ActiveConnectionGroup;
+        this.IsActive = databaseSource.IsActive;
+        this.Name = databaseSource.Name;
+        this.Result = databaseSource.Result;
+    }
 }

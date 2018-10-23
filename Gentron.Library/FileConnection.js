@@ -31,6 +31,12 @@ var FileConnection = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    FileConnection.prototype.toJson = function () {
+        throw new Error("Method not implemented");
+    };
+    FileConnection.prototype.update = function (dbConnection) {
+        throw new Error("Method not implemented");
+    };
     return FileConnection;
 }(ConnectionBase_1.ConnectionBase));
 exports.FileConnection = FileConnection;

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var crypto = require("crypto");
 var Guid = (function () {
     function Guid() {
     }
@@ -18,7 +17,10 @@ var Guid = (function () {
         for (var i = 0; i < 256; i++) {
             hex[i] = (i < 16 ? "0" : "") + (i).toString(16);
         }
-        var rand = crypto.getRandomValues(new Uint8Array(16));
+        var rand = new Uint8Array(16);
+        for (var i_1 = 0; i_1 < rand.length; ++i_1) {
+            rand[i_1] = Math.floor(Math.random() * 10);
+        }
         rand[6] = rand[6] & 0x0f | 0x40;
         rand[8] = rand[8] & 0x3f | 0x80;
         return (hex[rand[0]] +

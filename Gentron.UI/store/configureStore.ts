@@ -2,7 +2,7 @@
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk';
 //import { routerReducer, routerMiddleware } from 'react-router-redux';
-import { ApplicationState } from "../actions";
+import { ApplicationState } from "../types";
 import { reducers } from "../reducers";
 import { History } from 'history';
 

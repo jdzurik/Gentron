@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var PackageSettings = (function () {
     function PackageSettings() {
+        this.DatabaseSources = [];
+        this.FileSources = [];
+        this.HttpSources = [];
         this._packageName = "";
         this._readMeText = "";
     }
@@ -27,12 +30,27 @@ var PackageSettings = (function () {
     });
     PackageSettings.fromJson = function (obj) {
         var ret = new PackageSettings();
+        ret.DatabaseSources = obj.DatabaseSources;
+        ret.FileSources = obj.FileSources;
+        ret.HttpSources = obj.HttpSources;
         ret.PackageName = obj.PackageName;
         ret.ReadMeText = obj.ReadMeText;
         return ret;
     };
+    PackageSettings.prototype.toJson = function () {
+        return {
+            DatabaseSources: this.DatabaseSources,
+            FileSources: this.FileSources,
+            HttpSources: this.HttpSources,
+            PackageName: this.PackageName,
+            ReadMeText: this.ReadMeText
+        };
+    };
     PackageSettings.toJson = function (obj) {
         return {
+            DatabaseSources: obj.DatabaseSources,
+            FileSources: obj.FileSources,
+            HttpSources: obj.HttpSources,
             PackageName: obj.PackageName,
             ReadMeText: obj.ReadMeText
         };

@@ -12,17 +12,37 @@ var Gentron_Library_1 = require("../Gentron.Library");
 var react_redux_1 = require("react-redux");
 var App_1 = require("./components/App");
 var configureStore_1 = require("./store/configureStore");
-var electronMenu_1 = require("./electronMenu");
+var DatabaseSource_1 = require("../Gentron.Library/DatabaseSource");
 var syncHistoryWithStore = function (store, history) {
     var routing = store.getState().routing;
     if (routing && routing.location) {
         history.replace(routing.location);
     }
 };
-electronMenu_1.default();
 var history = history_1.createMemoryHistory();
-var initialState = (window.initialReduxState) || new Gentron_Library_1.Gentron();
-var store = configureStore_1.default(history, initialState);
+var initialState;
+if ((window.initialReduxState)) {
+    initialState = window.initialReduxState;
+}
+else {
+    initialState = new Gentron_Library_1.Gentron();
+    ["CAUtils", "CASecurity"].map(function (db) {
+        var source = new Gentron_Library_1.ConnectionGroup();
+        source.Name = db;
+        ["Dev", "Test", "Prod"].map(function (env) {
+            var conn = new Gentron_Library_1.DatabaseConnection();
+            conn.Environment = env;
+            source.addOrUpdateConnection(conn);
+        });
+        initialState.ProjectSettings.DatabaseConnections.push(source);
+    });
+    ["", ""].map(function (db, i) {
+        var source = new DatabaseSource_1.DatabaseSource();
+        source.Name = "DBSource" + i;
+        initialState.PackageSettings.DatabaseSources.push(source);
+    });
+}
+var store = configureStore_1.default(history, initialState.toJson());
 syncHistoryWithStore(store, history);
 var root = document.createElement("div");
 var rootId = "appRoot" + Date.now();

@@ -1,11 +1,25 @@
-﻿import * as React from "react";
+﻿import * as hash from "object-hash";
+import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Link } from 'react-router-dom'
+import { ActionCreators } from "../actions/PackageSettings";
+import { ApplicationState, NonFunctionProperties } from "../types";
+import { bindActionCreators } from "redux";
+import { connect } from "../connect";
+import { IDatabaseSource, IFileSource, IHttpSource } from "../../Gentron.Library";
+import { Link } from 'react-router-dom';
 
-type NavVIewPaneProps = {};
+type NullableSources = {
+    DatabaseSources?: NonFunctionProperties<IDatabaseSource>[];
+    FileSources?: NonFunctionProperties<IFileSource>[];
+    HttpSources?: NonFunctionProperties<IHttpSource>[];
+    _hash?: string;
+};
 
-export default class NavViewPane extends React.Component<NavVIewPaneProps> {
-    public constructor(props: NavVIewPaneProps) {
+type NavViewPaneProps = NullableSources;
+
+@connect<NullableSources, {}, NavViewPaneProps>(mapStateToProps, mapDispatchToProps)
+export default class NavViewPane extends React.Component<NavViewPaneProps> {
+    public constructor(props: NavViewPaneProps) {
         super(props);
     }
 
@@ -32,6 +46,13 @@ export default class NavViewPane extends React.Component<NavVIewPaneProps> {
                     </li>
 
                     <li>
+                        <Link to="/connections/db" className={`pl-7`}>
+                            <span className={`icon`}><span className={`mif-database`}></span></span>
+                            <span className={`caption`}>Connection Strings</span>
+                        </Link>
+                    </li>
+
+                    <li>
                         <Link to="/settings/package">
                             <span className={`icon`}><span className={`mif-gift`}></span></span>
                             <span className={`caption`}>Package Settings</span>
@@ -41,39 +62,77 @@ export default class NavViewPane extends React.Component<NavVIewPaneProps> {
                     <li>
                         <Link to="/sources/db">
                             <span className={`icon`}><span className={`mif-database`}></span></span>
-                            <span className={`caption`}>Database Sources</span>
+                            <span className={`caption`}>Database Source</span>
                         </Link>
                     </li>
 
+                    {
+                        this.props.DatabaseSources.map((connection, i) =>
+                            <li key={i}>
+                                <Link to={`/sources/db/${i}`} className={`pl-7`}>
+                                    <span className={`icon`}><span className={`mif-database`}></span></span>
+                                    <span className={`caption`}>{connection.Name}</span>
+                                </Link>
+                            </li>
+                        )
+                    }
+
                     <li>
-                        <Link to="/sources/db/1">
-                            <span className={`icon`}><span className={`mif-database`}></span></span>
-                            <span className={`caption`}>Database 1</span>
+                        <Link to="/sources/file">
+                            <span className={`icon`}><span className={`mif-file-code`}></span></span>
+                            <span className={`caption`}>File Sources</span>
                         </Link>
                     </li>
 
-                    <li>
-                        <Link to="/sources/db/2">
-                            <span className={`icon`}><span className={`mif-database`}></span></span>
-                            <span className={`caption`}>Database 2</span>
-                        </Link>
-                    </li>
+                    {
+                        this.props.FileSources.map((file, i) =>
+                            <li key={i}>
+                                <Link to={`/sources/file/${i}`} className={`pl-7`}>
+                                    <span className={`icon`}><span className={`mif-file-code`}></span></span>
+                                    <span className={`caption`}>{file.Name}</span>
+                                </Link>
+                            </li>
+                        )
+                    }
 
                     <li>
                         <Link to="/sources/http">
-                            <span className={`icon`}><span className={`mif-earth`}></span></span>
+                            <span className={`icon`}><span className={`mif-http`}></span></span>
                             <span className={`caption`}>HTTP Sources</span>
                         </Link>
                     </li>
 
-                    <li>
-                        <Link to="/sources/file">
-                            <span className={`icon`}><span className={`mif-drive`}></span></span>
-                            <span className={`caption`}>File Sources</span>
-                        </Link>
-                    </li>
+                    {
+                        this.props.HttpSources.map((file, i) =>
+                            <li key={i}>
+                                <Link to={`/sources/http/${i}`} className={`pl-7`}>
+                                    <span className={`icon`}><span className={`mif-http`}></span></span>
+                                    <span className={`caption`}>{file.Name}</span>
+                                </Link>
+                            </li>
+                        )
+                    }
                 </ul>
             </div>
         );
     }
+}
+
+function mapStateToProps(state: ApplicationState): NullableSources {
+    const _dbHash: string = hash(state.PackageSettings.DatabaseSources);
+    const _fileHash: string = hash(state.PackageSettings.FileSources);
+    const _httpHash: string = hash(state.PackageSettings.HttpSources);
+
+    const _hash: string = hash(_dbHash + _fileHash + _httpHash);
+
+    return {
+        DatabaseSources: state.PackageSettings.DatabaseSources,
+        FileSources: state.PackageSettings.FileSources,
+        HttpSources: state.PackageSettings.HttpSources,
+        _hash: _hash
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(ActionCreators, dispatch);
 }

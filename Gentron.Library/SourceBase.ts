@@ -1,15 +1,31 @@
-﻿export interface ISourceBase {
+﻿import Guid from "./utils/Guid";
+import IJsonSerializable from "./interfaces/IJsonSerializable";
+
+export interface ISourceBase extends IJsonSerializable {
     /*
      *  Properties & Fields 
      */
+    readonly ID: string;
     IsActive: boolean;
     Name: string;
+    Result: string;
+
+    /*
+     *  Methods
+     */
+    update(source: ISourceBase): void;
 }
 
 export abstract class SourceBase implements ISourceBase {
     /*
      *  Properties & Fields 
      */
+    private readonly _id: string;
+
+    public get ID(): string {
+        return this._id;
+    }
+
     private _isActive: boolean;
 
     public get IsActive(): boolean {
@@ -47,6 +63,7 @@ export abstract class SourceBase implements ISourceBase {
      *  Constructors
      */
     public constructor() {
+        this._id = Guid.newCryptoGuid();
         this._isActive = true;
         this._name = "";
         this._result = "";
@@ -56,4 +73,7 @@ export abstract class SourceBase implements ISourceBase {
     /*
      *  Methods
      */
+    public abstract toJson(): any;
+
+    public abstract update(source: ISourceBase): void;
 }

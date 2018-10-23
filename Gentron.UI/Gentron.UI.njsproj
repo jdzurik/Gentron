@@ -52,13 +52,22 @@
     <TypeScriptCompile Include="components\App.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="components\DatabaseConnections.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="components\DatabaseSources.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="components\FileSource.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\FileSources.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\Home.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="components\HttpSource.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\HttpSources.tsx">
@@ -88,10 +97,16 @@
     <TypeScriptCompile Include="components\NavView.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="components\OutputPaths.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="components\PackageSettings.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\ProjectSettings.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="connect.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="constants\ActionNames.ts">
@@ -114,16 +129,23 @@
     <TypeScriptCompile Include="store\configureStore.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="types\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="components\" />
     <Folder Include="components\metro\" />
     <Folder Include="actions\" />
     <Folder Include="constants\" />
+    <Folder Include="types\" />
     <Folder Include="store\" />
     <Folder Include="reducers\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="components\DatabaseSource.tsx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="webpack.config.ts">
       <SubType>Code</SubType>
     </Compile>

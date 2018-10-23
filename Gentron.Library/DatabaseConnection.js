@@ -18,9 +18,20 @@ var DatabaseConnection = (function (_super) {
     __extends(DatabaseConnection, _super);
     function DatabaseConnection() {
         var _this = _super.call(this) || this;
+        _this._connectionString = "";
         _this._environment = "";
         return _this;
     }
+    Object.defineProperty(DatabaseConnection.prototype, "ConnectionString", {
+        get: function () {
+            return this._connectionString;
+        },
+        set: function (value) {
+            this._connectionString = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DatabaseConnection.prototype, "Environment", {
         get: function () {
             return this._environment;
@@ -31,6 +42,14 @@ var DatabaseConnection = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    DatabaseConnection.prototype.toJson = function () {
+        throw new Error("Method not implemented");
+    };
+    DatabaseConnection.prototype.update = function (dbConnection) {
+        this.ConnectionString = dbConnection.ConnectionString;
+        this.Environment = dbConnection.Environment;
+        this.IsActive = dbConnection.IsActive;
+    };
     return DatabaseConnection;
 }(ConnectionBase_1.ConnectionBase));
 exports.DatabaseConnection = DatabaseConnection;

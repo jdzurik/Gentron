@@ -9,13 +9,14 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import { AnyAction, Store } from "redux";
-import { ApplicationState } from './actions';
+import { ApplicationState } from './types';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { Gentron } from "../Gentron.Library";
+import { Gentron, ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection } from "../Gentron.Library";
 import { Provider } from 'react-redux';
 import App from "./components/App";
 import configureStore from './store/configureStore';
-import setupMenu from "./electronMenu";
+import { IDatabaseSource, DatabaseSource } from "../Gentron.Library/DatabaseSource";
+//import setupMenu from "./electronMenu";
 
 type AppStore = Store<ApplicationState, AnyAction> & { dispatch: {} };
 
@@ -26,16 +27,44 @@ const syncHistoryWithStore = (store, history: MemoryHistory) => {
     }
 };
 
-setupMenu();
+//setupMenu();
 
 // Create browser history to use in the Redux store
 const history: MemoryHistory = createMemoryHistory();
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
-const initialState: ApplicationState = ((window as any).initialReduxState) || new Gentron() as ApplicationState;
-const store: AppStore = configureStore(history, initialState);
-syncHistoryWithStore(store, history);
+let initialState: ApplicationState;
 
+if (((window as any).initialReduxState)) {
+    initialState = (window as any).initialReduxState;
+}
+else {
+    initialState = new Gentron();
+
+    ["CAUtils", "CASecurity"].map(db => {
+        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
+        source.Name = db;
+
+        ["Dev", "Test", "Prod"].map(env => {
+            const conn: IDatabaseConnection = new DatabaseConnection();
+            conn.Environment = env;
+            source.addOrUpdateConnection(conn);
+        });
+
+        initialState.ProjectSettings.DatabaseConnections.push(source);
+    });
+
+    ["", ""].map((db, i) => {
+        const source: IDatabaseSource = new DatabaseSource();
+        source.Name = `DBSource${i}`;
+
+        initialState.PackageSettings.DatabaseSources.push(source);
+    });
+}
+
+//const initialState: ApplicationState = ((window as any).initialReduxState) || new Gentron() as ApplicationState;
+const store: AppStore = configureStore(history, initialState.toJson());
+syncHistoryWithStore(store, history);
 const root: HTMLElement = document.createElement("div");
 const rootId: string = `appRoot${Date.now()}`;
 root.id = rootId;

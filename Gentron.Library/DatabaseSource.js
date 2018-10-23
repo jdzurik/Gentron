@@ -13,25 +13,34 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var DatabaseConnection_1 = require("./DatabaseConnection");
+var ConnectionGroup_1 = require("./ConnectionGroup");
 var SourceBase_1 = require("./SourceBase");
 var DatabaseSource = (function (_super) {
     __extends(DatabaseSource, _super);
     function DatabaseSource() {
         var _this = _super.call(this) || this;
-        _this._activeConnection = new DatabaseConnection_1.DatabaseConnection();
+        _this._activeConnectionGroup = new ConnectionGroup_1.ConnectionGroup();
         return _this;
     }
-    Object.defineProperty(DatabaseSource.prototype, "ActiveConnection", {
+    Object.defineProperty(DatabaseSource.prototype, "ActiveConnectionGroup", {
         get: function () {
-            return this._activeConnection;
+            return this._activeConnectionGroup;
         },
         set: function (value) {
-            this._activeConnection = value;
+            this._activeConnectionGroup = value;
         },
         enumerable: true,
         configurable: true
     });
+    DatabaseSource.prototype.toJson = function () {
+        throw new Error("Method not implemented");
+    };
+    DatabaseSource.prototype.update = function (databaseSource) {
+        this.ActiveConnectionGroup = databaseSource.ActiveConnectionGroup;
+        this.IsActive = databaseSource.IsActive;
+        this.Name = databaseSource.Name;
+        this.Result = databaseSource.Result;
+    };
     return DatabaseSource;
 }(SourceBase_1.SourceBase));
 exports.DatabaseSource = DatabaseSource;

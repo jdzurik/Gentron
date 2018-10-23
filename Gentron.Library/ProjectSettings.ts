@@ -2,8 +2,9 @@
 import { IDatabaseConnection } from "./DatabaseConnection";
 import { IFileConnection } from "./FileConnection";
 import { IHttpConnection } from "./HttpConnection";
+import IJsonSerializable from "./interfaces/IJsonSerializable";
 
-export interface IProjectSettings {
+export interface IProjectSettings extends IJsonSerializable {
     /*
      *  Properties & Fields 
      */
@@ -19,15 +20,17 @@ export class ProjectSettings implements IProjectSettings {
     /*
      *  Properties & Fields 
      */
-    private _databaseConnections: IConnectionGroup<IDatabaseConnection>[];
+    //private _databaseConnections: IConnectionGroup<IDatabaseConnection>[];
 
-    public get DatabaseConnections(): IConnectionGroup<IDatabaseConnection>[] {
-        return this._databaseConnections;
-    }
+    //public get DatabaseConnections(): IConnectionGroup<IDatabaseConnection>[] {
+    //    return this._databaseConnections;
+    //}
 
-    public set DatabaseConnections(value: IConnectionGroup<IDatabaseConnection>[]) {
-        this._databaseConnections = value;
-    }
+    //public set DatabaseConnections(value: IConnectionGroup<IDatabaseConnection>[]) {
+    //    this._databaseConnections = value;
+    //}
+
+    public DatabaseConnections: IConnectionGroup<IDatabaseConnection>[];
 
     private _fileConnections: IConnectionGroup<IFileConnection>[];
 
@@ -86,7 +89,8 @@ export class ProjectSettings implements IProjectSettings {
      *  Constructors
      */
     public constructor() {
-        this._databaseConnections = [];
+        //this._databaseConnections = [];
+        this.DatabaseConnections = [];
         this._fileConnections = [];
         this._httpConnections = [];
         this._localPackageFolder = "";
@@ -108,11 +112,25 @@ export class ProjectSettings implements IProjectSettings {
         return ret;
     }
 
+    public toJson(): any {
+        return {
+            DatabaseConnections: this.DatabaseConnections,
+            FileConnections: this.FileConnections,
+            HttpConnections: this.HttpConnections,
+            LocalPackageFolder: this.LocalPackageFolder,
+            OutputCodeFolder: this.OutputCodeFolder,
+            RemotePackageLocation: this.RemotePackageLocation,
+        };
+    }
+
     public static toJson(obj: IProjectSettings): any {
         return {
+            DatabaseConnections: obj.DatabaseConnections,
+            FileConnections: obj.FileConnections,
+            HttpConnections: obj.HttpConnections,
             LocalPackageFolder: obj.LocalPackageFolder,
             OutputCodeFolder: obj.OutputCodeFolder,
-            RemotePackageLocation: obj.RemotePackageLocation
+            RemotePackageLocation: obj.RemotePackageLocation,
         };
     }
 }

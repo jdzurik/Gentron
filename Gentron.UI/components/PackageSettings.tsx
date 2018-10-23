@@ -1,26 +1,25 @@
-﻿import * as React from "react";
+﻿import * as hash from "object-hash";
+import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { connect } from "react-redux";
-import { RouteComponentProps } from "react-router";
+import { ActionCreators } from "../actions/PackageSettings";
+import { ApplicationState, NonFunctionProperties, Hash } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
-import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
-import { ActionCreators } from "../actions/PackageSettings";
+import { connect } from "../connect";
 import { IPackageSettings } from "../../Gentron.Library";
-import { ApplicationState } from "../actions";
+import { RouteComponentProps } from "react-router";
+import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type PackageSettingsProps = IPackageSettings
+type HashedIPackageSettings = NonFunctionProperties<IPackageSettings> & Hash
+
+type PackageSettingsProps = HashedIPackageSettings
     & typeof ActionCreators
     & RouteComponentProps<{}>;
 
-class PackageSettings extends React.Component<PackageSettingsProps, {}> {
+@connect<HashedIPackageSettings, {}, PackageSettingsProps>(mapStateToProps, mapDispatchToProps)
+export default class PackageSettings extends React.Component<PackageSettingsProps, {}> {
     public constructor(props: PackageSettingsProps) {
         super(props);
-    }
-
-    public componentDidMount(): void {
-        //console.log("mounted");
-        //console.log(this.props);
     }
 
     public render(): JSX.Element {
@@ -67,15 +66,19 @@ class PackageSettings extends React.Component<PackageSettingsProps, {}> {
 }
 
 // Wire up the React component to the Redux store
-function mapStateToProps(state: ApplicationState): IPackageSettings {
-    return state.PackageSettings;
+function mapStateToProps(state: ApplicationState): HashedIPackageSettings {
+    const _hash: string = hash(state.PackageSettings);
+
+    return {
+        DatabaseSources: state.PackageSettings.DatabaseSources,
+        FileSources: state.PackageSettings.FileSources,
+        HttpSources: state.PackageSettings.HttpSources,
+        PackageName: state.PackageSettings.PackageName,
+        ReadMeText: state.PackageSettings.ReadMeText,
+        _hash: _hash
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(ActionCreators, dispatch);
 }
-
-export default connect<IPackageSettings, {}, PackageSettingsProps>(
-    mapStateToProps,
-    mapDispatchToProps
-)(PackageSettings) as typeof PackageSettings;

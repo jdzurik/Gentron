@@ -4,6 +4,7 @@ export interface IDatabaseConnection extends IConnectionBase {
     /*
      *  Properties & Fields 
      */
+    ConnectionString: string;
     Environment: string;
 }
 
@@ -11,6 +12,16 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
     /*
      *  Properties & Fields 
      */
+    private _connectionString: string;
+
+    public get ConnectionString(): string {
+        return this._connectionString;
+    }
+
+    public set ConnectionString(value: string) {
+        this._connectionString = value;
+    }
+
     private _environment: string;
 
     public get Environment(): string {
@@ -27,6 +38,7 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
      */
     public constructor() {
         super();
+        this._connectionString = "";
         this._environment = "";
     }
 
@@ -34,4 +46,13 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
     /*
      *  Methods
      */
+    public toJson(): any {
+        throw new Error("Method not implemented");
+    }
+
+    public update(dbConnection: DatabaseConnection): void {
+        this.ConnectionString = dbConnection.ConnectionString;
+        this.Environment = dbConnection.Environment;
+        this.IsActive = dbConnection.IsActive;
+    }
 }

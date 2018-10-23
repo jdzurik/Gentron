@@ -1,12 +1,34 @@
-﻿import { Gentron, IGentron }from "./Gentron";
+﻿import { ConnectionGroup, IConnectionGroup } from "./ConnectionGroup";
+import { DatabaseConnection, IDatabaseConnection } from "./DatabaseConnection";
+import { DatabaseSource, IDatabaseSource } from "./DatabaseSource";
+import { FileSource, IFileSource } from "./FileSource";
+import { Gentron, IGentron }from "./Gentron";
+import { HttpSource, IHttpSource } from "./HttpSource";
 import { PackageSettings, IPackageSettings } from "./PackageSettings";
 import { ProjectSettings, IProjectSettings } from "./ProjectSettings";
 
 export {
     Gentron,
     IGentron,
+
     PackageSettings,
     IPackageSettings,
+
     ProjectSettings,
-    IProjectSettings
+    IProjectSettings,
+
+    ConnectionGroup,
+    IConnectionGroup,
+
+    DatabaseConnection,
+    IDatabaseConnection,
+
+    DatabaseSource,
+    IDatabaseSource,
+
+    HttpSource,
+    IHttpSource,
+
+    FileSource,
+    IFileSource
 };

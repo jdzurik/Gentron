@@ -31,6 +31,12 @@ var HttpConnection = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    HttpConnection.prototype.toJson = function () {
+        throw new Error("Method not implemented");
+    };
+    HttpConnection.prototype.update = function (dbConnection) {
+        throw new Error("Method not implemented");
+    };
     return HttpConnection;
 }(ConnectionBase_1.ConnectionBase));
 exports.HttpConnection = HttpConnection;

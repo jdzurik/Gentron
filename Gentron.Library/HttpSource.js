@@ -19,6 +19,14 @@ var HttpSource = (function (_super) {
     function HttpSource() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    HttpSource.prototype.toJson = function () {
+        throw new Error("Method not implemented");
+    };
+    HttpSource.prototype.update = function (httpSource) {
+        this.IsActive = httpSource.IsActive;
+        this.Name = httpSource.Name;
+        this.Result = httpSource.Result;
+    };
     return HttpSource;
 }(SourceBase_1.SourceBase));
 exports.HttpSource = HttpSource;

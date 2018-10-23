@@ -1,7 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var ConnectionGroup_1 = require("./ConnectionGroup");
+exports.ConnectionGroup = ConnectionGroup_1.ConnectionGroup;
+var DatabaseConnection_1 = require("./DatabaseConnection");
+exports.DatabaseConnection = DatabaseConnection_1.DatabaseConnection;
+var DatabaseSource_1 = require("./DatabaseSource");
+exports.DatabaseSource = DatabaseSource_1.DatabaseSource;
+var FileSource_1 = require("./FileSource");
+exports.FileSource = FileSource_1.FileSource;
 var Gentron_1 = require("./Gentron");
 exports.Gentron = Gentron_1.Gentron;
+var HttpSource_1 = require("./HttpSource");
+exports.HttpSource = HttpSource_1.HttpSource;
 var PackageSettings_1 = require("./PackageSettings");
 exports.PackageSettings = PackageSettings_1.PackageSettings;
 var ProjectSettings_1 = require("./ProjectSettings");

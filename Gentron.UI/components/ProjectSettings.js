@@ -12,20 +12,25 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var hash = require("object-hash");
 var React = require("react");
-var redux_1 = require("redux");
-var react_redux_1 = require("react-redux");
-var metro_1 = require("./metro");
-var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
 var ProjectSettings_1 = require("../actions/ProjectSettings");
+var redux_1 = require("redux");
+var metro_1 = require("./metro");
+var connect_1 = require("../connect");
+var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
 var ProjectSettings = (function (_super) {
     __extends(ProjectSettings, _super);
     function ProjectSettings(props) {
         return _super.call(this, props) || this;
     }
-    ProjectSettings.prototype.componentDidMount = function () {
-    };
     ProjectSettings.prototype.render = function () {
         var _this = this;
         return (React.createElement(metro_1.Cell, { className: "h-100" },
@@ -62,12 +67,24 @@ var ProjectSettings = (function (_super) {
                                 React.createElement("button", { className: "button input-custom-button", tabIndex: -1, type: "button", onClick: console.log },
                                     React.createElement("span", { className: "mif-folder-open" })))))))));
     };
+    ProjectSettings = __decorate([
+        connect_1.connect(mapStateToProps, mapDispatchToProps)
+    ], ProjectSettings);
     return ProjectSettings;
 }(React.Component));
+exports.default = ProjectSettings;
 function mapStateToProps(state) {
-    return state.ProjectSettings;
+    var _hash = hash(state.ProjectSettings);
+    return {
+        DatabaseConnections: state.ProjectSettings.DatabaseConnections,
+        FileConnections: state.ProjectSettings.FileConnections,
+        HttpConnections: state.ProjectSettings.HttpConnections,
+        LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
+        OutputCodeFolder: state.ProjectSettings.OutputCodeFolder,
+        RemotePackageLocation: state.ProjectSettings.RemotePackageLocation,
+        _hash: _hash
+    };
 }
 function mapDispatchToProps(dispatch) {
     return redux_1.bindActionCreators(ProjectSettings_1.ActionCreators, dispatch);
 }
-exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ProjectSettings);

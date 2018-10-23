@@ -1,12 +1,13 @@
 ﻿import Guid from "./utils/Guid";
 import { PackageSettings, IPackageSettings } from "./PackageSettings";
 import { ProjectSettings, IProjectSettings } from "./ProjectSettings";
+import IJsonSerializable from "./interfaces/IJsonSerializable";
 
-export interface IGentron {
+export interface IGentron extends IJsonSerializable {
     /*
      *  Properties & Fields 
      */
-    ID: string;
+    readonly ID: string;
     PackageSettings: IPackageSettings;
     ProjectSettings: IProjectSettings;
 }
@@ -15,7 +16,7 @@ export class Gentron implements IGentron {
     /*
      *  Properties & Fields 
      */
-    private _id: string;
+    private readonly _id: string;
 
     public get ID(): string {
         return this._id;
@@ -43,14 +44,17 @@ export class Gentron implements IGentron {
         this._projectSettings = value;
     }
 
+    //public ProjectSettings: ProjectSettings;
+
 
     /*
      *  Constructors
      */
-    public constructor() {
-        this._id = Guid.newCryptoGuid();
+    public constructor(id?: string) {
+        this._id = id || Guid.newCryptoGuid();
         this._packageSettings = new PackageSettings();
         this._projectSettings = new ProjectSettings();
+        //this.ProjectSettings = new ProjectSettings();
     }
 
 
@@ -58,13 +62,20 @@ export class Gentron implements IGentron {
      *  Methods
      */
     public static fromJson(obj: any): IGentron {
-        const ret: IGentron = new Gentron();
+        const ret: IGentron = new Gentron(obj.ID);
 
-        ret.ID = obj.ID;
         ret.PackageSettings = PackageSettings.fromJson(obj.PackageSettings);
         ret.ProjectSettings = ProjectSettings.fromJson(obj.ProjectSettings);
 
         return ret;
+    }
+
+    public toJson(): any {
+        return {
+            ID: this.ID,
+            PackageSettings: this.PackageSettings.toJson(),
+            ProjectSettings: this.ProjectSettings.toJson(),
+        };
     }
 
     public static toJson(obj: IGentron): any {

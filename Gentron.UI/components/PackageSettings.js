@@ -12,20 +12,25 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var hash = require("object-hash");
 var React = require("react");
-var react_redux_1 = require("react-redux");
+var PackageSettings_1 = require("../actions/PackageSettings");
 var redux_1 = require("redux");
 var metro_1 = require("./metro");
+var connect_1 = require("../connect");
 var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
-var PackageSettings_1 = require("../actions/PackageSettings");
 var PackageSettings = (function (_super) {
     __extends(PackageSettings, _super);
     function PackageSettings(props) {
         return _super.call(this, props) || this;
     }
-    PackageSettings.prototype.componentDidMount = function () {
-    };
     PackageSettings.prototype.render = function () {
         var _this = this;
         return (React.createElement(metro_1.Cell, { className: "h-100" },
@@ -42,12 +47,23 @@ var PackageSettings = (function (_super) {
                                 React.createElement("button", { className: "button input-custom-button", tabIndex: -1, type: "button", onClick: console.log },
                                     React.createElement("span", { className: "mif-folder-open" })))))))));
     };
+    PackageSettings = __decorate([
+        connect_1.connect(mapStateToProps, mapDispatchToProps)
+    ], PackageSettings);
     return PackageSettings;
 }(React.Component));
+exports.default = PackageSettings;
 function mapStateToProps(state) {
-    return state.PackageSettings;
+    var _hash = hash(state.PackageSettings);
+    return {
+        DatabaseSources: state.PackageSettings.DatabaseSources,
+        FileSources: state.PackageSettings.FileSources,
+        HttpSources: state.PackageSettings.HttpSources,
+        PackageName: state.PackageSettings.PackageName,
+        ReadMeText: state.PackageSettings.ReadMeText,
+        _hash: _hash
+    };
 }
 function mapDispatchToProps(dispatch) {
     return redux_1.bindActionCreators(PackageSettings_1.ActionCreators, dispatch);
 }
-exports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(PackageSettings);

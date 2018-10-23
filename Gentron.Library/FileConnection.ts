@@ -34,4 +34,11 @@ export class FileConnection extends ConnectionBase implements IFileConnection {
     /*
      *  Methods
      */
+    public toJson(): any {
+        throw new Error("Method not implemented");
+    }
+
+    public update(dbConnection: FileConnection): void {
+        throw new Error("Method not implemented");
+    }
 }

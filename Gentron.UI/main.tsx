@@ -16,7 +16,6 @@ function createWindow() {
     win = new BrowserWindow(windowOpts);
     win.loadURL(`file://${__dirname}/index.html`);
     win.webContents.openDevTools();
-
     // Emitted when the window is closed.
     win.on('closed', (): void => {
         // Dereference the window object, usually you would store windows
@@ -24,6 +23,16 @@ function createWindow() {
         // when you should delete the corresponding element.
         win = null;
     });
+
+    //  React
+    BrowserWindow.addDevToolsExtension(
+        "C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.4.2_0"
+    );
+
+    //  Redux
+    BrowserWindow.addDevToolsExtension(
+        "C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\lmhkpmbekcpmknklioeibfkpmmfibljd\\2.15.3_0"
+    );
 }
 
 // This method will be called when Electron has finished

@@ -16,6 +16,8 @@ function createWindow() {
     win.on('closed', function () {
         win = null;
     });
+    electron_1.BrowserWindow.addDevToolsExtension("C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.4.2_0");
+    electron_1.BrowserWindow.addDevToolsExtension("C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\lmhkpmbekcpmknklioeibfkpmmfibljd\\2.15.3_0");
 }
 electron_1.app.on('ready', createWindow);
 electron_1.app.on('window-all-closed', function () {

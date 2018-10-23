@@ -26,14 +26,7 @@ export default class NavView extends React.Component<NavViewProps> {
             <ConnectedRouter history={this.props.history}>
                 <div data-role="navview">
                     <NavViewPane />
-                    <div className={`navview-content d-flex flex-align-center flex-justify-center h-100`}>
-                        <Route exact path="/" component={Home} />
-                        <Route exact path="/settings/project" component={ProjectSettings} />
-                        <Route exact path="/settings/package" component={PackageSettings} />
-                        <Route exact path="/sources/db/:id" component={DatabaseSources} />
-                        <Route exact path="/sources/http/:id" component={HttpSources} />
-                        <Route exact path="/sources/file/:id" component={FileSources} />
-                    </div>
+                    <NavViewContent />
                 </div>
             </ConnectedRouter>
         );

@@ -19,6 +19,14 @@ var FileSource = (function (_super) {
     function FileSource() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    FileSource.prototype.toJson = function () {
+        throw new Error("Method not implemented");
+    };
+    FileSource.prototype.update = function (fileSource) {
+        this.IsActive = fileSource.IsActive;
+        this.Name = fileSource.Name;
+        this.Result = fileSource.Result;
+    };
     return FileSource;
 }(SourceBase_1.SourceBase));
 exports.FileSource = FileSource;

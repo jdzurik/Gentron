@@ -1,4 +1,4 @@
-﻿const crypto = require("crypto");
+﻿import * as crypto from "crypto";
 
 export default class Guid {
     private static _guidPlaceholder: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
@@ -21,7 +21,11 @@ export default class Guid {
             hex[i] = (i < 16 ? "0" : "") + (i).toString(16);
         }
 
-        const rand: number[] = crypto.getRandomValues(new Uint8Array(16));
+        const rand: Uint8Array = new Uint8Array(16);
+        for (let i: number = 0; i < rand.length; ++i) {
+            rand[i] = Math.floor(Math.random() * 10);
+        }
+        //const rand: number[] = crypto.getRandomValues(new Uint8Array(16));
 
         rand[6] = rand[6] & 0x0f | 0x40;
         rand[8] = rand[8] & 0x3f | 0x80;

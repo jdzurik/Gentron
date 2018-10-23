@@ -1,26 +1,25 @@
-﻿import * as React from "react";
+﻿import * as hash from "object-hash";
+import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { bindActionCreators, Dispatch, AnyAction } from 'redux';
-import { RouteComponentProps } from "react-router";
-import { connect } from 'react-redux';
-import { Cell, Grid, Row } from "./metro";
-import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
-import { ApplicationState } from "../actions";
 import { ActionCreators } from "../actions/ProjectSettings";
-import { IProjectSettings } from "../../Gentron.Library";
+import { ApplicationState, NonFunctionProperties, Hash } from "../types";
+import { bindActionCreators, Dispatch, AnyAction } from 'redux';
+import { Cell, Grid, Row } from "./metro";
+import { connect } from "../connect";
+import { ProjectSettings as LibProjectSettings, IProjectSettings } from "../../Gentron.Library";
+import { RouteComponentProps } from "react-router";
+import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type ProjectSettingsProps = IProjectSettings
+type HashedIProjectSettings = NonFunctionProperties<IProjectSettings> & Hash
+
+type ProjectSettingsProps = HashedIProjectSettings
     & typeof ActionCreators
     & RouteComponentProps<{}>;
 
-class ProjectSettings extends React.Component<ProjectSettingsProps, {}> {
+@connect<HashedIProjectSettings, {}, ProjectSettingsProps>(mapStateToProps, mapDispatchToProps)
+export default class ProjectSettings extends React.Component<ProjectSettingsProps, {}> {
     public constructor(props: ProjectSettingsProps) {
         super(props);
-    }
-
-    public componentDidMount(): void {
-        //console.log("mounted");
-        //console.log(this.props);
     }
 
     public render(): JSX.Element {
@@ -131,16 +130,19 @@ class ProjectSettings extends React.Component<ProjectSettingsProps, {}> {
     }
 }
 
-// Wire up the React component to the Redux store
-function mapStateToProps(state: ApplicationState): IProjectSettings {
-    return state.ProjectSettings;
+function mapStateToProps(state: ApplicationState): HashedIProjectSettings {
+    const _hash: string = hash(state.ProjectSettings);
+    return {
+        DatabaseConnections: state.ProjectSettings.DatabaseConnections,
+        FileConnections: state.ProjectSettings.FileConnections,
+        HttpConnections: state.ProjectSettings.HttpConnections,
+        LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
+        OutputCodeFolder: state.ProjectSettings.OutputCodeFolder,
+        RemotePackageLocation: state.ProjectSettings.RemotePackageLocation,
+        _hash: _hash
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(ActionCreators, dispatch);
 }
-
-export default connect<IProjectSettings, {}, ProjectSettingsProps>(
-    mapStateToProps,
-    mapDispatchToProps
-)(ProjectSettings) as typeof ProjectSettings;
