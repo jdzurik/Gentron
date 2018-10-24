@@ -1,6 +1,5 @@
 ﻿import * as PackageSettingsReducers from "./PackageSettings";
 import * as ProjectSettingsReducers from "./ProjectSettings";
-import { ApplicationState } from "../types";
 import { Reducer } from "redux";
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using

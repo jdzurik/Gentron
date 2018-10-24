@@ -3,7 +3,6 @@ import { NonFunctionProperties } from '../types';
 import { ProjectSettings, IProjectSettings } from "../../Gentron.Library";
 import { ProjectSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
-import { start } from 'repl';
 
 type ProjectSettingsProps = NonFunctionProperties<IProjectSettings>;
 

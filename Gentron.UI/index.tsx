@@ -12,10 +12,10 @@ import { AnyAction, Store } from "redux";
 import { ApplicationState } from './types';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { Gentron, ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection } from "../Gentron.Library";
+import { IDatabaseSource, DatabaseSource } from "../Gentron.Library/DatabaseSource";
 import { Provider } from 'react-redux';
 import App from "./components/App";
 import configureStore from './store/configureStore';
-import { IDatabaseSource, DatabaseSource } from "../Gentron.Library/DatabaseSource";
 //import setupMenu from "./electronMenu";
 
 type AppStore = Store<ApplicationState, AnyAction> & { dispatch: {} };

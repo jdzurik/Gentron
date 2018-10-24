@@ -1,8 +1,8 @@
 ﻿import { Action, Reducer } from 'redux';
 import { AppThunkAction } from '.';
-import { ProjectSettingsActionNames } from "../constants/ActionNames";
 import { ChangeEvent } from 'react';
 import { IConnectionGroup, IDatabaseConnection, IOutputPath } from '../../Gentron.Library';
+import { ProjectSettingsActionNames } from "../constants/ActionNames";
 
 export interface AddOrUpdateDatabaseConnectionGroupAction {
     databaseConnectionGroup: IConnectionGroup<IDatabaseConnection>;

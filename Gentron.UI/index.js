@@ -9,10 +9,10 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 var history_1 = require("history");
 var Gentron_Library_1 = require("../Gentron.Library");
+var DatabaseSource_1 = require("../Gentron.Library/DatabaseSource");
 var react_redux_1 = require("react-redux");
 var App_1 = require("./components/App");
 var configureStore_1 = require("./store/configureStore");
-var DatabaseSource_1 = require("../Gentron.Library/DatabaseSource");
 var syncHistoryWithStore = function (store, history) {
     var routing = store.getState().routing;
     if (routing && routing.location) {

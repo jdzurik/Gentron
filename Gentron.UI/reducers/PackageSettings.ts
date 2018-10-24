@@ -1,8 +1,8 @@
-﻿import { Reducer } from 'redux';
-import { PackageSettings, IPackageSettings } from "../../Gentron.Library";
-import * as PackageSettingsActions from '../actions/PackageSettings';
-import { PackageSettingsActionNames } from "../constants/ActionNames";
+﻿import * as PackageSettingsActions from '../actions/PackageSettings';
 import { NonFunctionProperties } from '../types';
+import { PackageSettings, IPackageSettings } from "../../Gentron.Library";
+import { PackageSettingsActionNames } from "../constants/ActionNames";
+import { Reducer } from 'redux';
 import Templates from '../components/Templates';
 
 type PackageSettingsProps = NonFunctionProperties<IPackageSettings>;

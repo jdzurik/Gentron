@@ -1,7 +1,7 @@
-﻿import { PackageSettingsActionNames } from "../constants/ActionNames";
-import { ChangeEvent } from 'react';
+﻿import { ChangeEvent } from 'react';
 import { IDatabaseSource } from '../../Gentron.Library/DatabaseSource';
 import { IEngine, IFileSource, IHttpSource, ITemplate } from '../../Gentron.Library';
+import { PackageSettingsActionNames } from "../constants/ActionNames";
 
 export interface AddOrUpdateDatabaseSourceAction {
     databaseSource: IDatabaseSource;

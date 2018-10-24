@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var redux_1 = require("redux");
 var connected_react_router_1 = require("connected-react-router");
-var redux_thunk_1 = require("redux-thunk");
+var redux_1 = require("redux");
 var reducers_1 = require("../reducers");
+var redux_thunk_1 = require("redux-thunk");
 function configureStore(history, initialState) {
     var windowIfDefined = typeof window === 'undefined' ? null : window;
     var devToolsExtension = windowIfDefined && windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__;
