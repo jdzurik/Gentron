@@ -4,6 +4,8 @@ import { Route } from 'react-router-dom';
 import DatabaseConnections from "./DatabaseConnections";
 import DatabaseSource from './DatabaseSource';
 import DatabaseSources from './DatabaseSources';
+import Engine from "./Engine";
+import Engines from "./Engines";
 import FileSource from './FileSource';
 import FileSources from './FileSources';
 import Home from './Home';
@@ -41,6 +43,8 @@ export default class NavViewContent extends React.Component<NavViewContentProps>
                 <Route exact path="/sources/http/:id" component={HttpSource} />
                 <Route exact path="/sources/file" component={FileSources} />
                 <Route exact path="/sources/file/:id" component={FileSource} />
+                <Route exact path="/engines/manage" component={Engines} />
+                <Route exact path="/engines/manage/:id" component={Engine} />
             </div>
         );
     }

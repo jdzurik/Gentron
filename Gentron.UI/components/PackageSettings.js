@@ -57,6 +57,7 @@ function mapStateToProps(state) {
     var _hash = hash(state.PackageSettings);
     return {
         DatabaseSources: state.PackageSettings.DatabaseSources,
+        Engines: state.PackageSettings.Engines,
         FileSources: state.PackageSettings.FileSources,
         HttpSources: state.PackageSettings.HttpSources,
         PackageName: state.PackageSettings.PackageName,

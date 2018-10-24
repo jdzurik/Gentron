@@ -25,39 +25,39 @@ var PackageSettings_1 = require("../actions/PackageSettings");
 var redux_1 = require("redux");
 var metro_1 = require("./metro");
 var connect_1 = require("../connect");
-var FileSource = (function (_super) {
-    __extends(FileSource, _super);
-    function FileSource(props) {
+var Engine = (function (_super) {
+    __extends(Engine, _super);
+    function Engine(props) {
         return _super.call(this, props) || this;
     }
-    FileSource.prototype.handleNameClick = function (source) {
+    Engine.prototype.handleNameClick = function (source) {
         source.Name = "Test";
-        this.props.addOrUpdateFileSource(source);
+        this.props.addOrUpdateEngine(source);
     };
-    FileSource.prototype.render = function () {
+    Engine.prototype.render = function () {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
                 React.createElement(metro_1.Row, null,
                     React.createElement(metro_1.Cell, { colSpan: 12 },
                         React.createElement("h3", null,
-                            React.createElement("span", { className: "mif-file-code mif-md mr-2" }),
-                            React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.FileSource) }, this.props.FileSource.Name)))),
+                            React.createElement("span", { className: "mif-http mif-md mr-2" }),
+                            React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.Engine) }, this.props.Engine.Name)))),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
-                        React.createElement(metro_1.BackButton, { routeTo: "/sources/file", buttonText: "Return to All Sources" }))),
+                        React.createElement(metro_1.BackButton, { routeTo: "/engines/manage", buttonText: "Return to All Engines" }))),
                 React.createElement("h1", null, this.props.match.params.id))));
     };
-    FileSource = __decorate([
+    Engine = __decorate([
         connect_1.connect(mapStateToProps, mapDispatchToProps)
-    ], FileSource);
-    return FileSource;
+    ], Engine);
+    return Engine;
 }(React.Component));
-exports.default = FileSource;
+exports.default = Engine;
 function mapStateToProps(state, routeComponentProps) {
     var id = routeComponentProps.match.params.id;
-    var _hash = hash(state.PackageSettings.FileSources[id] || "");
+    var _hash = hash(state.PackageSettings.Engines[id] || "");
     return {
-        FileSource: state.PackageSettings.FileSources[id],
+        Engine: state.PackageSettings.Engines[id],
         _hash: _hash
     };
 }

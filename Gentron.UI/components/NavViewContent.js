@@ -18,6 +18,8 @@ var react_router_dom_1 = require("react-router-dom");
 var DatabaseConnections_1 = require("./DatabaseConnections");
 var DatabaseSource_1 = require("./DatabaseSource");
 var DatabaseSources_1 = require("./DatabaseSources");
+var Engine_1 = require("./Engine");
+var Engines_1 = require("./Engines");
 var FileSource_1 = require("./FileSource");
 var FileSources_1 = require("./FileSources");
 var Home_1 = require("./Home");
@@ -43,7 +45,9 @@ var NavViewContent = (function (_super) {
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/http", component: HttpSources_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/http/:id", component: HttpSource_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/file", component: FileSources_1.default }),
-            React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/file/:id", component: FileSource_1.default })));
+            React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/file/:id", component: FileSource_1.default }),
+            React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage", component: Engines_1.default }),
+            React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage/:id", component: Engine_1.default })));
     };
     return NavViewContent;
 }(React.Component));

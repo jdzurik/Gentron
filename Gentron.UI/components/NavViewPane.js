@@ -95,6 +95,18 @@ var NavViewPane = (function (_super) {
                             React.createElement("span", { className: "icon" },
                                 React.createElement("span", { className: "mif-http" })),
                             React.createElement("span", { className: "caption" }, file.Name)));
+                }),
+                React.createElement("li", null,
+                    React.createElement(react_router_dom_1.Link, { to: "/engines/manage" },
+                        React.createElement("span", { className: "icon" },
+                            React.createElement("span", { className: "mif-drive-eta" })),
+                        React.createElement("span", { className: "caption" }, "Template Engines"))),
+                this.props.Engines.map(function (engine, i) {
+                    return React.createElement("li", { key: i },
+                        React.createElement(react_router_dom_1.Link, { to: "/engines/manage/" + i, className: "pl-7" },
+                            React.createElement("span", { className: "icon" },
+                                React.createElement("span", { className: "mif-drive-eta" })),
+                            React.createElement("span", { className: "caption" }, engine.Name)));
                 }))));
     };
     NavViewPane = __decorate([
@@ -105,11 +117,13 @@ var NavViewPane = (function (_super) {
 exports.default = NavViewPane;
 function mapStateToProps(state) {
     var _dbHash = hash(state.PackageSettings.DatabaseSources);
+    var _enginesHash = hash(state.PackageSettings.Engines);
     var _fileHash = hash(state.PackageSettings.FileSources);
     var _httpHash = hash(state.PackageSettings.HttpSources);
-    var _hash = hash(_dbHash + _fileHash + _httpHash);
+    var _hash = hash(_dbHash + _enginesHash + _fileHash + _httpHash);
     return {
         DatabaseSources: state.PackageSettings.DatabaseSources,
+        Engines: state.PackageSettings.Engines,
         FileSources: state.PackageSettings.FileSources,
         HttpSources: state.PackageSettings.HttpSources,
         _hash: _hash

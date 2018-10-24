@@ -25,7 +25,6 @@ var PackageSettings_1 = require("../actions/PackageSettings");
 var redux_1 = require("redux");
 var metro_1 = require("./metro");
 var connect_1 = require("../connect");
-var react_router_dom_1 = require("react-router-dom");
 var DatabaseSource = (function (_super) {
     __extends(DatabaseSource, _super);
     function DatabaseSource(props) {
@@ -45,8 +44,7 @@ var DatabaseSource = (function (_super) {
                             React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.DatabaseSource) }, this.props.DatabaseSource.Name)))),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
-                        React.createElement(react_router_dom_1.Link, { to: "/sources/db" },
-                            React.createElement("button", { className: "button" }, "Return to All Sources")))),
+                        React.createElement(metro_1.BackButton, { routeTo: "/sources/db", buttonText: "Return to All Sources" }))),
                 React.createElement("h1", null, this.props.match.params.id))));
     };
     DatabaseSource = __decorate([

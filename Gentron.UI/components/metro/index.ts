@@ -1,5 +1,6 @@
-﻿import Cell from "./Cell";
+﻿import BackButton from "./BackButton";
+import Cell from "./Cell";
 import Grid from "./Grid";
 import Row from "./Row";
 
-export { Cell, Grid, Row };
+export { BackButton, Cell, Grid, Row };

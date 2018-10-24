@@ -5,11 +5,12 @@ import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
-import { IDatabaseSource, IFileSource, IHttpSource } from "../../Gentron.Library";
+import { IDatabaseSource, IEngine, IFileSource, IHttpSource } from "../../Gentron.Library";
 import { Link } from 'react-router-dom';
 
 type NullableSources = Hash & {
     DatabaseSources?: NonFunctionProperties<IDatabaseSource>[];
+    Engines?: NonFunctionProperties<IEngine>[];
     FileSources?: NonFunctionProperties<IFileSource>[];
     HttpSources?: NonFunctionProperties<IHttpSource>[];
 };
@@ -125,6 +126,24 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                             </li>
                         )
                     }
+
+                    <li>
+                        <Link to="/engines/manage">
+                            <span className="icon"><span className="mif-drive-eta"></span></span>
+                            <span className="caption">Template Engines</span>
+                        </Link>
+                    </li>
+
+                    {
+                        this.props.Engines.map((engine, i) =>
+                            <li key={i}>
+                                <Link to={`/engines/manage/${i}`} className="pl-7">
+                                    <span className="icon"><span className="mif-drive-eta"></span></span>
+                                    <span className="caption">{engine.Name}</span>
+                                </Link>
+                            </li>
+                        )
+                    }
                 </ul>
             </div>
         );
@@ -133,13 +152,15 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
 
 function mapStateToProps(state: ApplicationState): NullableSources {
     const _dbHash: string = hash(state.PackageSettings.DatabaseSources);
+    const _enginesHash: string = hash(state.PackageSettings.Engines);
     const _fileHash: string = hash(state.PackageSettings.FileSources);
     const _httpHash: string = hash(state.PackageSettings.HttpSources);
 
-    const _hash: string = hash(_dbHash + _fileHash + _httpHash);
+    const _hash: string = hash(_dbHash + _enginesHash + _fileHash + _httpHash);
 
     return {
         DatabaseSources: state.PackageSettings.DatabaseSources,
+        Engines: state.PackageSettings.Engines,
         FileSources: state.PackageSettings.FileSources,
         HttpSources: state.PackageSettings.HttpSources,
         _hash: _hash

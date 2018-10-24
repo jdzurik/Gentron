@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
-import { Cell, Grid, Row } from "./metro";
+import { BackButton, Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { IDatabaseSource } from "../../Gentron.Library";
 import { Link } from "react-router-dom";
@@ -51,11 +51,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
 
                     <Row className="mt-2 mb-2">
                         <Cell>
-                            <Link to="/sources/db">
-                                <button className="button">
-                                    Return to All Sources
-                                </button>
-                            </Link>
+                            <BackButton routeTo="/sources/db" buttonText="Return to All Sources"></BackButton>
                         </Cell>
                     </Row>
 

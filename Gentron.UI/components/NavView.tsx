@@ -31,5 +31,4 @@ export default class NavView extends React.Component<NavViewProps> {
             </ConnectedRouter>
         );
     }
-
 }

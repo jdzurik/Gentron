@@ -58,6 +58,12 @@
     <TypeScriptCompile Include="components\DatabaseSources.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="components\Engine.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="components\Engines.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="components\FileSource.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -71,6 +77,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\HttpSources.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="components\metro\BackButton.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\metro\Cell.tsx">

@@ -6,24 +6,24 @@ import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { BackButton, Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IHttpSource } from "../../Gentron.Library";
+import { IEngine } from "../../Gentron.Library";
 import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 
-type HashedHttpSource = Hash & {
-    HttpSource?: NonFunctionProperties<IHttpSource>;
+type HashedEngine = Hash & {
+    Engine?: NonFunctionProperties<IEngine>;
 };
 
-type HttpSourceProps = HashedHttpSource
+type EngineProps = HashedEngine
     & typeof ActionCreators
     & RouteComponentProps<{ id: string }>;
 
-@connect<HashedHttpSource, {}, HttpSourceProps>(mapStateToProps, mapDispatchToProps)
-export default class HttpSource extends React.Component<HttpSourceProps> {
+@connect<HashedEngine, {}, EngineProps>(mapStateToProps, mapDispatchToProps)
+export default class Engine extends React.Component<EngineProps> {
     /*
      *  Constructors
      */
-    public constructor(props: HttpSourceProps) {
+    public constructor(props: EngineProps) {
         super(props);
     }
 
@@ -31,9 +31,9 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
     /*
      *  Methods
      */
-    private handleNameClick(source: IHttpSource): void {
+    private handleNameClick(source: IEngine): void {
         source.Name = "Test";
-        this.props.addOrUpdateHttpSource(source);
+        this.props.addOrUpdateEngine(source);
     }
 
     public render(): JSX.Element {
@@ -44,14 +44,14 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
                         <Cell colSpan={12}>
                             <h3>
                                 <span className="mif-http mif-md mr-2"></span>
-                                <span onClick={this.handleNameClick.bind(this, this.props.HttpSource)}>{this.props.HttpSource.Name}</span>
+                                <span onClick={this.handleNameClick.bind(this, this.props.Engine)}>{this.props.Engine.Name}</span>
                             </h3>
                         </Cell>
                     </Row>
 
                     <Row className="mt-2 mb-2">
                         <Cell>
-                            <BackButton routeTo="/sources/http" buttonText="Return to All Sources"></BackButton>
+                            <BackButton routeTo="/engines/manage" buttonText="Return to All Engines"></BackButton>
                         </Cell>
                     </Row>
 
@@ -62,11 +62,11 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ id: string }>): HashedHttpSource {
+function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ id: string }>): HashedEngine {
     const id: string = routeComponentProps.match.params.id;
-    const _hash: string = hash(state.PackageSettings.HttpSources[id] || "")
+    const _hash: string = hash(state.PackageSettings.Engines[id] || "")
     return {
-        HttpSource: state.PackageSettings.HttpSources[id],
+        Engine: state.PackageSettings.Engines[id],
         _hash: _hash
     };
 }

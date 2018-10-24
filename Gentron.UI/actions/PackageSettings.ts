@@ -1,11 +1,16 @@
 ﻿import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { ChangeEvent } from 'react';
 import { IDatabaseSource } from '../../Gentron.Library/DatabaseSource';
-import { IFileSource, IHttpSource } from '../../Gentron.Library';
+import { IEngine, IFileSource, IHttpSource } from '../../Gentron.Library';
 
 export interface AddOrUpdateDatabaseSourceAction {
     databaseSource: IDatabaseSource;
     type: PackageSettingsActionNames.AddOrUpdateDatabaseSource;
+}
+
+export interface AddOrUpdateEngineAction {
+    engine: IEngine;
+    type: PackageSettingsActionNames.AddOrUpdateEngine;
 }
 
 export interface AddOrUpdateFileSourceAction {
@@ -33,6 +38,11 @@ export interface RemoveDatabaseSourceAction {
     type: PackageSettingsActionNames.RemoveDatabaseSource;
 }
 
+export interface RemoveEngineAction {
+    engine: IEngine;
+    type: PackageSettingsActionNames.RemoveEngine;
+}
+
 export interface RemoveFileSourceAction {
     fileSource: IFileSource;
     type: PackageSettingsActionNames.RemoveFileSource;
@@ -44,11 +54,13 @@ export interface RemoveHttpSourceAction {
 }
 
 export type KnownPackageSettingsAction = AddOrUpdateDatabaseSourceAction
+    | AddOrUpdateEngineAction
     | AddOrUpdateFileSourceAction
     | AddOrUpdateHttpSourceAction
     | AddOrUpdatePackageNameAction
     | AddOrUpdateReadMeTextAction
     | RemoveDatabaseSourceAction
+    | RemoveEngineAction
     | RemoveFileSourceAction
     | RemoveHttpSourceAction;
 
@@ -57,6 +69,12 @@ export const ActionCreators = {
         return <AddOrUpdateDatabaseSourceAction>{
             databaseSource: databaseSource,
             type: PackageSettingsActionNames.AddOrUpdateDatabaseSource
+        };
+    },
+    addOrUpdateEngine: (engine: IEngine) => {
+        return <AddOrUpdateEngineAction>{
+            engine: engine,
+            type: PackageSettingsActionNames.AddOrUpdateEngine
         };
     },
     addOrUpdateFileSource: (fileSource: IFileSource) => {
@@ -87,6 +105,12 @@ export const ActionCreators = {
         return <RemoveDatabaseSourceAction>{
             databaseSource: databaseSource,
             type: PackageSettingsActionNames.RemoveDatabaseSource
+        };
+    },
+    removeEngine: (engine: IEngine) => {
+        return <RemoveEngineAction>{
+            engine: engine,
+            type: PackageSettingsActionNames.RemoveEngine
         };
     },
     removeFileSource: (fileSource: IFileSource) => {

@@ -18,6 +18,27 @@ exports.reducer = function (state, action) {
             }
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case "ADD_OR_UPDATE_ENGINE":
+            var engineFound = false;
+            for (var i = 0; i < state.Engines.length; ++i) {
+                if (state.Engines[i].ID === action.engine.ID) {
+                    state.Engines[i].update(action.engine);
+                    engineFound = true;
+                    break;
+                }
+            }
+            if (!engineFound) {
+                state.Engines.push(action.engine);
+            }
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -37,6 +58,7 @@ exports.reducer = function (state, action) {
             }
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -56,6 +78,7 @@ exports.reducer = function (state, action) {
             }
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -64,6 +87,7 @@ exports.reducer = function (state, action) {
         case "ADD_OR_UPDATE_PACKAGE_NAME":
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: action.packageName,
@@ -72,6 +96,7 @@ exports.reducer = function (state, action) {
         case "ADD_OR_UPDATE_READ_ME_TEXT":
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -90,6 +115,26 @@ exports.reducer = function (state, action) {
             }
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case "REMOVE_ENGINE":
+            var engineIdx = -1;
+            for (var i = 0; i < state.Engines.length; ++i) {
+                if (state.Engines[i].ID === action.engine.ID) {
+                    engineIdx = i;
+                    break;
+                }
+            }
+            if (engineIdx >= 0) {
+                state.Engines.splice(engineIdx, 1);
+            }
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -108,6 +153,7 @@ exports.reducer = function (state, action) {
             }
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -126,6 +172,7 @@ exports.reducer = function (state, action) {
             }
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,

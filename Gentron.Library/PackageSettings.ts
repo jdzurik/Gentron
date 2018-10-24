@@ -1,4 +1,4 @@
-﻿import { IDatabaseSource, IFileSource, IHttpSource } from ".";
+﻿import { IDatabaseSource, IEngine, IFileSource, IHttpSource } from ".";
 import IJsonSerializable from "./interfaces/IJsonSerializable";
 
 export interface IPackageSettings extends IJsonSerializable {
@@ -6,6 +6,7 @@ export interface IPackageSettings extends IJsonSerializable {
      *  Properties & Fields 
      */
     DatabaseSources: IDatabaseSource[];
+    Engines: IEngine[];
     FileSources: IFileSource[];
     HttpSources: IHttpSource[];
     PackageName: string;
@@ -27,6 +28,18 @@ export class PackageSettings implements IPackageSettings {
     //}
 
     public DatabaseSources: IDatabaseSource[];
+
+    //private _engines: IEngine[];
+
+    //public get Engines(): IEngine[] {
+    //    return this._engines;
+    //}
+
+    //public set Engines(value: IEngine[]) {
+    //    this._engines= value;
+    //}
+
+    public Engines: IEngine[];
 
     //private _fileSources: IFileSource[];
 
@@ -78,11 +91,12 @@ export class PackageSettings implements IPackageSettings {
      *  Constructors
      */
     public constructor() {
-        this.DatabaseSources = [];
-        this.FileSources = [];
-        this.HttpSources = [];
         this._packageName = "";
         this._readMeText = "";
+        this.DatabaseSources = [];
+        this.Engines = [];
+        this.FileSources = [];
+        this.HttpSources = [];
     }
 
 
@@ -93,6 +107,7 @@ export class PackageSettings implements IPackageSettings {
         const ret: IPackageSettings = new PackageSettings();
 
         ret.DatabaseSources = obj.DatabaseSources;
+        ret.Engines = obj.Engines;
         ret.FileSources = obj.FileSources;
         ret.HttpSources = obj.HttpSources;
         ret.PackageName = obj.PackageName;
@@ -104,6 +119,7 @@ export class PackageSettings implements IPackageSettings {
     public toJson(): any {
         return {
             DatabaseSources: this.DatabaseSources,
+            Engines: this.Engines,
             FileSources: this.FileSources,
             HttpSources: this.HttpSources,
             PackageName: this.PackageName,
@@ -114,6 +130,7 @@ export class PackageSettings implements IPackageSettings {
     public static toJson(obj: IPackageSettings): any {
         return {
             DatabaseSources: obj.DatabaseSources,
+            Engines: obj.Engines,
             FileSources: obj.FileSources,
             HttpSources: obj.HttpSources,
             PackageName: obj.PackageName,

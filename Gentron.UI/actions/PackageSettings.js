@@ -7,6 +7,12 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_DATABASE_SOURCE"
         };
     },
+    addOrUpdateEngine: function (engine) {
+        return {
+            engine: engine,
+            type: "ADD_OR_UPDATE_ENGINE"
+        };
+    },
     addOrUpdateFileSource: function (fileSource) {
         return {
             fileSource: fileSource,
@@ -35,6 +41,12 @@ exports.ActionCreators = {
         return {
             databaseSource: databaseSource,
             type: "REMOVE_DATABASE_SOURCE"
+        };
+    },
+    removeEngine: function (engine) {
+        return {
+            engine: engine,
+            type: "REMOVE_ENGINE"
         };
     },
     removeFileSource: function (fileSource) {

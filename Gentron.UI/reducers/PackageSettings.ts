@@ -26,6 +26,29 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
 
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case PackageSettingsActionNames.AddOrUpdateEngine:
+            let engineFound: boolean = false;
+            for (let i: number = 0; i < state.Engines.length; ++i) {
+                if (state.Engines[i].ID === action.engine.ID) {
+                    state.Engines[i].update(action.engine);
+                    engineFound= true;
+                    break;
+                }
+            }
+
+            if (!engineFound) {
+                state.Engines.push(action.engine);
+            }
+
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -47,6 +70,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
 
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -68,6 +92,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
 
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -76,6 +101,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.AddOrUpdatePackageName:
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: action.packageName,
@@ -84,6 +110,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.AddOrUpdateReadMeText:
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -104,6 +131,28 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
 
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case PackageSettingsActionNames.RemoveEngine:
+            let engineIdx: number = -1;
+            for (let i: number = 0; i < state.Engines.length; ++i) {
+                if (state.Engines[i].ID === action.engine.ID) {
+                    engineIdx = i;
+                    break;
+                }
+            }
+
+            if (engineIdx >= 0) {
+                state.Engines.splice(engineIdx, 1);
+            }
+
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -124,6 +173,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
 
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -144,6 +194,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
 
             return {
                 DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
