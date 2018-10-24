@@ -14,6 +14,8 @@ import HttpSources from './HttpSources';
 import OutputPaths from "./OutputPaths";
 import PackageSettings from './PackageSettings';
 import ProjectSettings from './ProjectSettings';
+import Template from "./Template";
+import Templates from "./Templates";
 
 type NavViewContentProps = {};
 
@@ -45,6 +47,8 @@ export default class NavViewContent extends React.Component<NavViewContentProps>
                 <Route exact path="/sources/file/:id" component={FileSource} />
                 <Route exact path="/engines/manage" component={Engines} />
                 <Route exact path="/engines/manage/:id" component={Engine} />
+                <Route exact path="/engines/manage/:engineid/templates" component={Templates} />
+                <Route exact path="/engines/manage/:engineid/templates/:templateid" component={Template} />
             </div>
         );
     }

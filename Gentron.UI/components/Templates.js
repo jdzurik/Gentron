@@ -28,24 +28,27 @@ var connect_1 = require("../connect");
 var Gentron_Library_1 = require("../../Gentron.Library");
 var react_router_dom_1 = require("react-router-dom");
 var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
-var Engines = (function (_super) {
-    __extends(Engines, _super);
-    function Engines(props) {
+var Templates = (function (_super) {
+    __extends(Templates, _super);
+    function Templates(props) {
         return _super.call(this, props) || this;
     }
-    Engines.prototype.handleAddEngineClick = function () {
-        var source = new Gentron_Library_1.Engine();
-        source.Name = "Engine" + this.props.Engines.length;
-        this.props.addOrUpdateEngine(source);
+    Templates.prototype.handleAddTemplateClick = function () {
+        var source = new Gentron_Library_1.Template();
+        source.Name = "Template" + this.props.Templates.length;
+        this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, source);
     };
-    Engines.prototype.handleRemoveEngineClick = function (source) {
-        this.props.removeEngine(source);
+    Templates.prototype.handleRemoveTemplateClick = function (source) {
+        this.props.removeEngineTemplate(this.props.match.params.engineid, source);
     };
-    Engines.prototype.render = function () {
+    Templates.prototype.render = function () {
         var _this = this;
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
-                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-drive-eta", title: "Template Engines" }),
+                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-embed2", title: "Engine Templates" }),
+                React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
+                    React.createElement(metro_1.Cell, null,
+                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/engines/manage/" + this.props.match.params.engineid, buttonText: "View Template Engine" }))),
                 React.createElement("table", { className: "table striped table-border mt-4" },
                     React.createElement("thead", null,
                         React.createElement("tr", null,
@@ -55,30 +58,31 @@ var Engines = (function (_super) {
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", null,
-                                React.createElement("button", { className: "button", onClick: this.handleAddEngineClick.bind(this) }, "Add Engine")),
+                                React.createElement("button", { className: "button", onClick: this.handleAddTemplateClick.bind(this) }, "Add Template")),
                             React.createElement("td", null, " "),
                             React.createElement("td", null, " ")),
-                        this.props.Engines.map(function (source, i) {
+                        this.props.Templates.map(function (source, i) {
                             return React.createElement("tr", { key: i },
                                 React.createElement("td", null,
-                                    React.createElement(react_router_dom_1.Link, { to: "/engines/manage/" + i },
+                                    React.createElement(react_router_dom_1.Link, { to: "/engines/manage/" + _this.props.match.params.engineid + "/templates/" + i },
                                         React.createElement("button", { className: "button" }, "View"))),
                                 React.createElement("td", null, source.Name),
                                 React.createElement("td", null,
                                     React.createElement("a", { href: "#" },
-                                        React.createElement("button", { className: "button", onClick: _this.handleRemoveEngineClick.bind(_this, source) }, "Remove"))));
+                                        React.createElement("button", { className: "button", onClick: _this.handleRemoveTemplateClick.bind(_this, source) }, "Remove"))));
                         }))))));
     };
-    Engines = __decorate([
+    Templates = __decorate([
         connect_1.connect(mapStateToProps, mapDispatchToProps)
-    ], Engines);
-    return Engines;
+    ], Templates);
+    return Templates;
 }(React.Component));
-exports.default = Engines;
-function mapStateToProps(state) {
-    var _hash = hash(state.PackageSettings.Engines);
+exports.default = Templates;
+function mapStateToProps(state, routeComponentProps) {
+    var engineid = routeComponentProps.match.params.engineid;
+    var _hash = hash(state.PackageSettings.Engines[engineid].Templates);
     return {
-        Engines: state.PackageSettings.Engines,
+        Templates: state.PackageSettings.Engines[engineid].Templates,
         _hash: _hash
     };
 }

@@ -8,6 +8,7 @@ import { HttpSource, IHttpSource } from "./HttpSource";
 import { OutputPath, IOutputPath } from "./OutputPath";
 import { PackageSettings, IPackageSettings } from "./PackageSettings";
 import { ProjectSettings, IProjectSettings } from "./ProjectSettings";
+import { Template, ITemplate } from "./Template";
 
 export {
     Gentron,
@@ -36,6 +37,9 @@ export {
 
     Engine,
     IEngine,
+
+    Template,
+    ITemplate,
 
     OutputPath,
     IOutputPath

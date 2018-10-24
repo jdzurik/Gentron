@@ -25,39 +25,43 @@ var PackageSettings_1 = require("../actions/PackageSettings");
 var redux_1 = require("redux");
 var metro_1 = require("./metro");
 var connect_1 = require("../connect");
-var HttpSource = (function (_super) {
-    __extends(HttpSource, _super);
-    function HttpSource(props) {
+var Template = (function (_super) {
+    __extends(Template, _super);
+    function Template(props) {
         return _super.call(this, props) || this;
     }
-    HttpSource.prototype.handleNameClick = function (source) {
+    Template.prototype.handleNameClick = function (source) {
         source.Name = "Test";
-        this.props.addOrUpdateHttpSource(source);
+        this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, source);
     };
-    HttpSource.prototype.render = function () {
+    Template.prototype.render = function () {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
                 React.createElement(metro_1.Row, null,
                     React.createElement(metro_1.Cell, { colSpan: 12 },
                         React.createElement("h3", null,
-                            React.createElement("span", { className: "mif-http mif-md mr-2" }),
-                            React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.HttpSource) }, this.props.HttpSource.Name)))),
+                            React.createElement("span", { className: "mif-embed2 mif-md mr-2" }),
+                            React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.Template) }, this.props.Template.Name)))),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
-                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/sources/http", buttonText: "View All Sources" }))),
-                React.createElement("h1", null, this.props.match.params.id))));
+                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/engines/manage/" + this.props.match.params.engineid, buttonText: "View All Templates" }))),
+                React.createElement("h1", null,
+                    this.props.match.params.engineid,
+                    " ",
+                    this.props.match.params.templateid))));
     };
-    HttpSource = __decorate([
+    Template = __decorate([
         connect_1.connect(mapStateToProps, mapDispatchToProps)
-    ], HttpSource);
-    return HttpSource;
+    ], Template);
+    return Template;
 }(React.Component));
-exports.default = HttpSource;
+exports.default = Template;
 function mapStateToProps(state, routeComponentProps) {
-    var id = routeComponentProps.match.params.id;
-    var _hash = hash(state.PackageSettings.HttpSources[id] || "");
+    var engineid = routeComponentProps.match.params.engineid;
+    var templateid = routeComponentProps.match.params.templateid;
+    var _hash = hash(state.PackageSettings.Engines[engineid].Templates[templateid] || "");
     return {
-        HttpSource: state.PackageSettings.HttpSources[id],
+        Template: state.PackageSettings.Engines[engineid].Templates[templateid],
         _hash: _hash
     };
 }

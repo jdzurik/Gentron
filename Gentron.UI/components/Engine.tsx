@@ -4,10 +4,9 @@ import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
-import { BackButton, Cell, Grid, Row } from "./metro";
+import { LinkButton, Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { IEngine } from "../../Gentron.Library";
-import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 
 type HashedEngine = Hash & {
@@ -43,7 +42,7 @@ export default class Engine extends React.Component<EngineProps> {
                     <Row>
                         <Cell colSpan={12}>
                             <h3>
-                                <span className="mif-http mif-md mr-2"></span>
+                                <span className="mif-drive-eta mif-md mr-2"></span>
                                 <span onClick={this.handleNameClick.bind(this, this.props.Engine)}>{this.props.Engine.Name}</span>
                             </h3>
                         </Cell>
@@ -51,7 +50,16 @@ export default class Engine extends React.Component<EngineProps> {
 
                     <Row className="mt-2 mb-2">
                         <Cell>
-                            <BackButton routeTo="/engines/manage" buttonText="Return to All Engines"></BackButton>
+                            <LinkButton iconClassName="mif-arrow-left"
+                                linkTo="/engines/manage"
+                                buttonText="View All Engines">
+                            </LinkButton>
+                            <LinkButton iconClassName="mif-arrow-right"
+                                iconPosition="forward"
+                                linkTo={`/engines/manage/${this.props.match.params.id}/templates`}
+                                buttonText="Manage Templates"
+                                buttonClassName="ml-2">
+                            </LinkButton>
                         </Cell>
                     </Row>
 

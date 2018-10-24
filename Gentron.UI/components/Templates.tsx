@@ -4,26 +4,26 @@ import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
-import { Cell, Grid } from "./metro";
+import { LinkButton, Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { DatabaseSource, IDatabaseSource } from "../../Gentron.Library";
+import { Template, ITemplate } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type NullableDatabaseSources = Hash & {
-    DatabaseSources?: NonFunctionProperties<IDatabaseSource>[];
+type NullableTemplates = Hash & {
+    Templates?: NonFunctionProperties<ITemplate>[];
 };
 
-type DatabaseSourcesProps = NullableDatabaseSources
+type TemplatesProps = NullableTemplates
     & typeof ActionCreators
-    & RouteComponentProps<{}>;
+    & RouteComponentProps<{ engineid: string }>;
 
-@connect<NullableDatabaseSources, {}, DatabaseSourcesProps>(mapStateToProps, mapDispatchToProps)
-export default class DatabaseSources extends React.Component<DatabaseSourcesProps> {
+@connect<NullableTemplates, {}, TemplatesProps>(mapStateToProps, mapDispatchToProps)
+export default class Templates extends React.Component<TemplatesProps> {
     /*
      *  Constructors
      */
-    public constructor(props: DatabaseSourcesProps) {
+    public constructor(props: TemplatesProps) {
         super(props);
     }
 
@@ -31,59 +31,62 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
     /*
      *  Methods
      */
-    private handleAddSourceClick(): void {
-        const source: IDatabaseSource = new DatabaseSource();
-        source.Name = `DBSource${this.props.DatabaseSources.length}`;
+    private handleAddTemplateClick(): void {
+        const source: ITemplate = new Template();
+        source.Name = `Template${this.props.Templates.length}`;
 
-        this.props.addOrUpdateDatabaseSource(source);
+        this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, source);
     }
 
-    private handleRemoveSourceClick(source: IDatabaseSource): void {
-        this.props.removeDatabaseSource(source);
+    private handleRemoveTemplateClick(source: ITemplate): void {
+        this.props.removeEngineTemplate(this.props.match.params.engineid, source);
     }
 
     public render(): JSX.Element {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-database" title="Database Sources" />
+                    <NavViewContentHeaderRow iconClassName="mif-embed2" title="Engine Templates" />
+
+                    <Row className="mt-2 mb-2">
+                        <Cell>
+                            <LinkButton iconClassName="mif-arrow-left" linkTo={`/engines/manage/${this.props.match.params.engineid}`} buttonText="View Template Engine"></LinkButton>
+                        </Cell>
+                    </Row>
 
                     <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
                                 <th>{` `}</th>
                                 <th>Name</th>
-                                <th>Connections</th>
                                 <th>{` `}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>Add Database Source</button>
+                                    <button className="button" onClick={this.handleAddTemplateClick.bind(this)}>Add Template</button>
                                 </td>
-                                <td>{` `}</td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.DatabaseSources.map((source, i) =>
+                                this.props.Templates.map((source, i) =>
                                     <tr key={i}>
                                         <td>
-                                            <Link to={`/sources/db/${i}`}>
+                                            <Link to={`/engines/manage/${this.props.match.params.engineid}/templates/${i}`}>
                                                 <button className="button">
                                                     View
                                                 </button>
                                             </Link>
                                         </td>
                                         <td>{source.Name}</td>
-                                        <td>{source.ActiveConnectionGroup.Connections.length}</td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>Remove</button>
+                                                <button className="button" onClick={this.handleRemoveTemplateClick.bind(this, source)}>Remove</button>
                                             </a>
                                         </td>
-                                    </tr>   
+                                    </tr>
                                 )
                             }
                         </tbody>
@@ -94,10 +97,11 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
     }
 }
 
-function mapStateToProps(state: ApplicationState): NullableDatabaseSources {
-    const _hash: string = hash(state.PackageSettings.DatabaseSources);
+function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ engineid: string }>): NullableTemplates {
+    const engineid: string = routeComponentProps.match.params.engineid;
+    const _hash: string = hash(state.PackageSettings.Engines[engineid].Templates);
     return {
-        DatabaseSources: state.PackageSettings.DatabaseSources,
+        Templates: state.PackageSettings.Engines[engineid].Templates,
         _hash: _hash
     };
 }

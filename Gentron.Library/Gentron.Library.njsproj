@@ -93,6 +93,12 @@
     <TypeScriptCompile Include="ProjectSettings.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Template.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Types.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="utils\Guid.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

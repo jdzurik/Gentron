@@ -46,7 +46,7 @@ export default class Engines extends React.Component<EnginesProps> {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-http" title="Template Engines" />
+                    <NavViewContentHeaderRow iconClassName="mif-drive-eta" title="Template Engines" />
 
                     <table className="table striped table-border mt-4">
                         <thead>
@@ -59,7 +59,7 @@ export default class Engines extends React.Component<EnginesProps> {
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddEngineClick.bind(this)}>Add Source</button>
+                                    <button className="button" onClick={this.handleAddEngineClick.bind(this)}>Add Engine</button>
                                 </td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>

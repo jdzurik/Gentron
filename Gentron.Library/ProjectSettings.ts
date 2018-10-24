@@ -95,7 +95,6 @@ export class ProjectSettings implements IProjectSettings {
      *  Constructors
      */
     public constructor() {
-        //this._databaseConnections = [];
         this.DatabaseConnections = [];
         this._fileConnections = [];
         this._httpConnections = [];

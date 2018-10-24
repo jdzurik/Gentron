@@ -17,15 +17,17 @@ var SourceBase_1 = require("./SourceBase");
 var Engine = (function (_super) {
     __extends(Engine, _super);
     function Engine() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super.call(this) || this;
+        _this.Templates = [];
+        return _this;
     }
     Engine.prototype.toJson = function () {
         throw new Error("Method not implemented");
     };
-    Engine.prototype.update = function (httpSource) {
-        this.IsActive = httpSource.IsActive;
-        this.Name = httpSource.Name;
-        this.Result = httpSource.Result;
+    Engine.prototype.update = function (engine) {
+        this.IsActive = engine.IsActive;
+        this.Name = engine.Name;
+        this.Result = engine.Result;
     };
     return Engine;
 }(SourceBase_1.SourceBase));

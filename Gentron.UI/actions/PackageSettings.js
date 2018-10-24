@@ -13,6 +13,13 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_ENGINE"
         };
     },
+    addOrUpdateEngineTemplate: function (engineId, template) {
+        return {
+            engineId: engineId,
+            template: template,
+            type: "ADD_OR_UPDATE_ENGINE_TEMPLATE"
+        };
+    },
     addOrUpdateFileSource: function (fileSource) {
         return {
             fileSource: fileSource,
@@ -47,6 +54,13 @@ exports.ActionCreators = {
         return {
             engine: engine,
             type: "REMOVE_ENGINE"
+        };
+    },
+    removeEngineTemplate: function (engineId, template) {
+        return {
+            engineId: engineId,
+            template: template,
+            type: "REMOVE_ENGINE_TEMPLATE"
         };
     },
     removeFileSource: function (fileSource) {

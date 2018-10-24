@@ -55,7 +55,7 @@ var HttpSources = (function (_super) {
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", null,
-                                React.createElement("button", { className: "button", onClick: this.handleAddSourceClick.bind(this) }, "Add Source")),
+                                React.createElement("button", { className: "button", onClick: this.handleAddSourceClick.bind(this) }, "Add HTTP Source")),
                             React.createElement("td", null, " "),
                             React.createElement("td", null, " ")),
                         this.props.HttpSources.map(function (source, i) {

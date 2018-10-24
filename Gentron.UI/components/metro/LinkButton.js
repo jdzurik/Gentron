@@ -16,21 +16,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_router_dom_1 = require("react-router-dom");
 ;
-var BackButton = (function (_super) {
-    __extends(BackButton, _super);
-    function BackButton(props) {
+var LinkButton = (function (_super) {
+    __extends(LinkButton, _super);
+    function LinkButton(props) {
         return _super.call(this, props) || this;
     }
-    BackButton.prototype.render = function () {
+    LinkButton.prototype.render = function () {
         var btnClassName = "button";
         if (this.props.buttonClassName && this.props.buttonClassName.length > 0) {
             btnClassName += " " + this.props.buttonClassName;
         }
-        return (React.createElement(react_router_dom_1.Link, { to: this.props.routeTo },
+        var icon = (this.props.iconClassName && this.props.iconClassName.length > 0)
+            ? React.createElement("span", { className: "mif-arrow-left" }, "\u00A0")
+            : null;
+        var iconPosition = this.props.iconPosition || "";
+        return (React.createElement(react_router_dom_1.Link, { to: this.props.linkTo },
             React.createElement("button", { className: btnClassName },
-                React.createElement("span", { className: "mif-arrow-left" }, "\u00A0"),
-                this.props.buttonText)));
+                (icon && iconPosition.length === 0 || iconPosition === "back")
+                    ? icon
+                    : null,
+                this.props.buttonText,
+                (icon && iconPosition.length > 0 && iconPosition === "front")
+                    ? icon
+                    : null)));
     };
-    return BackButton;
+    return LinkButton;
 }(React.PureComponent));
-exports.default = BackButton;
+exports.default = LinkButton;

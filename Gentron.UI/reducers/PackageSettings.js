@@ -44,6 +44,27 @@ exports.reducer = function (state, action) {
                 PackageName: state.PackageName,
                 ReadMeText: state.ReadMeText,
             };
+        case "ADD_OR_UPDATE_ENGINE_TEMPLATE":
+            var engineId = parseInt(action.engineId, 10);
+            var templateFound = false;
+            for (var i = 0; i < state.Engines[engineId].Templates.length; ++i) {
+                if (state.Engines[engineId].Templates[i].ID === action.template.ID) {
+                    state.Engines[engineId].Templates[i].update(action.template);
+                    templateFound = true;
+                    break;
+                }
+            }
+            if (!templateFound) {
+                state.Engines[engineId].Templates.push(action.template);
+            }
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
         case "ADD_OR_UPDATE_FILE_SOURCE":
             var fileSourceFound = false;
             for (var i = 0; i < state.FileSources.length; ++i) {
@@ -131,6 +152,26 @@ exports.reducer = function (state, action) {
             }
             if (engineIdx >= 0) {
                 state.Engines.splice(engineIdx, 1);
+            }
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case "REMOVE_ENGINE_TEMPLATE":
+            var engineTemplateIdx = -1;
+            var removeEngineId = parseInt(action.engineId, 10);
+            for (var i = 0; i < state.Engines[removeEngineId].Templates.length; ++i) {
+                if (state.Engines[removeEngineId].Templates[i].ID === action.template.ID) {
+                    engineTemplateIdx = i;
+                    break;
+                }
+            }
+            if (engineTemplateIdx >= 0) {
+                state.Engines[removeEngineId].Templates.splice(engineTemplateIdx, 1);
             }
             return {
                 DatabaseSources: state.DatabaseSources,

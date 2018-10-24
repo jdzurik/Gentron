@@ -59,7 +59,7 @@ export default class FileSources extends React.Component<FileSourcesProps> {
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>Add Source</button>
+                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>Add File Source</button>
                                 </td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>

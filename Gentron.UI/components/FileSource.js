@@ -44,7 +44,7 @@ var FileSource = (function (_super) {
                             React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.FileSource) }, this.props.FileSource.Name)))),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
-                        React.createElement(metro_1.BackButton, { routeTo: "/sources/file", buttonText: "Return to All Sources" }))),
+                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/sources/file", buttonText: "View All Sources" }))),
                 React.createElement("h1", null, this.props.match.params.id))));
     };
     FileSource = __decorate([

@@ -102,11 +102,19 @@ var NavViewPane = (function (_super) {
                             React.createElement("span", { className: "mif-drive-eta" })),
                         React.createElement("span", { className: "caption" }, "Template Engines"))),
                 this.props.Engines.map(function (engine, i) {
-                    return React.createElement("li", { key: i },
-                        React.createElement(react_router_dom_1.Link, { to: "/engines/manage/" + i, className: "pl-7" },
-                            React.createElement("span", { className: "icon" },
-                                React.createElement("span", { className: "mif-drive-eta" })),
-                            React.createElement("span", { className: "caption" }, engine.Name)));
+                    return (React.createElement(React.Fragment, { key: i },
+                        React.createElement("li", null,
+                            React.createElement(react_router_dom_1.Link, { to: "/engines/manage/" + i, className: "pl-7" },
+                                React.createElement("span", { className: "icon" },
+                                    React.createElement("span", { className: "mif-drive-eta" })),
+                                React.createElement("span", { className: "caption" }, engine.Name))),
+                        engine.Templates.map(function (template, j) {
+                            return React.createElement("li", { key: j },
+                                React.createElement(react_router_dom_1.Link, { to: "/engines/manage/" + i + "/templates/" + j, className: "pl-10" },
+                                    React.createElement("span", { className: "icon" },
+                                        React.createElement("span", { className: "mif-embed2" })),
+                                    React.createElement("span", { className: "caption" }, template.Name)));
+                        })));
                 }))));
     };
     NavViewPane = __decorate([

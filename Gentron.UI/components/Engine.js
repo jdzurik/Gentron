@@ -40,11 +40,12 @@ var Engine = (function (_super) {
                 React.createElement(metro_1.Row, null,
                     React.createElement(metro_1.Cell, { colSpan: 12 },
                         React.createElement("h3", null,
-                            React.createElement("span", { className: "mif-http mif-md mr-2" }),
+                            React.createElement("span", { className: "mif-drive-eta mif-md mr-2" }),
                             React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.Engine) }, this.props.Engine.Name)))),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
-                        React.createElement(metro_1.BackButton, { routeTo: "/engines/manage", buttonText: "Return to All Engines" }))),
+                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/engines/manage", buttonText: "View All Engines" }),
+                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-right", iconPosition: "forward", linkTo: "/engines/manage/" + this.props.match.params.id + "/templates", buttonText: "Manage Templates", buttonClassName: "ml-2" }))),
                 React.createElement("h1", null, this.props.match.params.id))));
     };
     Engine = __decorate([

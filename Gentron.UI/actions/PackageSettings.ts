@@ -1,7 +1,7 @@
 ﻿import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { ChangeEvent } from 'react';
 import { IDatabaseSource } from '../../Gentron.Library/DatabaseSource';
-import { IEngine, IFileSource, IHttpSource } from '../../Gentron.Library';
+import { IEngine, IFileSource, IHttpSource, ITemplate } from '../../Gentron.Library';
 
 export interface AddOrUpdateDatabaseSourceAction {
     databaseSource: IDatabaseSource;
@@ -11,6 +11,12 @@ export interface AddOrUpdateDatabaseSourceAction {
 export interface AddOrUpdateEngineAction {
     engine: IEngine;
     type: PackageSettingsActionNames.AddOrUpdateEngine;
+}
+
+export interface AddOrUpdateEngineTemplateAction {
+    engineId: string;
+    template: ITemplate;
+    type: PackageSettingsActionNames.AddOrUpdateEngineTemplate;
 }
 
 export interface AddOrUpdateFileSourceAction {
@@ -43,6 +49,12 @@ export interface RemoveEngineAction {
     type: PackageSettingsActionNames.RemoveEngine;
 }
 
+export interface RemoveEngineTemplateAction {
+    engineId: string;
+    template: ITemplate;
+    type: PackageSettingsActionNames.RemoveEngineTemplate;
+}
+
 export interface RemoveFileSourceAction {
     fileSource: IFileSource;
     type: PackageSettingsActionNames.RemoveFileSource;
@@ -55,12 +67,14 @@ export interface RemoveHttpSourceAction {
 
 export type KnownPackageSettingsAction = AddOrUpdateDatabaseSourceAction
     | AddOrUpdateEngineAction
+    | AddOrUpdateEngineTemplateAction
     | AddOrUpdateFileSourceAction
     | AddOrUpdateHttpSourceAction
     | AddOrUpdatePackageNameAction
     | AddOrUpdateReadMeTextAction
     | RemoveDatabaseSourceAction
     | RemoveEngineAction
+    | RemoveEngineTemplateAction
     | RemoveFileSourceAction
     | RemoveHttpSourceAction;
 
@@ -75,6 +89,13 @@ export const ActionCreators = {
         return <AddOrUpdateEngineAction>{
             engine: engine,
             type: PackageSettingsActionNames.AddOrUpdateEngine
+        };
+    },
+    addOrUpdateEngineTemplate: (engineId: string, template: ITemplate) => {
+        return <AddOrUpdateEngineTemplateAction>{
+            engineId: engineId,
+            template: template,
+            type: PackageSettingsActionNames.AddOrUpdateEngineTemplate
         };
     },
     addOrUpdateFileSource: (fileSource: IFileSource) => {
@@ -111,6 +132,13 @@ export const ActionCreators = {
         return <RemoveEngineAction>{
             engine: engine,
             type: PackageSettingsActionNames.RemoveEngine
+        };
+    },
+    removeEngineTemplate: (engineId: string, template: ITemplate) => {
+        return <RemoveEngineTemplateAction>{
+            engineId: engineId,
+            template: template,
+            type: PackageSettingsActionNames.RemoveEngineTemplate
         };
     },
     removeFileSource: (fileSource: IFileSource) => {

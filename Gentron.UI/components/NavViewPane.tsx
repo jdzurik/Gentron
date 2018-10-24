@@ -136,12 +136,27 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
 
                     {
                         this.props.Engines.map((engine, i) =>
-                            <li key={i}>
-                                <Link to={`/engines/manage/${i}`} className="pl-7">
-                                    <span className="icon"><span className="mif-drive-eta"></span></span>
-                                    <span className="caption">{engine.Name}</span>
-                                </Link>
-                            </li>
+                            (
+                                <React.Fragment key={i}>
+                                    <li>
+                                        <Link to={`/engines/manage/${i}`} className="pl-7">
+                                            <span className="icon"><span className="mif-drive-eta"></span></span>
+                                            <span className="caption">{engine.Name}</span>
+                                        </Link>
+                                    </li>
+
+                                    {
+                                        engine.Templates.map((template, j) => 
+                                            <li key={j}>
+                                                <Link to={`/engines/manage/${i}/templates/${j}`} className="pl-10">
+                                                    <span className="icon"><span className="mif-embed2"></span></span>
+                                                    <span className="caption">{template.Name}</span>
+                                                </Link>
+                                            </li>                                            
+                                        )
+                                    }
+                                </React.Fragment>
+                            )
                         )
                     }
                 </ul>

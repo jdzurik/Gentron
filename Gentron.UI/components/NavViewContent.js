@@ -28,6 +28,8 @@ var HttpSources_1 = require("./HttpSources");
 var OutputPaths_1 = require("./OutputPaths");
 var PackageSettings_1 = require("./PackageSettings");
 var ProjectSettings_1 = require("./ProjectSettings");
+var Template_1 = require("./Template");
+var Templates_1 = require("./Templates");
 var NavViewContent = (function (_super) {
     __extends(NavViewContent, _super);
     function NavViewContent(props) {
@@ -47,7 +49,9 @@ var NavViewContent = (function (_super) {
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/file", component: FileSources_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/file/:id", component: FileSource_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage", component: Engines_1.default }),
-            React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage/:id", component: Engine_1.default })));
+            React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage/:id", component: Engine_1.default }),
+            React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage/:engineid/templates", component: Templates_1.default }),
+            React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage/:engineid/templates/:templateid", component: Template_1.default })));
     };
     return NavViewContent;
 }(React.Component));

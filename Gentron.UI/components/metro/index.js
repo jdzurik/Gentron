@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var BackButton_1 = require("./BackButton");
-exports.BackButton = BackButton_1.default;
+var LinkButton_1 = require("./LinkButton");
+exports.LinkButton = LinkButton_1.default;
 var Cell_1 = require("./Cell");
 exports.Cell = Cell_1.default;
 var Grid_1 = require("./Grid");

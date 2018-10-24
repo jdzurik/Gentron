@@ -44,7 +44,7 @@ var DatabaseSource = (function (_super) {
                             React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.DatabaseSource) }, this.props.DatabaseSource.Name)))),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
-                        React.createElement(metro_1.BackButton, { routeTo: "/sources/db", buttonText: "Return to All Sources" }))),
+                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/sources/db", buttonText: "View All Sources" }))),
                 React.createElement("h1", null, this.props.match.params.id))));
     };
     DatabaseSource = __decorate([

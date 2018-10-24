@@ -59,7 +59,7 @@ export default class HttpSources extends React.Component<HttpSourcesProps> {
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>Add Source</button>
+                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>Add HTTP Source</button>
                                 </td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>

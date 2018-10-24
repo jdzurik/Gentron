@@ -3,6 +3,7 @@ import { PackageSettings, IPackageSettings } from "../../Gentron.Library";
 import * as PackageSettingsActions from '../actions/PackageSettings';
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { NonFunctionProperties } from '../types';
+import Templates from '../components/Templates';
 
 type PackageSettingsProps = NonFunctionProperties<IPackageSettings>;
 
@@ -44,6 +45,29 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
 
             if (!engineFound) {
                 state.Engines.push(action.engine);
+            }
+
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case PackageSettingsActionNames.AddOrUpdateEngineTemplate:
+            const engineId: number = parseInt(action.engineId, 10);
+            let templateFound: boolean = false;
+            for (let i: number = 0; i < state.Engines[engineId].Templates.length; ++i) {
+                if (state.Engines[engineId].Templates[i].ID === action.template.ID) {
+                    state.Engines[engineId].Templates[i].update(action.template);
+                    templateFound = true;
+                    break;
+                }
+            }
+
+            if (!templateFound) {
+                state.Engines[engineId].Templates.push(action.template);
             }
 
             return {
@@ -148,6 +172,28 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
 
             if (engineIdx >= 0) {
                 state.Engines.splice(engineIdx, 1);
+            }
+
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case PackageSettingsActionNames.RemoveEngineTemplate:
+            let engineTemplateIdx: number = -1;
+            const removeEngineId: number = parseInt(action.engineId, 10);
+            for (let i: number = 0; i < state.Engines[removeEngineId].Templates.length; ++i) {
+                if (state.Engines[removeEngineId].Templates[i].ID === action.template.ID) {
+                    engineTemplateIdx = i;
+                    break;
+                }
+            }
+
+            if (engineTemplateIdx >= 0) {
+                state.Engines[removeEngineId].Templates.splice(engineTemplateIdx, 1);
             }
 
             return {

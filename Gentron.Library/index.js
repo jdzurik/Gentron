@@ -20,3 +20,5 @@ var PackageSettings_1 = require("./PackageSettings");
 exports.PackageSettings = PackageSettings_1.PackageSettings;
 var ProjectSettings_1 = require("./ProjectSettings");
 exports.ProjectSettings = ProjectSettings_1.ProjectSettings;
+var Template_1 = require("./Template");
+exports.Template = Template_1.Template;
