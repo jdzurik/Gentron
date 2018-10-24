@@ -1,6 +1,5 @@
 ﻿import * as React from "react";
 import * as ReactDOM from "react-dom";
-import PackageSettings from "../PackageSettings";
 import { HTMLProps } from "react";
 
 interface CellProps extends React.HTMLProps<HTMLDivElement> {
@@ -13,10 +12,17 @@ interface CellProps extends React.HTMLProps<HTMLDivElement> {
 };
 
 export default class Cell extends React.PureComponent<CellProps> {
+    /*
+     *  Constructors
+     */
     public constructor(props?: CellProps) {
         super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     public render(): JSX.Element {
         let className: string = "";
 

@@ -1,4 +1,4 @@
-﻿import { SourceBase, ISourceBase } from "./SourceBase";
+﻿import { ISourceBase, SourceBase } from "./SourceBase";
 
 export interface IHttpSource extends ISourceBase {
 

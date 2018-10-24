@@ -2,7 +2,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, NonFunctionProperties } from "../types";
+import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
@@ -10,9 +10,8 @@ import { IHttpSource } from "../../Gentron.Library";
 import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 
-type HashedHttpSource = {
+type HashedHttpSource = Hash & {
     HttpSource?: NonFunctionProperties<IHttpSource>;
-    _hash?: string;
 };
 
 type HttpSourceProps = HashedHttpSource
@@ -21,10 +20,17 @@ type HttpSourceProps = HashedHttpSource
 
 @connect<HashedHttpSource, {}, HttpSourceProps>(mapStateToProps, mapDispatchToProps)
 export default class HttpSource extends React.Component<HttpSourceProps> {
+    /*
+     *  Constructors
+     */
     public constructor(props: HttpSourceProps) {
         super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     private handleNameClick(source: IHttpSource): void {
         source.Name = "Test";
         this.props.addOrUpdateHttpSource(source);

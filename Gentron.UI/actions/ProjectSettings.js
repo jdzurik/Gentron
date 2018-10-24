@@ -13,10 +13,10 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER"
         };
     },
-    addOrUpdateOutputCodeFolder: function (ev) {
+    addOrUpdateOutputPath: function (outputPath) {
         return {
-            outputCodeFolder: ev ? ev.target.value : "",
-            type: "ADD_OR_UPDATE_OUTPUT_CODE_FOLDER"
+            outputPath: outputPath,
+            type: "ADD_OR_UPDATE_OUTPUT_PATH"
         };
     },
     addOrUpdateRemotePackageLocation: function (ev) {
@@ -29,6 +29,12 @@ exports.ActionCreators = {
         return {
             databaseConnectionGroup: databaseSource,
             type: "REMOVE_DATABASE_CONNECTION_GROUP"
+        };
+    },
+    removeOutputPath: function (outputPath) {
+        return {
+            outputPath: outputPath,
+            type: "REMOVE_OUTPUT_PATH"
         };
     },
 };

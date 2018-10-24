@@ -30,7 +30,7 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputCodeFolder: state.OutputCodeFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction:
@@ -39,16 +39,29 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: action.localPackageFolder,
-                OutputCodeFolder: state.OutputCodeFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: state.RemotePackageLocation
             };
-        case ProjectSettingsActionNames.AddOrUpdateOutputCodeFolderAction:
+        case ProjectSettingsActionNames.AddOrUpdateOutputPathAction:
+            let pathFound: boolean = false;
+            for (let i: number = 0; i < state.OutputPaths.length; ++i) {
+                if (state.OutputPaths[i].ID === action.outputPath.ID) {
+                    state.OutputPaths[i].update(action.outputPath);
+                    pathFound = true;
+                    break;
+                }
+            }
+
+            if (!pathFound) {
+                state.OutputPaths.push(action.outputPath);
+            }
+
             return {
                 DatabaseConnections: state.DatabaseConnections,
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputCodeFolder: action.outputCodeFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case ProjectSettingsActionNames.AddOrUpdateRemotePackageLocationAction:
@@ -57,20 +70,20 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputCodeFolder: state.OutputCodeFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: action.remotePackageLocation
             };
         case ProjectSettingsActionNames.RemoveDatabaseConnectionGroup:
-            let foundIdx: number = -1;
+            let foundDatabaseConnectionIdx: number = -1;
             for (let i: number = 0; i < state.DatabaseConnections.length; ++i) {
                 if (state.DatabaseConnections[i].ID === action.databaseConnectionGroup.ID) {
-                    foundIdx = i;
+                    foundDatabaseConnectionIdx = i;
                     break;
                 }
             }
 
-            if (foundIdx >= 0) {
-                state.DatabaseConnections.splice(foundIdx, 1);
+            if (foundDatabaseConnectionIdx >= 0) {
+                state.DatabaseConnections.splice(foundDatabaseConnectionIdx, 1);
             }
 
             return {
@@ -78,7 +91,28 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputCodeFolder: state.OutputCodeFolder,
+                OutputPaths: state.OutputPaths,
+                RemotePackageLocation: state.RemotePackageLocation
+            };
+        case ProjectSettingsActionNames.RemoveOutputPathAction:
+            let foundOutputPathIdx: number = -1;
+            for (let i: number = 0; i < state.OutputPaths.length; ++i) {
+                if (state.OutputPaths[i].ID === action.outputPath.ID) {
+                    foundOutputPathIdx = i;
+                    break;
+                }
+            }
+
+            if (foundOutputPathIdx >= 0) {
+                state.OutputPaths.splice(foundOutputPathIdx, 1);
+            }
+
+            return {
+                DatabaseConnections: state.DatabaseConnections,
+                FileConnections: state.FileConnections,
+                HttpConnections: state.HttpConnections,
+                LocalPackageFolder: state.LocalPackageFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         default:

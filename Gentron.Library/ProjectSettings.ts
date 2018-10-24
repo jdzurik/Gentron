@@ -2,6 +2,7 @@
 import { IDatabaseConnection } from "./DatabaseConnection";
 import { IFileConnection } from "./FileConnection";
 import { IHttpConnection } from "./HttpConnection";
+import { IOutputPath } from "./OutputPath";
 import IJsonSerializable from "./interfaces/IJsonSerializable";
 
 export interface IProjectSettings extends IJsonSerializable {
@@ -12,7 +13,7 @@ export interface IProjectSettings extends IJsonSerializable {
     FileConnections: IConnectionGroup<IFileConnection>[];
     HttpConnections: IConnectionGroup<IHttpConnection>[];
     LocalPackageFolder: string;
-    OutputCodeFolder: string;
+    OutputPaths: IOutputPath[];
     RemotePackageLocation: string;
 }
 
@@ -32,6 +33,7 @@ export class ProjectSettings implements IProjectSettings {
 
     public DatabaseConnections: IConnectionGroup<IDatabaseConnection>[];
 
+
     private _fileConnections: IConnectionGroup<IFileConnection>[];
 
     public get FileConnections(): IConnectionGroup<IFileConnection>[] {
@@ -42,6 +44,7 @@ export class ProjectSettings implements IProjectSettings {
         this._fileConnections = value;
     }
 
+
     private _httpConnections: IConnectionGroup<IHttpConnection>[];
 
     public get HttpConnections(): IConnectionGroup<IHttpConnection>[] {
@@ -51,6 +54,7 @@ export class ProjectSettings implements IProjectSettings {
     public set HttpConnections(value: IConnectionGroup<IHttpConnection>[]) {
         this._httpConnections = value;
     }
+
 
     private _localPackageFolder: string;
 
@@ -63,15 +67,17 @@ export class ProjectSettings implements IProjectSettings {
     }
 
 
-    private _outputCodeFolder: string;
+    //private _outputPaths: IOutputPath[];
 
-    public get OutputCodeFolder(): string {
-        return this._outputCodeFolder;
-    }
+    //public get OutputPaths(): IOutputPath[] {
+    //    return this._outputPaths;
+    //}
 
-    public set OutputCodeFolder(value: string) {
-        this._outputCodeFolder = value;
-    }
+    //public set OutputPaths(value: IOutputPath[]) {
+    //    this._outputPaths = value;
+    //}
+
+    public OutputPaths: IOutputPath[];
 
 
     private _remotePackageLocation: string;
@@ -94,7 +100,7 @@ export class ProjectSettings implements IProjectSettings {
         this._fileConnections = [];
         this._httpConnections = [];
         this._localPackageFolder = "";
-        this._outputCodeFolder = "";
+        this.OutputPaths = [];
         this._remotePackageLocation = "";
     }
 
@@ -105,8 +111,9 @@ export class ProjectSettings implements IProjectSettings {
     public static fromJson(obj: any): IProjectSettings {
         const ret: IProjectSettings = new ProjectSettings();
 
+        ret.DatabaseConnections = obj.DatabaseConnections;
         ret.LocalPackageFolder = obj.LocalPackageFolder;
-        ret.OutputCodeFolder = obj.OutputCodeFolder;
+        ret.OutputPaths = obj.OutputPaths;
         ret.RemotePackageLocation = obj.RemotePackageLocation;
 
         return ret;
@@ -118,7 +125,7 @@ export class ProjectSettings implements IProjectSettings {
             FileConnections: this.FileConnections,
             HttpConnections: this.HttpConnections,
             LocalPackageFolder: this.LocalPackageFolder,
-            OutputCodeFolder: this.OutputCodeFolder,
+            OutputPaths: this.OutputPaths,
             RemotePackageLocation: this.RemotePackageLocation,
         };
     }
@@ -129,7 +136,7 @@ export class ProjectSettings implements IProjectSettings {
             FileConnections: obj.FileConnections,
             HttpConnections: obj.HttpConnections,
             LocalPackageFolder: obj.LocalPackageFolder,
-            OutputCodeFolder: obj.OutputCodeFolder,
+            OutputPaths: obj.OutputPaths,
             RemotePackageLocation: obj.RemotePackageLocation,
         };
     }

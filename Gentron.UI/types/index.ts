@@ -11,7 +11,7 @@ export type FunctionPropertyNames<T> = {
         : never
 }[keyof T];
 export type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>;
-export type Hash = { _hash: string };
+export type Hash = { _hash?: string };
 export type NonFunctionPropertyNames<T> = {
     [K in keyof T]: T[K] extends Function
         ? never

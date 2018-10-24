@@ -1,17 +1,13 @@
 ﻿import Guid from "./utils/Guid";
+import IIdentifiable from "./interfaces/IIdentifiable";
 import IJsonSerializable from "./interfaces/IJsonSerializable";
+import IModifiable from "./interfaces/IModifiable";
 
-export interface IConnectionBase extends IJsonSerializable {
+export interface IConnectionBase extends IJsonSerializable, IIdentifiable, IModifiable<IConnectionBase> {
     /*
      *  Properties & Fields 
      */
-    readonly ID: string;
     IsActive: boolean;
-
-    /*
-     *  Methods
-     */
-    update(connection: IConnectionBase): void;
 }
 
 export abstract class ConnectionBase implements IConnectionBase {

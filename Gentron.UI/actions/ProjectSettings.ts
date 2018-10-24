@@ -2,7 +2,7 @@
 import { AppThunkAction } from '.';
 import { ProjectSettingsActionNames } from "../constants/ActionNames";
 import { ChangeEvent } from 'react';
-import { IConnectionGroup, IDatabaseConnection } from '../../Gentron.Library';
+import { IConnectionGroup, IDatabaseConnection, IOutputPath } from '../../Gentron.Library';
 
 export interface AddOrUpdateDatabaseConnectionGroupAction {
     databaseConnectionGroup: IConnectionGroup<IDatabaseConnection>;
@@ -14,9 +14,9 @@ export interface AddOrUpdateLocalPackageFolderAction {
     type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction;
 }
 
-export interface AddOrUpdateOutputCodeFolderAction {
-    outputCodeFolder: string;
-    type: ProjectSettingsActionNames.AddOrUpdateOutputCodeFolderAction;
+export interface AddOrUpdateOutputPathAction {
+    outputPath: IOutputPath;
+    type: ProjectSettingsActionNames.AddOrUpdateOutputPathAction;
 }
 
 export interface AddOrUpdateRemotePackageLocationAction {
@@ -29,11 +29,17 @@ export interface RemoveDatabaseConnectionGroupAction {
     type: ProjectSettingsActionNames.RemoveDatabaseConnectionGroup;
 }
 
+export interface RemoveOutputPathAction {
+    outputPath: IOutputPath;
+    type: ProjectSettingsActionNames.RemoveOutputPathAction;
+}
+
 export type KnownProjectSettingsAction = AddOrUpdateDatabaseConnectionGroupAction
     | AddOrUpdateLocalPackageFolderAction
-    | AddOrUpdateOutputCodeFolderAction
+    | AddOrUpdateOutputPathAction
     | AddOrUpdateRemotePackageLocationAction
-    | RemoveDatabaseConnectionGroupAction;
+    | RemoveDatabaseConnectionGroupAction
+    | RemoveOutputPathAction;
 
 export const ActionCreators = {
     addOrUpdateDatabaseConnectionGroup: (databaseSource: IConnectionGroup<IDatabaseConnection>) => {
@@ -48,10 +54,10 @@ export const ActionCreators = {
             type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction
         };
     },
-    addOrUpdateOutputCodeFolder: (ev?: ChangeEvent<HTMLInputElement>) => {
-        return <AddOrUpdateOutputCodeFolderAction>{
-            outputCodeFolder: ev ? ev.target.value : "",
-            type: ProjectSettingsActionNames.AddOrUpdateOutputCodeFolderAction
+    addOrUpdateOutputPath: (outputPath: IOutputPath) => {
+        return <AddOrUpdateOutputPathAction>{
+            outputPath: outputPath,
+            type: ProjectSettingsActionNames.AddOrUpdateOutputPathAction
         };
     },
     addOrUpdateRemotePackageLocation: (ev?: ChangeEvent<HTMLInputElement>) => {
@@ -64,6 +70,12 @@ export const ActionCreators = {
         return <RemoveDatabaseConnectionGroupAction>{
             databaseConnectionGroup: databaseSource,
             type: ProjectSettingsActionNames.RemoveDatabaseConnectionGroup
+        };
+    },
+    removeOutputPath: (outputPath: IOutputPath) => {
+        return <RemoveOutputPathAction>{
+            outputPath: outputPath,
+            type: ProjectSettingsActionNames.RemoveOutputPathAction
         };
     },
 };

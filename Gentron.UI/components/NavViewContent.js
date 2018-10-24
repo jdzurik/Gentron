@@ -23,6 +23,7 @@ var FileSources_1 = require("./FileSources");
 var Home_1 = require("./Home");
 var HttpSource_1 = require("./HttpSource");
 var HttpSources_1 = require("./HttpSources");
+var OutputPaths_1 = require("./OutputPaths");
 var PackageSettings_1 = require("./PackageSettings");
 var ProjectSettings_1 = require("./ProjectSettings");
 var NavViewContent = (function (_super) {
@@ -35,6 +36,7 @@ var NavViewContent = (function (_super) {
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/", component: Home_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/settings/project", component: ProjectSettings_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/connections/db", component: DatabaseConnections_1.default }),
+            React.createElement(react_router_dom_1.Route, { exact: true, path: "/output/paths", component: OutputPaths_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/settings/package", component: PackageSettings_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/db", component: DatabaseSources_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/db/:id", component: DatabaseSource_1.default }),

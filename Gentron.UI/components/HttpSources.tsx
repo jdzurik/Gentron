@@ -2,7 +2,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, NonFunctionProperties } from "../types";
+import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid } from "./metro";
 import { connect } from "../connect";
@@ -10,9 +10,8 @@ import { HttpSource, IHttpSource } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type NullableHttpSources = {
+type NullableHttpSources = Hash & {
     HttpSources?: NonFunctionProperties<IHttpSource>[];
-    _hash?: string;
 };
 
 type HttpSourcesProps = NullableHttpSources
@@ -21,10 +20,17 @@ type HttpSourcesProps = NullableHttpSources
 
 @connect<NullableHttpSources, {}, HttpSourcesProps>(mapStateToProps, mapDispatchToProps)
 export default class HttpSources extends React.Component<HttpSourcesProps> {
+    /*
+     *  Constructors
+     */
     public constructor(props: HttpSourcesProps) {
         super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     private handleAddSourceClick(): void {
         const source: IHttpSource = new HttpSource();
         source.Name = `HTTPSource${this.props.HttpSources.length}`;
@@ -38,11 +44,11 @@ export default class HttpSources extends React.Component<HttpSourcesProps> {
 
     public render(): JSX.Element {
         return (
-            <Cell className={`h-100`}>
-                <Grid className={`w-100 h-100 p-3`}>
-                    <NavViewContentHeaderRow iconClassName={`mif-http`} title={`HTTP Sources`} />
+            <Cell className="h-100">
+                <Grid className="w-100 h-100 p-3">
+                    <NavViewContentHeaderRow iconClassName="mif-http" title="HTTP Sources" />
 
-                    <table className={`table striped table-border mt-4`}>
+                    <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
                                 <th>{` `}</th>
@@ -53,7 +59,7 @@ export default class HttpSources extends React.Component<HttpSourcesProps> {
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className={`button`} onClick={this.handleAddSourceClick.bind(this)}>Add Source</button>
+                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>Add Source</button>
                                 </td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>

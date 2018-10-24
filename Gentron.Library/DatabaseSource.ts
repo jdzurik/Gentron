@@ -1,6 +1,6 @@
 ﻿import { IConnectionGroup, ConnectionGroup } from "./ConnectionGroup";
 import { IDatabaseConnection } from "./DatabaseConnection";
-import { SourceBase, ISourceBase } from "./SourceBase";
+import { ISourceBase, SourceBase } from "./SourceBase";
 import IJsonSerializable from "./interfaces/IJsonSerializable";
 
 export interface IDatabaseSource extends ISourceBase, IJsonSerializable {

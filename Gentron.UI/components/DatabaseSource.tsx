@@ -2,7 +2,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, NonFunctionProperties } from "../types";
+import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
@@ -10,9 +10,8 @@ import { IDatabaseSource } from "../../Gentron.Library";
 import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 
-type DbSource = {
+type DbSource = Hash & {
     DatabaseSource?: NonFunctionProperties<IDatabaseSource>;
-    _hash?: string;
 };
 
 type DatabaseSourceProps = DbSource
@@ -21,10 +20,17 @@ type DatabaseSourceProps = DbSource
 
 @connect<DbSource, {}, DatabaseSourceProps>(mapStateToProps, mapDispatchToProps)
 export default class DatabaseSource extends React.Component<DatabaseSourceProps> {
+    /*
+     *  Constructors
+     */
     public constructor(props: DatabaseSourceProps) {
         super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     private handleNameClick(source: IDatabaseSource): void {
         source.Name = "Test";
         this.props.addOrUpdateDatabaseSource(source);

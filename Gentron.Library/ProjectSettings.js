@@ -6,7 +6,7 @@ var ProjectSettings = (function () {
         this._fileConnections = [];
         this._httpConnections = [];
         this._localPackageFolder = "";
-        this._outputCodeFolder = "";
+        this.OutputPaths = [];
         this._remotePackageLocation = "";
     }
     Object.defineProperty(ProjectSettings.prototype, "FileConnections", {
@@ -39,16 +39,6 @@ var ProjectSettings = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(ProjectSettings.prototype, "OutputCodeFolder", {
-        get: function () {
-            return this._outputCodeFolder;
-        },
-        set: function (value) {
-            this._outputCodeFolder = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(ProjectSettings.prototype, "RemotePackageLocation", {
         get: function () {
             return this._remotePackageLocation;
@@ -61,8 +51,9 @@ var ProjectSettings = (function () {
     });
     ProjectSettings.fromJson = function (obj) {
         var ret = new ProjectSettings();
+        ret.DatabaseConnections = obj.DatabaseConnections;
         ret.LocalPackageFolder = obj.LocalPackageFolder;
-        ret.OutputCodeFolder = obj.OutputCodeFolder;
+        ret.OutputPaths = obj.OutputPaths;
         ret.RemotePackageLocation = obj.RemotePackageLocation;
         return ret;
     };
@@ -72,7 +63,7 @@ var ProjectSettings = (function () {
             FileConnections: this.FileConnections,
             HttpConnections: this.HttpConnections,
             LocalPackageFolder: this.LocalPackageFolder,
-            OutputCodeFolder: this.OutputCodeFolder,
+            OutputPaths: this.OutputPaths,
             RemotePackageLocation: this.RemotePackageLocation,
         };
     };
@@ -82,7 +73,7 @@ var ProjectSettings = (function () {
             FileConnections: obj.FileConnections,
             HttpConnections: obj.HttpConnections,
             LocalPackageFolder: obj.LocalPackageFolder,
-            OutputCodeFolder: obj.OutputCodeFolder,
+            OutputPaths: obj.OutputPaths,
             RemotePackageLocation: obj.RemotePackageLocation,
         };
     };

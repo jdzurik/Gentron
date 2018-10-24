@@ -50,7 +50,7 @@ var DatabaseConnections = (function (_super) {
         var _this = this;
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
-                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-database", title: "Database Connections" }),
+                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-settings-ethernet", title: "Database Connections" }),
                 React.createElement("table", { className: "table striped table-border mt-4" },
                     React.createElement("thead", null,
                         React.createElement("tr", null,

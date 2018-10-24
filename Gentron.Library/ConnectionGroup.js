@@ -37,6 +37,7 @@ var ConnectionGroup = (function () {
     ConnectionGroup.prototype.removeConnection = function (connection) {
     };
     ConnectionGroup.prototype.toJson = function () {
+        throw new Error("Method not implemented");
     };
     ConnectionGroup.prototype.update = function (connection) {
         for (var i = 0; i < this.Connections.length; ++i) {

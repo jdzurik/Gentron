@@ -1,12 +1,13 @@
 ﻿import { IConnectionBase } from "./ConnectionBase";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
 import Guid from "./utils/Guid";
+import IIdentifiable from "./interfaces/IIdentifiable";
+import IJsonSerializable from "./interfaces/IJsonSerializable";
+import IModifiable from "./interfaces/IModifiable";
 
-export interface IConnectionGroup<TConnection extends IConnectionBase> extends IJsonSerializable {
+export interface IConnectionGroup<TConnection extends IConnectionBase> extends IJsonSerializable, IIdentifiable, IModifiable<IConnectionGroup<TConnection>> {
     /*
      *  Properties & Fields 
      */
-    readonly ID: string;
     Connections: TConnection[];
     Name: string;
 
@@ -15,7 +16,6 @@ export interface IConnectionGroup<TConnection extends IConnectionBase> extends I
      */
     addOrUpdateConnection(connection: TConnection): void;
     removeConnection(connection: TConnection): void;
-    update(connection: IConnectionGroup<TConnection>): void;
 }
 
 export class ConnectionGroup<TConnection extends IConnectionBase> implements IConnectionGroup<TConnection> {
@@ -67,7 +67,7 @@ export class ConnectionGroup<TConnection extends IConnectionBase> implements ICo
     }
 
     public toJson(): any {
-
+        throw new Error("Method not implemented");
     }
 
     public update(connection: IConnectionGroup<TConnection>): void {

@@ -5,10 +5,17 @@ import { HTMLProps } from "react";
 interface GridProps extends React.HTMLProps<HTMLDivElement> { };
 
 export default class Grid extends React.PureComponent<GridProps> {
+    /*
+     *  Constructors
+     */
     public constructor(props?: GridProps) {
         super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     public render(): JSX.Element {
         let className: string = "";
 

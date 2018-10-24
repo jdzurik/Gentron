@@ -55,16 +55,6 @@ var ProjectSettings = (function (_super) {
                                 React.createElement("button", { className: "button input-clear-button", tabIndex: -1, type: "button", onClick: this.props.addOrUpdateRemotePackageLocation.bind(this, null) },
                                     React.createElement("span", { className: "default-icon-cross" })),
                                 React.createElement("button", { className: "button input-custom-button", tabIndex: -1, type: "button", onClick: console.log },
-                                    React.createElement("span", { className: "mif-folder-open" })))))),
-                React.createElement(metro_1.Row, { className: "mb-2" },
-                    React.createElement("label", { className: "cell-3 text-right" }, "Output Code Folder"),
-                    React.createElement(metro_1.Cell, { colSpan: 9 },
-                        React.createElement("div", { className: "input" },
-                            React.createElement("input", { type: "text", placeholder: "Output Code Folder", value: this.props.OutputCodeFolder, onChange: function (ev) { return _this.props.addOrUpdateOutputCodeFolder(ev); }, "data-role": "input", "data-role-input": true }),
-                            React.createElement("div", { className: "button-group" },
-                                React.createElement("button", { className: "button input-clear-button", tabIndex: -1, type: "button", onClick: this.props.addOrUpdateOutputCodeFolder.bind(this, null) },
-                                    React.createElement("span", { className: "default-icon-cross" })),
-                                React.createElement("button", { className: "button input-custom-button", tabIndex: -1, type: "button", onClick: console.log },
                                     React.createElement("span", { className: "mif-folder-open" })))))))));
     };
     ProjectSettings = __decorate([
@@ -80,7 +70,7 @@ function mapStateToProps(state) {
         FileConnections: state.ProjectSettings.FileConnections,
         HttpConnections: state.ProjectSettings.HttpConnections,
         LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
-        OutputCodeFolder: state.ProjectSettings.OutputCodeFolder,
+        OutputPaths: state.ProjectSettings.OutputPaths,
         RemotePackageLocation: state.ProjectSettings.RemotePackageLocation,
         _hash: _hash
     };

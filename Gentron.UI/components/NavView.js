@@ -14,9 +14,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
+var connected_react_router_1 = require("connected-react-router");
 var NavViewContent_1 = require("./NavViewContent");
 var NavViewPane_1 = require("./NavViewPane");
-var connected_react_router_1 = require("connected-react-router");
 var NavView = (function (_super) {
     __extends(NavView, _super);
     function NavView(props) {

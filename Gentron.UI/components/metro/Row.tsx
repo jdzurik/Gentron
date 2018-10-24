@@ -5,10 +5,17 @@ import { HTMLProps } from "react";
 interface RowProps extends React.HTMLProps<HTMLDivElement> { };
 
 export default class Row extends React.PureComponent<RowProps> {
+    /*
+     *  Constructors
+     */
     public constructor(props?: RowProps) {
         super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     public render(): JSX.Element {
         let className: string = "";
 

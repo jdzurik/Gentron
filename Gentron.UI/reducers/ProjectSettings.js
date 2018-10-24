@@ -21,7 +21,7 @@ exports.reducer = function (state, action) {
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputCodeFolder: state.OutputCodeFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER":
@@ -30,16 +30,27 @@ exports.reducer = function (state, action) {
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: action.localPackageFolder,
-                OutputCodeFolder: state.OutputCodeFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: state.RemotePackageLocation
             };
-        case "ADD_OR_UPDATE_OUTPUT_CODE_FOLDER":
+        case "ADD_OR_UPDATE_OUTPUT_PATH":
+            var pathFound = false;
+            for (var i = 0; i < state.OutputPaths.length; ++i) {
+                if (state.OutputPaths[i].ID === action.outputPath.ID) {
+                    state.OutputPaths[i].update(action.outputPath);
+                    pathFound = true;
+                    break;
+                }
+            }
+            if (!pathFound) {
+                state.OutputPaths.push(action.outputPath);
+            }
             return {
                 DatabaseConnections: state.DatabaseConnections,
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputCodeFolder: action.outputCodeFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case "ADD_OR_UPDATE_REMOTE_PACKAGE_LOCATION":
@@ -48,26 +59,45 @@ exports.reducer = function (state, action) {
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputCodeFolder: state.OutputCodeFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: action.remotePackageLocation
             };
         case "REMOVE_DATABASE_CONNECTION_GROUP":
-            var foundIdx = -1;
+            var foundDatabaseConnectionIdx = -1;
             for (var i = 0; i < state.DatabaseConnections.length; ++i) {
                 if (state.DatabaseConnections[i].ID === action.databaseConnectionGroup.ID) {
-                    foundIdx = i;
+                    foundDatabaseConnectionIdx = i;
                     break;
                 }
             }
-            if (foundIdx >= 0) {
-                state.DatabaseConnections.splice(foundIdx, 1);
+            if (foundDatabaseConnectionIdx >= 0) {
+                state.DatabaseConnections.splice(foundDatabaseConnectionIdx, 1);
             }
             return {
                 DatabaseConnections: state.DatabaseConnections,
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputCodeFolder: state.OutputCodeFolder,
+                OutputPaths: state.OutputPaths,
+                RemotePackageLocation: state.RemotePackageLocation
+            };
+        case "REMOVE_OUTPUT_PATH":
+            var foundOutputPathIdx = -1;
+            for (var i = 0; i < state.OutputPaths.length; ++i) {
+                if (state.OutputPaths[i].ID === action.outputPath.ID) {
+                    foundOutputPathIdx = i;
+                    break;
+                }
+            }
+            if (foundOutputPathIdx >= 0) {
+                state.OutputPaths.splice(foundOutputPathIdx, 1);
+            }
+            return {
+                DatabaseConnections: state.DatabaseConnections,
+                FileConnections: state.FileConnections,
+                HttpConnections: state.HttpConnections,
+                LocalPackageFolder: state.LocalPackageFolder,
+                OutputPaths: state.OutputPaths,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         default:

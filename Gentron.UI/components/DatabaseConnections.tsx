@@ -2,17 +2,16 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/ProjectSettings";
-import { ApplicationState, NonFunctionProperties } from "../types";
+import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid } from "./metro";
 import { connect } from "../connect";
-import { DatabaseSource, IDatabaseSource, IConnectionGroup, IDatabaseConnection, ConnectionGroup, DatabaseConnection } from "../../Gentron.Library";
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection } from "../../Gentron.Library";
+import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type NullableDatabaseConnections = {
+type NullableDatabaseConnections = Hash & {
     DatabaseConnections?: NonFunctionProperties<IConnectionGroup<IDatabaseConnection>>[];
-    _hash?: string;
 };
 
 type DatabaseConnectionsProps = NullableDatabaseConnections
@@ -21,10 +20,17 @@ type DatabaseConnectionsProps = NullableDatabaseConnections
 
 @connect<NullableDatabaseConnections, {}, DatabaseConnectionsProps>(mapStateToProps, mapDispatchToProps)
 export default class DatabaseConnections extends React.Component<DatabaseConnectionsProps> {
+    /*
+     *  Constructors
+     */
     public constructor(props: DatabaseConnectionsProps) {
         super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     private handleAddConnectionClick(): void {
         const connectionGroup: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
         connectionGroup.Name = `DBConn${this.props.DatabaseConnections.length}`;
@@ -47,11 +53,11 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
 
     public render(): JSX.Element {
         return (
-            <Cell className={`h-100`}>
-                <Grid className={`w-100 h-100 p-3`}>
-                    <NavViewContentHeaderRow iconClassName={`mif-database`} title={`Database Connections`} />
+            <Cell className="h-100">
+                <Grid className="w-100 h-100 p-3">
+                    <NavViewContentHeaderRow iconClassName="mif-settings-ethernet" title="Database Connections" />
 
-                    <table className={`table striped table-border mt-4`}>
+                    <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
                                 <th>{` `}</th>
@@ -63,7 +69,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className={`button`} onClick={this.handleAddConnectionClick.bind(this)}>Add Connection</button>
+                                    <button className="button" onClick={this.handleAddConnectionClick.bind(this)}>Add Connection</button>
                                 </td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>

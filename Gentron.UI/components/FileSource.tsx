@@ -2,7 +2,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, NonFunctionProperties } from "../types";
+import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
@@ -10,9 +10,8 @@ import { IFileSource } from "../../Gentron.Library";
 import { Link } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 
-type HashedFileSource = {
+type HashedFileSource = Hash & {
     FileSource?: NonFunctionProperties<IFileSource>;
-    _hash?: string;
 };
 
 type FileSourceProps = HashedFileSource
@@ -21,10 +20,17 @@ type FileSourceProps = HashedFileSource
 
 @connect<HashedFileSource, {}, FileSourceProps>(mapStateToProps, mapDispatchToProps)
 export default class FileSource extends React.Component<FileSourceProps> {
+    /*
+     *  Constructors
+     */
     public constructor(props: FileSourceProps) {
         super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     private handleNameClick(source: IFileSource): void {
         source.Name = "Test";
         this.props.addOrUpdateFileSource(source);

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Guid_1 = require("./utils/Guid");
 var PackageSettings_1 = require("./PackageSettings");
 var ProjectSettings_1 = require("./ProjectSettings");
+var Guid_1 = require("./utils/Guid");
 var Gentron = (function () {
     function Gentron(id) {
         this._id = id || Guid_1.default.newCryptoGuid();
