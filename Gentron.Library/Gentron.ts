@@ -1,45 +1,97 @@
-﻿import Package from "./Package";
-import Project from "./Project";
+﻿import { PackageSettings, IPackageSettings } from "./PackageSettings";
+import { ProjectSettings, IProjectSettings } from "./ProjectSettings";
+import Guid from "./utils/Guid";
+import IIdentifiable from "./interfaces/IIdentifiable";
+import IJsonSerializable from "./interfaces/IJsonSerializable";
 
-export default class Gentron {
+export interface IGentron extends IJsonSerializable, IIdentifiable {
     /*
      *  Properties & Fields 
      */
-    private _package: Package;
+    PackageSettings: IPackageSettings;
+    ProjectSettings: IProjectSettings;
+}
 
-    public get Package(): Package {
-        return this._package;
+export class Gentron implements IGentron {
+    /*
+     *  Properties & Fields 
+     */
+    private readonly _id: string;
+
+    public get ID(): string {
+        return this._id;
     }
 
-    public set Package(_package: Package) {
-        this._package = _package;
+
+    private _packageSettings: IPackageSettings;
+
+    public get PackageSettings(): IPackageSettings {
+        return this._packageSettings;
     }
 
-    private _project: Project;
-
-    public get Project(): Project {
-        return this._project;
+    public set PackageSettings(value: IPackageSettings) {
+        this._packageSettings = value;
     }
 
-    public set Project(_project: Project) {
-        this._project = _project;
+
+    private _projectSettings: IProjectSettings;
+
+    public get ProjectSettings(): IProjectSettings {
+        return this._projectSettings;
+    }
+
+    public set ProjectSettings(value: IProjectSettings) {
+        this._projectSettings = value;
     }
 
 
     /*
      *  Constructors
      */
-    public constructor() { }
+    public constructor(id?: string) {
+        this._id = id || Guid.newCryptoGuid();
+        this._packageSettings = new PackageSettings();
+        this._projectSettings = new ProjectSettings();
+    }
 
 
     /*
      *  Methods
      */
-    public static fromJson(jsonStr: string): Gentron {
-        return JSON.parse(jsonStr) as Gentron;
+    public static fromJson(obj: any): IGentron {
+        const ret: IGentron = new Gentron(obj.ID);
+
+        ret.PackageSettings = PackageSettings.fromJson(obj.PackageSettings);
+        ret.ProjectSettings = ProjectSettings.fromJson(obj.ProjectSettings);
+
+        return ret;
     }
 
-    public static toJson(gentronObj: Gentron): string {
-        return JSON.stringify(gentronObj);
+    public toJson(): any {
+        return {
+            ID: this.ID,
+            PackageSettings: this.PackageSettings.toJson(),
+            ProjectSettings: this.ProjectSettings.toJson(),
+        };
+    }
+
+    public static toJson(obj: IGentron): any {
+        return {
+            ID: obj.ID,
+            PackageSettings: PackageSettings.toJson(obj.PackageSettings),
+            ProjectSettings: ProjectSettings.toJson(obj.ProjectSettings),
+        };
+    }
+
+    public static save(): void {
+
+    }
+
+    public static saveAs(): void {
+
+    }
+
+    public static open(): void {
+
     }
 }

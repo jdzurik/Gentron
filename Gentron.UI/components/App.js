@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -12,14 +15,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var NavView_1 = require("./NavView");
-var App = /** @class */ (function (_super) {
+var App = (function (_super) {
     __extends(App, _super);
-    function App() {
-        return _super.call(this, null) || this;
+    function App(props) {
+        return _super.call(this, props) || this;
     }
     App.prototype.render = function () {
         return (React.createElement("div", { className: "h-100 w-100" },
-            React.createElement(NavView_1.default, null)));
+            React.createElement(NavView_1.default, { history: this.props.history })));
     };
     return App;
 }(React.PureComponent));

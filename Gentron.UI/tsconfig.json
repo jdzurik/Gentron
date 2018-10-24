@@ -2,17 +2,19 @@
   "compileOnSave": true,
   "compilerOptions": {
     "allowJs": true,
+    "experimentalDecorators": true,
     "jsx": "react",
-    //"lib": [ "es5", "dom" ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
+    "removeComments": true,
     "sourceMap": false,
-    "target": "es5"
+    "target": "es5",
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    //"webpack.config.ts"
   ],
   "typeAcquisition": {
     "enable": true 

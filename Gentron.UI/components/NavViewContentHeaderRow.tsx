@@ -8,10 +8,17 @@ type NavViewContentHeaderRowProps = {
 };
 
 export default class NavViewContentHeaderRow extends React.Component<NavViewContentHeaderRowProps> {
+    /*
+     *  Constructors
+     */
     public constructor(props?: NavViewContentHeaderRowProps) {
         super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     public render(): JSX.Element {
         return (
             <Row>

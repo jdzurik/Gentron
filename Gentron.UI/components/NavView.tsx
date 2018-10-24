@@ -1,22 +1,34 @@
 ﻿import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { HashRouter } from 'react-router-dom';
+import { ConnectedRouter } from "connected-react-router";
+import { History } from "history";
 import NavViewContent from "./NavViewContent";
 import NavViewPane from "./NavViewPane";
 
-export default class NavView extends React.Component {
-    public constructor() {
-        super(null);
+type NavViewProps = {
+    history: History;
+};
+
+export default class NavView extends React.Component<NavViewProps> {
+    /*
+     *  Constructors
+     */
+    public constructor(props: NavViewProps) {
+        super(props);
     }
 
+
+    /*
+     *  Methods
+     */
     public render(): JSX.Element {
         return (
-            <HashRouter>
+            <ConnectedRouter history={this.props.history}>
                 <div data-role="navview">
                     <NavViewPane />
                     <NavViewContent />
                 </div>
-            </HashRouter>
+            </ConnectedRouter>
         );
     }
 }
