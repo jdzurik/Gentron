@@ -17,7 +17,7 @@ type PackageSettingsProps = HashedIPackageSettings
     & RouteComponentProps<{}>;
 
 @connect<HashedIPackageSettings, {}, PackageSettingsProps>(mapStateToProps, mapDispatchToProps)
-export default class PackageSettings extends React.Component<PackageSettingsProps, {}> {
+export default class PackageSettings extends React.Component<PackageSettingsProps> {
     /*
      *  Constructors
      */

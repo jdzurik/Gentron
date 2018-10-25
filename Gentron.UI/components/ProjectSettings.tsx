@@ -17,7 +17,7 @@ type ProjectSettingsProps = HashedIProjectSettings
     & RouteComponentProps<{}>;
 
 @connect<HashedIProjectSettings, {}, ProjectSettingsProps>(mapStateToProps, mapDispatchToProps)
-export default class ProjectSettings extends React.Component<ProjectSettingsProps, {}> {
+export default class ProjectSettings extends React.Component<ProjectSettingsProps> {
     /*
      *  Constructors
      */

@@ -1,2 +1,2 @@
 ﻿import SplitPane from "./SplitPane";
-export { SplitPane };
+export default SplitPane;

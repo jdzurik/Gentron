@@ -8,7 +8,8 @@ import { connect } from "../connect";
 import { ITemplate } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
-import { SplitPane } from "./splitpane";
+import SplitPane from "./SplitPane";
+import MonacoEditor from 'react-monaco-editor';
 
 type HashedTemplate = Hash & {
     Template?: NonFunctionProperties<ITemplate>;
@@ -51,13 +52,29 @@ export default class Template extends React.Component<TemplateProps> {
 
                     <Row className="mt-2 mb-2">
                         <Cell>
-                            <LinkButton iconClassName="mif-arrow-left" linkTo={`/engines/manage/${this.props.match.params.engineid}`} buttonText="View All Templates"></LinkButton>
+                            <LinkButton iconClassName="mif-arrow-left" linkTo={`/engines/manage/${this.props.match.params.engineid}`} buttonText="View All Engine Templates"></LinkButton>
                         </Cell>
                     </Row>
 
-                    <SplitPane splitPaneProps={{ split:`vertical`, size: `calc(50% - 15px)`}}>
-                        <div>Pane 1</div>
-                        <div>Pane 2</div>
+                    <SplitPane splitPaneProps={{ split: `vertical`, size: `calc(50% - 15px)` }}>
+                        <div className="h-100 w-100">
+                            <MonacoEditor
+                                language="javascript"
+                                value={(() => { }).toString()}
+                                options={{}}
+                                onChange={console.log}
+                                editorDidMount={console.log}
+                            />
+                        </div>
+                        <div className="h-100 w-100">
+                            <MonacoEditor
+                                language="javascript"
+                                value={(() => { }).toString()}
+                                options={{}}
+                                onChange={console.log}
+                                editorDidMount={console.log}
+                            />
+                        </div>
                     </SplitPane>
                 </Grid>
             </Cell>

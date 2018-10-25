@@ -394,3 +394,10 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+Gentron.UI/dist/*
+Gentron.UI/bundle.js
+Gentron.UI/[\.?]worker.js
+Gentron.UI/**/*[\.?]worker.js
+Gentron.UI/[\.?]bundle.js
+Gentron.UI/**/*[\.?]bundle.js

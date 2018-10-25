@@ -4,10 +4,11 @@ import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
-import { LinkButton, Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { IFileSource } from "../../Gentron.Library";
+import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
+import MonacoEditor from 'react-monaco-editor';
 
 type HashedFileSource = Hash & {
     FileSource?: NonFunctionProperties<IFileSource>;
@@ -54,7 +55,19 @@ export default class FileSource extends React.Component<FileSourceProps> {
                         </Cell>
                     </Row>
 
-                    <h1>{this.props.match.params.id}</h1>
+                    <Row className="h-100 mt-2">
+                        <Cell>
+                            <div className="h-100 w-100 border bd-grayWhite border-size-2">
+                                <MonacoEditor
+                                    language="javascript"
+                                    value={(() => { }).toString()}
+                                    options={{}}
+                                    onChange={console.log}
+                                    editorDidMount={console.log}
+                                />
+                            </div>
+                        </Cell>
+                    </Row>
                 </Grid>
             </Cell>
         );

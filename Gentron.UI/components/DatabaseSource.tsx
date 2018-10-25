@@ -8,7 +8,8 @@ import { connect } from "../connect";
 import { IDatabaseSource } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
-import { SplitPane } from "./splitpane";
+import SplitPane from "./SplitPane";
+import MonacoEditor from 'react-monaco-editor';
 
 type DbSource = Hash & {
     DatabaseSource?: NonFunctionProperties<IDatabaseSource>;
@@ -56,8 +57,24 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                     </Row>
 
                     <SplitPane splitPaneProps={{ split: `vertical`, size: `calc(50% - 15px)` }}>
-                        <div>Pane 1</div>
-                        <div>Pane 2</div>
+                        <div className="h-100 w-100">
+                            <MonacoEditor
+                                language="javascript"
+                                value={(() => { }).toString()}
+                                options={{}}
+                                onChange={console.log}
+                                editorDidMount={console.log}
+                            />
+                        </div>
+                        <div className="h-100 w-100">
+                            <MonacoEditor
+                                language="javascript"
+                                value={(() => { }).toString()}
+                                options={{}}
+                                onChange={console.log}
+                                editorDidMount={console.log}
+                            />
+                        </div>
                     </SplitPane>
                 </Grid>
             </Cell>

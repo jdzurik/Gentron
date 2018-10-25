@@ -26,6 +26,7 @@ var redux_1 = require("redux");
 var connect_1 = require("../connect");
 var metro_1 = require("./metro");
 var splitpane_1 = require("./splitpane");
+var react_monaco_editor_1 = require("react-monaco-editor");
 var DatabaseSource = (function (_super) {
     __extends(DatabaseSource, _super);
     function DatabaseSource(props) {
@@ -47,7 +48,8 @@ var DatabaseSource = (function (_super) {
                     React.createElement(metro_1.Cell, null,
                         React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/sources/db", buttonText: "View All Sources" }))),
                 React.createElement(splitpane_1.SplitPane, { splitPaneProps: { split: "vertical", size: "calc(50% - 15px)" } },
-                    React.createElement("div", null, "Pane 1"),
+                    React.createElement("div", null,
+                        React.createElement(react_monaco_editor_1.default, { language: "javascript", theme: "vs-dark", value: (function () { }).toString(), options: {}, onChange: console.log, editorDidMount: console.log })),
                     React.createElement("div", null, "Pane 2")))));
     };
     DatabaseSource = __decorate([
