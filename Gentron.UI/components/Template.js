@@ -23,8 +23,9 @@ var hash = require("object-hash");
 var React = require("react");
 var PackageSettings_1 = require("../actions/PackageSettings");
 var redux_1 = require("redux");
-var metro_1 = require("./metro");
 var connect_1 = require("../connect");
+var metro_1 = require("./metro");
+var splitpane_1 = require("./splitpane");
 var Template = (function (_super) {
     __extends(Template, _super);
     function Template(props) {
@@ -45,10 +46,9 @@ var Template = (function (_super) {
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
                         React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/engines/manage/" + this.props.match.params.engineid, buttonText: "View All Templates" }))),
-                React.createElement("h1", null,
-                    this.props.match.params.engineid,
-                    " ",
-                    this.props.match.params.templateid))));
+                React.createElement(splitpane_1.SplitPane, { splitPaneProps: { split: "vertical", size: "calc(50% - 15px)" } },
+                    React.createElement("div", null, "Pane 1"),
+                    React.createElement("div", null, "Pane 2")))));
     };
     Template = __decorate([
         connect_1.connect(mapStateToProps, mapDispatchToProps)

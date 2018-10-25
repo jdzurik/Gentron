@@ -4,10 +4,11 @@ import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
-import { LinkButton, Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { ITemplate } from "../../Gentron.Library";
+import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
+import { SplitPane } from "./splitpane";
 
 type HashedTemplate = Hash & {
     Template?: NonFunctionProperties<ITemplate>;
@@ -54,7 +55,10 @@ export default class Template extends React.Component<TemplateProps> {
                         </Cell>
                     </Row>
 
-                    <h1>{this.props.match.params.engineid} {this.props.match.params.templateid}</h1>
+                    <SplitPane splitPaneProps={{ split:`vertical`, size: `calc(50% - 15px)`}}>
+                        <div>Pane 1</div>
+                        <div>Pane 2</div>
+                    </SplitPane>
                 </Grid>
             </Cell>
         );

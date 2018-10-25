@@ -4,10 +4,11 @@ import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
-import { LinkButton, Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { IHttpSource } from "../../Gentron.Library";
+import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
+import { SplitPane } from "./splitpane";
 
 type HashedHttpSource = Hash & {
     HttpSource?: NonFunctionProperties<IHttpSource>;
@@ -54,7 +55,10 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
                         </Cell>
                     </Row>
 
-                    <h1>{this.props.match.params.id}</h1>
+                    <SplitPane splitPaneProps={{ split: `vertical`, size: `calc(50% - 15px)` }}>
+                        <div>Pane 1</div>
+                        <div>Pane 2</div>
+                    </SplitPane>
                 </Grid>
             </Cell>
         );

@@ -5,19 +5,43 @@
     <meta charset="UTF-8">
     <title>Gentron - Project</title>
     <style type="text/css">
-        .gutter {
-            background-color: #eee;
-            background-repeat: no-repeat;
-            background-position: 50%;
+        .Resizer {
+            background: #000;
+            opacity: .2;
+            z-index: 1;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -moz-background-clip: padding;
+            -webkit-background-clip: padding;
+            background-clip: padding-box;
         }
 
-        .gutter.gutter-vertical {
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=')
-        }
+            .Resizer:hover {
+                -webkit-transition: all .3s ease;
+                transition: all .3s ease;
+            }
 
-        .gutter.gutter-horizontal {
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')
-        }
+            .Resizer.vertical {
+                width: 15px;
+                margin: 0 -5px;
+                border-left: 7px solid rgba(255, 255, 255, 0);
+                border-right: 7px solid rgba(255, 255, 255, 0);
+                cursor: col-resize;
+            }
+
+                .Resizer.vertical:hover {
+                    border-left: 7px solid rgba(0, 0, 0, 0.5);
+                    border-right: 7px solid rgba(0, 0, 0, 0.5);
+                }
+
+            .Resizer.disabled {
+                cursor: not-allowed;
+            }
+
+                .Resizer.disabled:hover {
+                    border-color: transparent;
+                }
     </style>
     <link rel="stylesheet" href="./node_modules/metro4/build/css/metro-all.min.css" />
 </head>
