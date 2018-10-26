@@ -1,17 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19,18 +6,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var hash = require("object-hash");
-var React = require("react");
-var PackageSettings_1 = require("../actions/PackageSettings");
-var redux_1 = require("redux");
-var connect_1 = require("../connect");
-var react_router_dom_1 = require("react-router-dom");
-var NavViewPane = (function (_super) {
-    __extends(NavViewPane, _super);
-    function NavViewPane(props) {
-        return _super.call(this, props) || this;
+const hash = require("object-hash");
+const React = require("react");
+const PackageSettings_1 = require("../actions/PackageSettings");
+const redux_1 = require("redux");
+const connect_1 = require("../connect");
+const react_router_dom_1 = require("react-router-dom");
+let NavViewPane = class NavViewPane extends React.Component {
+    constructor(props) {
+        super(props);
     }
-    NavViewPane.prototype.render = function () {
+    render() {
         return (React.createElement("div", { className: "navview-pane h-100" },
             React.createElement("button", { className: "pull-button" },
                 React.createElement("span", { className: "default-icon-menu" })),
@@ -65,70 +51,59 @@ var NavViewPane = (function (_super) {
                         React.createElement("span", { className: "icon" },
                             React.createElement("span", { className: "mif-database" })),
                         React.createElement("span", { className: "caption" }, "Database Source"))),
-                this.props.DatabaseSources.map(function (connection, i) {
-                    return React.createElement("li", { key: i },
-                        React.createElement(react_router_dom_1.Link, { to: "/sources/db/" + i, className: "pl-7" },
-                            React.createElement("span", { className: "icon" },
-                                React.createElement("span", { className: "mif-database" })),
-                            React.createElement("span", { className: "caption" }, connection.Name)));
-                }),
+                this.props.DatabaseSources.map((connection, i) => React.createElement("li", { key: i },
+                    React.createElement(react_router_dom_1.Link, { to: `/sources/db/${i}`, className: "pl-7" },
+                        React.createElement("span", { className: "icon" },
+                            React.createElement("span", { className: "mif-database" })),
+                        React.createElement("span", { className: "caption" }, connection.Name)))),
                 React.createElement("li", null,
                     React.createElement(react_router_dom_1.Link, { to: "/sources/file" },
                         React.createElement("span", { className: "icon" },
                             React.createElement("span", { className: "mif-file-code" })),
                         React.createElement("span", { className: "caption" }, "File Sources"))),
-                this.props.FileSources.map(function (file, i) {
-                    return React.createElement("li", { key: i },
-                        React.createElement(react_router_dom_1.Link, { to: "/sources/file/" + i, className: "pl-7" },
-                            React.createElement("span", { className: "icon" },
-                                React.createElement("span", { className: "mif-file-code" })),
-                            React.createElement("span", { className: "caption" }, file.Name)));
-                }),
+                this.props.FileSources.map((file, i) => React.createElement("li", { key: i },
+                    React.createElement(react_router_dom_1.Link, { to: `/sources/file/${i}`, className: "pl-7" },
+                        React.createElement("span", { className: "icon" },
+                            React.createElement("span", { className: "mif-file-code" })),
+                        React.createElement("span", { className: "caption" }, file.Name)))),
                 React.createElement("li", null,
                     React.createElement(react_router_dom_1.Link, { to: "/sources/http" },
                         React.createElement("span", { className: "icon" },
                             React.createElement("span", { className: "mif-http" })),
                         React.createElement("span", { className: "caption" }, "HTTP Sources"))),
-                this.props.HttpSources.map(function (file, i) {
-                    return React.createElement("li", { key: i },
-                        React.createElement(react_router_dom_1.Link, { to: "/sources/http/" + i, className: "pl-7" },
-                            React.createElement("span", { className: "icon" },
-                                React.createElement("span", { className: "mif-http" })),
-                            React.createElement("span", { className: "caption" }, file.Name)));
-                }),
+                this.props.HttpSources.map((file, i) => React.createElement("li", { key: i },
+                    React.createElement(react_router_dom_1.Link, { to: `/sources/http/${i}`, className: "pl-7" },
+                        React.createElement("span", { className: "icon" },
+                            React.createElement("span", { className: "mif-http" })),
+                        React.createElement("span", { className: "caption" }, file.Name)))),
                 React.createElement("li", null,
                     React.createElement(react_router_dom_1.Link, { to: "/engines/manage" },
                         React.createElement("span", { className: "icon" },
                             React.createElement("span", { className: "mif-drive-eta" })),
                         React.createElement("span", { className: "caption" }, "Template Engines"))),
-                this.props.Engines.map(function (engine, i) {
-                    return (React.createElement(React.Fragment, { key: i },
-                        React.createElement("li", null,
-                            React.createElement(react_router_dom_1.Link, { to: "/engines/manage/" + i, className: "pl-7" },
-                                React.createElement("span", { className: "icon" },
-                                    React.createElement("span", { className: "mif-drive-eta" })),
-                                React.createElement("span", { className: "caption" }, engine.Name))),
-                        engine.Templates.map(function (template, j) {
-                            return React.createElement("li", { key: j },
-                                React.createElement(react_router_dom_1.Link, { to: "/engines/manage/" + i + "/templates/" + j, className: "pl-10" },
-                                    React.createElement("span", { className: "icon" },
-                                        React.createElement("span", { className: "mif-embed2" })),
-                                    React.createElement("span", { className: "caption" }, template.Name)));
-                        })));
-                }))));
-    };
-    NavViewPane = __decorate([
-        connect_1.connect(mapStateToProps, mapDispatchToProps)
-    ], NavViewPane);
-    return NavViewPane;
-}(React.Component));
+                this.props.Engines.map((engine, i) => (React.createElement(React.Fragment, { key: i },
+                    React.createElement("li", null,
+                        React.createElement(react_router_dom_1.Link, { to: `/engines/manage/${i}`, className: "pl-7" },
+                            React.createElement("span", { className: "icon" },
+                                React.createElement("span", { className: "mif-drive-eta" })),
+                            React.createElement("span", { className: "caption" }, engine.Name))),
+                    engine.Templates.map((template, j) => React.createElement("li", { key: j },
+                        React.createElement(react_router_dom_1.Link, { to: `/engines/manage/${i}/templates/${j}`, className: "pl-10" },
+                            React.createElement("span", { className: "icon" },
+                                React.createElement("span", { className: "mif-embed2" })),
+                            React.createElement("span", { className: "caption" }, template.Name))))))))));
+    }
+};
+NavViewPane = __decorate([
+    connect_1.connect(mapStateToProps, mapDispatchToProps)
+], NavViewPane);
 exports.default = NavViewPane;
 function mapStateToProps(state) {
-    var _dbHash = hash(state.PackageSettings.DatabaseSources);
-    var _enginesHash = hash(state.PackageSettings.Engines);
-    var _fileHash = hash(state.PackageSettings.FileSources);
-    var _httpHash = hash(state.PackageSettings.HttpSources);
-    var _hash = hash(_dbHash + _enginesHash + _fileHash + _httpHash);
+    const _dbHash = hash(state.PackageSettings.DatabaseSources);
+    const _enginesHash = hash(state.PackageSettings.Engines);
+    const _fileHash = hash(state.PackageSettings.FileSources);
+    const _httpHash = hash(state.PackageSettings.HttpSources);
+    const _hash = hash(_dbHash + _enginesHash + _fileHash + _httpHash);
     return {
         DatabaseSources: state.PackageSettings.DatabaseSources,
         Engines: state.PackageSettings.Engines,

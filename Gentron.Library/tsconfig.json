@@ -2,13 +2,18 @@
   "compileOnSave": true,
   "compilerOptions": {
     "allowJs": false,
+    "lib": [
+      "es2015",
+      "es6",
+    ],
     "module": "commonjs",
+    "moduleResolution": "node",
     "noEmitOnError": true,
     "removeComments": true,
     "sourceMap": false,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "es5"
+    "target": "es6"
   },
   "exclude": [
     "node_modules",

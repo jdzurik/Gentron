@@ -1,41 +1,27 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = require("react");
-var react_router_dom_1 = require("react-router-dom");
-var DatabaseConnections_1 = require("./DatabaseConnections");
-var DatabaseSource_1 = require("./DatabaseSource");
-var DatabaseSources_1 = require("./DatabaseSources");
-var Engine_1 = require("./Engine");
-var Engines_1 = require("./Engines");
-var FileSource_1 = require("./FileSource");
-var FileSources_1 = require("./FileSources");
-var Home_1 = require("./Home");
-var HttpSource_1 = require("./HttpSource");
-var HttpSources_1 = require("./HttpSources");
-var OutputPaths_1 = require("./OutputPaths");
-var PackageSettings_1 = require("./PackageSettings");
-var ProjectSettings_1 = require("./ProjectSettings");
-var Template_1 = require("./Template");
-var Templates_1 = require("./Templates");
-var NavViewContent = (function (_super) {
-    __extends(NavViewContent, _super);
-    function NavViewContent(props) {
-        return _super.call(this, props) || this;
+const React = require("react");
+const react_router_dom_1 = require("react-router-dom");
+const DatabaseConnections_1 = require("./DatabaseConnections");
+const DatabaseSource_1 = require("./DatabaseSource");
+const DatabaseSources_1 = require("./DatabaseSources");
+const Engine_1 = require("./Engine");
+const Engines_1 = require("./Engines");
+const FileSource_1 = require("./FileSource");
+const FileSources_1 = require("./FileSources");
+const Home_1 = require("./Home");
+const HttpSource_1 = require("./HttpSource");
+const HttpSources_1 = require("./HttpSources");
+const OutputPaths_1 = require("./OutputPaths");
+const PackageSettings_1 = require("./PackageSettings");
+const ProjectSettings_1 = require("./ProjectSettings");
+const Template_1 = require("./Template");
+const Templates_1 = require("./Templates");
+class NavViewContent extends React.Component {
+    constructor(props) {
+        super(props);
     }
-    NavViewContent.prototype.render = function () {
+    render() {
         return (React.createElement("div", { className: "navview-content d-flex flex-align-center flex-justify-center h-100" },
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/", component: Home_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/settings/project", component: ProjectSettings_1.default }),
@@ -52,7 +38,6 @@ var NavViewContent = (function (_super) {
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage/:id", component: Engine_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage/:engineid/templates", component: Templates_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/engines/manage/:engineid/templates/:templateid", component: Template_1.default })));
-    };
-    return NavViewContent;
-}(React.Component));
+    }
+}
 exports.default = NavViewContent;

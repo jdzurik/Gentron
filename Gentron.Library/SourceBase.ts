@@ -16,13 +16,13 @@ export abstract class SourceBase implements ISourceBase {
     /*
      *  Properties & Fields 
      */
-    private readonly _id: string;
+    protected readonly _id: string;
 
     public get ID(): string {
         return this._id;
     }
 
-    private _isActive: boolean;
+    protected _isActive: boolean;
 
     public get IsActive(): boolean {
         return this._isActive;
@@ -33,7 +33,7 @@ export abstract class SourceBase implements ISourceBase {
     }
 
 
-    private _name: string;
+    protected _name: string;
 
     public get Name(): string {
         return this._name;
@@ -44,7 +44,7 @@ export abstract class SourceBase implements ISourceBase {
     }
 
 
-    private _result: string;
+    protected _result: string;
 
     public get Result(): string {
         return this._result;

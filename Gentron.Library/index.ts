@@ -3,6 +3,7 @@ import { DatabaseConnection, IDatabaseConnection } from "./DatabaseConnection";
 import { DatabaseSource, IDatabaseSource } from "./DatabaseSource";
 import { Engine, IEngine } from "./Engine";
 import { FileSource, IFileSource } from "./FileSource";
+import { File, IFile } from "./File";
 import { Gentron, IGentron }from "./Gentron";
 import { HttpSource, IHttpSource } from "./HttpSource";
 import { OutputPath, IOutputPath } from "./OutputPath";
@@ -34,6 +35,9 @@ export {
 
     FileSource,
     IFileSource,
+
+    File,
+    IFile,
 
     Engine,
     IEngine,

@@ -8,7 +8,9 @@ import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { IPackageSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
+import MonacoEditor from 'react-monaco-editor';
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
+import SplitPane from "./SplitPane";
 
 type HashedIPackageSettings = Hash & NonFunctionProperties<IPackageSettings>
 
@@ -63,6 +65,20 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
                                         <span className="mif-folder-open"></span>
                                     </button>
                                 </div>
+                            </div>
+                        </Cell>
+                    </Row>
+
+                    <Row className="h-100 mt-2">
+                        <Cell>
+                            <div className="h-100 w-100 border bd-grayWhite border-size-2">
+                                <MonacoEditor
+                                    language="markdown"
+                                    value={(() => { }).toString()}
+                                    options={{}}
+                                    onChange={console.log}
+                                    editorDidMount={console.log}
+                                />
                             </div>
                         </Cell>
                     </Row>

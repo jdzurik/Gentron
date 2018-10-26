@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Gentron_Library_1 = require("../../Gentron.Library");
-var _unloadedProjectSettingsState = new Gentron_Library_1.ProjectSettings();
-exports.reducer = function (state, action) {
+const Gentron_Library_1 = require("../../Gentron.Library");
+const _unloadedProjectSettingsState = new Gentron_Library_1.ProjectSettings();
+exports.reducer = (state, action) => {
     switch (action.type) {
         case "ADD_OR_UPDATE_DATABASE_CONNECTION_GROUP":
-            var found = false;
-            for (var i = 0; i < state.DatabaseConnections.length; ++i) {
+            let found = false;
+            for (let i = 0; i < state.DatabaseConnections.length; ++i) {
                 if (state.DatabaseConnections[i].ID === action.databaseConnectionGroup.ID) {
                     state.DatabaseConnections[i].update(action.databaseConnectionGroup);
                     found = true;
@@ -34,8 +34,8 @@ exports.reducer = function (state, action) {
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case "ADD_OR_UPDATE_OUTPUT_PATH":
-            var pathFound = false;
-            for (var i = 0; i < state.OutputPaths.length; ++i) {
+            let pathFound = false;
+            for (let i = 0; i < state.OutputPaths.length; ++i) {
                 if (state.OutputPaths[i].ID === action.outputPath.ID) {
                     state.OutputPaths[i].update(action.outputPath);
                     pathFound = true;
@@ -63,8 +63,8 @@ exports.reducer = function (state, action) {
                 RemotePackageLocation: action.remotePackageLocation
             };
         case "REMOVE_DATABASE_CONNECTION_GROUP":
-            var foundDatabaseConnectionIdx = -1;
-            for (var i = 0; i < state.DatabaseConnections.length; ++i) {
+            let foundDatabaseConnectionIdx = -1;
+            for (let i = 0; i < state.DatabaseConnections.length; ++i) {
                 if (state.DatabaseConnections[i].ID === action.databaseConnectionGroup.ID) {
                     foundDatabaseConnectionIdx = i;
                     break;
@@ -82,8 +82,8 @@ exports.reducer = function (state, action) {
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case "REMOVE_OUTPUT_PATH":
-            var foundOutputPathIdx = -1;
-            for (var i = 0; i < state.OutputPaths.length; ++i) {
+            let foundOutputPathIdx = -1;
+            for (let i = 0; i < state.OutputPaths.length; ++i) {
                 if (state.OutputPaths[i].ID === action.outputPath.ID) {
                     foundOutputPathIdx = i;
                     break;
@@ -101,7 +101,7 @@ exports.reducer = function (state, action) {
                 RemotePackageLocation: state.RemotePackageLocation
             };
         default:
-            var exhaustiveCheck = action;
+            const exhaustiveCheck = action;
     }
     return state || _unloadedProjectSettingsState;
 };

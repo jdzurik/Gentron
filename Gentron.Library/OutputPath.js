@@ -1,46 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Guid_1 = require("./utils/Guid");
-var OutputPath = (function () {
-    function OutputPath() {
+const Guid_1 = require("./utils/Guid");
+class OutputPath {
+    get ID() {
+        return this._id;
+    }
+    get Name() {
+        return this._name;
+    }
+    set Name(value) {
+        this._name = value;
+    }
+    get Path() {
+        return this._path;
+    }
+    set Path(value) {
+        this._path = value;
+    }
+    constructor() {
         this._id = Guid_1.default.newGuid();
         this._name = "";
         this._path = "";
     }
-    Object.defineProperty(OutputPath.prototype, "ID", {
-        get: function () {
-            return this._id;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(OutputPath.prototype, "Name", {
-        get: function () {
-            return this._name;
-        },
-        set: function (value) {
-            this._name = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(OutputPath.prototype, "Path", {
-        get: function () {
-            return this._path;
-        },
-        set: function (value) {
-            this._path = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    OutputPath.prototype.toJson = function () {
+    toJson() {
         throw new Error("Method not implemented");
-    };
-    OutputPath.prototype.update = function (ouputPath) {
+    }
+    update(ouputPath) {
         this._name = ouputPath.Name;
         this._path = ouputPath.Path;
-    };
-    return OutputPath;
-}());
+    }
+}
 exports.OutputPath = OutputPath;

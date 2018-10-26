@@ -1,7 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ProjectSettings = (function () {
-    function ProjectSettings() {
+class ProjectSettings {
+    get FileConnections() {
+        return this._fileConnections;
+    }
+    set FileConnections(value) {
+        this._fileConnections = value;
+    }
+    get HttpConnections() {
+        return this._httpConnections;
+    }
+    set HttpConnections(value) {
+        this._httpConnections = value;
+    }
+    get LocalPackageFolder() {
+        return this._localPackageFolder;
+    }
+    set LocalPackageFolder(value) {
+        this._localPackageFolder = value;
+    }
+    get RemotePackageLocation() {
+        return this._remotePackageLocation;
+    }
+    set RemotePackageLocation(value) {
+        this._remotePackageLocation = value;
+    }
+    constructor() {
         this.DatabaseConnections = [];
         this._fileConnections = [];
         this._httpConnections = [];
@@ -9,55 +33,15 @@ var ProjectSettings = (function () {
         this.OutputPaths = [];
         this._remotePackageLocation = "";
     }
-    Object.defineProperty(ProjectSettings.prototype, "FileConnections", {
-        get: function () {
-            return this._fileConnections;
-        },
-        set: function (value) {
-            this._fileConnections = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ProjectSettings.prototype, "HttpConnections", {
-        get: function () {
-            return this._httpConnections;
-        },
-        set: function (value) {
-            this._httpConnections = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ProjectSettings.prototype, "LocalPackageFolder", {
-        get: function () {
-            return this._localPackageFolder;
-        },
-        set: function (value) {
-            this._localPackageFolder = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ProjectSettings.prototype, "RemotePackageLocation", {
-        get: function () {
-            return this._remotePackageLocation;
-        },
-        set: function (value) {
-            this._remotePackageLocation = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    ProjectSettings.fromJson = function (obj) {
-        var ret = new ProjectSettings();
+    static fromJson(obj) {
+        const ret = new ProjectSettings();
         ret.DatabaseConnections = obj.DatabaseConnections;
         ret.LocalPackageFolder = obj.LocalPackageFolder;
         ret.OutputPaths = obj.OutputPaths;
         ret.RemotePackageLocation = obj.RemotePackageLocation;
         return ret;
-    };
-    ProjectSettings.prototype.toJson = function () {
+    }
+    toJson() {
         return {
             DatabaseConnections: this.DatabaseConnections,
             FileConnections: this.FileConnections,
@@ -66,8 +50,8 @@ var ProjectSettings = (function () {
             OutputPaths: this.OutputPaths,
             RemotePackageLocation: this.RemotePackageLocation,
         };
-    };
-    ProjectSettings.toJson = function (obj) {
+    }
+    static toJson(obj) {
         return {
             DatabaseConnections: obj.DatabaseConnections,
             FileConnections: obj.FileConnections,
@@ -76,7 +60,6 @@ var ProjectSettings = (function () {
             OutputPaths: obj.OutputPaths,
             RemotePackageLocation: obj.RemotePackageLocation,
         };
-    };
-    return ProjectSettings;
-}());
+    }
+}
 exports.ProjectSettings = ProjectSettings;

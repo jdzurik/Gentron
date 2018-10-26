@@ -1,17 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19,20 +6,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var hash = require("object-hash");
-var React = require("react");
-var PackageSettings_1 = require("../actions/PackageSettings");
-var redux_1 = require("redux");
-var metro_1 = require("./metro");
-var connect_1 = require("../connect");
-var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
-var PackageSettings = (function (_super) {
-    __extends(PackageSettings, _super);
-    function PackageSettings(props) {
-        return _super.call(this, props) || this;
+const hash = require("object-hash");
+const React = require("react");
+const PackageSettings_1 = require("../actions/PackageSettings");
+const redux_1 = require("redux");
+const metro_1 = require("./metro");
+const connect_1 = require("../connect");
+const react_monaco_editor_1 = require("react-monaco-editor");
+const NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
+let PackageSettings = class PackageSettings extends React.Component {
+    constructor(props) {
+        super(props);
     }
-    PackageSettings.prototype.render = function () {
-        var _this = this;
+    render() {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
                 React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-gift", title: "Package Settings" }),
@@ -40,21 +26,24 @@ var PackageSettings = (function (_super) {
                     React.createElement("label", { className: "cell-3 text-right" }, "Package Name"),
                     React.createElement(metro_1.Cell, { colSpan: 9 },
                         React.createElement("div", { className: "input" },
-                            React.createElement("input", { type: "text", placeholder: "Package Name", value: this.props.PackageName, onChange: function (ev) { return _this.props.addOrUpdatePackageName(ev); }, "data-role": "input", "data-role-input": true }),
+                            React.createElement("input", { type: `text`, placeholder: `Package Name`, value: this.props.PackageName, onChange: (ev) => this.props.addOrUpdatePackageName(ev), "data-role": `input`, "data-role-input": true }),
                             React.createElement("div", { className: "button-group" },
-                                React.createElement("button", { className: "button input-clear-button", tabIndex: -1, type: "button", onClick: this.props.addOrUpdatePackageName.bind(this, null) },
+                                React.createElement("button", { className: "button input-clear-button", tabIndex: -1, type: `button`, onClick: this.props.addOrUpdatePackageName.bind(this, null) },
                                     React.createElement("span", { className: "default-icon-cross" })),
-                                React.createElement("button", { className: "button input-custom-button", tabIndex: -1, type: "button", onClick: console.log },
-                                    React.createElement("span", { className: "mif-folder-open" })))))))));
-    };
-    PackageSettings = __decorate([
-        connect_1.connect(mapStateToProps, mapDispatchToProps)
-    ], PackageSettings);
-    return PackageSettings;
-}(React.Component));
+                                React.createElement("button", { className: "button input-custom-button", tabIndex: -1, type: `button`, onClick: console.log },
+                                    React.createElement("span", { className: "mif-folder-open" })))))),
+                React.createElement(metro_1.Row, { className: "h-100 mt-2" },
+                    React.createElement(metro_1.Cell, null,
+                        React.createElement("div", { className: "h-100 w-100 border bd-grayWhite border-size-2" },
+                            React.createElement(react_monaco_editor_1.default, { language: "markdown", value: (() => { }).toString(), options: {}, onChange: console.log, editorDidMount: console.log })))))));
+    }
+};
+PackageSettings = __decorate([
+    connect_1.connect(mapStateToProps, mapDispatchToProps)
+], PackageSettings);
 exports.default = PackageSettings;
 function mapStateToProps(state) {
-    var _hash = hash(state.PackageSettings);
+    const _hash = hash(state.PackageSettings);
     return {
         DatabaseSources: state.PackageSettings.DatabaseSources,
         Engines: state.PackageSettings.Engines,

@@ -1,7 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var PackageSettings = (function () {
-    function PackageSettings() {
+class PackageSettings {
+    get PackageName() {
+        return this._packageName;
+    }
+    set PackageName(value) {
+        this._packageName = value;
+    }
+    get ReadMeText() {
+        return this._readMeText;
+    }
+    set ReadMeText(value) {
+        this._readMeText = value;
+    }
+    constructor() {
         this._packageName = "";
         this._readMeText = "";
         this.DatabaseSources = [];
@@ -9,28 +21,8 @@ var PackageSettings = (function () {
         this.FileSources = [];
         this.HttpSources = [];
     }
-    Object.defineProperty(PackageSettings.prototype, "PackageName", {
-        get: function () {
-            return this._packageName;
-        },
-        set: function (value) {
-            this._packageName = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(PackageSettings.prototype, "ReadMeText", {
-        get: function () {
-            return this._readMeText;
-        },
-        set: function (value) {
-            this._readMeText = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    PackageSettings.fromJson = function (obj) {
-        var ret = new PackageSettings();
+    static fromJson(obj) {
+        const ret = new PackageSettings();
         ret.DatabaseSources = obj.DatabaseSources;
         ret.Engines = obj.Engines;
         ret.FileSources = obj.FileSources;
@@ -38,8 +30,8 @@ var PackageSettings = (function () {
         ret.PackageName = obj.PackageName;
         ret.ReadMeText = obj.ReadMeText;
         return ret;
-    };
-    PackageSettings.prototype.toJson = function () {
+    }
+    toJson() {
         return {
             DatabaseSources: this.DatabaseSources,
             Engines: this.Engines,
@@ -48,8 +40,8 @@ var PackageSettings = (function () {
             PackageName: this.PackageName,
             ReadMeText: this.ReadMeText
         };
-    };
-    PackageSettings.toJson = function (obj) {
+    }
+    static toJson(obj) {
         return {
             DatabaseSources: obj.DatabaseSources,
             Engines: obj.Engines,
@@ -58,7 +50,6 @@ var PackageSettings = (function () {
             PackageName: obj.PackageName,
             ReadMeText: obj.ReadMeText
         };
-    };
-    return PackageSettings;
-}());
+    }
+}
 exports.PackageSettings = PackageSettings;

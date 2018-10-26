@@ -1,25 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Guid = (function () {
-    function Guid() {
-    }
-    Guid.newGuid = function () {
+class Guid {
+    static newGuid() {
         return this._guidPlaceholder.replace(/[xy]/g, function (substring) {
-            var rand = Math.random() * 16 | 0;
-            var ret = (substring === "x")
+            const rand = Math.random() * 16 | 0;
+            const ret = (substring === "x")
                 ? rand
                 : (rand & 0x3 | 0x8);
             return ret.toString(16);
         });
-    };
-    Guid.newCryptoGuid = function () {
-        var hex = [];
+    }
+    static newCryptoGuid() {
+        const hex = [];
         for (var i = 0; i < 256; i++) {
             hex[i] = (i < 16 ? "0" : "") + (i).toString(16);
         }
-        var rand = new Uint8Array(16);
-        for (var i_1 = 0; i_1 < rand.length; ++i_1) {
-            rand[i_1] = Math.floor(Math.random() * 10);
+        const rand = new Uint8Array(16);
+        for (let i = 0; i < rand.length; ++i) {
+            rand[i] = Math.floor(Math.random() * 10);
         }
         rand[6] = rand[6] & 0x0f | 0x40;
         rand[8] = rand[8] & 0x3f | 0x80;
@@ -43,8 +41,7 @@ var Guid = (function () {
             hex[rand[13]] +
             hex[rand[14]] +
             hex[rand[15]]);
-    };
-    Guid._guidPlaceholder = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
-    return Guid;
-}());
+    }
+}
+Guid._guidPlaceholder = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
 exports.default = Guid;

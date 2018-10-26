@@ -1,17 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19,65 +6,60 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var hash = require("object-hash");
-var React = require("react");
-var ProjectSettings_1 = require("../actions/ProjectSettings");
-var redux_1 = require("redux");
-var metro_1 = require("./metro");
-var connect_1 = require("../connect");
-var Gentron_Library_1 = require("../../Gentron.Library");
-var NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
-var OutputPaths = (function (_super) {
-    __extends(OutputPaths, _super);
-    function OutputPaths(props) {
-        return _super.call(this, props) || this;
+const hash = require("object-hash");
+const React = require("react");
+const ProjectSettings_1 = require("../actions/ProjectSettings");
+const redux_1 = require("redux");
+const metro_1 = require("./metro");
+const connect_1 = require("../connect");
+const Gentron_Library_1 = require("../../Gentron.Library");
+const NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
+let OutputPaths = class OutputPaths extends React.Component {
+    constructor(props) {
+        super(props);
     }
-    OutputPaths.prototype.handleAddOutputPathClick = function () {
-        var ouputPath = new Gentron_Library_1.OutputPath();
-        ouputPath.Name = "OutputPath" + this.props.OutputPaths.length;
+    handleAddOutputPathClick() {
+        const ouputPath = new Gentron_Library_1.OutputPath();
+        ouputPath.Name = `OutputPath${this.props.OutputPaths.length}`;
         ouputPath.Path = new Date().getTime().toString();
         this.props.addOrUpdateOutputPath(ouputPath);
-    };
-    OutputPaths.prototype.handleRemoveOutputPathClick = function (outputPath) {
+    }
+    handleRemoveOutputPathClick(outputPath) {
         this.props.removeOutputPath(outputPath);
-    };
-    OutputPaths.prototype.render = function () {
-        var _this = this;
+    }
+    render() {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
                 React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-folder-open", title: "Output Paths" }),
                 React.createElement("table", { className: "table striped table-border mt-4" },
                     React.createElement("thead", null,
                         React.createElement("tr", null,
-                            React.createElement("th", null, " "),
+                            React.createElement("th", null, ` `),
                             React.createElement("th", null, "Name"),
                             React.createElement("th", null, "Path"),
-                            React.createElement("th", null, " "))),
+                            React.createElement("th", null, ` `))),
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", null,
                                 React.createElement("button", { className: "button", onClick: this.handleAddOutputPathClick.bind(this) }, "Add Output Path")),
-                            React.createElement("td", null, " "),
-                            React.createElement("td", null, " "),
-                            React.createElement("td", null, " ")),
-                        this.props.OutputPaths.map(function (connection, i) {
-                            return React.createElement("tr", { key: i },
-                                React.createElement("td", null, " "),
-                                React.createElement("td", null, connection.Name),
-                                React.createElement("td", null, connection.Path),
-                                React.createElement("td", null,
-                                    React.createElement("a", { href: "#" },
-                                        React.createElement("button", { className: "button", onClick: _this.handleRemoveOutputPathClick.bind(_this, connection) }, "Remove"))));
-                        }))))));
-    };
-    OutputPaths = __decorate([
-        connect_1.connect(mapStateToProps, mapDispatchToProps)
-    ], OutputPaths);
-    return OutputPaths;
-}(React.Component));
+                            React.createElement("td", null, ` `),
+                            React.createElement("td", null, ` `),
+                            React.createElement("td", null, ` `)),
+                        this.props.OutputPaths.map((connection, i) => React.createElement("tr", { key: i },
+                            React.createElement("td", null, ` `),
+                            React.createElement("td", null, connection.Name),
+                            React.createElement("td", null, connection.Path),
+                            React.createElement("td", null,
+                                React.createElement("a", { href: "#" },
+                                    React.createElement("button", { className: "button", onClick: this.handleRemoveOutputPathClick.bind(this, connection) }, "Remove"))))))))));
+    }
+};
+OutputPaths = __decorate([
+    connect_1.connect(mapStateToProps, mapDispatchToProps)
+], OutputPaths);
 exports.default = OutputPaths;
 function mapStateToProps(state) {
-    var _hash = hash(state.ProjectSettings.OutputPaths);
+    const _hash = hash(state.ProjectSettings.OutputPaths);
     return {
         OutputPaths: state.ProjectSettings.OutputPaths,
         _hash: _hash

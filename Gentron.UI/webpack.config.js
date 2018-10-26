@@ -1,9 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var path = require("path");
-var webpack = require("webpack");
-var MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
-var config = {
+const path = require("path");
+const webpack = require("webpack");
+const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+const config = {
+    node: {
+        fs: "empty"
+    },
     mode: "development",
     entry: './index.js',
     output: {
@@ -11,7 +14,7 @@ var config = {
         path: path.resolve(__dirname, '.')
     },
     resolve: {
-        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx']
     },
     module: {
         rules: [

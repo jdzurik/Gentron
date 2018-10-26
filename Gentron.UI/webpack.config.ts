@@ -4,6 +4,11 @@ import * as webpack from 'webpack';
 import * as MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
 
 const config: webpack.Configuration = {
+    //  fixes webpack compilation error,
+    //  see: https://github.com/webpack-contrib/css-loader/issues/447
+    node: {
+        fs: "empty"
+    },
     mode: "development",
     entry: './index.js',
     output: {
@@ -11,7 +16,7 @@ const config: webpack.Configuration = {
         path: path.resolve(__dirname, '.')
     },
     resolve: {
-        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+        extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx']
     },
     module: {
         rules: [

@@ -53,6 +53,9 @@
     <TypeScriptCompile Include="Engine.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="File.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="FileConnection.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

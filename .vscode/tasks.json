@@ -1,0 +1,38 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Install Library Packages",
+            "type": "npm",
+            "script": "install",
+            "path": "Gentron.Library/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Install UI Packages",
+            "type": "npm",
+            "script": "install",
+            "path": "Gentron.UI/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Install Packages",
+            "dependsOn": [
+                "Install Library Packages",
+                "Install UI Packages"
+            ],
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "label": "Webpack",
+            "type": "npm",
+            "script": "build",
+            "path": "Gentron.UI/",
+            "problemMatcher": []
+        },
+    ]
+}

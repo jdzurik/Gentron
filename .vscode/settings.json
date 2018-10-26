@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "**/dist/": true,
+        "**/bundle.js": true,
+        "**/*[.?]bundle.js": true,
+        "**/*[.?]worker.js": true
+    }
+}

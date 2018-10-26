@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var connected_react_router_1 = require("connected-react-router");
-var redux_1 = require("redux");
-var reducers_1 = require("../reducers");
-var redux_thunk_1 = require("redux-thunk");
+const connected_react_router_1 = require("connected-react-router");
+const redux_1 = require("redux");
+const reducers_1 = require("../reducers");
+const redux_thunk_1 = require("redux-thunk");
 function configureStore(history, initialState) {
-    var windowIfDefined = typeof window === 'undefined' ? null : window;
-    var devToolsExtension = windowIfDefined && windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__;
-    var middleWare = redux_1.applyMiddleware(redux_thunk_1.default, connected_react_router_1.routerMiddleware(history));
-    var createStoreWithMiddleware = redux_1.compose(middleWare, devToolsExtension
+    const windowIfDefined = typeof window === 'undefined' ? null : window;
+    const devToolsExtension = windowIfDefined && windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__;
+    const middleWare = redux_1.applyMiddleware(redux_thunk_1.default, connected_react_router_1.routerMiddleware(history));
+    const createStoreWithMiddleware = redux_1.compose(middleWare, devToolsExtension
         ? devToolsExtension()
-        : function (next) { return next; })(redux_1.createStore);
-    var allReducers = buildRootReducer(reducers_1.reducers);
-    var store = redux_1.createStore(connected_react_router_1.connectRouter(history)(allReducers), initialState, redux_1.compose(redux_1.applyMiddleware(connected_react_router_1.routerMiddleware(history))));
+        : (next) => next)(redux_1.createStore);
+    const allReducers = buildRootReducer(reducers_1.reducers);
+    const store = redux_1.createStore(connected_react_router_1.connectRouter(history)(allReducers), initialState, redux_1.compose(redux_1.applyMiddleware(connected_react_router_1.routerMiddleware(history))));
     return store;
 }
 exports.default = configureStore;

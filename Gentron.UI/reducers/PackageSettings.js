@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Gentron_Library_1 = require("../../Gentron.Library");
-var _unloadedPackageSettingsState = new Gentron_Library_1.PackageSettings();
-exports.reducer = function (state, action) {
+const Gentron_Library_1 = require("../../Gentron.Library");
+const _unloadedPackageSettingsState = new Gentron_Library_1.PackageSettings();
+exports.reducer = (state, action) => {
     switch (action.type) {
         case "ADD_OR_UPDATE_DATABASE_SOURCE":
-            var dbSourceFound = false;
-            for (var i = 0; i < state.DatabaseSources.length; ++i) {
+            let dbSourceFound = false;
+            for (let i = 0; i < state.DatabaseSources.length; ++i) {
                 if (state.DatabaseSources[i].ID === action.databaseSource.ID) {
                     state.DatabaseSources[i].update(action.databaseSource);
                     dbSourceFound = true;
@@ -25,8 +25,8 @@ exports.reducer = function (state, action) {
                 ReadMeText: state.ReadMeText,
             };
         case "ADD_OR_UPDATE_ENGINE":
-            var engineFound = false;
-            for (var i = 0; i < state.Engines.length; ++i) {
+            let engineFound = false;
+            for (let i = 0; i < state.Engines.length; ++i) {
                 if (state.Engines[i].ID === action.engine.ID) {
                     state.Engines[i].update(action.engine);
                     engineFound = true;
@@ -45,9 +45,9 @@ exports.reducer = function (state, action) {
                 ReadMeText: state.ReadMeText,
             };
         case "ADD_OR_UPDATE_ENGINE_TEMPLATE":
-            var engineId = parseInt(action.engineId, 10);
-            var templateFound = false;
-            for (var i = 0; i < state.Engines[engineId].Templates.length; ++i) {
+            const engineId = parseInt(action.engineId, 10);
+            let templateFound = false;
+            for (let i = 0; i < state.Engines[engineId].Templates.length; ++i) {
                 if (state.Engines[engineId].Templates[i].ID === action.template.ID) {
                     state.Engines[engineId].Templates[i].update(action.template);
                     templateFound = true;
@@ -66,8 +66,8 @@ exports.reducer = function (state, action) {
                 ReadMeText: state.ReadMeText,
             };
         case "ADD_OR_UPDATE_FILE_SOURCE":
-            var fileSourceFound = false;
-            for (var i = 0; i < state.FileSources.length; ++i) {
+            let fileSourceFound = false;
+            for (let i = 0; i < state.FileSources.length; ++i) {
                 if (state.FileSources[i].ID === action.fileSource.ID) {
                     state.FileSources[i].update(action.fileSource);
                     fileSourceFound = true;
@@ -86,8 +86,8 @@ exports.reducer = function (state, action) {
                 ReadMeText: state.ReadMeText,
             };
         case "ADD_OR_UPDATE_HTTP_SOURCE":
-            var httpSourceFound = false;
-            for (var i = 0; i < state.HttpSources.length; ++i) {
+            let httpSourceFound = false;
+            for (let i = 0; i < state.HttpSources.length; ++i) {
                 if (state.HttpSources[i].ID === action.httpSource.ID) {
                     state.HttpSources[i].update(action.httpSource);
                     httpSourceFound = true;
@@ -124,8 +124,8 @@ exports.reducer = function (state, action) {
                 ReadMeText: action.readMeText,
             };
         case "REMOVE_DATABASE_SOURCE":
-            var dbSourceIdx = -1;
-            for (var i = 0; i < state.DatabaseSources.length; ++i) {
+            let dbSourceIdx = -1;
+            for (let i = 0; i < state.DatabaseSources.length; ++i) {
                 if (state.DatabaseSources[i].ID === action.databaseSource.ID) {
                     dbSourceIdx = i;
                     break;
@@ -143,8 +143,8 @@ exports.reducer = function (state, action) {
                 ReadMeText: state.ReadMeText,
             };
         case "REMOVE_ENGINE":
-            var engineIdx = -1;
-            for (var i = 0; i < state.Engines.length; ++i) {
+            let engineIdx = -1;
+            for (let i = 0; i < state.Engines.length; ++i) {
                 if (state.Engines[i].ID === action.engine.ID) {
                     engineIdx = i;
                     break;
@@ -162,9 +162,9 @@ exports.reducer = function (state, action) {
                 ReadMeText: state.ReadMeText,
             };
         case "REMOVE_ENGINE_TEMPLATE":
-            var engineTemplateIdx = -1;
-            var removeEngineId = parseInt(action.engineId, 10);
-            for (var i = 0; i < state.Engines[removeEngineId].Templates.length; ++i) {
+            let engineTemplateIdx = -1;
+            const removeEngineId = parseInt(action.engineId, 10);
+            for (let i = 0; i < state.Engines[removeEngineId].Templates.length; ++i) {
                 if (state.Engines[removeEngineId].Templates[i].ID === action.template.ID) {
                     engineTemplateIdx = i;
                     break;
@@ -182,8 +182,8 @@ exports.reducer = function (state, action) {
                 ReadMeText: state.ReadMeText,
             };
         case "REMOVE_FILE_SOURCE":
-            var fileSourceIdx = -1;
-            for (var i = 0; i < state.FileSources.length; ++i) {
+            let fileSourceIdx = -1;
+            for (let i = 0; i < state.FileSources.length; ++i) {
                 if (state.FileSources[i].ID === action.fileSource.ID) {
                     fileSourceIdx = i;
                     break;
@@ -201,8 +201,8 @@ exports.reducer = function (state, action) {
                 ReadMeText: state.ReadMeText,
             };
         case "REMOVE_HTTP_SOURCE":
-            var httpSourceIdx = -1;
-            for (var i = 0; i < state.HttpSources.length; ++i) {
+            let httpSourceIdx = -1;
+            for (let i = 0; i < state.HttpSources.length; ++i) {
                 if (state.HttpSources[i].ID === action.httpSource.ID) {
                     httpSourceIdx = i;
                     break;
@@ -220,7 +220,7 @@ exports.reducer = function (state, action) {
                 ReadMeText: state.ReadMeText,
             };
         default:
-            var exhaustiveCheck = action;
+            const exhaustiveCheck = action;
     }
     return state || _unloadedPackageSettingsState;
 };
