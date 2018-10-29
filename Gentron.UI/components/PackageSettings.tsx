@@ -46,7 +46,7 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
                                 <input type={`text`}
                                     placeholder={`Package Name`}
                                     value={this.props.PackageName}
-                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdatePackageName(ev)}
+                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdatePackageName(ev.target.value || ``)}
                                     data-role={`input`}
                                     data-role-input={true}
                                 />
@@ -94,6 +94,7 @@ function mapStateToProps(state: ApplicationState): HashedIPackageSettings {
     return {
         DatabaseSources: state.PackageSettings.DatabaseSources,
         Engines: state.PackageSettings.Engines,
+        Environments: state.PackageSettings.Environments,
         FileSources: state.PackageSettings.FileSources,
         HttpSources: state.PackageSettings.HttpSources,
         PackageName: state.PackageSettings.PackageName,

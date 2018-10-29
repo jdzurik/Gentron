@@ -2,6 +2,7 @@
     AddOrUpdateDatabaseSource = "ADD_OR_UPDATE_DATABASE_SOURCE",
     AddOrUpdateEngine = "ADD_OR_UPDATE_ENGINE",
     AddOrUpdateEngineTemplate = "ADD_OR_UPDATE_ENGINE_TEMPLATE",
+    AddOrUpdateEnvironment = "ADD_OR_UPDATE_ENVIRONMENT",
     AddOrUpdateFileSource = "ADD_OR_UPDATE_FILE_SOURCE",
     AddOrUpdateHttpSource = "ADD_OR_UPDATE_HTTP_SOURCE",
     AddOrUpdatePackageName = "ADD_OR_UPDATE_PACKAGE_NAME",
@@ -9,8 +10,10 @@
     RemoveDatabaseSource = "REMOVE_DATABASE_SOURCE",
     RemoveEngine = "REMOVE_ENGINE",
     RemoveEngineTemplate = "REMOVE_ENGINE_TEMPLATE",
+    RemoveEnvironment = "REMOVE_ENVIRONMENT",
     RemoveFileSource = "REMOVE_FILE_SOURCE",
     RemoveHttpSource = "REMOVE_HTTP_SOURCE",
+    ToggleActiveEnvironment = "TOGGLE_ACTIVE_ENVIRONMENT",
 }
 
 

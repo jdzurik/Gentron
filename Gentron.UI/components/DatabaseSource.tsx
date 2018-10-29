@@ -93,7 +93,10 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                     <div className="pos-center text-right">Database Script:</div>
                                 </Cell>
                                 <Cell colSpan={8}>
-                                    <FileInput onFilePathChange={(value: string) => this.handleScriptFileNameChange(this.props.DatabaseSource, value)} />
+                                    <FileInput
+                                        onFilePathChange={(value: string) => this.handleScriptFileNameChange(this.props.DatabaseSource, value)}
+                                        value={this.props.DatabaseSource.Script.Path}
+                                    />
                                 </Cell>
                             </Row>
 
@@ -102,8 +105,8 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                     <MonacoEditor
                                         language="sql"
                                         value={this.props.DatabaseSource.Script.Contents || (() => { }).toString()}
-                                        options={{}}
-                                        onChange={console.log}
+                                        options={{wordWrap: `on`}}
+                                        onChange={() => { }}
                                         editorDidMount={() => {}}
                                     />
                                 </Cell>

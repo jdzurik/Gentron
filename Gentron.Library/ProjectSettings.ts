@@ -21,17 +21,15 @@ export class ProjectSettings implements IProjectSettings {
     /*
      *  Properties & Fields 
      */
-    //private _databaseConnections: IConnectionGroup<IDatabaseConnection>[];
+    private _databaseConnections: IConnectionGroup<IDatabaseConnection>[];
 
-    //public get DatabaseConnections(): IConnectionGroup<IDatabaseConnection>[] {
-    //    return this._databaseConnections;
-    //}
+    public get DatabaseConnections(): IConnectionGroup<IDatabaseConnection>[] {
+        return this._databaseConnections;
+    }
 
-    //public set DatabaseConnections(value: IConnectionGroup<IDatabaseConnection>[]) {
-    //    this._databaseConnections = value;
-    //}
-
-    public DatabaseConnections: IConnectionGroup<IDatabaseConnection>[];
+    public set DatabaseConnections(value: IConnectionGroup<IDatabaseConnection>[]) {
+        this._databaseConnections = value;
+    }
 
 
     private _fileConnections: IConnectionGroup<IFileConnection>[];
@@ -67,17 +65,15 @@ export class ProjectSettings implements IProjectSettings {
     }
 
 
-    //private _outputPaths: IOutputPath[];
+    private _outputPaths: IOutputPath[];
 
-    //public get OutputPaths(): IOutputPath[] {
-    //    return this._outputPaths;
-    //}
+    public get OutputPaths(): IOutputPath[] {
+        return this._outputPaths;
+    }
 
-    //public set OutputPaths(value: IOutputPath[]) {
-    //    this._outputPaths = value;
-    //}
-
-    public OutputPaths: IOutputPath[];
+    public set OutputPaths(value: IOutputPath[]) {
+        this._outputPaths = value;
+    }
 
 
     private _remotePackageLocation: string;
@@ -95,11 +91,11 @@ export class ProjectSettings implements IProjectSettings {
      *  Constructors
      */
     public constructor() {
-        this.DatabaseConnections = [];
+        this._databaseConnections = [];
         this._fileConnections = [];
         this._httpConnections = [];
         this._localPackageFolder = "";
-        this.OutputPaths = [];
+        this._outputPaths = [];
         this._remotePackageLocation = "";
     }
 

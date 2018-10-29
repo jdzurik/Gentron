@@ -14,3 +14,5 @@ const Row_1 = require("./Row");
 exports.Row = Row_1.default;
 const SelectList_1 = require("./SelectList");
 exports.SelectList = SelectList_1.default;
+const Switch_1 = require("./Switch");
+exports.Switch = Switch_1.default;

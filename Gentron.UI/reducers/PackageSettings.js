@@ -19,6 +19,7 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -39,6 +40,7 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -60,6 +62,28 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case "ADD_OR_UPDATE_ENVIRONMENT":
+            let environmentFound = false;
+            for (let i = 0; i < state.Environments.length; ++i) {
+                if (state.Environments[i].ID === action.environment.ID) {
+                    state.Environments[i].update(action.environment);
+                    environmentFound = true;
+                    break;
+                }
+            }
+            if (!environmentFound) {
+                state.Environments.push(action.environment);
+            }
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -80,6 +104,7 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -100,6 +125,7 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -109,6 +135,7 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: action.packageName,
@@ -118,6 +145,7 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -137,6 +165,7 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -156,6 +185,7 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -176,6 +206,27 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case "REMOVE_ENVIRONMENT":
+            let environmentIdx = -1;
+            for (let i = 0; i < state.Environments.length; ++i) {
+                if (state.Environments[i].ID === action.environment.ID) {
+                    environmentIdx = i;
+                    break;
+                }
+            }
+            if (environmentIdx >= 0) {
+                state.Environments.splice(environmentIdx, 1);
+            }
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -195,6 +246,7 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -214,6 +266,27 @@ exports.reducer = (state, action) => {
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case "TOGGLE_ACTIVE_ENVIRONMENT":
+            for (let i = 0; i < state.Environments.length; ++i) {
+                const environment = state.Environments[i];
+                if (environment.ID === action.environment.ID) {
+                    environment.update(action.environment);
+                }
+                else {
+                    environment.IsActive = false;
+                    environment.update(environment);
+                }
+            }
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,

@@ -5,6 +5,7 @@ import Grid from "./Grid";
 import LinkButton from "./LinkButton";
 import Row from "./Row";
 import SelectList from "./SelectList";
+import Switch from "./Switch";
 
 export {
     Cell,
@@ -13,5 +14,6 @@ export {
     Grid,
     LinkButton,
     Row,
-    SelectList
+    SelectList,
+    Switch
 };

@@ -1,4 +1,4 @@
-﻿import { IDatabaseSource, IEngine, IFileSource, IHttpSource } from ".";
+﻿import { IDatabaseSource, IEngine, IFileSource, IHttpSource, IEnvironment } from ".";
 import { IJsonSerializable } from "./interfaces";
 
 export interface IPackageSettings extends IJsonSerializable {
@@ -7,6 +7,7 @@ export interface IPackageSettings extends IJsonSerializable {
      */
     DatabaseSources: IDatabaseSource[];
     Engines: IEngine[];
+    Environments: IEnvironment[];
     FileSources: IFileSource[];
     HttpSources: IHttpSource[];
     PackageName: string;
@@ -17,53 +18,60 @@ export class PackageSettings implements IPackageSettings {
     /*
      *  Properties & Fields 
      */
-    //private _databaseSources: IDatabaseSource[];
+    private _databaseSources: IDatabaseSource[];
 
-    //public get DatabaseSources(): IDatabaseSource[] {
-    //    return this._databaseSources;
-    //}
+    public get DatabaseSources(): IDatabaseSource[] {
+        return this._databaseSources;
+    }
 
-    //public set DatabaseSources(value: IDatabaseSource[]) {
-    //    this._databaseSources = value;
-    //}
+    public set DatabaseSources(value: IDatabaseSource[]) {
+        this._databaseSources = value;
+    }
 
-    public DatabaseSources: IDatabaseSource[];
 
-    //private _engines: IEngine[];
+    private _engines: IEngine[];
 
-    //public get Engines(): IEngine[] {
-    //    return this._engines;
-    //}
+    public get Engines(): IEngine[] {
+        return this._engines;
+    }
 
-    //public set Engines(value: IEngine[]) {
-    //    this._engines= value;
-    //}
+    public set Engines(value: IEngine[]) {
+        this._engines= value;
+    }
 
-    public Engines: IEngine[];
 
-    //private _fileSources: IFileSource[];
+    private _environments: IEnvironment[];
 
-    //public get FileSources(): IFileSource[] {
-    //    return this._fileSources;
-    //}
+    public get Environments(): IEnvironment[] {
+        return this._environments;
+    }
 
-    //public set FileSources(value: IFileSource[]) {
-    //    this._fileSources = value;
-    //}
+    public set Environments(value: IEnvironment[]) {
+        this._environments= value;
+    }
 
-    public FileSources: IFileSource[];
 
-    //private _httpSources: IHttpSource[];
+    private _fileSources: IFileSource[];
 
-    //public get HttpSources(): IHttpSource[] {
-    //    return this._httpSources;
-    //}
+    public get FileSources(): IFileSource[] {
+        return this._fileSources;
+    }
 
-    //public set HttpSources(value: IHttpSource[]) {
-    //    this._httpSources = value;
-    //}
+    public set FileSources(value: IFileSource[]) {
+        this._fileSources = value;
+    }
 
-    public HttpSources: IHttpSource[];
+
+    private _httpSources: IHttpSource[];
+
+    public get HttpSources(): IHttpSource[] {
+        return this._httpSources;
+    }
+
+    public set HttpSources(value: IHttpSource[]) {
+        this._httpSources = value;
+    }
+
 
     private _packageName: string;
 
@@ -91,12 +99,13 @@ export class PackageSettings implements IPackageSettings {
      *  Constructors
      */
     public constructor() {
+        this._databaseSources = [];
+        this._engines = [];
+        this._environments = [];
+        this._fileSources = [];
+        this._httpSources = [];
         this._packageName = "";
         this._readMeText = "";
-        this.DatabaseSources = [];
-        this.Engines = [];
-        this.FileSources = [];
-        this.HttpSources = [];
     }
 
 
@@ -108,6 +117,7 @@ export class PackageSettings implements IPackageSettings {
 
         ret.DatabaseSources = obj.DatabaseSources;
         ret.Engines = obj.Engines;
+        ret.Environments = obj.Environments;
         ret.FileSources = obj.FileSources;
         ret.HttpSources = obj.HttpSources;
         ret.PackageName = obj.PackageName;
@@ -120,6 +130,7 @@ export class PackageSettings implements IPackageSettings {
         return {
             DatabaseSources: this.DatabaseSources,
             Engines: this.Engines,
+            Environments: this.Environments,
             FileSources: this.FileSources,
             HttpSources: this.HttpSources,
             PackageName: this.PackageName,
@@ -131,6 +142,7 @@ export class PackageSettings implements IPackageSettings {
         return {
             DatabaseSources: obj.DatabaseSources,
             Engines: obj.Engines,
+            Environments: obj.Environments,
             FileSources: obj.FileSources,
             HttpSources: obj.HttpSources,
             PackageName: obj.PackageName,

@@ -24,7 +24,7 @@ export default class FileInput extends React.Component<FileInputProps, FileInput
 
 
     /*
-     *  Properties & Fields
+     *  Methods
      */
     private handleOpenDialogClick(ev: React.MouseEvent<HTMLButtonElement>): void {
         const dialogOpts: Electron.OpenDialogOptions = {

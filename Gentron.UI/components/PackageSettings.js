@@ -26,7 +26,7 @@ let PackageSettings = class PackageSettings extends React.Component {
                     React.createElement("label", { className: "cell-3 text-right" }, "Package Name"),
                     React.createElement(metro_1.Cell, { colSpan: 9 },
                         React.createElement("div", { className: "input" },
-                            React.createElement("input", { type: `text`, placeholder: `Package Name`, value: this.props.PackageName, onChange: (ev) => this.props.addOrUpdatePackageName(ev), "data-role": `input`, "data-role-input": true }),
+                            React.createElement("input", { type: `text`, placeholder: `Package Name`, value: this.props.PackageName, onChange: (ev) => this.props.addOrUpdatePackageName(ev.target.value || ``), "data-role": `input`, "data-role-input": true }),
                             React.createElement("div", { className: "button-group" },
                                 React.createElement("button", { className: "button input-clear-button", tabIndex: -1, type: `button`, onClick: this.props.addOrUpdatePackageName.bind(this, null) },
                                     React.createElement("span", { className: "default-icon-cross" })),
@@ -47,6 +47,7 @@ function mapStateToProps(state) {
     return {
         DatabaseSources: state.PackageSettings.DatabaseSources,
         Engines: state.PackageSettings.Engines,
+        Environments: state.PackageSettings.Environments,
         FileSources: state.PackageSettings.FileSources,
         HttpSources: state.PackageSettings.HttpSources,
         PackageName: state.PackageSettings.PackageName,

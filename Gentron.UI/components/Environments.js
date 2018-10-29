@@ -13,65 +13,59 @@ const redux_1 = require("redux");
 const metro_1 = require("./metro");
 const connect_1 = require("../connect");
 const Gentron_Library_1 = require("../../Gentron.Library");
-const react_router_dom_1 = require("react-router-dom");
 const NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
-let DatabaseSources = class DatabaseSources extends React.Component {
+let Environments = class Environments extends React.Component {
     constructor(props) {
         super(props);
     }
-    handleAddSourceClick() {
-        const source = new Gentron_Library_1.DatabaseSource();
-        source.Name = `DBSource${this.props.DatabaseSources.length}`;
-        this.props.addOrUpdateDatabaseSource(source);
+    handleAddEnvironmentClick() {
+        const ouputPath = new Gentron_Library_1.Environment();
+        ouputPath.Name = `Environment${this.props.Environments.length}`;
+        this.props.addOrUpdateEnvironment(ouputPath);
     }
-    handleToggleSourceIsActiveClick(source, isActive) {
-        source.IsActive = isActive;
-        this.props.addOrUpdateDatabaseSource(source);
+    handleToggleEnvironmentIsActiveClick(environment, isActive) {
+        environment.IsActive = isActive;
+        this.props.toggleActiveEnvironment(environment);
     }
-    handleRemoveSourceClick(source) {
-        this.props.removeDatabaseSource(source);
+    handleRemoveEnvironmentClick(Environment) {
+        this.props.removeEnvironment(Environment);
     }
     render() {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
-                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-database", title: "Database Sources" }),
+                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-folder-open", title: "Environments" }),
                 React.createElement("table", { className: "table striped table-border mt-4" },
                     React.createElement("thead", null,
                         React.createElement("tr", null,
                             React.createElement("th", null, ` `),
                             React.createElement("th", null, "Name"),
-                            React.createElement("th", null, "Active Connection"),
                             React.createElement("th", null, "Active?"),
                             React.createElement("th", null, ` `))),
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", null,
-                                React.createElement("button", { className: "button", onClick: this.handleAddSourceClick.bind(this) }, "Add Database Source")),
-                            React.createElement("td", null, ` `),
+                                React.createElement("button", { className: "button", onClick: this.handleAddEnvironmentClick.bind(this) }, "Add Environment")),
                             React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `)),
-                        this.props.DatabaseSources.map((source, i) => React.createElement("tr", { key: i },
+                        this.props.Environments.map((environment, i) => React.createElement("tr", { key: i },
+                            React.createElement("td", null, ` `),
+                            React.createElement("td", null, environment.Name),
                             React.createElement("td", null,
-                                React.createElement(react_router_dom_1.Link, { to: `/sources/db/${i}` },
-                                    React.createElement("button", { className: "button" }, "View"))),
-                            React.createElement("td", null, source.Name),
-                            React.createElement("td", null, source.ActiveConnectionGroup.Name),
-                            React.createElement("td", null,
-                                React.createElement(metro_1.Switch, { checked: source.IsActive, onStateChanged: (isActive) => this.handleToggleSourceIsActiveClick(source, isActive) })),
+                                React.createElement(metro_1.Switch, { checked: environment.IsActive, onStateChanged: (isActive) => this.handleToggleEnvironmentIsActiveClick(environment, isActive) })),
                             React.createElement("td", null,
                                 React.createElement("a", { href: "#" },
-                                    React.createElement("button", { className: "button", onClick: this.handleRemoveSourceClick.bind(this, source) }, "Remove"))))))))));
+                                    React.createElement("button", { className: "button", onClick: this.handleRemoveEnvironmentClick.bind(this, environment) }, "Remove"))))))))));
     }
 };
-DatabaseSources = __decorate([
+Environments = __decorate([
     connect_1.connect(mapStateToProps, mapDispatchToProps)
-], DatabaseSources);
-exports.default = DatabaseSources;
+], Environments);
+exports.default = Environments;
 function mapStateToProps(state) {
-    const _hash = hash(state.PackageSettings.DatabaseSources);
+    const _hash = hash(state.PackageSettings.Environments);
     return {
-        DatabaseSources: state.PackageSettings.DatabaseSources,
+        Environments: state.PackageSettings.Environments,
         _hash: _hash
     };
 }

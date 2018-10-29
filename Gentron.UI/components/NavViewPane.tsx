@@ -59,6 +59,13 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                     </li>
 
                     <li>
+                        <Link to="/environments" className="pl-7">
+                            <span className="icon"><span className="mif-earth"></span></span>
+                            <span className="caption">Environments</span>
+                        </Link>
+                    </li>
+
+                    <li>
                         <Link to="/output/paths" className="pl-7">
                             <span className="icon"><span className="mif-folder-open"></span></span>
                             <span className="caption">Output Paths</span>

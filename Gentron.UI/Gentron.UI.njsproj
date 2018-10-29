@@ -67,6 +67,9 @@
     <TypeScriptCompile Include="components\Engines.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="components\Environments.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="components\FileSource.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -104,6 +107,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\metro\SelectList.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="components\metro\Switch.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\NavViewContent.tsx">

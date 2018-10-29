@@ -11,7 +11,7 @@ import * as ReactDOM from "react-dom";
 import { AnyAction, Store } from "redux";
 import { ApplicationState } from './types';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { Gentron, ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection } from "../Gentron.Library";
+import { Gentron, ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection, IEnvironment, Environment } from "../Gentron.Library";
 import { IDatabaseSource, DatabaseSource } from "../Gentron.Library/DatabaseSource";
 import { Provider } from 'react-redux';
 import App from "./components/App";
@@ -41,13 +41,19 @@ if (((window as any).initialReduxState)) {
 else {
     initialState = new Gentron();
 
+    ["Dev", "Test", "Prod"].map(env => {
+        const environment: IEnvironment = new Environment();
+        environment.Name = env;
+        initialState.PackageSettings.Environments.push(environment);
+    });
+
     ["CAUtils", "CASecurity"].map(db => {
         const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
         source.Name = db;
 
-        ["Dev", "Test", "Prod"].map(env => {
+        initialState.PackageSettings.Environments.map(env => {
             const conn: IDatabaseConnection = new DatabaseConnection();
-            conn.Environment = env;
+            conn.Environment = env.Name;
             source.addOrUpdateConnection(conn);
         });
 

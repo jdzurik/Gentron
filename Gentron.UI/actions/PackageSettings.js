@@ -20,6 +20,12 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_ENGINE_TEMPLATE"
         };
     },
+    addOrUpdateEnvironment: (environment) => {
+        return {
+            environment: environment,
+            type: "ADD_OR_UPDATE_ENVIRONMENT"
+        };
+    },
     addOrUpdateFileSource: (fileSource) => {
         return {
             fileSource: fileSource,
@@ -63,6 +69,12 @@ exports.ActionCreators = {
             type: "REMOVE_ENGINE_TEMPLATE"
         };
     },
+    removeEnvironment: (environment) => {
+        return {
+            environment: environment,
+            type: "REMOVE_ENVIRONMENT"
+        };
+    },
     removeFileSource: (fileSource) => {
         return {
             fileSource: fileSource,
@@ -73,6 +85,12 @@ exports.ActionCreators = {
         return {
             httpSource: httpSource,
             type: "REMOVE_HTTP_SOURCE"
+        };
+    },
+    toggleActiveEnvironment: (environment) => {
+        return {
+            environment: environment,
+            type: "TOGGLE_ACTIVE_ENVIRONMENT"
         };
     },
 };

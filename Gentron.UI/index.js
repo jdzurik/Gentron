@@ -26,12 +26,17 @@ if ((window.initialReduxState)) {
 }
 else {
     initialState = new Gentron_Library_1.Gentron();
+    ["Dev", "Test", "Prod"].map(env => {
+        const environment = new Gentron_Library_1.Environment();
+        environment.Name = env;
+        initialState.PackageSettings.Environments.push(environment);
+    });
     ["CAUtils", "CASecurity"].map(db => {
         const source = new Gentron_Library_1.ConnectionGroup();
         source.Name = db;
-        ["Dev", "Test", "Prod"].map(env => {
+        initialState.PackageSettings.Environments.map(env => {
             const conn = new Gentron_Library_1.DatabaseConnection();
-            conn.Environment = env;
+            conn.Environment = env.Name;
             source.addOrUpdateConnection(conn);
         });
         initialState.ProjectSettings.DatabaseConnections.push(source);

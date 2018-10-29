@@ -3,14 +3,14 @@ import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
-import { Cell, Grid } from "./metro";
+import { Cell, Grid, Switch } from "./metro";
 import { connect } from "../connect";
 import { DatabaseSource, IDatabaseSource } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableDatabaseSources = Hash & {
-    DatabaseSources?: NonFunctionProperties<IDatabaseSource>[];
+    DatabaseSources?: IDatabaseSource[];
 };
 
 type DatabaseSourcesProps = NullableDatabaseSources
@@ -37,6 +37,11 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
         this.props.addOrUpdateDatabaseSource(source);
     }
 
+    private handleToggleSourceIsActiveClick(source: IDatabaseSource, isActive: boolean): void {
+        source.IsActive = isActive;
+        this.props.addOrUpdateDatabaseSource(source);
+    }
+
     private handleRemoveSourceClick(source: IDatabaseSource): void {
         this.props.removeDatabaseSource(source);
     }
@@ -52,7 +57,8 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                             <tr>
                                 <th>{` `}</th>
                                 <th>Name</th>
-                                <th>Connections</th>
+                                <th>Active Connection</th>
+                                <th>Active?</th>
                                 <th>{` `}</th>
                             </tr>
                         </thead>
@@ -61,6 +67,7 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                 <td>
                                     <button className="button" onClick={this.handleAddSourceClick.bind(this)}>Add Database Source</button>
                                 </td>
+                                <td>{` `}</td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
@@ -76,7 +83,13 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                             </Link>
                                         </td>
                                         <td>{source.Name}</td>
-                                        <td>{source.ActiveConnectionGroup.Connections.length}</td>
+                                        <td>{source.ActiveConnectionGroup.Name}</td>
+                                        <td>
+                                            <Switch
+                                                checked={source.IsActive}
+                                                onStateChanged={(isActive: boolean) => this.handleToggleSourceIsActiveClick(source, isActive)}
+                                            />
+                                        </td>
                                         <td>
                                             <a href="#">
                                                 <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>Remove</button>

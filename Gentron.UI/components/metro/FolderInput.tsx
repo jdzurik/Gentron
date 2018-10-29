@@ -24,7 +24,7 @@ export default class FolderInput extends React.Component<FolderInputProps, Folde
 
 
     /*
-     *  Properties & Fields
+     *  Methods
      */
     private handleOpenDialogClick(ev: React.MouseEvent<HTMLButtonElement>): void {
         const dialogOpts: Electron.OpenDialogOptions = {

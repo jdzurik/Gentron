@@ -2,6 +2,7 @@
 import { DatabaseConnection, IDatabaseConnection } from "./DatabaseConnection";
 import { DatabaseSource, IDatabaseSource } from "./DatabaseSource";
 import { Engine, IEngine } from "./Engine";
+import { Environment, IEnvironment } from "./Environment";
 import { FileSource, IFileSource } from "./FileSource";
 import { File, IFile } from "./File";
 import { Gentron, IGentron }from "./Gentron";
@@ -42,6 +43,9 @@ export {
 
     Engine,
     IEngine,
+
+    Environment,
+    IEnvironment,
 
     Template,
     ITemplate,

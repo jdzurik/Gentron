@@ -33,11 +33,22 @@ class File {
         this._lastModified = undefined;
         this._path = "";
     }
+    loadContentsSync(filePath = this.Path || "", setContents = true) {
+        try {
+            const buf = fs.readFileSync(filePath);
+            const contents = buf.toString();
+            if (setContents) {
+                this.Contents = contents;
+            }
+            return contents;
+        }
+        catch (e) {
+            return e.message.toString();
+        }
+    }
     loadContents(filePath = this.Path || "", setContents = true) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log(fs.promises);
-                console.log(filePath);
                 const buf = yield fs.promises.readFile(filePath);
                 const contents = buf.toString();
                 if (setContents) {
@@ -51,9 +62,11 @@ class File {
         });
     }
     update(file) {
-        this.Contents = file.Contents;
         this.LastModified = file.LastModified;
-        this.Path = file.Path;
+        if (this.Path !== file.Path) {
+            this.Path = file.Path;
+            this.Contents = this.loadContentsSync();
+        }
     }
 }
 exports.File = File;

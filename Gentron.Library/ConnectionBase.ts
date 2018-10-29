@@ -1,12 +1,7 @@
 ﻿import { Utilities } from ".";
-import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
+import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
 
-export interface IConnectionBase extends IJsonSerializable, IIdentifiable, IModifiable<IConnectionBase> {
-    /*
-     *  Properties & Fields 
-     */
-    IsActive: boolean;
-}
+export interface IConnectionBase extends IActivateable, IJsonSerializable, IIdentifiable, IModifiable<IConnectionBase> { }
 
 export abstract class ConnectionBase implements IConnectionBase {
     /*

@@ -28,7 +28,11 @@ class DatabaseSource extends SourceBase_1.SourceBase {
         this.IsActive = databaseSource.IsActive;
         this.Name = databaseSource.Name;
         this.Result = databaseSource.Result;
-        this.Script.update(databaseSource.Script);
+        if (_1.Utilities.hasValue(this.Script)
+            && _1.Utilities.hasValue(databaseSource.Script)
+            && this.Script.Path !== databaseSource.Script.Path) {
+            this.Script.update(databaseSource.Script);
+        }
     }
 }
 exports.DatabaseSource = DatabaseSource;

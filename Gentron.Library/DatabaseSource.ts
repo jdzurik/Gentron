@@ -1,8 +1,7 @@
 ﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, File, IFile, Utilities } from ".";
-import { IJsonSerializable } from "./interfaces";
 import { ISourceBase, SourceBase } from "./SourceBase";
 
-export interface IDatabaseSource extends ISourceBase, IJsonSerializable {
+export interface IDatabaseSource extends ISourceBase {
     /*
      *  Properties & Fields 
      */
@@ -60,18 +59,10 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
         this.Name = databaseSource.Name;
         this.Result = databaseSource.Result;
 
-        this.Script.update(databaseSource.Script as IFile);
-
-        //if (Utilities.hasValue(this.Script.Path)) {
-        //    this.Script.loadContents()
-        //        .then((data) => {
-        //            console.log(data);
-        //            Promise.resolve(data);
-        //        })
-        //        .catch((err) => {
-        //            console.log(err);
-        //            Promise.reject(err);
-        //        });
-        //}
+        if (Utilities.hasValue(this.Script)
+            && Utilities.hasValue(databaseSource.Script)
+            && this.Script.Path !== databaseSource.Script.Path) {
+            this.Script.update(databaseSource.Script as IFile);
+        }
     }
 }
