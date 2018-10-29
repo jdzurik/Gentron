@@ -1,7 +1,5 @@
-﻿import Guid from "./utils/Guid";
-import IIdentifiable from "./interfaces/IIdentifiable";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
-import IModifiable from "./interfaces/IModifiable";
+﻿import { Utilities } from ".";
+import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
 
 export interface IOutputPath extends IJsonSerializable, IIdentifiable, IModifiable<IOutputPath> {
     /*
@@ -48,7 +46,7 @@ export class OutputPath implements IOutputPath {
      *  Constructors
      */
     public constructor() {
-        this._id = Guid.newGuid();
+        this._id = Utilities.newCryptoGuid();
         this._name = "";
         this._path = "";
     }

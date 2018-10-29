@@ -1,6 +1,7 @@
 ﻿import * as fs from "fs";
+import { IModifiable } from "./interfaces"
 
-export interface IFile {
+export interface IFile extends IModifiable<IFile> {
     /*
      *  Properties & Fields
      */
@@ -11,7 +12,7 @@ export interface IFile {
     /*
      *  Methods
      */
-    loadContents(filePath: string, setContents: boolean): Promise<string>;
+    loadContents(filePath?: string, setContents?: boolean): Promise<string>;
 }
 
 export class File implements IFile {
@@ -64,6 +65,8 @@ export class File implements IFile {
      */
     public async loadContents(filePath: string = this.Path || "", setContents: boolean = true): Promise<string> {
         try {
+            console.log(fs.promises);
+            console.log(filePath);
             const buf: Buffer = await fs.promises.readFile(filePath);
             const contents: string = buf.toString();
 
@@ -76,5 +79,11 @@ export class File implements IFile {
         catch (e) {
             return (e as NodeJS.ErrnoException).message.toString();
         }
+    }
+
+    public update(file: IFile): void {
+        this.Contents = file.Contents;
+        this.LastModified = file.LastModified;
+        this.Path = file.Path;
     }
 }

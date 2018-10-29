@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Guid_1 = require("./utils/Guid");
+const _1 = require(".");
 class ConnectionGroup {
     constructor() {
-        this._id = Guid_1.default.newCryptoGuid();
+        this._id = _1.Utilities.newCryptoGuid();
         this._connections = [];
         this._name = "";
     }

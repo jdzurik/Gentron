@@ -38,6 +38,7 @@ const config = {
             jQuery: "jquery"
         }),
         new MonacoWebpackPlugin({})
-    ]
+    ],
+    target: "electron-renderer"
 };
 exports.default = config;

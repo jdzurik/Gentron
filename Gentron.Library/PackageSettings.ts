@@ -1,5 +1,5 @@
 ﻿import { IDatabaseSource, IEngine, IFileSource, IHttpSource } from ".";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
+import { IJsonSerializable } from "./interfaces";
 
 export interface IPackageSettings extends IJsonSerializable {
     /*

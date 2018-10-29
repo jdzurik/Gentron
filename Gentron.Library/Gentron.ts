@@ -1,8 +1,5 @@
-﻿import { PackageSettings, IPackageSettings } from "./PackageSettings";
-import { ProjectSettings, IProjectSettings } from "./ProjectSettings";
-import Guid from "./utils/Guid";
-import IIdentifiable from "./interfaces/IIdentifiable";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
+﻿import { IIdentifiable, IJsonSerializable } from "./interfaces";
+import { PackageSettings, IPackageSettings, ProjectSettings, IProjectSettings, Utilities } from ".";
 
 export interface IGentron extends IJsonSerializable, IIdentifiable {
     /*
@@ -49,7 +46,7 @@ export class Gentron implements IGentron {
      *  Constructors
      */
     public constructor(id?: string) {
-        this._id = id || Guid.newCryptoGuid();
+        this._id = id || Utilities.newCryptoGuid();
         this._packageSettings = new PackageSettings();
         this._projectSettings = new ProjectSettings();
     }

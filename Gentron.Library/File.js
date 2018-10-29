@@ -36,6 +36,8 @@ class File {
     loadContents(filePath = this.Path || "", setContents = true) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log(fs.promises);
+                console.log(filePath);
                 const buf = yield fs.promises.readFile(filePath);
                 const contents = buf.toString();
                 if (setContents) {
@@ -47,6 +49,11 @@ class File {
                 return e.message.toString();
             }
         });
+    }
+    update(file) {
+        this.Contents = file.Contents;
+        this.LastModified = file.LastModified;
+        this.Path = file.Path;
     }
 }
 exports.File = File;

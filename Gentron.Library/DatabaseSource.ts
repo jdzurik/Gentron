@@ -1,8 +1,6 @@
-﻿import { ConnectionGroup, IConnectionGroup } from "./ConnectionGroup";
-import { File, IFile } from ".";
-import { IDatabaseConnection } from "./DatabaseConnection";
+﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, File, IFile, Utilities } from ".";
+import { IJsonSerializable } from "./interfaces";
 import { ISourceBase, SourceBase } from "./SourceBase";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
 
 export interface IDatabaseSource extends ISourceBase, IJsonSerializable {
     /*
@@ -61,5 +59,19 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
         this.IsActive = databaseSource.IsActive;
         this.Name = databaseSource.Name;
         this.Result = databaseSource.Result;
+
+        this.Script.update(databaseSource.Script as IFile);
+
+        //if (Utilities.hasValue(this.Script.Path)) {
+        //    this.Script.loadContents()
+        //        .then((data) => {
+        //            console.log(data);
+        //            Promise.resolve(data);
+        //        })
+        //        .catch((err) => {
+        //            console.log(err);
+        //            Promise.reject(err);
+        //        });
+        //}
     }
 }

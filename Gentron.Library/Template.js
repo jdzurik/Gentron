@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Types_1 = require("./Types");
-const Guid_1 = require("./utils/Guid");
+const _1 = require(".");
 class Template {
     get ID() {
         return this._id;
@@ -19,7 +19,7 @@ class Template {
         this._type = value;
     }
     constructor() {
-        this._id = Guid_1.default.newGuid();
+        this._id = _1.Utilities.newGuid();
         this._name = "";
         this._type = Types_1.TemplateTypes.Partial;
     }

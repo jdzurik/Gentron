@@ -24,7 +24,7 @@ let FileSource = class FileSource extends React.Component {
     render() {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
-                React.createElement(metro_1.Row, null,
+                React.createElement(metro_1.Row, { className: "mb-2" },
                     React.createElement(metro_1.Cell, { colSpan: 12 },
                         React.createElement("h3", null,
                             React.createElement("span", { className: "mif-file-code mif-md mr-2" }),
@@ -35,7 +35,7 @@ let FileSource = class FileSource extends React.Component {
                 React.createElement(metro_1.Row, { className: "h-100 mt-2" },
                     React.createElement(metro_1.Cell, null,
                         React.createElement("div", { className: "h-100 w-100 border bd-grayWhite border-size-2" },
-                            React.createElement(react_monaco_editor_1.default, { language: "javascript", value: (() => { }).toString(), options: {}, onChange: console.log, editorDidMount: console.log })))))));
+                            React.createElement(react_monaco_editor_1.default, { language: "javascript", value: (() => { }).toString(), options: {}, onChange: console.log, editorDidMount: () => { } })))))));
     }
 };
 FileSource = __decorate([

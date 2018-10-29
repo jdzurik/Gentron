@@ -1,6 +1,5 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
@@ -41,7 +40,7 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row>
+                    <Row className="mb-2">
                         <Cell colSpan={12}>
                             <h3>
                                 <span className="mif-http mif-md mr-2"></span>
@@ -61,18 +60,18 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
                             <MonacoEditor
                                 language="javascript"
                                 value={(() => { }).toString()}
-                                options={{}}
+                                options={{readOnly: true, wordWrap: `on`}}
                                 onChange={console.log}
-                                editorDidMount={console.log}
+                                editorDidMount={() => {}}
                             />
                         </div>
                         <div className="h-100 w-100">
                             <MonacoEditor
-                                language="javascript"
+                                language="json"
                                 value={(() => { }).toString()}
-                                options={{}}
+                                options={{ readOnly: true, wordWrap: `on` }}
                                 onChange={console.log}
-                                editorDidMount={console.log}
+                                editorDidMount={() => {}}
                             />
                         </div>
                     </SplitPane>

@@ -10,6 +10,7 @@ import { OutputPath, IOutputPath } from "./OutputPath";
 import { PackageSettings, IPackageSettings } from "./PackageSettings";
 import { ProjectSettings, IProjectSettings } from "./ProjectSettings";
 import { Template, ITemplate } from "./Template";
+import Utilities from "./Utilities";
 
 export {
     Gentron,
@@ -46,5 +47,7 @@ export {
     ITemplate,
 
     OutputPath,
-    IOutputPath
+    IOutputPath,
+
+    Utilities
 };

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Guid_1 = require("./utils/Guid");
+const _1 = require(".");
 class OutputPath {
     get ID() {
         return this._id;
@@ -18,7 +18,7 @@ class OutputPath {
         this._path = value;
     }
     constructor() {
-        this._id = Guid_1.default.newGuid();
+        this._id = _1.Utilities.newCryptoGuid();
         this._name = "";
         this._path = "";
     }

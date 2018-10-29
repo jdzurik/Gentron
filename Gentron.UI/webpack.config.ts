@@ -40,7 +40,8 @@ const config: webpack.Configuration = {
             jQuery: "jquery"
         }),
         new MonacoWebpackPlugin({})
-    ]
+    ],
+    target: "electron-renderer"
 }
 
 export default config;

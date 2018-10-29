@@ -1,8 +1,6 @@
 ﻿import { IConnectionBase } from "./ConnectionBase";
-import Guid from "./utils/Guid";
-import IIdentifiable from "./interfaces/IIdentifiable";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
-import IModifiable from "./interfaces/IModifiable";
+import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
+import { Utilities } from ".";
 
 export interface IConnectionGroup<TConnection extends IConnectionBase> extends IJsonSerializable, IIdentifiable, IModifiable<IConnectionGroup<TConnection>> {
     /*
@@ -49,7 +47,7 @@ export class ConnectionGroup<TConnection extends IConnectionBase> implements ICo
      *  Constructors
      */
     public constructor() {
-        this._id = Guid.newCryptoGuid();
+        this._id = Utilities.newCryptoGuid();
         this._connections = [];
         this._name = "";
     }

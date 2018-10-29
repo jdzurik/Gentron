@@ -24,3 +24,5 @@ const ProjectSettings_1 = require("./ProjectSettings");
 exports.ProjectSettings = ProjectSettings_1.ProjectSettings;
 const Template_1 = require("./Template");
 exports.Template = Template_1.Template;
+const Utilities_1 = require("./Utilities");
+exports.Utilities = Utilities_1.default;

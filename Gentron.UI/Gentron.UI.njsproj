@@ -7,6 +7,9 @@
     <NodeExePath>node_modules\electron\dist\electron.exe</NodeExePath>
     <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
     <ToolsVersionPromptShown>2.8</ToolsVersionPromptShown>
+    <NodeExeArguments>
+    </NodeExeArguments>
+    <ScriptArguments>--no-warnings</ScriptArguments>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -79,6 +82,12 @@
     <TypeScriptCompile Include="components\HttpSources.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="components\metro\FileInput.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="components\metro\FolderInput.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="components\metro\LinkButton.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -92,6 +101,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\metro\Row.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="components\metro\SelectList.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\NavViewContent.tsx">

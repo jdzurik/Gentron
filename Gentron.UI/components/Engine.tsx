@@ -1,6 +1,5 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
@@ -40,7 +39,7 @@ export default class Engine extends React.Component<EngineProps> {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row>
+                    <Row className="mb-2">
                         <Cell colSpan={12}>
                             <h3>
                                 <span className="mif-drive-eta mif-md mr-2"></span>
@@ -72,7 +71,7 @@ export default class Engine extends React.Component<EngineProps> {
                                     value={(() => { }).toString()}
                                     options={{}}
                                     onChange={console.log}
-                                    editorDidMount={console.log}
+                                    editorDidMount={() => {}}
                                 />
                             </div>
                         </Cell>

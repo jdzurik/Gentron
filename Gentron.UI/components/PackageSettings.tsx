@@ -1,6 +1,5 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
 import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
@@ -77,7 +76,7 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
                                     value={(() => { }).toString()}
                                     options={{}}
                                     onChange={console.log}
-                                    editorDidMount={console.log}
+                                    editorDidMount={() => {}}
                                 />
                             </div>
                         </Cell>

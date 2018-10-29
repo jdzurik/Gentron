@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Guid_1 = require("./utils/Guid");
+const _1 = require(".");
 class SourceBase {
     get ID() {
         return this._id;
@@ -24,7 +24,7 @@ class SourceBase {
         this._result = value;
     }
     constructor() {
-        this._id = Guid_1.default.newCryptoGuid();
+        this._id = _1.Utilities.newCryptoGuid();
         this._isActive = true;
         this._name = "";
         this._result = "";

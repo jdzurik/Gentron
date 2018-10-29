@@ -1,7 +1,5 @@
-﻿import Guid from "./utils/Guid";
-import IIdentifiable from "./interfaces/IIdentifiable";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
-import IModifiable from "./interfaces/IModifiable";
+﻿import { Utilities } from ".";
+import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
 
 export interface IConnectionBase extends IJsonSerializable, IIdentifiable, IModifiable<IConnectionBase> {
     /*
@@ -35,7 +33,7 @@ export abstract class ConnectionBase implements IConnectionBase {
      *  Constructors
      */
     public constructor() {
-        this._id = Guid.newCryptoGuid();
+        this._id = Utilities.newCryptoGuid();
         this._isActive = true;
     }
 

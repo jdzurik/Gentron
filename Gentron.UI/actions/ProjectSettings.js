@@ -7,9 +7,9 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_DATABASE_CONNECTION_GROUP"
         };
     },
-    addOrUpdateLocalPackageFolder: (ev) => {
+    addOrUpdateLocalPackageFolder: (value) => {
         return {
-            localPackageFolder: ev ? ev.target.value : "",
+            localPackageFolder: value || "",
             type: "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER"
         };
     },

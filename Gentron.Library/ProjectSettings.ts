@@ -2,8 +2,8 @@
 import { IDatabaseConnection } from "./DatabaseConnection";
 import { IFileConnection } from "./FileConnection";
 import { IHttpConnection } from "./HttpConnection";
+import { IJsonSerializable } from "./interfaces";
 import { IOutputPath } from "./OutputPath";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
 
 export interface IProjectSettings extends IJsonSerializable {
     /*

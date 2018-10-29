@@ -48,9 +48,9 @@ export const ActionCreators = {
             type: ProjectSettingsActionNames.AddOrUpdateDatabaseConnectionGroup
         };
     },
-    addOrUpdateLocalPackageFolder: (ev?: ChangeEvent<HTMLInputElement>) => {
+    addOrUpdateLocalPackageFolder: (value?: string) => {
         return <AddOrUpdateLocalPackageFolderAction>{
-            localPackageFolder: ev ? ev.target.value : "",
+            localPackageFolder: value || "",
             type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction
         };
     },
