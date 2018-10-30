@@ -1,19 +1,21 @@
 ﻿import { Utilities } from ".";
-import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
+import { IActivateable, ICloneable, IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
 
-export interface IConnectionBase extends IActivateable, IJsonSerializable, IIdentifiable, IModifiable<IConnectionBase> { }
+export interface IConnectionBase extends IActivateable, ICloneable<IConnectionBase>, IIdentifiable, IJsonSerializable, IModifiable<IConnectionBase> {
+
+}
 
 export abstract class ConnectionBase implements IConnectionBase {
     /*
      *  Properties & Fields 
      */
-    private readonly _id: string;
+    protected _id: string;
 
     public get ID(): string {
         return this._id;
     }
 
-    private _isActive: boolean;
+    protected _isActive: boolean;
 
     public get IsActive(): boolean {
         return this._isActive;
@@ -37,6 +39,8 @@ export abstract class ConnectionBase implements IConnectionBase {
      *  Methods
      */
     public abstract toJson(): any;
+
+    public abstract clone(): IConnectionBase;
 
     public abstract update(connection: IConnectionBase): void;
 }

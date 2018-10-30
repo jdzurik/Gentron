@@ -1,7 +1,7 @@
 ﻿import { Utilities } from ".";
 import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
 
-export interface ISourceBase extends IActivateable, IJsonSerializable, IIdentifiable, IModifiable<ISourceBase> {
+export interface ISourceBase extends IActivateable, IJsonSerializable, Readonly<IIdentifiable>, IModifiable<ISourceBase> {
     /*
      *  Properties & Fields 
      */
@@ -18,6 +18,7 @@ export abstract class SourceBase implements ISourceBase {
     public get ID(): string {
         return this._id;
     }
+
 
     protected _isActive: boolean;
 

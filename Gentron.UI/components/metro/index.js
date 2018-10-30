@@ -2,6 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Cell_1 = require("./Cell");
 exports.Cell = Cell_1.default;
+const Dialog_1 = require("./Dialog");
+exports.Dialog = Dialog_1.Dialog;
+exports.DialogAction = Dialog_1.DialogAction;
+exports.DialogContent = Dialog_1.DialogContent;
+exports.DialogTitle = Dialog_1.DialogTitle;
+const EditableTextInput_1 = require("./EditableTextInput");
+exports.EditableTextInput = EditableTextInput_1.default;
 const FileInput_1 = require("./FileInput");
 exports.FileInput = FileInput_1.default;
 const FolderInput_1 = require("./FolderInput");

@@ -1,7 +1,4 @@
-﻿const { dialog } = (window as any).require('electron').remote;
-import * as React from "react";
-import { MouseEvent } from "react";
-import { Utilities } from "../../../Gentron.Library";
+﻿import * as React from "react";
 
 type SwitchProps = {
     checked: boolean;

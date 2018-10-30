@@ -85,6 +85,12 @@
     <TypeScriptCompile Include="components\HttpSources.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="components\metro\Dialog.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="components\metro\EditableTextInput.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="components\metro\FileInput.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>

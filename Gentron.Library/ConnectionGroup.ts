@@ -1,8 +1,8 @@
 ﻿import { IConnectionBase } from "./ConnectionBase";
-import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
+import { ICloneable, IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
 import { Utilities } from ".";
 
-export interface IConnectionGroup<TConnection extends IConnectionBase> extends IJsonSerializable, IIdentifiable, IModifiable<IConnectionGroup<TConnection>> {
+export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IJsonSerializable, IIdentifiable, IModifiable<IConnectionGroup<TConnection>> {
     /*
      *  Properties & Fields 
      */
@@ -20,7 +20,7 @@ export class ConnectionGroup<TConnection extends IConnectionBase> implements ICo
     /*
      *  Properties & Fields 
      */
-    private readonly _id: string;
+    protected _id: string;
 
     public get ID(): string {
         return this._id;
@@ -68,13 +68,18 @@ export class ConnectionGroup<TConnection extends IConnectionBase> implements ICo
         throw new Error("Method not implemented");
     }
 
+    public clone(): IConnectionGroup<TConnection> {
+        const ret: ConnectionGroup<TConnection> = new ConnectionGroup<TConnection>();
+
+        ret._connections = this._connections.map((conn: TConnection, i: number) => conn.clone() as TConnection);
+        ret._id = this._id;
+        ret._name = this._name;
+
+        return ret;
+    }
+
     public update(connection: IConnectionGroup<TConnection>): void {
-        for (let i: number = 0; i < this.Connections.length; ++i) {
-            for (let j: number = 0; j < connection.Connections.length; ++j) {
-                if (this.Connections[i].ID === connection.Connections[j].ID) {
-                    this.Connections[i].update(connection.Connections[j]);
-                }
-            }
-        }
+        this._connections = connection.Connections.map((conn: TConnection, i: number) => conn.clone() as TConnection);
+        this._name = connection.Name;
     }
 }

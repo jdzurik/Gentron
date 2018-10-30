@@ -30,6 +30,7 @@ export class File implements IFile {
         this._contents = value;
     }
 
+
     private _lastModified?: Date;
 
     public get LastModified(): Date | undefined {
@@ -39,6 +40,7 @@ export class File implements IFile {
     public set LastModified(value: Date | undefined) {
         this._lastModified = value;
     }
+
 
     private _path: string;
 

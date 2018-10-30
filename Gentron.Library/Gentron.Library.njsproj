@@ -74,6 +74,9 @@
     <TypeScriptCompile Include="interfaces\IActivateable.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="interfaces\ICloneable.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="interfaces\IIdentifiable.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

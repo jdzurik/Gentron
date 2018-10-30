@@ -38,15 +38,15 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_HTTP_SOURCE"
         };
     },
-    addOrUpdatePackageName: (ev) => {
+    addOrUpdatePackageName: (packageName) => {
         return {
-            packageName: ev ? ev.target.value : "",
+            packageName: packageName,
             type: "ADD_OR_UPDATE_PACKAGE_NAME"
         };
     },
-    addOrUpdateReadMeText: (ev) => {
+    addOrUpdateReadMeText: (readMeText) => {
         return {
-            readMeText: ev ? ev.target.value : "",
+            readMeText: readMeText,
             type: "ADD_OR_UPDATE_READ_ME_TEXT"
         };
     },

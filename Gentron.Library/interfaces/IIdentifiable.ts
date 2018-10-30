@@ -2,5 +2,5 @@
     /*
      *  Properties & Fields
      */
-    readonly ID: string;
+    ID: string;
 }

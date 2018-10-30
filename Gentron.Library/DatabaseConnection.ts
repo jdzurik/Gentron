@@ -22,6 +22,7 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
         this._connectionString = value;
     }
 
+
     private _environment: string;
 
     public get Environment(): string {
@@ -48,6 +49,17 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
      */
     public toJson(): any {
         throw new Error("Method not implemented");
+    }
+
+    public clone(): DatabaseConnection {
+        const ret: DatabaseConnection = new DatabaseConnection();
+
+        ret._connectionString = this._connectionString;
+        ret._environment = this._environment;
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+
+        return ret;
     }
 
     public update(dbConnection: DatabaseConnection): void {

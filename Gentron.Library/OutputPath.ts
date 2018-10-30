@@ -1,7 +1,7 @@
 ﻿import { Utilities } from ".";
 import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
 
-export interface IOutputPath extends IJsonSerializable, IIdentifiable, IModifiable<IOutputPath> {
+export interface IOutputPath extends IJsonSerializable, Readonly<IIdentifiable>, IModifiable<IOutputPath> {
     /*
      *  Properties & Fields
      */

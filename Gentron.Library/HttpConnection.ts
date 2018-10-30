@@ -38,6 +38,10 @@ export class HttpConnection extends ConnectionBase implements IHttpConnection {
         throw new Error("Method not implemented");
     }
 
+    public clone(): HttpConnection {
+        throw new Error("Method not implemented");
+    }
+
     public update(dbConnection: HttpConnection): void {
         throw new Error("Method not implemented");
     }

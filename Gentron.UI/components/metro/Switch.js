@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const { dialog } = window.require('electron').remote;
 const React = require("react");
 class Switch extends React.Component {
     constructor(props) {

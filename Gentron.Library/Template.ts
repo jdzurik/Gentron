@@ -2,7 +2,7 @@
 import { TemplateTypes } from "./Types";
 import { Utilities } from ".";
 
-export interface ITemplate extends IJsonSerializable, IIdentifiable, IModifiable<ITemplate> {
+export interface ITemplate extends IJsonSerializable, Readonly<IIdentifiable>, IModifiable<ITemplate> {
     Name: string;
     Type: TemplateTypes;
 }

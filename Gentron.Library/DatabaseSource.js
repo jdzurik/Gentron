@@ -24,15 +24,14 @@ class DatabaseSource extends SourceBase_1.SourceBase {
         throw new Error("Method not implemented");
     }
     update(databaseSource) {
+        if (typeof (databaseSource) === typeof (undefined) || databaseSource === null) {
+            return;
+        }
         this.ActiveConnectionGroup = databaseSource.ActiveConnectionGroup;
         this.IsActive = databaseSource.IsActive;
         this.Name = databaseSource.Name;
         this.Result = databaseSource.Result;
-        if (_1.Utilities.hasValue(this.Script)
-            && _1.Utilities.hasValue(databaseSource.Script)
-            && this.Script.Path !== databaseSource.Script.Path) {
-            this.Script.update(databaseSource.Script);
-        }
+        this.Script.update(databaseSource.Script);
     }
 }
 exports.DatabaseSource = DatabaseSource;

@@ -27,14 +27,16 @@ class ConnectionGroup {
     toJson() {
         throw new Error("Method not implemented");
     }
+    clone() {
+        const ret = new ConnectionGroup();
+        ret._connections = this._connections.map((conn, i) => conn.clone());
+        ret._id = this._id;
+        ret._name = this._name;
+        return ret;
+    }
     update(connection) {
-        for (let i = 0; i < this.Connections.length; ++i) {
-            for (let j = 0; j < connection.Connections.length; ++j) {
-                if (this.Connections[i].ID === connection.Connections[j].ID) {
-                    this.Connections[i].update(connection.Connections[j]);
-                }
-            }
-        }
+        this._connections = connection.Connections.map((conn, i) => conn.clone());
+        this._name = connection.Name;
     }
 }
 exports.ConnectionGroup = ConnectionGroup;

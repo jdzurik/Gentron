@@ -54,15 +54,19 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
 
 
     public update(databaseSource: IDatabaseSource): void {
+        if (typeof (databaseSource) === typeof (undefined) || databaseSource === null) {
+            return;
+        }
+
         this.ActiveConnectionGroup = databaseSource.ActiveConnectionGroup;
         this.IsActive = databaseSource.IsActive;
         this.Name = databaseSource.Name;
         this.Result = databaseSource.Result;
 
-        if (Utilities.hasValue(this.Script)
-            && Utilities.hasValue(databaseSource.Script)
-            && this.Script.Path !== databaseSource.Script.Path) {
-            this.Script.update(databaseSource.Script as IFile);
-        }
+        this.Script.update(databaseSource.Script as IFile);
+        //if (Utilities.hasValue(this.Script)
+        //    && Utilities.hasValue(databaseSource.Script)
+        //    && this.Script.Path !== databaseSource.Script.Path) {
+        //}
     }
 }

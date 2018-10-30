@@ -15,6 +15,9 @@ class HttpConnection extends ConnectionBase_1.ConnectionBase {
     toJson() {
         throw new Error("Method not implemented");
     }
+    clone() {
+        throw new Error("Method not implemented");
+    }
     update(dbConnection) {
         throw new Error("Method not implemented");
     }
