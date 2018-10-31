@@ -38,6 +38,15 @@
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="abstract\Cloneable.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="abstract\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="abstract\JsonSerializable.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ConnectionBase.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -92,6 +101,9 @@
     <TypeScriptCompile Include="OutputPath.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="OutputPathGroup.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="SerializeBase.ts" />
     <TypeScriptCompile Include="SourceBase.ts">
       <SubType>Code</SubType>
@@ -120,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="interfaces\" />
+    <Folder Include="abstract\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

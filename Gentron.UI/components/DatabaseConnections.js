@@ -29,35 +29,34 @@ let DatabaseConnections = class DatabaseConnections extends React.Component {
         this.props.removeDatabaseConnectionGroup(connectionGroup);
     }
     handleOpenEditConnectionClick(connectionGroup) {
-        this.setState((prevState) => {
-            return Object.assign({}, prevState, { EditingConnectionGroup: connectionGroup.clone() });
+        this.setState({
+            EditingConnectionGroup: connectionGroup.clone()
         });
     }
     handleEditConnectionNameChange(name) {
-        const editingConnectionGrp = this.state.EditingConnectionGroup;
-        editingConnectionGrp.Name = name;
-        this.setState((prevState) => {
-            return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGrp });
+        const editingConnectionGroup = this.state.EditingConnectionGroup;
+        editingConnectionGroup.Name = name;
+        this.setState({
+            EditingConnectionGroup: editingConnectionGroup
         });
     }
     handleEditConnectionStringChange(environment, connStr) {
-        this.setState((prevState) => {
-            return Object.assign({}, prevState, {
-                Connections: prevState.EditingConnectionGroup.Connections.map((conn, i) => {
-                    if (conn.Environment === environment.Name) {
-                        conn.ConnectionString = connStr;
-                    }
-                    return conn;
-                })
-            });
+        const editingConnectionGroup = this.state.EditingConnectionGroup;
+        editingConnectionGroup.Connections.forEach((conn, i) => {
+            if (conn.Environment === environment.Name) {
+                conn.ConnectionString = connStr;
+            }
+        });
+        this.setState({
+            EditingConnectionGroup: editingConnectionGroup
         });
     }
     handleCloseEditConnectionClick(save) {
         if (save) {
             this.props.addOrUpdateDatabaseConnectionGroup(this.state.EditingConnectionGroup);
         }
-        this.setState((prevState) => {
-            return Object.assign({}, prevState, { EditingConnectionGroup: null });
+        this.setState({
+            EditingConnectionGroup: null
         });
     }
     render() {
@@ -67,25 +66,27 @@ let DatabaseConnections = class DatabaseConnections extends React.Component {
                 React.createElement("table", { className: "table striped table-border mt-4" },
                     React.createElement("thead", null,
                         React.createElement("tr", null,
-                            React.createElement("th", null, ` `),
                             React.createElement("th", null, "Name"),
                             React.createElement("th", null, "Connections"),
                             React.createElement("th", null, ` `))),
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", null,
-                                React.createElement("button", { className: "button", onClick: this.handleAddConnectionClick.bind(this) }, "Add Connection")),
-                            React.createElement("td", null, ` `),
+                                React.createElement("button", { className: "button", onClick: this.handleAddConnectionClick.bind(this) },
+                                    React.createElement("span", { className: "mif-add" }))),
                             React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `)),
                         this.props.DatabaseConnections.map((connection, i) => React.createElement("tr", { key: i },
                             React.createElement("td", null,
-                                React.createElement("button", { className: "button", onClick: () => this.handleOpenEditConnectionClick(connection) }, "Click")),
-                            React.createElement("td", null, connection.Name),
+                                React.createElement("button", { className: "button", onClick: () => this.handleOpenEditConnectionClick(connection) },
+                                    React.createElement("span", { className: "mif-pencil" })),
+                                React.createElement("span", null,
+                                    " ",
+                                    connection.Name)),
                             React.createElement("td", null, connection.Connections.length),
                             React.createElement("td", null,
-                                React.createElement("a", { href: "#" },
-                                    React.createElement("button", { className: "button", onClick: this.handleRemoveConnectionClick.bind(this, connection) }, "Remove")))))))),
+                                React.createElement("button", { className: "button", onClick: this.handleRemoveConnectionClick.bind(this, connection) },
+                                    React.createElement("span", { className: "mif-bin" })))))))),
             Gentron_Library_1.Utilities.hasValue(this.state.EditingConnectionGroup)
                 ? (React.createElement(metro_1.Dialog, null,
                     React.createElement(metro_1.DialogTitle, null, "Edit Connection"),

@@ -49,7 +49,11 @@ export default class Templates extends React.Component<TemplatesProps> {
 
                     <Row className="mt-2 mb-2">
                         <Cell>
-                            <LinkButton iconClassName="mif-arrow-left" linkTo={`/engines/manage/${this.props.match.params.engineid}`} buttonText="View Template Engine"></LinkButton>
+                            <LinkButton
+                                buttonText="View Template Engine"
+                                iconClassName="mif-arrow-left"
+                                linkTo={`/engines/manage/${this.props.match.params.engineid}`}
+                            />
                         </Cell>
                     </Row>
 

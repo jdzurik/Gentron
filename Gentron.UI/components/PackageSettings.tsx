@@ -74,7 +74,7 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
                                 <MonacoEditor
                                     language="markdown"
                                     value={(() => { }).toString()}
-                                    options={{}}
+                                    options={{ wordWrap: `on` }}
                                     onChange={console.log}
                                     editorDidMount={() => {}}
                                 />

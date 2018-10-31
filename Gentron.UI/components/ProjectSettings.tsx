@@ -58,7 +58,7 @@ export default class ProjectSettings extends React.Component<ProjectSettingsProp
                                 <input type={`text`}
                                     placeholder={`Remote Package Location`}
                                     value={this.props.RemotePackageLocation}
-                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdateRemotePackageLocation(ev)}
+                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdateRemotePackageLocation(ev.target.value || ``)}
                                     data-role={`input`}
                                     data-role-input={true}
                                 />
@@ -92,7 +92,7 @@ function mapStateToProps(state: ApplicationState): HashedIProjectSettings {
         FileConnections: state.ProjectSettings.FileConnections,
         HttpConnections: state.ProjectSettings.HttpConnections,
         LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
-        OutputPaths: state.ProjectSettings.OutputPaths,
+        OutputPathGroups: state.ProjectSettings.OutputPathGroups,
         RemotePackageLocation: state.ProjectSettings.RemotePackageLocation,
         _hash: _hash
     };

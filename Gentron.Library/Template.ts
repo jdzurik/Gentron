@@ -1,13 +1,14 @@
 ﻿import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
 import { TemplateTypes } from "./Types";
 import { Utilities } from ".";
+import { JsonSerializable } from "./abstract";
 
-export interface ITemplate extends IJsonSerializable, Readonly<IIdentifiable>, IModifiable<ITemplate> {
+export interface ITemplate extends IJsonSerializable<ITemplate>, IIdentifiable, IModifiable<ITemplate> {
     Name: string;
     Type: TemplateTypes;
 }
 
-export class Template implements ITemplate {
+export class Template extends JsonSerializable<ITemplate> implements ITemplate {
     /*
      *  Properties & Fields
      */
@@ -44,6 +45,7 @@ export class Template implements ITemplate {
      *  Constructors
      */
     public constructor() {
+        super();
         this._id = Utilities.newGuid();
         this._name = "";
         this._type = TemplateTypes.Partial;

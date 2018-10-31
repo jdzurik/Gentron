@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class PackageSettings {
+const abstract_1 = require("./abstract");
+class PackageSettings extends abstract_1.JsonSerializable {
     get DatabaseSources() {
         return this._databaseSources;
     }
@@ -44,6 +45,7 @@ class PackageSettings {
         this._readMeText = value;
     }
     constructor() {
+        super();
         this._databaseSources = [];
         this._engines = [];
         this._environments = [];

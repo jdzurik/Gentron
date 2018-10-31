@@ -1,7 +1,4 @@
-﻿import { Action, Reducer } from 'redux';
-import { AppThunkAction } from '.';
-import { ChangeEvent } from 'react';
-import { IConnectionGroup, IDatabaseConnection, IOutputPath } from '../../Gentron.Library';
+﻿import { IConnectionGroup, IDatabaseConnection, IOutputPath, IOutputPathGroup } from '../../Gentron.Library';
 import { ProjectSettingsActionNames } from "../constants/ActionNames";
 
 export interface AddOrUpdateDatabaseConnectionGroupAction {
@@ -14,9 +11,9 @@ export interface AddOrUpdateLocalPackageFolderAction {
     type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction;
 }
 
-export interface AddOrUpdateOutputPathAction {
-    outputPath: IOutputPath;
-    type: ProjectSettingsActionNames.AddOrUpdateOutputPathAction;
+export interface AddOrUpdateOutputPathGroupAction {
+    outputPathGroup: IOutputPathGroup<IOutputPath>;
+    type: ProjectSettingsActionNames.AddOrUpdateOutputPathGroupAction;
 }
 
 export interface AddOrUpdateRemotePackageLocationAction {
@@ -29,17 +26,17 @@ export interface RemoveDatabaseConnectionGroupAction {
     type: ProjectSettingsActionNames.RemoveDatabaseConnectionGroup;
 }
 
-export interface RemoveOutputPathAction {
-    outputPath: IOutputPath;
-    type: ProjectSettingsActionNames.RemoveOutputPathAction;
+export interface RemoveOutputPathGroupAction {
+    outputPathGroup: IOutputPathGroup<IOutputPath>;
+    type: ProjectSettingsActionNames.RemoveOutputPathGroupAction;
 }
 
 export type KnownProjectSettingsAction = AddOrUpdateDatabaseConnectionGroupAction
     | AddOrUpdateLocalPackageFolderAction
-    | AddOrUpdateOutputPathAction
+    | AddOrUpdateOutputPathGroupAction
     | AddOrUpdateRemotePackageLocationAction
     | RemoveDatabaseConnectionGroupAction
-    | RemoveOutputPathAction;
+    | RemoveOutputPathGroupAction;
 
 export const ActionCreators = {
     addOrUpdateDatabaseConnectionGroup: (databaseSource: IConnectionGroup<IDatabaseConnection>) => {
@@ -48,21 +45,21 @@ export const ActionCreators = {
             type: ProjectSettingsActionNames.AddOrUpdateDatabaseConnectionGroup
         };
     },
-    addOrUpdateLocalPackageFolder: (value?: string) => {
+    addOrUpdateLocalPackageFolder: (localPackageFolder?: string) => {
         return <AddOrUpdateLocalPackageFolderAction>{
-            localPackageFolder: value || "",
+            localPackageFolder: localPackageFolder,
             type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction
         };
     },
-    addOrUpdateOutputPath: (outputPath: IOutputPath) => {
-        return <AddOrUpdateOutputPathAction>{
-            outputPath: outputPath,
-            type: ProjectSettingsActionNames.AddOrUpdateOutputPathAction
+    addOrUpdateOutputPathGroup: (outputPathGroup: IOutputPathGroup<IOutputPath>) => {
+        return <AddOrUpdateOutputPathGroupAction>{
+            outputPathGroup: outputPathGroup,
+            type: ProjectSettingsActionNames.AddOrUpdateOutputPathGroupAction
         };
     },
-    addOrUpdateRemotePackageLocation: (ev?: ChangeEvent<HTMLInputElement>) => {
+    addOrUpdateRemotePackageLocation: (remotePackageLocation?: string) => {
         return <AddOrUpdateRemotePackageLocationAction>{
-            remotePackageLocation: ev ? ev.target.value : "",
+            remotePackageLocation: remotePackageLocation,
             type: ProjectSettingsActionNames.AddOrUpdateRemotePackageLocationAction
         };
     },
@@ -72,10 +69,10 @@ export const ActionCreators = {
             type: ProjectSettingsActionNames.RemoveDatabaseConnectionGroup
         };
     },
-    removeOutputPath: (outputPath: IOutputPath) => {
-        return <RemoveOutputPathAction>{
-            outputPath: outputPath,
-            type: ProjectSettingsActionNames.RemoveOutputPathAction
+    removeOutputPathGroup: (outputPathGroup: IOutputPathGroup<IOutputPath>) => {
+        return <RemoveOutputPathGroupAction>{
+            outputPathGroup: outputPathGroup,
+            type: ProjectSettingsActionNames.RemoveOutputPathGroupAction
         };
     },
 };

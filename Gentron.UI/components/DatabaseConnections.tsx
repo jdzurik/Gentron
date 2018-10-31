@@ -49,33 +49,28 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
     }
 
     private handleOpenEditConnectionClick(connectionGroup: IConnectionGroup<IDatabaseConnection>): void {
-        this.setState((prevState: Readonly<DatabaseConnectionsState>) => {
-            return Object.assign({}, prevState, { EditingConnectionGroup: connectionGroup.clone() });
+        this.setState({
+            EditingConnectionGroup: connectionGroup.clone()
         });
     }
 
     private handleEditConnectionNameChange(name: string): void {
-        const editingConnectionGrp: IConnectionGroup<IDatabaseConnection> = this.state.EditingConnectionGroup;
-        editingConnectionGrp.Name = name;
-        this.setState((prevState: Readonly<DatabaseConnectionsState>) => {
-            return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGrp });
+        const editingConnectionGroup: IConnectionGroup<IDatabaseConnection> = this.state.EditingConnectionGroup;
+        editingConnectionGroup.Name = name;
+        this.setState({
+            EditingConnectionGroup: editingConnectionGroup
         });
     }
 
     private handleEditConnectionStringChange(environment: IEnvironment, connStr): void {
-        this.setState((prevState: Readonly<DatabaseConnectionsState>) => {
-            return Object.assign(
-                {},
-                prevState,
-                {
-                    Connections: prevState.EditingConnectionGroup.Connections.map((conn: IDatabaseConnection, i: number) => {
-                        if (conn.Environment === environment.Name) {
-                            conn.ConnectionString = connStr;
-                        }
-
-                        return conn;
-                    })
-                });
+        const editingConnectionGroup: IConnectionGroup<IDatabaseConnection> = this.state.EditingConnectionGroup;
+        editingConnectionGroup.Connections.forEach((conn: IDatabaseConnection, i: number) => {
+            if (conn.Environment === environment.Name) {
+                conn.ConnectionString = connStr;
+            }
+        });
+        this.setState({
+            EditingConnectionGroup: editingConnectionGroup
         });
     }
 
@@ -84,8 +79,8 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
             this.props.addOrUpdateDatabaseConnectionGroup(this.state.EditingConnectionGroup);
         }
 
-        this.setState((prevState: Readonly<DatabaseConnectionsState>) => {
-            return Object.assign({}, prevState, { EditingConnectionGroup: null });
+        this.setState({
+            EditingConnectionGroup: null
         });
     }
 
@@ -98,7 +93,6 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                     <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
-                                <th>{` `}</th>
                                 <th>Name</th>
                                 <th>Connections</th>
                                 <th>{` `}</th>
@@ -107,9 +101,10 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddConnectionClick.bind(this)}>Add Connection</button>
+                                    <button className="button" onClick={this.handleAddConnectionClick.bind(this)}>
+                                        <span className="mif-add"></span>
+                                    </button>
                                 </td>
-                                <td>{` `}</td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
                             </tr>
@@ -119,15 +114,17 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                         <td>
                                             <button className="button"
                                                 onClick={() => this.handleOpenEditConnectionClick(connection)}>
-                                                Click
+                                                <span className="mif-pencil"></span>
                                             </button>
+                                            <span> {connection.Name}</span>
                                         </td>
-                                        <td>{connection.Name}</td>
-                                        <td>{connection.Connections.length}</td>
                                         <td>
-                                            <a href="#">
-                                                <button className="button" onClick={this.handleRemoveConnectionClick.bind(this, connection)}>Remove</button>
-                                            </a>
+                                            {connection.Connections.length}
+                                        </td>
+                                        <td>
+                                            <button className="button" onClick={this.handleRemoveConnectionClick.bind(this, connection)}>
+                                                <span className="mif-bin"></span>
+                                            </button>
                                         </td>
                                     </tr>
                                 )

@@ -1,8 +1,8 @@
 ﻿import { IConnectionBase } from "./ConnectionBase";
 import { ICloneable, IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
-import { Utilities } from ".";
+import { Cloneable } from "./abstract";
 
-export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IJsonSerializable, IIdentifiable, IModifiable<IConnectionGroup<TConnection>> {
+export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IJsonSerializable<IConnectionGroup<TConnection>>, IIdentifiable, IModifiable<IConnectionGroup<TConnection>> {
     /*
      *  Properties & Fields 
      */
@@ -16,16 +16,10 @@ export interface IConnectionGroup<TConnection extends IConnectionBase> extends I
     removeConnection(connection: TConnection): void;
 }
 
-export class ConnectionGroup<TConnection extends IConnectionBase> implements IConnectionGroup<TConnection> {
+export class ConnectionGroup<TConnection extends IConnectionBase> extends Cloneable<IConnectionGroup<TConnection>> implements IConnectionGroup<TConnection> {
     /*
      *  Properties & Fields 
      */
-    protected _id: string;
-
-    public get ID(): string {
-        return this._id;
-    }
-
     private _connections: TConnection[];
 
     public get Connections(): TConnection[] {
@@ -47,7 +41,7 @@ export class ConnectionGroup<TConnection extends IConnectionBase> implements ICo
      *  Constructors
      */
     public constructor() {
-        this._id = Utilities.newCryptoGuid();
+        super();
         this._connections = [];
         this._name = "";
     }
@@ -71,8 +65,9 @@ export class ConnectionGroup<TConnection extends IConnectionBase> implements ICo
     public clone(): IConnectionGroup<TConnection> {
         const ret: ConnectionGroup<TConnection> = new ConnectionGroup<TConnection>();
 
+        ret._cloneId = this.ID;
         ret._connections = this._connections.map((conn: TConnection, i: number) => conn.clone() as TConnection);
-        ret._id = this._id;
+        ret._isClone = true;
         ret._name = this._name;
 
         return ret;

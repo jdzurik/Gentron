@@ -1,7 +1,8 @@
 ﻿import { IDatabaseSource, IEngine, IFileSource, IHttpSource, IEnvironment } from ".";
 import { IJsonSerializable } from "./interfaces";
+import { JsonSerializable } from "./abstract";
 
-export interface IPackageSettings extends IJsonSerializable {
+export interface IPackageSettings extends IJsonSerializable<IPackageSettings> {
     /*
      *  Properties & Fields 
      */
@@ -14,7 +15,7 @@ export interface IPackageSettings extends IJsonSerializable {
     ReadMeText: string;
 }
 
-export class PackageSettings implements IPackageSettings {
+export class PackageSettings extends JsonSerializable<IPackageSettings> implements IPackageSettings {
     /*
      *  Properties & Fields 
      */
@@ -99,6 +100,7 @@ export class PackageSettings implements IPackageSettings {
      *  Constructors
      */
     public constructor() {
+        super();
         this._databaseSources = [];
         this._engines = [];
         this._environments = [];

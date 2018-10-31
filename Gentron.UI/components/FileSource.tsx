@@ -8,6 +8,7 @@ import { IFileSource } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
+import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type HashedFileSource = Hash & {
     FileSource?: NonFunctionProperties<IFileSource>;
@@ -30,27 +31,19 @@ export default class FileSource extends React.Component<FileSourceProps> {
     /*
      *  Methods
      */
-    private handleNameClick(source: IFileSource): void {
-        source.Name = "Test";
-        this.props.addOrUpdateFileSource(source);
-    }
-
     public render(): JSX.Element {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row className="mb-2">
-                        <Cell colSpan={12}>
-                            <h3>
-                                <span className="mif-file-code mif-md mr-2"></span>
-                                <span onClick={this.handleNameClick.bind(this, this.props.FileSource)}>{this.props.FileSource.Name}</span>
-                            </h3>
-                        </Cell>
-                    </Row>
+                    <NavViewContentHeaderRow iconClassName="mif-file-code" title={this.props.FileSource.Name} />
 
                     <Row className="mt-2 mb-2">
                         <Cell>
-                            <LinkButton iconClassName="mif-arrow-left" linkTo="/sources/file" buttonText="View All Sources"></LinkButton>
+                            <LinkButton
+                                buttonText="View All Sources"
+                                iconClassName="mif-arrow-left"
+                                linkTo="/sources/file"
+                            />
                         </Cell>
                     </Row>
 
@@ -60,7 +53,7 @@ export default class FileSource extends React.Component<FileSourceProps> {
                                 <MonacoEditor
                                     language="javascript"
                                     value={(() => { }).toString()}
-                                    options={{}}
+                                    options={{ wordWrap: `on` }}
                                     onChange={console.log}
                                     editorDidMount={() => {}}
                                 />

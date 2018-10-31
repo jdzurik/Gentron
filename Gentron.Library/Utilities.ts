@@ -3,28 +3,54 @@
 export default class Utilities {
     private static _guidPlaceholder: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
 
+    private static readonly _booleanType = typeof (true);
+    private static readonly _functionType = typeof (() => { });
+    private static readonly _numberType = typeof (0);
+    private static readonly _objectType = typeof ({});
+    private static readonly _stringType = typeof ("");
+    private static readonly _symbolType = typeof (Symbol);
+    private static readonly _undefinedType = typeof (undefined);
+
+    public static readonly ObjectPrototype = Object.getPrototypeOf({});
+
     public static hasValue(obj: any): boolean {
-        return typeof (obj) !== typeof (undefined) && obj !== null;
+        return !this.isUndefined(obj) && obj !== null;
+    }
+
+    public static isArray(obj: any): boolean {
+        return Array.isArray(obj) || obj instanceof Array;
     }
 
     public static isBoolean(obj: any): boolean {
-        return this.hasValue(obj) && typeof (obj) === typeof (true);
+        return typeof (obj) === this._booleanType;
     }
 
     public static isFunction(obj: any): boolean {
-        return this.hasValue(obj) && typeof (obj) === typeof ((() => { }));
-    }
-
-    public static isObject(obj: any): boolean {
-        return this.hasValue(obj) && typeof (obj) === typeof ({});
+        return typeof (obj) === this._functionType;
     }
 
     public static isNumber(obj: any): boolean {
-        return this.hasValue(obj) && typeof (obj) === typeof (0);
+        return typeof (obj) === this._numberType;
+    }
+
+    public static isObject(obj: any): boolean {
+        return typeof (obj) === this._objectType;
     }
 
     public static isString(obj: any): boolean {
-        return this.hasValue(obj) && typeof (obj) === typeof ("");
+        return typeof (obj) === this._stringType;
+    }
+
+    public static isSymbol(obj: any): boolean {
+        return typeof (obj) === this._symbolType;
+    }
+
+    public static isUndefined(obj: any): boolean {
+        return typeof (obj) === this._undefinedType;
+    }
+
+    public static isPrimitive(obj: any): boolean {
+        return this.isBoolean(obj) || this.isNumber(obj) || this.isString(obj);
     }
 
     public static newGuid(): string {

@@ -3,7 +3,6 @@ import { NonFunctionProperties } from '../types';
 import { PackageSettings, IPackageSettings, IEnvironment } from "../../Gentron.Library";
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
-import Templates from '../components/Templates';
 
 type PackageSettingsProps = NonFunctionProperties<IPackageSettings>;
 

@@ -14,14 +14,11 @@ const redux_1 = require("redux");
 const metro_1 = require("./metro");
 const connect_1 = require("../connect");
 const react_monaco_editor_1 = require("react-monaco-editor");
+const NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
 const SplitPane_1 = require("./SplitPane");
 let DatabaseSource = class DatabaseSource extends React.Component {
     constructor(props) {
         super(props);
-    }
-    handleNameClick(source) {
-        source.Name = "Test";
-        this.props.addOrUpdateDatabaseSource(source);
     }
     handleScriptFileNameChange(source, value) {
         source.Script.Path = value;
@@ -36,14 +33,10 @@ let DatabaseSource = class DatabaseSource extends React.Component {
         const xmlEditorContainerId = `databaseSourceXmlResultsEditorContainer${this.props.match.params.id}`;
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
-                React.createElement(metro_1.Row, { className: "mb-2" },
-                    React.createElement(metro_1.Cell, { colSpan: 12 },
-                        React.createElement("h3", null,
-                            React.createElement("span", { className: "mif-database mif-md mr-2" }),
-                            React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.DatabaseSource) }, this.props.DatabaseSource.Name)))),
+                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-database", title: this.props.DatabaseSource.Name }),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
-                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/sources/db", buttonText: "View All Sources" }))),
+                        React.createElement(metro_1.LinkButton, { buttonText: "View All Sources", iconClassName: "mif-arrow-left", linkTo: "/sources/db" }))),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
                         React.createElement("select", { onChange: this.handleActiveConnectionChange.bind(this) }, this.props.DatabaseConnections.map((dbConn, i) => React.createElement("option", { key: i, value: dbConn.ID }, dbConn.Name))))),

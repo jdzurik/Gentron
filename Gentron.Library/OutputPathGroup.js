@@ -1,14 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const abstract_1 = require("./abstract");
-class ConnectionGroup extends abstract_1.Cloneable {
+class OutputPathGroup extends abstract_1.Cloneable {
     constructor() {
         super();
-        this._connections = [];
         this._name = "";
-    }
-    get Connections() {
-        return (this._connections || []).slice();
+        this._paths = [];
     }
     get Name() {
         return this._name;
@@ -16,25 +13,28 @@ class ConnectionGroup extends abstract_1.Cloneable {
     set Name(value) {
         this._name = value;
     }
-    addOrUpdateConnection(connection) {
-        this._connections.push(connection);
+    get Paths() {
+        return (this._paths || []).slice();
     }
-    removeConnection(connection) {
+    addOrUpdatePath(connection) {
+        this._paths.push(connection);
+    }
+    removePath(connection) {
     }
     toJson() {
         throw new Error("Method not implemented");
     }
     clone() {
-        const ret = new ConnectionGroup();
+        const ret = new OutputPathGroup();
         ret._cloneId = this.ID;
-        ret._connections = this._connections.map((conn, i) => conn.clone());
         ret._isClone = true;
         ret._name = this._name;
+        ret._paths = this._paths.map((conn, i) => conn.clone());
         return ret;
     }
     update(connection) {
-        this._connections = connection.Connections.map((conn, i) => conn.clone());
         this._name = connection.Name;
+        this._paths = connection.Paths.map((conn, i) => conn.clone());
     }
 }
-exports.ConnectionGroup = ConnectionGroup;
+exports.OutputPathGroup = OutputPathGroup;

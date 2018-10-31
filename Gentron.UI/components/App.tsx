@@ -1,12 +1,14 @@
 ﻿import * as React from "react";
+import { ConnectedRouter } from "connected-react-router";
 import { History } from "history";
-import NavView from "./NavView";
+import NavViewContent from "./NavViewContent";
+import NavViewPane from "./NavViewPane";
 
 type AppProps = {
     history: History;
 };
 
-export default class App extends React.PureComponent<AppProps> {
+export default class App extends React.Component<AppProps> {
     /*
      *  Constructors
      */
@@ -21,7 +23,12 @@ export default class App extends React.PureComponent<AppProps> {
     public render(): JSX.Element {
         return (
             <div className="h-100 w-100">
-                <NavView history={this.props.history} />
+                <ConnectedRouter history={this.props.history}>
+                    <div data-role="navview">
+                        <NavViewPane />
+                        <NavViewContent />
+                    </div>
+                </ConnectedRouter>
             </div>
         );
     }

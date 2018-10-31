@@ -1,7 +1,8 @@
 ﻿import { Utilities } from ".";
 import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
+import { JsonSerializable } from "./abstract";
 
-export interface ISourceBase extends IActivateable, IJsonSerializable, Readonly<IIdentifiable>, IModifiable<ISourceBase> {
+export interface ISourceBase extends IActivateable, IJsonSerializable<ISourceBase>, IIdentifiable, IModifiable<ISourceBase> {
     /*
      *  Properties & Fields 
      */
@@ -9,7 +10,7 @@ export interface ISourceBase extends IActivateable, IJsonSerializable, Readonly<
     Result: string;
 }
 
-export abstract class SourceBase implements ISourceBase {
+export abstract class SourceBase extends JsonSerializable<ISourceBase> implements ISourceBase {
     /*
      *  Properties & Fields 
      */
@@ -57,6 +58,7 @@ export abstract class SourceBase implements ISourceBase {
      *  Constructors
      */
     public constructor() {
+        super();
         this._id = Utilities.newCryptoGuid();
         this._isActive = true;
         this._name = "";

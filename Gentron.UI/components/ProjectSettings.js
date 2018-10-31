@@ -29,7 +29,7 @@ let ProjectSettings = class ProjectSettings extends React.Component {
                     React.createElement("label", { className: "cell-3 text-right" }, "Remote Package Location"),
                     React.createElement(metro_1.Cell, { colSpan: 9 },
                         React.createElement("div", { className: "input" },
-                            React.createElement("input", { type: `text`, placeholder: `Remote Package Location`, value: this.props.RemotePackageLocation, onChange: (ev) => this.props.addOrUpdateRemotePackageLocation(ev), "data-role": `input`, "data-role-input": true }),
+                            React.createElement("input", { type: `text`, placeholder: `Remote Package Location`, value: this.props.RemotePackageLocation, onChange: (ev) => this.props.addOrUpdateRemotePackageLocation(ev.target.value || ``), "data-role": `input`, "data-role-input": true }),
                             React.createElement("div", { className: "button-group" },
                                 React.createElement("button", { className: "button input-clear-button", tabIndex: -1, type: `button`, onClick: this.props.addOrUpdateRemotePackageLocation.bind(this, null) },
                                     React.createElement("span", { className: "default-icon-cross" })),
@@ -48,7 +48,7 @@ function mapStateToProps(state) {
         FileConnections: state.ProjectSettings.FileConnections,
         HttpConnections: state.ProjectSettings.HttpConnections,
         LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
-        OutputPaths: state.ProjectSettings.OutputPaths,
+        OutputPathGroups: state.ProjectSettings.OutputPathGroups,
         RemotePackageLocation: state.ProjectSettings.RemotePackageLocation,
         _hash: _hash
     };

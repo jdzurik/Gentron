@@ -1,4 +1,10 @@
-﻿export default interface IJsonSerializable {
+﻿export default interface IJsonSerializable<T extends Object> {
+    /*
+     *  Properties & Fields
+     */
+    IgnoreFields: [keyof T];
+
+
     /*
      *  Methods
      */

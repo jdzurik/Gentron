@@ -33,7 +33,7 @@ let Templates = class Templates extends React.Component {
                 React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-embed2", title: "Engine Templates" }),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
-                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: `/engines/manage/${this.props.match.params.engineid}`, buttonText: "View Template Engine" }))),
+                        React.createElement(metro_1.LinkButton, { buttonText: "View Template Engine", iconClassName: "mif-arrow-left", linkTo: `/engines/manage/${this.props.match.params.engineid}` }))),
                 React.createElement("table", { className: "table striped table-border mt-4" },
                     React.createElement("thead", null,
                         React.createElement("tr", null,

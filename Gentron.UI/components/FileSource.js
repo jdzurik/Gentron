@@ -13,29 +13,22 @@ const redux_1 = require("redux");
 const connect_1 = require("../connect");
 const metro_1 = require("./metro");
 const react_monaco_editor_1 = require("react-monaco-editor");
+const NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
 let FileSource = class FileSource extends React.Component {
     constructor(props) {
         super(props);
     }
-    handleNameClick(source) {
-        source.Name = "Test";
-        this.props.addOrUpdateFileSource(source);
-    }
     render() {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
-                React.createElement(metro_1.Row, { className: "mb-2" },
-                    React.createElement(metro_1.Cell, { colSpan: 12 },
-                        React.createElement("h3", null,
-                            React.createElement("span", { className: "mif-file-code mif-md mr-2" }),
-                            React.createElement("span", { onClick: this.handleNameClick.bind(this, this.props.FileSource) }, this.props.FileSource.Name)))),
+                React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-file-code", title: this.props.FileSource.Name }),
                 React.createElement(metro_1.Row, { className: "mt-2 mb-2" },
                     React.createElement(metro_1.Cell, null,
-                        React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: "/sources/file", buttonText: "View All Sources" }))),
+                        React.createElement(metro_1.LinkButton, { buttonText: "View All Sources", iconClassName: "mif-arrow-left", linkTo: "/sources/file" }))),
                 React.createElement(metro_1.Row, { className: "h-100 mt-2" },
                     React.createElement(metro_1.Cell, null,
                         React.createElement("div", { className: "h-100 w-100 border bd-grayWhite border-size-2" },
-                            React.createElement(react_monaco_editor_1.default, { language: "javascript", value: (() => { }).toString(), options: {}, onChange: console.log, editorDidMount: () => { } })))))));
+                            React.createElement(react_monaco_editor_1.default, { language: "javascript", value: (() => { }).toString(), options: { wordWrap: `on` }, onChange: console.log, editorDidMount: () => { } })))))));
     }
 };
 FileSource = __decorate([

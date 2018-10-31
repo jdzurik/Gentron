@@ -1,4 +1,4 @@
-﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, File, IFile, Utilities } from ".";
+﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, File, IFile } from ".";
 import { ISourceBase, SourceBase } from "./SourceBase";
 
 export interface IDatabaseSource extends ISourceBase {

@@ -1,7 +1,8 @@
 ﻿import { IIdentifiable, IJsonSerializable } from "./interfaces";
 import { PackageSettings, IPackageSettings, ProjectSettings, IProjectSettings, Utilities } from ".";
+import { JsonSerializable } from "./abstract";
 
-export interface IGentron extends IJsonSerializable, Readonly<IIdentifiable> {
+export interface IGentron extends IJsonSerializable<IGentron>, IIdentifiable {
     /*
      *  Properties & Fields 
      */
@@ -9,7 +10,7 @@ export interface IGentron extends IJsonSerializable, Readonly<IIdentifiable> {
     ProjectSettings: IProjectSettings;
 }
 
-export class Gentron implements IGentron {
+export class Gentron extends JsonSerializable<IGentron> implements IGentron {
     /*
      *  Properties & Fields 
      */
@@ -46,6 +47,7 @@ export class Gentron implements IGentron {
      *  Constructors
      */
     public constructor(id?: string) {
+        super();
         this._id = id || Utilities.newCryptoGuid();
         this._packageSettings = new PackageSettings();
         this._projectSettings = new ProjectSettings();

@@ -8,6 +8,7 @@ import { IEngine } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
+import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type HashedEngine = Hash & {
     Engine?: NonFunctionProperties<IEngine>;
@@ -30,36 +31,24 @@ export default class Engine extends React.Component<EngineProps> {
     /*
      *  Methods
      */
-    private handleNameClick(source: IEngine): void {
-        source.Name = "Test";
-        this.props.addOrUpdateEngine(source);
-    }
-
     public render(): JSX.Element {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row className="mb-2">
-                        <Cell colSpan={12}>
-                            <h3>
-                                <span className="mif-drive-eta mif-md mr-2"></span>
-                                <span onClick={this.handleNameClick.bind(this, this.props.Engine)}>{this.props.Engine.Name}</span>
-                            </h3>
-                        </Cell>
-                    </Row>
+                    <NavViewContentHeaderRow iconClassName="mif-drive-eta" title={this.props.Engine.Name} />
 
                     <Row className="mt-2 mb-2">
                         <Cell>
                             <LinkButton iconClassName="mif-arrow-left"
                                 linkTo="/engines/manage"
-                                buttonText="View All Engines">
-                            </LinkButton>
+                                buttonText="View All Engines"
+                            />
                             <LinkButton iconClassName="mif-arrow-right"
                                 iconPosition="forward"
                                 linkTo={`/engines/manage/${this.props.match.params.id}/templates`}
                                 buttonText="Manage Templates"
-                                buttonClassName="ml-2">
-                            </LinkButton>
+                                buttonClassName="ml-2"
+                            />
                         </Cell>
                     </Row>
 
@@ -69,7 +58,7 @@ export default class Engine extends React.Component<EngineProps> {
                                 <MonacoEditor
                                     language="javascript"
                                     value={(() => { }).toString()}
-                                    options={{}}
+                                    options={{ wordWrap: `on` }}
                                     onChange={console.log}
                                     editorDidMount={() => {}}
                                 />

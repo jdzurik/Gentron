@@ -1,44 +1,87 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import { ActionCreators } from "../actions/ProjectSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
+import { ActionCreators as PackageSettingsActionCreators } from "../actions/PackageSettings";
+import { ActionCreators as ProjectSettingsActionCreators } from "../actions/ProjectSettings";
+import { ApplicationState, Hash } from "../types";
 import { bindActionCreators } from "redux";
-import { Cell, Grid } from "./metro";
+import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IOutputPath, OutputPath } from "../../Gentron.Library";
+import { IEnvironment, Utilities, IOutputPathGroup, IOutputPath, OutputPathGroup, OutputPath } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableOutputPaths = Hash & {
-    OutputPaths?: NonFunctionProperties<IOutputPath>[];
+    OutputPathGroups?: IOutputPathGroup<IOutputPath>[];
+    Environments?: IEnvironment[];
 };
 
 type OutputPathsProps = NullableOutputPaths
-    & typeof ActionCreators
+    & typeof PackageSettingsActionCreators
+    & typeof ProjectSettingsActionCreators
     & RouteComponentProps<{}>;
 
+type OutputPathsState = {
+    EditingOutputPathGroup: IOutputPathGroup<IOutputPath>;
+};
+
 @connect<NullableOutputPaths, {}, OutputPathsProps>(mapStateToProps, mapDispatchToProps)
-export default class OutputPaths extends React.Component<OutputPathsProps> {
+export default class OutputPaths extends React.Component<OutputPathsProps, OutputPathsState> {
     /*
      *  Constructors
      */
-    public constructor(props: OutputPathsProps) {
+    public constructor(props: OutputPathsProps, state: OutputPathsState) {
         super(props);
+        this.state = {
+            EditingOutputPathGroup: null
+        };
     }
 
 
     /*
      *  Methods
      */
-    private handleAddOutputPathClick(): void {
-        const ouputPath: IOutputPath = new OutputPath();
-        ouputPath.Name = `OutputPath${this.props.OutputPaths.length}`;
-        ouputPath.Path = new Date().getTime().toString();
-        this.props.addOrUpdateOutputPath(ouputPath);
+    private handleAddOutputPathGroupClick(): void {
+        this.handleOpenEditOutputPathGroupClick(new OutputPathGroup<IOutputPath>());
     }
 
-    private handleRemoveOutputPathClick(outputPath: IOutputPath): void {
-        this.props.removeOutputPath(outputPath);
+    private handleRemoveOutputPathGroupClick(outputPathGroup: IOutputPathGroup<IOutputPath>): void {
+        this.props.removeOutputPathGroup(outputPathGroup);
+    }
+
+    private handleOpenEditOutputPathGroupClick(outputPathGroup: IOutputPathGroup<IOutputPath>): void {
+        this.setState({
+            EditingOutputPathGroup: outputPathGroup.clone()
+        });
+    }
+
+    private handleEditOutputPathGroupNameChange(name: string): void {
+        const editingOutputPathGroup: IOutputPathGroup<IOutputPath> = this.state.EditingOutputPathGroup;
+        editingOutputPathGroup.Name = name;
+        this.setState({
+            EditingOutputPathGroup: editingOutputPathGroup
+        });
+    }
+
+    private handleEditOutputPathGroupPathChange(environment: IEnvironment, connStr): void {
+        const editingOutputPathGroup: IOutputPathGroup<IOutputPath> = this.state.EditingOutputPathGroup;
+        editingOutputPathGroup.Paths.forEach((path: IOutputPath, i: number) => {
+            if (path.Environment === environment.Name) {
+                path.Path = connStr;
+            }
+        });
+        this.setState({
+            EditingOutputPathGroup: editingOutputPathGroup
+        });
+    }
+
+    private handleCloseEditOutputPathGroupClick(save: boolean): void {
+        if (save) {
+            this.props.addOrUpdateOutputPathGroup(this.state.EditingOutputPathGroup);
+        }
+
+        this.setState({
+            EditingOutputPathGroup: null
+        });
     }
 
     public render(): JSX.Element {
@@ -50,31 +93,38 @@ export default class OutputPaths extends React.Component<OutputPathsProps> {
                     <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
-                                <th>{` `}</th>
                                 <th>Name</th>
-                                <th>Path</th>
+                                <th>Paths</th>
                                 <th>{` `}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddOutputPathClick.bind(this)}>Add Output Path</button>
+                                    <button className="button" onClick={this.handleAddOutputPathGroupClick.bind(this)}>
+                                        <span className="mif-add"></span>
+                                    </button>
                                 </td>
-                                <td>{` `}</td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.OutputPaths.map((connection, i) =>
+                                this.props.OutputPathGroups.map((outputPath: IOutputPathGroup<IOutputPath>, i: number) =>
                                     <tr key={i}>
-                                        <td>{` `}</td>
-                                        <td>{connection.Name}</td>
-                                        <td>{connection.Path}</td>
                                         <td>
-                                            <a href="#">
-                                                <button className="button" onClick={this.handleRemoveOutputPathClick.bind(this, connection)}>Remove</button>
-                                            </a>
+                                            <button className="button"
+                                                onClick={() => this.handleOpenEditOutputPathGroupClick(outputPath)}>
+                                                <span className="mif-pencil"></span>
+                                            </button>
+                                            <span> {outputPath.Name}</span>
+                                        </td>
+                                        <td>
+                                            {outputPath.Paths.length}
+                                        </td>
+                                        <td>
+                                            <button className="button" onClick={this.handleRemoveOutputPathGroupClick.bind(this, outputPath)}>
+                                                <span className="mif-bin"></span>
+                                            </button>
                                         </td>
                                     </tr>
                                 )
@@ -82,19 +132,88 @@ export default class OutputPaths extends React.Component<OutputPathsProps> {
                         </tbody>
                     </table>
                 </Grid>
+
+                {
+                    Utilities.hasValue(this.state.EditingOutputPathGroup)
+                        ? (
+                            <Dialog>
+                                <DialogTitle>Edit Output Path</DialogTitle>
+                                <DialogContent>
+                                    <Row className="mb-2 mt-2">
+                                        <Cell>
+                                            <label>Group Name</label>
+                                        </Cell>
+                                    </Row>
+
+                                    <Row className="mb-2 mt-2">
+                                        <Cell>
+                                            <input type="text"
+                                                data-role="input"
+                                                data-role-input="true"
+                                                onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditOutputPathGroupNameChange(ev.target.value)}
+                                                value={this.state.EditingOutputPathGroup.Name}
+                                            />
+                                        </Cell>
+                                    </Row>
+
+                                    {
+                                        this.props.Environments.map((env: IEnvironment, i: number) => {
+                                            let currOutputPath: IOutputPath = this.state.EditingOutputPathGroup.Paths.find(conn => conn.Environment === env.Name);
+
+                                            if (!Utilities.hasValue(currOutputPath)) {
+                                                currOutputPath = new OutputPath();
+                                                currOutputPath.Environment = env.Name;
+                                                this.state.EditingOutputPathGroup.addOrUpdatePath(currOutputPath);
+                                            }
+
+                                            return (
+                                                <React.Fragment key={i}>
+                                                    <Row className="mb-2 mt-2">
+                                                        <Cell>
+                                                            <label>{env.Name} Output Path</label>
+                                                        </Cell>
+                                                    </Row>
+
+                                                    <Row className="mb-2 mt-2">
+                                                        <Cell>
+                                                            <input type="text"
+                                                                data-role="input"
+                                                                data-role-input="true"
+                                                                onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditOutputPathGroupPathChange(env, ev.target.value)}
+                                                                value={currOutputPath.Path}
+                                                            />
+                                                        </Cell>
+                                                    </Row>
+                                                </React.Fragment>
+                                            );
+                                        })
+                                    }
+
+                                </DialogContent>
+                                <DialogAction>
+                                    <button className="button" onClick={this.handleCloseEditOutputPathGroupClick.bind(this, false)}>Cancel</button>
+                                    <button className="button" onClick={this.handleCloseEditOutputPathGroupClick.bind(this, true)}>Save</button>
+                                </DialogAction>
+                            </Dialog>
+                        )
+                        : null
+                }
             </Cell>
         );
     }
 }
 
 function mapStateToProps(state: ApplicationState): NullableOutputPaths {
-    const _hash: string = hash(state.ProjectSettings.OutputPaths);
+    const _outputPathGroupsHash: string = hash(state.ProjectSettings.OutputPathGroups);
+    const _envHash: string = hash(state.PackageSettings.Environments);
+    const _hash: string = hash(_outputPathGroupsHash + _envHash);
     return {
-        OutputPaths: state.ProjectSettings.OutputPaths,
+        OutputPathGroups: state.ProjectSettings.OutputPathGroups,
+        Environments: state.PackageSettings.Environments,
         _hash: _hash
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(ActionCreators, dispatch);
+    return bindActionCreators({ ...PackageSettingsActionCreators, ...ProjectSettingsActionCreators }, dispatch);
 }

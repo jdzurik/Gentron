@@ -7,8 +7,9 @@ import { connect } from "../connect";
 import { ITemplate } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
-import SplitPane from "./SplitPane";
 import MonacoEditor from 'react-monaco-editor';
+import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
+import SplitPane from "./SplitPane";
 
 type HashedTemplate = Hash & {
     Template?: NonFunctionProperties<ITemplate>;
@@ -31,27 +32,19 @@ export default class Template extends React.Component<TemplateProps> {
     /*
      *  Methods
      */
-    private handleNameClick(source: ITemplate): void {
-        source.Name = "Test";
-        this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, source);
-    }
-
     public render(): JSX.Element {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row className="mb-2">
-                        <Cell colSpan={12}>
-                            <h3>
-                                <span className="mif-embed2 mif-md mr-2"></span>
-                                <span onClick={this.handleNameClick.bind(this, this.props.Template)}>{this.props.Template.Name}</span>
-                            </h3>
-                        </Cell>
-                    </Row>
+                    <NavViewContentHeaderRow iconClassName="mif-embed2" title={this.props.Template.Name} />
 
                     <Row className="mt-2 mb-2">
                         <Cell>
-                            <LinkButton iconClassName="mif-arrow-left" linkTo={`/engines/manage/${this.props.match.params.engineid}`} buttonText="View All Engine Templates"></LinkButton>
+                            <LinkButton
+                                buttonText="View All Engine Templates"
+                                iconClassName="mif-arrow-left"
+                                linkTo={`/engines/manage/${this.props.match.params.engineid}`}
+                            />
                         </Cell>
                     </Row>
 

@@ -4,6 +4,7 @@ import { createStore, applyMiddleware, compose, combineReducers, Store, StoreEnh
 import { History } from 'history';
 import { reducers } from "../reducers";
 import thunk from 'redux-thunk';
+declare const window: any;
 
 export default function configureStore(history: History, initialState: ApplicationState) {
     // Build middleware. These are functions that can process the actions before they reach the store.

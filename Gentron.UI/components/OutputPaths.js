@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const hash = require("object-hash");
 const React = require("react");
+const PackageSettings_1 = require("../actions/PackageSettings");
 const ProjectSettings_1 = require("../actions/ProjectSettings");
 const redux_1 = require("redux");
 const metro_1 = require("./metro");
@@ -15,17 +16,48 @@ const connect_1 = require("../connect");
 const Gentron_Library_1 = require("../../Gentron.Library");
 const NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
 let OutputPaths = class OutputPaths extends React.Component {
-    constructor(props) {
+    constructor(props, state) {
         super(props);
+        this.state = {
+            EditingOutputPathGroup: null
+        };
     }
-    handleAddOutputPathClick() {
-        const ouputPath = new Gentron_Library_1.OutputPath();
-        ouputPath.Name = `OutputPath${this.props.OutputPaths.length}`;
-        ouputPath.Path = new Date().getTime().toString();
-        this.props.addOrUpdateOutputPath(ouputPath);
+    handleAddOutputPathGroupClick() {
+        this.handleOpenEditOutputPathGroupClick(new Gentron_Library_1.OutputPathGroup());
     }
-    handleRemoveOutputPathClick(outputPath) {
-        this.props.removeOutputPath(outputPath);
+    handleRemoveOutputPathGroupClick(outputPathGroup) {
+        this.props.removeOutputPathGroup(outputPathGroup);
+    }
+    handleOpenEditOutputPathGroupClick(outputPathGroup) {
+        this.setState({
+            EditingOutputPathGroup: outputPathGroup.clone()
+        });
+    }
+    handleEditOutputPathGroupNameChange(name) {
+        const editingOutputPathGroup = this.state.EditingOutputPathGroup;
+        editingOutputPathGroup.Name = name;
+        this.setState({
+            EditingOutputPathGroup: editingOutputPathGroup
+        });
+    }
+    handleEditOutputPathGroupPathChange(environment, connStr) {
+        const editingOutputPathGroup = this.state.EditingOutputPathGroup;
+        editingOutputPathGroup.Paths.forEach((path, i) => {
+            if (path.Environment === environment.Name) {
+                path.Path = connStr;
+            }
+        });
+        this.setState({
+            EditingOutputPathGroup: editingOutputPathGroup
+        });
+    }
+    handleCloseEditOutputPathGroupClick(save) {
+        if (save) {
+            this.props.addOrUpdateOutputPathGroup(this.state.EditingOutputPathGroup);
+        }
+        this.setState({
+            EditingOutputPathGroup: null
+        });
     }
     render() {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
@@ -34,24 +66,58 @@ let OutputPaths = class OutputPaths extends React.Component {
                 React.createElement("table", { className: "table striped table-border mt-4" },
                     React.createElement("thead", null,
                         React.createElement("tr", null,
-                            React.createElement("th", null, ` `),
                             React.createElement("th", null, "Name"),
-                            React.createElement("th", null, "Path"),
+                            React.createElement("th", null, "Paths"),
                             React.createElement("th", null, ` `))),
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", null,
-                                React.createElement("button", { className: "button", onClick: this.handleAddOutputPathClick.bind(this) }, "Add Output Path")),
-                            React.createElement("td", null, ` `),
+                                React.createElement("button", { className: "button", onClick: this.handleAddOutputPathGroupClick.bind(this) },
+                                    React.createElement("span", { className: "mif-add" }))),
                             React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `)),
-                        this.props.OutputPaths.map((connection, i) => React.createElement("tr", { key: i },
-                            React.createElement("td", null, ` `),
-                            React.createElement("td", null, connection.Name),
-                            React.createElement("td", null, connection.Path),
+                        this.props.OutputPathGroups.map((outputPath, i) => React.createElement("tr", { key: i },
                             React.createElement("td", null,
-                                React.createElement("a", { href: "#" },
-                                    React.createElement("button", { className: "button", onClick: this.handleRemoveOutputPathClick.bind(this, connection) }, "Remove"))))))))));
+                                React.createElement("button", { className: "button", onClick: () => this.handleOpenEditOutputPathGroupClick(outputPath) },
+                                    React.createElement("span", { className: "mif-pencil" })),
+                                React.createElement("span", null,
+                                    " ",
+                                    outputPath.Name)),
+                            React.createElement("td", null, outputPath.Paths.length),
+                            React.createElement("td", null,
+                                React.createElement("button", { className: "button", onClick: this.handleRemoveOutputPathGroupClick.bind(this, outputPath) },
+                                    React.createElement("span", { className: "mif-bin" })))))))),
+            Gentron_Library_1.Utilities.hasValue(this.state.EditingOutputPathGroup)
+                ? (React.createElement(metro_1.Dialog, null,
+                    React.createElement(metro_1.DialogTitle, null, "Edit Output Path"),
+                    React.createElement(metro_1.DialogContent, null,
+                        React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                            React.createElement(metro_1.Cell, null,
+                                React.createElement("label", null, "Group Name"))),
+                        React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                            React.createElement(metro_1.Cell, null,
+                                React.createElement("input", { type: "text", "data-role": "input", "data-role-input": "true", onChange: (ev) => this.handleEditOutputPathGroupNameChange(ev.target.value), value: this.state.EditingOutputPathGroup.Name }))),
+                        this.props.Environments.map((env, i) => {
+                            let currOutputPath = this.state.EditingOutputPathGroup.Paths.find(conn => conn.Environment === env.Name);
+                            if (!Gentron_Library_1.Utilities.hasValue(currOutputPath)) {
+                                currOutputPath = new Gentron_Library_1.OutputPath();
+                                currOutputPath.Environment = env.Name;
+                                this.state.EditingOutputPathGroup.addOrUpdatePath(currOutputPath);
+                            }
+                            return (React.createElement(React.Fragment, { key: i },
+                                React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                                    React.createElement(metro_1.Cell, null,
+                                        React.createElement("label", null,
+                                            env.Name,
+                                            " Output Path"))),
+                                React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                                    React.createElement(metro_1.Cell, null,
+                                        React.createElement("input", { type: "text", "data-role": "input", "data-role-input": "true", onChange: (ev) => this.handleEditOutputPathGroupPathChange(env, ev.target.value), value: currOutputPath.Path })))));
+                        })),
+                    React.createElement(metro_1.DialogAction, null,
+                        React.createElement("button", { className: "button", onClick: this.handleCloseEditOutputPathGroupClick.bind(this, false) }, "Cancel"),
+                        React.createElement("button", { className: "button", onClick: this.handleCloseEditOutputPathGroupClick.bind(this, true) }, "Save"))))
+                : null));
     }
 };
 OutputPaths = __decorate([
@@ -59,12 +125,15 @@ OutputPaths = __decorate([
 ], OutputPaths);
 exports.default = OutputPaths;
 function mapStateToProps(state) {
-    const _hash = hash(state.ProjectSettings.OutputPaths);
+    const _outputPathGroupsHash = hash(state.ProjectSettings.OutputPathGroups);
+    const _envHash = hash(state.PackageSettings.Environments);
+    const _hash = hash(_outputPathGroupsHash + _envHash);
     return {
-        OutputPaths: state.ProjectSettings.OutputPaths,
+        OutputPathGroups: state.ProjectSettings.OutputPathGroups,
+        Environments: state.PackageSettings.Environments,
         _hash: _hash
     };
 }
 function mapDispatchToProps(dispatch) {
-    return redux_1.bindActionCreators(ProjectSettings_1.ActionCreators, dispatch);
+    return redux_1.bindActionCreators(Object.assign({}, PackageSettings_1.ActionCreators, ProjectSettings_1.ActionCreators), dispatch);
 }

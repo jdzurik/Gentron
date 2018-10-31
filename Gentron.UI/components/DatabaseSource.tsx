@@ -9,6 +9,7 @@ import { connect } from "../connect";
 import { IConnectionGroup, IDatabaseConnection, IDatabaseSource } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
+import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 import SplitPane from "./SplitPane";
 
 type IDatabaseSourceProperties = IDatabaseSource;
@@ -36,11 +37,6 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
     /*
      *  Methods
      */
-    private handleNameClick(source: IDatabaseSource): void {
-        source.Name = "Test";
-        this.props.addOrUpdateDatabaseSource(source);
-    }
-
     private handleScriptFileNameChange(source: IDatabaseSourceProperties, value: string): void {
         source.Script.Path = value;
         this.props.addOrUpdateDatabaseSource(source as IDatabaseSource);
@@ -58,18 +54,15 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row className="mb-2">
-                        <Cell colSpan={12}>
-                            <h3>
-                                <span className="mif-database mif-md mr-2"></span>
-                                <span onClick={this.handleNameClick.bind(this, this.props.DatabaseSource)}>{this.props.DatabaseSource.Name}</span>
-                            </h3>
-                        </Cell>
-                    </Row>
+                    <NavViewContentHeaderRow iconClassName="mif-database" title={this.props.DatabaseSource.Name} />
 
                     <Row className="mt-2 mb-2">
                         <Cell>
-                            <LinkButton iconClassName="mif-arrow-left" linkTo="/sources/db" buttonText="View All Sources"></LinkButton>
+                            <LinkButton
+                                buttonText="View All Sources"
+                                iconClassName="mif-arrow-left"
+                                linkTo="/sources/db"
+                            />
                         </Cell>
                     </Row>
 
@@ -105,7 +98,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                     <MonacoEditor
                                         language="sql"
                                         value={this.props.DatabaseSource.Script.Contents || (() => { }).toString()}
-                                        options={{wordWrap: `on`}}
+                                        options={{ wordWrap: `on` }}
                                         onChange={() => { }}
                                         editorDidMount={() => {}}
                                     />

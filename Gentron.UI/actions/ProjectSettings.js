@@ -7,21 +7,21 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_DATABASE_CONNECTION_GROUP"
         };
     },
-    addOrUpdateLocalPackageFolder: (value) => {
+    addOrUpdateLocalPackageFolder: (localPackageFolder) => {
         return {
-            localPackageFolder: value || "",
+            localPackageFolder: localPackageFolder,
             type: "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER"
         };
     },
-    addOrUpdateOutputPath: (outputPath) => {
+    addOrUpdateOutputPathGroup: (outputPathGroup) => {
         return {
-            outputPath: outputPath,
+            outputPathGroup: outputPathGroup,
             type: "ADD_OR_UPDATE_OUTPUT_PATH"
         };
     },
-    addOrUpdateRemotePackageLocation: (ev) => {
+    addOrUpdateRemotePackageLocation: (remotePackageLocation) => {
         return {
-            remotePackageLocation: ev ? ev.target.value : "",
+            remotePackageLocation: remotePackageLocation,
             type: "ADD_OR_UPDATE_REMOTE_PACKAGE_LOCATION"
         };
     },
@@ -31,9 +31,9 @@ exports.ActionCreators = {
             type: "REMOVE_DATABASE_CONNECTION_GROUP"
         };
     },
-    removeOutputPath: (outputPath) => {
+    removeOutputPathGroup: (outputPathGroup) => {
         return {
-            outputPath: outputPath,
+            outputPathGroup: outputPathGroup,
             type: "REMOVE_OUTPUT_PATH"
         };
     },

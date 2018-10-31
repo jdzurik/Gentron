@@ -2,22 +2,34 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Utilities {
     static hasValue(obj) {
-        return typeof (obj) !== typeof (undefined) && obj !== null;
+        return !this.isUndefined(obj) && obj !== null;
+    }
+    static isArray(obj) {
+        return Array.isArray(obj) || obj instanceof Array;
     }
     static isBoolean(obj) {
-        return this.hasValue(obj) && typeof (obj) === typeof (true);
+        return typeof (obj) === this._booleanType;
     }
     static isFunction(obj) {
-        return this.hasValue(obj) && typeof (obj) === typeof ((() => { }));
-    }
-    static isObject(obj) {
-        return this.hasValue(obj) && typeof (obj) === typeof ({});
+        return typeof (obj) === this._functionType;
     }
     static isNumber(obj) {
-        return this.hasValue(obj) && typeof (obj) === typeof (0);
+        return typeof (obj) === this._numberType;
+    }
+    static isObject(obj) {
+        return typeof (obj) === this._objectType;
     }
     static isString(obj) {
-        return this.hasValue(obj) && typeof (obj) === typeof ("");
+        return typeof (obj) === this._stringType;
+    }
+    static isSymbol(obj) {
+        return typeof (obj) === this._symbolType;
+    }
+    static isUndefined(obj) {
+        return typeof (obj) === this._undefinedType;
+    }
+    static isPrimitive(obj) {
+        return this.isBoolean(obj) || this.isNumber(obj) || this.isString(obj);
     }
     static newGuid() {
         return this._guidPlaceholder.replace(/[xy]/g, function (substring) {
@@ -62,4 +74,12 @@ class Utilities {
     }
 }
 Utilities._guidPlaceholder = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
+Utilities._booleanType = typeof (true);
+Utilities._functionType = typeof (() => { });
+Utilities._numberType = typeof (0);
+Utilities._objectType = typeof ({});
+Utilities._stringType = typeof ("");
+Utilities._symbolType = typeof (Symbol);
+Utilities._undefinedType = typeof (undefined);
+Utilities.ObjectPrototype = Object.getPrototypeOf({});
 exports.default = Utilities;

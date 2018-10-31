@@ -1,20 +1,14 @@
-﻿import { Utilities } from ".";
+﻿import { Cloneable } from "./abstract";
 import { IActivateable, ICloneable, IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
 
-export interface IConnectionBase extends IActivateable, ICloneable<IConnectionBase>, IIdentifiable, IJsonSerializable, IModifiable<IConnectionBase> {
+export interface IConnectionBase extends IActivateable, ICloneable<IConnectionBase>, IIdentifiable, IJsonSerializable<IConnectionBase>, IModifiable<IConnectionBase> {
 
 }
 
-export abstract class ConnectionBase implements IConnectionBase {
+export abstract class ConnectionBase extends Cloneable<IConnectionBase> implements IConnectionBase {
     /*
      *  Properties & Fields 
      */
-    protected _id: string;
-
-    public get ID(): string {
-        return this._id;
-    }
-
     protected _isActive: boolean;
 
     public get IsActive(): boolean {
@@ -30,7 +24,7 @@ export abstract class ConnectionBase implements IConnectionBase {
      *  Constructors
      */
     public constructor() {
-        this._id = Utilities.newCryptoGuid();
+        super();
         this._isActive = true;
     }
 

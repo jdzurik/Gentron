@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const _1 = require(".");
-class ConnectionBase {
-    get ID() {
-        return this._id;
-    }
+const abstract_1 = require("./abstract");
+class ConnectionBase extends abstract_1.Cloneable {
     get IsActive() {
         return this._isActive;
     }
@@ -12,7 +9,7 @@ class ConnectionBase {
         this._isActive = value;
     }
     constructor() {
-        this._id = _1.Utilities.newCryptoGuid();
+        super();
         this._isActive = true;
     }
 }

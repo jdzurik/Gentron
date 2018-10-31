@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class ProjectSettings {
+const abstract_1 = require("./abstract");
+class ProjectSettings extends abstract_1.JsonSerializable {
     get DatabaseConnections() {
         return this._databaseConnections;
     }
@@ -25,11 +26,11 @@ class ProjectSettings {
     set LocalPackageFolder(value) {
         this._localPackageFolder = value;
     }
-    get OutputPaths() {
-        return this._outputPaths;
+    get OutputPathGroups() {
+        return this._outputPathGroups;
     }
-    set OutputPaths(value) {
-        this._outputPaths = value;
+    set OutputPathGroups(value) {
+        this._outputPathGroups = value;
     }
     get RemotePackageLocation() {
         return this._remotePackageLocation;
@@ -38,18 +39,19 @@ class ProjectSettings {
         this._remotePackageLocation = value;
     }
     constructor() {
+        super();
         this._databaseConnections = [];
         this._fileConnections = [];
         this._httpConnections = [];
         this._localPackageFolder = "";
-        this._outputPaths = [];
+        this._outputPathGroups = [];
         this._remotePackageLocation = "";
     }
     static fromJson(obj) {
         const ret = new ProjectSettings();
         ret.DatabaseConnections = obj.DatabaseConnections;
         ret.LocalPackageFolder = obj.LocalPackageFolder;
-        ret.OutputPaths = obj.OutputPaths;
+        ret.OutputPathGroups = obj.OutputPathGroups;
         ret.RemotePackageLocation = obj.RemotePackageLocation;
         return ret;
     }
@@ -59,7 +61,7 @@ class ProjectSettings {
             FileConnections: this.FileConnections,
             HttpConnections: this.HttpConnections,
             LocalPackageFolder: this.LocalPackageFolder,
-            OutputPaths: this.OutputPaths,
+            OutputPathGroups: this.OutputPathGroups,
             RemotePackageLocation: this.RemotePackageLocation,
         };
     }
@@ -69,7 +71,7 @@ class ProjectSettings {
             FileConnections: obj.FileConnections,
             HttpConnections: obj.HttpConnections,
             LocalPackageFolder: obj.LocalPackageFolder,
-            OutputPaths: obj.OutputPaths,
+            OutputPathGroups: obj.OutputPathGroups,
             RemotePackageLocation: obj.RemotePackageLocation,
         };
     }

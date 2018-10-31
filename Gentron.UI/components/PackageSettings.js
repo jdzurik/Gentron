@@ -35,7 +35,7 @@ let PackageSettings = class PackageSettings extends React.Component {
                 React.createElement(metro_1.Row, { className: "h-100 mt-2" },
                     React.createElement(metro_1.Cell, null,
                         React.createElement("div", { className: "h-100 w-100 border bd-grayWhite border-size-2" },
-                            React.createElement(react_monaco_editor_1.default, { language: "markdown", value: (() => { }).toString(), options: {}, onChange: console.log, editorDidMount: () => { } })))))));
+                            React.createElement(react_monaco_editor_1.default, { language: "markdown", value: (() => { }).toString(), options: { wordWrap: `on` }, onChange: console.log, editorDidMount: () => { } })))))));
     }
 };
 PackageSettings = __decorate([

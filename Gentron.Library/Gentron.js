@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
-class Gentron {
+const abstract_1 = require("./abstract");
+class Gentron extends abstract_1.JsonSerializable {
     get ID() {
         return this._id;
     }
@@ -18,6 +19,7 @@ class Gentron {
         this._projectSettings = value;
     }
     constructor(id) {
+        super();
         this._id = id || _1.Utilities.newCryptoGuid();
         this._packageSettings = new _1.PackageSettings();
         this._projectSettings = new _1.ProjectSettings();
