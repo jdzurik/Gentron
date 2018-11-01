@@ -98,7 +98,6 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                     <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
-                                <th>{` `}</th>
                                 <th>Name</th>
                                 <th>Connections</th>
                                 <th>{` `}</th>
@@ -111,7 +110,6 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                         <span className="mif-add"></span>
                                     </button>
                                 </td>
-                                <td>{` `}</td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
                             </tr>
