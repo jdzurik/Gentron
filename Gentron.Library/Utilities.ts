@@ -1,14 +1,38 @@
 ﻿import * as crypto from "crypto";
 
-export default class Guid {
+export default class Utilities {
     private static _guidPlaceholder: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
+
+    public static hasValue(obj: any): boolean {
+        return typeof (obj) !== typeof (undefined) && obj !== null;
+    }
+
+    public static isBoolean(obj: any): boolean {
+        return this.hasValue(obj) && typeof (obj) === typeof (true);
+    }
+
+    public static isFunction(obj: any): boolean {
+        return this.hasValue(obj) && typeof (obj) === typeof ((() => { }));
+    }
+
+    public static isObject(obj: any): boolean {
+        return this.hasValue(obj) && typeof (obj) === typeof ({});
+    }
+
+    public static isNumber(obj: any): boolean {
+        return this.hasValue(obj) && typeof (obj) === typeof (0);
+    }
+
+    public static isString(obj: any): boolean {
+        return this.hasValue(obj) && typeof (obj) === typeof ("");
+    }
 
     public static newGuid(): string {
         return this._guidPlaceholder.replace(/[xy]/g, function (substring: string) {
             const rand: number = Math.random() * 16 | 0;
             const ret = (substring === "x")
-                    ? rand
-                    : (rand & 0x3 | 0x8);
+                ? rand
+                : (rand & 0x3 | 0x8);
             return ret.toString(16);
         });
     }
@@ -25,7 +49,6 @@ export default class Guid {
         for (let i: number = 0; i < rand.length; ++i) {
             rand[i] = Math.floor(Math.random() * 10);
         }
-        //const rand: number[] = crypto.getRandomValues(new Uint8Array(16));
 
         rand[6] = rand[6] & 0x0f | 0x40;
         rand[8] = rand[8] & 0x3f | 0x80;

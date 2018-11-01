@@ -9,7 +9,7 @@ const React = require("react");
 const ReactDOM = require("react-dom");
 const history_1 = require("history");
 const Gentron_Library_1 = require("../Gentron.Library");
-const DatabaseSource_1 = require("../Gentron.Library/DatabaseSource");
+const Gentron_Library_2 = require("../Gentron.Library");
 const react_redux_1 = require("react-redux");
 const App_1 = require("./components/App");
 const configureStore_1 = require("./store/configureStore");
@@ -26,18 +26,23 @@ if ((window.initialReduxState)) {
 }
 else {
     initialState = new Gentron_Library_1.Gentron();
+    ["Dev", "Test", "Prod"].map(env => {
+        const environment = new Gentron_Library_1.Environment();
+        environment.Name = env;
+        initialState.PackageSettings.Environments.push(environment);
+    });
     ["CAUtils", "CASecurity"].map(db => {
         const source = new Gentron_Library_1.ConnectionGroup();
         source.Name = db;
-        ["Dev", "Test", "Prod"].map(env => {
+        initialState.PackageSettings.Environments.map(env => {
             const conn = new Gentron_Library_1.DatabaseConnection();
-            conn.Environment = env;
+            conn.Environment = env.Name;
             source.addOrUpdateConnection(conn);
         });
         initialState.ProjectSettings.DatabaseConnections.push(source);
     });
     ["", ""].map((db, i) => {
-        const source = new DatabaseSource_1.DatabaseSource();
+        const source = new Gentron_Library_2.DatabaseSource();
         source.Name = `DBSource${i}`;
         initialState.PackageSettings.DatabaseSources.push(source);
     });

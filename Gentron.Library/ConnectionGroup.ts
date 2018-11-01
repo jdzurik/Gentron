@@ -1,10 +1,8 @@
 ﻿import { IConnectionBase } from "./ConnectionBase";
-import Guid from "./utils/Guid";
-import IIdentifiable from "./interfaces/IIdentifiable";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
-import IModifiable from "./interfaces/IModifiable";
+import { ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
+import { Cloneable } from "./abstract";
 
-export interface IConnectionGroup<TConnection extends IConnectionBase> extends IJsonSerializable, IIdentifiable, IModifiable<IConnectionGroup<TConnection>> {
+export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IJsonSerializable, IModifiable<IConnectionGroup<TConnection>> {
     /*
      *  Properties & Fields 
      */
@@ -18,16 +16,10 @@ export interface IConnectionGroup<TConnection extends IConnectionBase> extends I
     removeConnection(connection: TConnection): void;
 }
 
-export class ConnectionGroup<TConnection extends IConnectionBase> implements IConnectionGroup<TConnection> {
+export class ConnectionGroup<TConnection extends IConnectionBase> extends Cloneable<IConnectionGroup<TConnection>> implements IConnectionGroup<TConnection> {
     /*
      *  Properties & Fields 
      */
-    private readonly _id: string;
-
-    public get ID(): string {
-        return this._id;
-    }
-
     private _connections: TConnection[];
 
     public get Connections(): TConnection[] {
@@ -49,7 +41,7 @@ export class ConnectionGroup<TConnection extends IConnectionBase> implements ICo
      *  Constructors
      */
     public constructor() {
-        this._id = Guid.newCryptoGuid();
+        super();
         this._connections = [];
         this._name = "";
     }
@@ -70,13 +62,19 @@ export class ConnectionGroup<TConnection extends IConnectionBase> implements ICo
         throw new Error("Method not implemented");
     }
 
+    public clone(): IConnectionGroup<TConnection> {
+        const ret: ConnectionGroup<TConnection> = new ConnectionGroup<TConnection>();
+
+        ret._cloneId = this.ID;
+        ret._connections = this._connections.map((conn: TConnection, i: number) => conn.clone() as TConnection);
+        ret._isClone = true;
+        ret._name = this._name;
+
+        return ret;
+    }
+
     public update(connection: IConnectionGroup<TConnection>): void {
-        for (let i: number = 0; i < this.Connections.length; ++i) {
-            for (let j: number = 0; j < connection.Connections.length; ++j) {
-                if (this.Connections[i].ID === connection.Connections[j].ID) {
-                    this.Connections[i].update(connection.Connections[j]);
-                }
-            }
-        }
+        this._connections = connection.Connections.map((conn: TConnection, i: number) => conn.clone() as TConnection);
+        this._name = connection.Name;
     }
 }

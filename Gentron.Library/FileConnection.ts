@@ -38,6 +38,10 @@ export class FileConnection extends ConnectionBase implements IFileConnection {
         throw new Error("Method not implemented");
     }
 
+    public clone(): FileConnection {
+        throw new Error("Method not implemented");
+    }
+
     public update(dbConnection: FileConnection): void {
         throw new Error("Method not implemented");
     }

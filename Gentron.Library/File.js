@@ -33,6 +33,19 @@ class File {
         this._lastModified = undefined;
         this._path = "";
     }
+    loadContentsSync(filePath = this.Path || "", setContents = true) {
+        try {
+            const buf = fs.readFileSync(filePath);
+            const contents = buf.toString();
+            if (setContents) {
+                this.Contents = contents;
+            }
+            return contents;
+        }
+        catch (e) {
+            return e.message.toString();
+        }
+    }
     loadContents(filePath = this.Path || "", setContents = true) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -47,6 +60,13 @@ class File {
                 return e.message.toString();
             }
         });
+    }
+    update(file) {
+        this.LastModified = file.LastModified;
+        if (this.Path !== file.Path) {
+            this.Path = file.Path;
+            this.Contents = this.loadContentsSync();
+        }
     }
 }
 exports.File = File;

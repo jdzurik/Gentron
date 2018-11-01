@@ -1,17 +1,16 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid } from "./metro";
+import { Hash } from "../../Gentron.Library/types";
 import { connect } from "../connect";
-import { HttpSource, IHttpSource } from "../../Gentron.Library";
+import { IGentron, HttpSource, IHttpSource } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableHttpSources = Hash & {
-    HttpSources?: NonFunctionProperties<IHttpSource>[];
+    HttpSources?: IHttpSource[];
 };
 
 type HttpSourcesProps = NullableHttpSources
@@ -91,7 +90,7 @@ export default class HttpSources extends React.Component<HttpSourcesProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState): NullableHttpSources {
+function mapStateToProps(state: IGentron): NullableHttpSources {
     const _hash: string = hash(state.PackageSettings.HttpSources);
     return {
         HttpSources: state.PackageSettings.HttpSources,

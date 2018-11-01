@@ -1,6 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class ProjectSettings {
+    get DatabaseConnections() {
+        return this._databaseConnections;
+    }
+    set DatabaseConnections(value) {
+        this._databaseConnections = value;
+    }
     get FileConnections() {
         return this._fileConnections;
     }
@@ -19,6 +25,12 @@ class ProjectSettings {
     set LocalPackageFolder(value) {
         this._localPackageFolder = value;
     }
+    get OutputPathGroups() {
+        return this._outputPathGroups;
+    }
+    set OutputPathGroups(value) {
+        this._outputPathGroups = value;
+    }
     get RemotePackageLocation() {
         return this._remotePackageLocation;
     }
@@ -26,18 +38,20 @@ class ProjectSettings {
         this._remotePackageLocation = value;
     }
     constructor() {
-        this.DatabaseConnections = [];
+        this._databaseConnections = [];
         this._fileConnections = [];
         this._httpConnections = [];
         this._localPackageFolder = "";
-        this.OutputPaths = [];
+        this._outputPathGroups = [];
         this._remotePackageLocation = "";
     }
     static fromJson(obj) {
         const ret = new ProjectSettings();
         ret.DatabaseConnections = obj.DatabaseConnections;
+        ret.FileConnections = obj.FileConnections;
+        ret.HttpConnections = obj.HttpConnections;
         ret.LocalPackageFolder = obj.LocalPackageFolder;
-        ret.OutputPaths = obj.OutputPaths;
+        ret.OutputPathGroups = obj.OutputPathGroups;
         ret.RemotePackageLocation = obj.RemotePackageLocation;
         return ret;
     }
@@ -47,7 +61,7 @@ class ProjectSettings {
             FileConnections: this.FileConnections,
             HttpConnections: this.HttpConnections,
             LocalPackageFolder: this.LocalPackageFolder,
-            OutputPaths: this.OutputPaths,
+            OutputPathGroups: this.OutputPathGroups,
             RemotePackageLocation: this.RemotePackageLocation,
         };
     }
@@ -57,7 +71,7 @@ class ProjectSettings {
             FileConnections: obj.FileConnections,
             HttpConnections: obj.HttpConnections,
             LocalPackageFolder: obj.LocalPackageFolder,
-            OutputPaths: obj.OutputPaths,
+            OutputPathGroups: obj.OutputPathGroups,
             RemotePackageLocation: obj.RemotePackageLocation,
         };
     }

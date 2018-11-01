@@ -1,12 +1,11 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IPackageSettings } from "../../Gentron.Library";
+import { Hash, NonFunctionProperties } from "../../Gentron.Library/types";
+import { IGentron, IPackageSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
@@ -47,7 +46,7 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
                                 <input type={`text`}
                                     placeholder={`Package Name`}
                                     value={this.props.PackageName}
-                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdatePackageName(ev)}
+                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdatePackageName(ev.target.value || ``)}
                                     data-role={`input`}
                                     data-role-input={true}
                                 />
@@ -77,7 +76,7 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
                                     value={(() => { }).toString()}
                                     options={{}}
                                     onChange={console.log}
-                                    editorDidMount={console.log}
+                                    editorDidMount={() => {}}
                                 />
                             </div>
                         </Cell>
@@ -89,12 +88,13 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
 }
 
 // Wire up the React component to the Redux store
-function mapStateToProps(state: ApplicationState): HashedIPackageSettings {
+function mapStateToProps(state: IGentron): HashedIPackageSettings {
     const _hash: string = hash(state.PackageSettings);
 
     return {
         DatabaseSources: state.PackageSettings.DatabaseSources,
         Engines: state.PackageSettings.Engines,
+        Environments: state.PackageSettings.Environments,
         FileSources: state.PackageSettings.FileSources,
         HttpSources: state.PackageSettings.HttpSources,
         PackageName: state.PackageSettings.PackageName,

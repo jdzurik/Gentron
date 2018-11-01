@@ -1,13 +1,10 @@
-﻿import Guid from "./utils/Guid";
-import IIdentifiable from "./interfaces/IIdentifiable";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
-import IModifiable from "./interfaces/IModifiable";
+﻿import { Utilities } from ".";
+import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
 
-export interface ISourceBase extends IJsonSerializable, IIdentifiable, IModifiable<ISourceBase> {
+export interface ISourceBase extends IActivateable, IJsonSerializable, IIdentifiable, IModifiable<ISourceBase> {
     /*
      *  Properties & Fields 
      */
-    IsActive: boolean;
     Name: string;
     Result: string;
 }
@@ -21,6 +18,7 @@ export abstract class SourceBase implements ISourceBase {
     public get ID(): string {
         return this._id;
     }
+
 
     protected _isActive: boolean;
 
@@ -59,7 +57,7 @@ export abstract class SourceBase implements ISourceBase {
      *  Constructors
      */
     public constructor() {
-        this._id = Guid.newCryptoGuid();
+        this._id = Utilities.newCryptoGuid();
         this._isActive = true;
         this._name = "";
         this._result = "";

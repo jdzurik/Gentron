@@ -1,35 +1,26 @@
-﻿import Guid from "./utils/Guid";
-import IIdentifiable from "./interfaces/IIdentifiable";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
-import IModifiable from "./interfaces/IModifiable";
+﻿import { ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
+import { Cloneable } from "./abstract";
 
-export interface IOutputPath extends IJsonSerializable, IIdentifiable, IModifiable<IOutputPath> {
+export interface IOutputPath extends ICloneable<IOutputPath>, IJsonSerializable, IModifiable<IOutputPath> {
     /*
      *  Properties & Fields
      */
-    Name: string;
+    Environment: string;
     Path: string;
 }
 
-export class OutputPath implements IOutputPath {
+export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
     /*
      *  Properties & Fields
      */
-    private readonly _id: string;
+    private _environment: string;
 
-    public get ID(): string {
-        return this._id;
+    public get Environment(): string {
+        return this._environment;
     }
 
-
-    private _name: string;
-
-    public get Name(): string {
-        return this._name;
-    }
-
-    public set Name(value: string) {
-        this._name = value;
+    public set Environment(value: string) {
+        this._environment = value;
     }
 
 
@@ -48,8 +39,8 @@ export class OutputPath implements IOutputPath {
      *  Constructors
      */
     public constructor() {
-        this._id = Guid.newGuid();
-        this._name = "";
+        super();
+        this._environment = "";
         this._path = "";
     }
 
@@ -61,8 +52,19 @@ export class OutputPath implements IOutputPath {
         throw new Error("Method not implemented");
     }
 
+    public clone(): IOutputPath {
+        const ret: OutputPath = new OutputPath();
+
+        ret._cloneId = this._id;
+        ret._isClone = true;
+        ret._environment = this._environment;
+        ret._path = this._path;
+
+        return ret;
+    }
+
     public update(ouputPath: IOutputPath): void {
-        this._name = ouputPath.Name;
+        this._environment = ouputPath.Environment;
         this._path = ouputPath.Path;
     }
 }

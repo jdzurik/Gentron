@@ -7,7 +7,7 @@ class NavViewContentHeaderRow extends React.Component {
         super(props);
     }
     render() {
-        return (React.createElement(metro_1.Row, null,
+        return (React.createElement(metro_1.Row, { className: "mb-2" },
             React.createElement(metro_1.Cell, { colSpan: 12 },
                 React.createElement("h3", null,
                     this.props.iconClassName && this.props.iconClassName.length > 0

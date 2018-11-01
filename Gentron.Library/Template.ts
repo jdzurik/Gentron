@@ -1,8 +1,10 @@
-﻿import { TemplateTypes } from "./Types";
-import IIdentifiable from "./interfaces/IIdentifiable";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
-import IModifiable from "./interfaces/IModifiable";
-import Guid from "./utils/Guid";
+﻿import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
+import { Utilities } from ".";
+
+export enum TemplateTypes {
+    Partial,
+    Primary,
+}
 
 export interface ITemplate extends IJsonSerializable, IIdentifiable, IModifiable<ITemplate> {
     Name: string;
@@ -46,7 +48,7 @@ export class Template implements ITemplate {
      *  Constructors
      */
     public constructor() {
-        this._id = Guid.newGuid();
+        this._id = Utilities.newGuid();
         this._name = "";
         this._type = TemplateTypes.Partial;
     }

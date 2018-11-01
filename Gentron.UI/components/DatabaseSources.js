@@ -24,6 +24,10 @@ let DatabaseSources = class DatabaseSources extends React.Component {
         source.Name = `DBSource${this.props.DatabaseSources.length}`;
         this.props.addOrUpdateDatabaseSource(source);
     }
+    handleToggleSourceIsActiveClick(source, isActive) {
+        source.IsActive = isActive;
+        this.props.addOrUpdateDatabaseSource(source);
+    }
     handleRemoveSourceClick(source) {
         this.props.removeDatabaseSource(source);
     }
@@ -36,12 +40,14 @@ let DatabaseSources = class DatabaseSources extends React.Component {
                         React.createElement("tr", null,
                             React.createElement("th", null, ` `),
                             React.createElement("th", null, "Name"),
-                            React.createElement("th", null, "Connections"),
+                            React.createElement("th", null, "Active Connection"),
+                            React.createElement("th", null, "Active?"),
                             React.createElement("th", null, ` `))),
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", null,
                                 React.createElement("button", { className: "button", onClick: this.handleAddSourceClick.bind(this) }, "Add Database Source")),
+                            React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `)),
@@ -50,7 +56,9 @@ let DatabaseSources = class DatabaseSources extends React.Component {
                                 React.createElement(react_router_dom_1.Link, { to: `/sources/db/${i}` },
                                     React.createElement("button", { className: "button" }, "View"))),
                             React.createElement("td", null, source.Name),
-                            React.createElement("td", null, source.ActiveConnectionGroup.Connections.length),
+                            React.createElement("td", null, source.ActiveConnectionGroup.Name),
+                            React.createElement("td", null,
+                                React.createElement(metro_1.Switch, { checked: source.IsActive, onStateChanged: (isActive) => this.handleToggleSourceIsActiveClick(source, isActive) })),
                             React.createElement("td", null,
                                 React.createElement("a", { href: "#" },
                                     React.createElement("button", { className: "button", onClick: this.handleRemoveSourceClick.bind(this, source) }, "Remove"))))))))));

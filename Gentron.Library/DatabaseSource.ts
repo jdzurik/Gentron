@@ -1,10 +1,7 @@
-﻿import { ConnectionGroup, IConnectionGroup } from "./ConnectionGroup";
-import { File, IFile } from ".";
-import { IDatabaseConnection } from "./DatabaseConnection";
+﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, File, IFile, Utilities } from ".";
 import { ISourceBase, SourceBase } from "./SourceBase";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
 
-export interface IDatabaseSource extends ISourceBase, IJsonSerializable {
+export interface IDatabaseSource extends ISourceBase {
     /*
      *  Properties & Fields 
      */
@@ -57,9 +54,19 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
 
 
     public update(databaseSource: IDatabaseSource): void {
+        if (typeof (databaseSource) === typeof (undefined) || databaseSource === null) {
+            return;
+        }
+
         this.ActiveConnectionGroup = databaseSource.ActiveConnectionGroup;
         this.IsActive = databaseSource.IsActive;
         this.Name = databaseSource.Name;
         this.Result = databaseSource.Result;
+
+        this.Script.update(databaseSource.Script as IFile);
+        //if (Utilities.hasValue(this.Script)
+        //    && Utilities.hasValue(databaseSource.Script)
+        //    && this.Script.Path !== databaseSource.Script.Path) {
+        //}
     }
 }

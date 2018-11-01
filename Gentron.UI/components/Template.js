@@ -25,7 +25,7 @@ let Template = class Template extends React.Component {
     render() {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
-                React.createElement(metro_1.Row, null,
+                React.createElement(metro_1.Row, { className: "mb-2" },
                     React.createElement(metro_1.Cell, { colSpan: 12 },
                         React.createElement("h3", null,
                             React.createElement("span", { className: "mif-embed2 mif-md mr-2" }),
@@ -35,9 +35,9 @@ let Template = class Template extends React.Component {
                         React.createElement(metro_1.LinkButton, { iconClassName: "mif-arrow-left", linkTo: `/engines/manage/${this.props.match.params.engineid}`, buttonText: "View All Engine Templates" }))),
                 React.createElement(SplitPane_1.default, { splitPaneProps: { split: `vertical`, size: `calc(50% - 15px)` } },
                     React.createElement("div", { className: "h-100 w-100" },
-                        React.createElement(react_monaco_editor_1.default, { language: "javascript", value: (() => { }).toString(), options: {}, onChange: console.log, editorDidMount: console.log })),
+                        React.createElement(react_monaco_editor_1.default, { language: "javascript", value: (() => { }).toString(), options: { readOnly: true, wordWrap: `on` }, onChange: console.log, editorDidMount: () => { } })),
                     React.createElement("div", { className: "h-100 w-100" },
-                        React.createElement(react_monaco_editor_1.default, { language: "javascript", value: (() => { }).toString(), options: {}, onChange: console.log, editorDidMount: console.log }))))));
+                        React.createElement(react_monaco_editor_1.default, { language: "javascript", value: (() => { }).toString(), options: { readOnly: true, wordWrap: `on` }, onChange: console.log, editorDidMount: () => { } }))))));
     }
 };
 Template = __decorate([

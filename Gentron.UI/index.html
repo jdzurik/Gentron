@@ -5,6 +5,19 @@
     <meta charset="UTF-8">
     <title>Gentron - Project</title>
     <style type="text/css">
+        label.switch input[type="checkbox"] ~ .check {
+            background: #CE352C !important;
+        }
+
+        label.switch input[type="checkbox"]:checked ~ .check {
+            background: #60a917 !important;
+        }
+
+            label.switch input[type="checkbox"] ~ .check::after {
+                border-color: #ffffff !important;
+                background: #ffffff !important;
+            }
+
         .Resizer {
             background: #000;
             opacity: .2;

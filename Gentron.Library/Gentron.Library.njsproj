@@ -38,6 +38,12 @@
     <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="abstract\Cloneable.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="abstract\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ConnectionBase.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -51,6 +57,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Engine.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Environment.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="File.ts">
@@ -68,6 +77,12 @@
     <TypeScriptCompile Include="HttpSource.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="interfaces\IActivateable.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="interfaces\ICloneable.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="interfaces\IIdentifiable.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -77,7 +92,13 @@
     <TypeScriptCompile Include="interfaces\IModifiable.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="interfaces\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="OutputPath.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="OutputPathGroup.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="SerializeBase.ts" />
@@ -99,16 +120,17 @@
     <TypeScriptCompile Include="Template.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Types.ts">
+    <TypeScriptCompile Include="types\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="utils\Guid.ts">
+    <TypeScriptCompile Include="Utilities.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="interfaces\" />
-    <Folder Include="utils\" />
+    <Folder Include="abstract\" />
+    <Folder Include="types\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

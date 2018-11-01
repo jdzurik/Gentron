@@ -1,18 +1,17 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
+import { Hash } from "../../Gentron.Library/types";
 import { connect } from "../connect";
-import { IDatabaseSource, IEngine, IFileSource, IHttpSource } from "../../Gentron.Library";
+import { IGentron, IDatabaseSource, IEngine, IFileSource, IHttpSource } from "../../Gentron.Library";
 import { Link } from 'react-router-dom';
 
 type NullableSources = Hash & {
-    DatabaseSources?: NonFunctionProperties<IDatabaseSource>[];
-    Engines?: NonFunctionProperties<IEngine>[];
-    FileSources?: NonFunctionProperties<IFileSource>[];
-    HttpSources?: NonFunctionProperties<IHttpSource>[];
+    DatabaseSources?: IDatabaseSource[];
+    Engines?: IEngine[];
+    FileSources?: IFileSource[];
+    HttpSources?: IHttpSource[];
 };
 
 type NavViewPaneProps = NullableSources;
@@ -56,6 +55,13 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                         <Link to="/connections/db" className="pl-7">
                             <span className="icon"><span className="mif-settings-ethernet"></span></span>
                             <span className="caption">Connection Strings</span>
+                        </Link>
+                    </li>
+
+                    <li>
+                        <Link to="/environments" className="pl-7">
+                            <span className="icon"><span className="mif-earth"></span></span>
+                            <span className="caption">Environments</span>
                         </Link>
                     </li>
 
@@ -165,7 +171,7 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState): NullableSources {
+function mapStateToProps(state: IGentron): NullableSources {
     const _dbHash: string = hash(state.PackageSettings.DatabaseSources);
     const _enginesHash: string = hash(state.PackageSettings.Engines);
     const _fileHash: string = hash(state.PackageSettings.FileSources);

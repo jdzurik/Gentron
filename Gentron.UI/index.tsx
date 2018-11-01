@@ -9,16 +9,15 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import { AnyAction, Store } from "redux";
-import { ApplicationState } from './types';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { Gentron, ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection } from "../Gentron.Library";
-import { IDatabaseSource, DatabaseSource } from "../Gentron.Library/DatabaseSource";
+import { Gentron, ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection, IEnvironment, Environment } from "../Gentron.Library";
+import { IDatabaseSource, IGentron, DatabaseSource } from "../Gentron.Library";
 import { Provider } from 'react-redux';
 import App from "./components/App";
 import configureStore from './store/configureStore';
 //import setupMenu from "./electronMenu";
 
-type AppStore = Store<ApplicationState, AnyAction> & { dispatch: {} };
+type AppStore = Store<IGentron, AnyAction> & { dispatch: {} };
 
 const syncHistoryWithStore = (store, history: MemoryHistory) => {
     const { routing } = store.getState();
@@ -33,7 +32,7 @@ const syncHistoryWithStore = (store, history: MemoryHistory) => {
 const history: MemoryHistory = createMemoryHistory();
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
-let initialState: ApplicationState;
+let initialState: IGentron;
 
 if (((window as any).initialReduxState)) {
     initialState = (window as any).initialReduxState;
@@ -41,13 +40,19 @@ if (((window as any).initialReduxState)) {
 else {
     initialState = new Gentron();
 
+    ["Dev", "Test", "Prod"].map(env => {
+        const environment: IEnvironment = new Environment();
+        environment.Name = env;
+        initialState.PackageSettings.Environments.push(environment);
+    });
+
     ["CAUtils", "CASecurity"].map(db => {
         const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
         source.Name = db;
 
-        ["Dev", "Test", "Prod"].map(env => {
+        initialState.PackageSettings.Environments.map(env => {
             const conn: IDatabaseConnection = new DatabaseConnection();
-            conn.Environment = env;
+            conn.Environment = env.Name;
             source.addOrUpdateConnection(conn);
         });
 
@@ -62,7 +67,7 @@ else {
     });
 }
 
-//const initialState: ApplicationState = ((window as any).initialReduxState) || new Gentron() as ApplicationState;
+//const initialState: IGentron = ((window as any).initialReduxState) || new Gentron() as IGentron;
 const store: AppStore = configureStore(history, initialState.toJson());
 syncHistoryWithStore(store, history);
 const root: HTMLElement = document.createElement("div");

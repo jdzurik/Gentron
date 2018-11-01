@@ -1,5 +1,4 @@
 ﻿import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { History } from "history";
 import NavViewContent from "./NavViewContent";

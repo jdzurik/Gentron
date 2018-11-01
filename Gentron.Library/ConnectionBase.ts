@@ -1,26 +1,15 @@
-﻿import Guid from "./utils/Guid";
-import IIdentifiable from "./interfaces/IIdentifiable";
-import IJsonSerializable from "./interfaces/IJsonSerializable";
-import IModifiable from "./interfaces/IModifiable";
+﻿import { IActivateable, ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
+import { Cloneable } from "./abstract";
 
-export interface IConnectionBase extends IJsonSerializable, IIdentifiable, IModifiable<IConnectionBase> {
-    /*
-     *  Properties & Fields 
-     */
-    IsActive: boolean;
+export interface IConnectionBase extends IActivateable, ICloneable<IConnectionBase>, IJsonSerializable, IModifiable<IConnectionBase> {
+
 }
 
-export abstract class ConnectionBase implements IConnectionBase {
+export abstract class ConnectionBase extends Cloneable<IConnectionBase> implements IConnectionBase {
     /*
      *  Properties & Fields 
      */
-    private readonly _id: string;
-
-    public get ID(): string {
-        return this._id;
-    }
-
-    private _isActive: boolean;
+    protected _isActive: boolean;
 
     public get IsActive(): boolean {
         return this._isActive;
@@ -35,7 +24,7 @@ export abstract class ConnectionBase implements IConnectionBase {
      *  Constructors
      */
     public constructor() {
-        this._id = Guid.newCryptoGuid();
+        super();
         this._isActive = true;
     }
 
@@ -44,6 +33,8 @@ export abstract class ConnectionBase implements IConnectionBase {
      *  Methods
      */
     public abstract toJson(): any;
+
+    public abstract clone(): IConnectionBase;
 
     public abstract update(connection: IConnectionBase): void;
 }

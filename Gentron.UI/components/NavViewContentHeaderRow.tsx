@@ -1,5 +1,4 @@
 ﻿import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { Cell, Row } from "./metro";
 
 type NavViewContentHeaderRowProps = {
@@ -21,7 +20,7 @@ export default class NavViewContentHeaderRow extends React.Component<NavViewCont
      */
     public render(): JSX.Element {
         return (
-            <Row>
+            <Row className="mb-2">
                 <Cell colSpan={12}>
                     <h3>
                         {

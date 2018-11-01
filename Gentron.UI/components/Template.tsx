@@ -1,18 +1,17 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
-import { ITemplate } from "../../Gentron.Library";
+import { Hash } from "../../Gentron.Library/types";
+import { IGentron, ITemplate } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import SplitPane from "./SplitPane";
 import MonacoEditor from 'react-monaco-editor';
 
 type HashedTemplate = Hash & {
-    Template?: NonFunctionProperties<ITemplate>;
+    Template?: ITemplate;
 };
 
 type TemplateProps = HashedTemplate
@@ -41,7 +40,7 @@ export default class Template extends React.Component<TemplateProps> {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row>
+                    <Row className="mb-2">
                         <Cell colSpan={12}>
                             <h3>
                                 <span className="mif-embed2 mif-md mr-2"></span>
@@ -61,18 +60,18 @@ export default class Template extends React.Component<TemplateProps> {
                             <MonacoEditor
                                 language="javascript"
                                 value={(() => { }).toString()}
-                                options={{}}
+                                options={{readOnly: true, wordWrap: `on`}}
                                 onChange={console.log}
-                                editorDidMount={console.log}
+                                editorDidMount={() => {}}
                             />
                         </div>
                         <div className="h-100 w-100">
                             <MonacoEditor
                                 language="javascript"
                                 value={(() => { }).toString()}
-                                options={{}}
+                                options={{ readOnly: true, wordWrap: `on` }}
                                 onChange={console.log}
-                                editorDidMount={console.log}
+                                editorDidMount={() => {}}
                             />
                         </div>
                     </SplitPane>
@@ -82,7 +81,7 @@ export default class Template extends React.Component<TemplateProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ engineid: string, templateid: string }>): HashedTemplate {
+function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ engineid: string, templateid: string }>): HashedTemplate {
     const engineid: string = routeComponentProps.match.params.engineid;
     const templateid: string = routeComponentProps.match.params.templateid;
     const _hash: string = hash(state.PackageSettings.Engines[engineid].Templates[templateid] || "")

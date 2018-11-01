@@ -1,17 +1,16 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
-import { IFileSource } from "../../Gentron.Library";
+import { Hash } from "../../Gentron.Library/types";
+import { IGentron, IFileSource } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 
 type HashedFileSource = Hash & {
-    FileSource?: NonFunctionProperties<IFileSource>;
+    FileSource?: IFileSource;
 };
 
 type FileSourceProps = HashedFileSource
@@ -40,7 +39,7 @@ export default class FileSource extends React.Component<FileSourceProps> {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row>
+                    <Row className="mb-2">
                         <Cell colSpan={12}>
                             <h3>
                                 <span className="mif-file-code mif-md mr-2"></span>
@@ -63,7 +62,7 @@ export default class FileSource extends React.Component<FileSourceProps> {
                                     value={(() => { }).toString()}
                                     options={{}}
                                     onChange={console.log}
-                                    editorDidMount={console.log}
+                                    editorDidMount={() => {}}
                                 />
                             </div>
                         </Cell>
@@ -74,7 +73,7 @@ export default class FileSource extends React.Component<FileSourceProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ id: string }>): HashedFileSource {
+function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ id: string }>): HashedFileSource {
     const id: string = routeComponentProps.match.params.id;
     const _hash: string = hash(state.PackageSettings.FileSources[id] || "")
     return {

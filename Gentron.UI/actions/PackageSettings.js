@@ -20,6 +20,12 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_ENGINE_TEMPLATE"
         };
     },
+    addOrUpdateEnvironment: (environment) => {
+        return {
+            environment: environment,
+            type: "ADD_OR_UPDATE_ENVIRONMENT"
+        };
+    },
     addOrUpdateFileSource: (fileSource) => {
         return {
             fileSource: fileSource,
@@ -32,15 +38,15 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_HTTP_SOURCE"
         };
     },
-    addOrUpdatePackageName: (ev) => {
+    addOrUpdatePackageName: (packageName) => {
         return {
-            packageName: ev ? ev.target.value : "",
+            packageName: packageName,
             type: "ADD_OR_UPDATE_PACKAGE_NAME"
         };
     },
-    addOrUpdateReadMeText: (ev) => {
+    addOrUpdateReadMeText: (readMeText) => {
         return {
-            readMeText: ev ? ev.target.value : "",
+            readMeText: readMeText,
             type: "ADD_OR_UPDATE_READ_ME_TEXT"
         };
     },
@@ -63,6 +69,12 @@ exports.ActionCreators = {
             type: "REMOVE_ENGINE_TEMPLATE"
         };
     },
+    removeEnvironment: (environment) => {
+        return {
+            environment: environment,
+            type: "REMOVE_ENVIRONMENT"
+        };
+    },
     removeFileSource: (fileSource) => {
         return {
             fileSource: fileSource,
@@ -73,6 +85,12 @@ exports.ActionCreators = {
         return {
             httpSource: httpSource,
             type: "REMOVE_HTTP_SOURCE"
+        };
+    },
+    toggleActiveEnvironment: (environment) => {
+        return {
+            environment: environment,
+            type: "TOGGLE_ACTIVE_ENVIRONMENT"
         };
     },
 };

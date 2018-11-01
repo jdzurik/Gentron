@@ -7,21 +7,21 @@ exports.ActionCreators = {
             type: "ADD_OR_UPDATE_DATABASE_CONNECTION_GROUP"
         };
     },
-    addOrUpdateLocalPackageFolder: (ev) => {
+    addOrUpdateLocalPackageFolder: (value) => {
         return {
-            localPackageFolder: ev ? ev.target.value : "",
+            localPackageFolder: value || "",
             type: "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER"
         };
     },
-    addOrUpdateOutputPath: (outputPath) => {
+    addOrUpdateOutputPathGroup: (outputPathGroup) => {
         return {
-            outputPath: outputPath,
-            type: "ADD_OR_UPDATE_OUTPUT_PATH"
+            outputPathGroup: outputPathGroup,
+            type: "ADD_OR_UPDATE_OUTPUT_PATH_GROUP"
         };
     },
-    addOrUpdateRemotePackageLocation: (ev) => {
+    addOrUpdateRemotePackageLocation: (value) => {
         return {
-            remotePackageLocation: ev ? ev.target.value : "",
+            remotePackageLocation: value,
             type: "ADD_OR_UPDATE_REMOTE_PACKAGE_LOCATION"
         };
     },
@@ -31,10 +31,10 @@ exports.ActionCreators = {
             type: "REMOVE_DATABASE_CONNECTION_GROUP"
         };
     },
-    removeOutputPath: (outputPath) => {
+    removeOutputPathGroup: (outputPathGroup) => {
         return {
-            outputPath: outputPath,
-            type: "REMOVE_OUTPUT_PATH"
+            outputPathGroup: outputPathGroup,
+            type: "REMOVE_OUTPUT_PATH_GROUP"
         };
     },
 };

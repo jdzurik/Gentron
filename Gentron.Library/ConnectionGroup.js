@@ -1,14 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Guid_1 = require("./utils/Guid");
-class ConnectionGroup {
+const abstract_1 = require("./abstract");
+class ConnectionGroup extends abstract_1.Cloneable {
     constructor() {
-        this._id = Guid_1.default.newCryptoGuid();
+        super();
         this._connections = [];
         this._name = "";
-    }
-    get ID() {
-        return this._id;
     }
     get Connections() {
         return (this._connections || []).slice();
@@ -27,14 +24,17 @@ class ConnectionGroup {
     toJson() {
         throw new Error("Method not implemented");
     }
+    clone() {
+        const ret = new ConnectionGroup();
+        ret._cloneId = this.ID;
+        ret._connections = this._connections.map((conn, i) => conn.clone());
+        ret._isClone = true;
+        ret._name = this._name;
+        return ret;
+    }
     update(connection) {
-        for (let i = 0; i < this.Connections.length; ++i) {
-            for (let j = 0; j < connection.Connections.length; ++j) {
-                if (this.Connections[i].ID === connection.Connections[j].ID) {
-                    this.Connections[i].update(connection.Connections[j]);
-                }
-            }
-        }
+        this._connections = connection.Connections.map((conn, i) => conn.clone());
+        this._name = connection.Name;
     }
 }
 exports.ConnectionGroup = ConnectionGroup;

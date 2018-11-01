@@ -1,17 +1,16 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid } from "./metro";
+import { Hash } from "../../Gentron.Library/types";
 import { connect } from "../connect";
-import { FileSource, IFileSource } from "../../Gentron.Library";
+import { IGentron, FileSource, IFileSource } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type NullableFileSources = Hash &{
-    FileSources?: NonFunctionProperties<IFileSource>[];
+type NullableFileSources = Hash & {
+    FileSources?: IFileSource[];
 };
 
 type FileSourcesProps = NullableFileSources
@@ -91,7 +90,7 @@ export default class FileSources extends React.Component<FileSourcesProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState): NullableFileSources {
+function mapStateToProps(state: IGentron): NullableFileSources {
     const _hash: string = hash(state.PackageSettings.FileSources);
     return {
         FileSources: state.PackageSettings.FileSources,

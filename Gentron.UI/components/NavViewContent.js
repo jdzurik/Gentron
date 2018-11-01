@@ -7,6 +7,7 @@ const DatabaseSource_1 = require("./DatabaseSource");
 const DatabaseSources_1 = require("./DatabaseSources");
 const Engine_1 = require("./Engine");
 const Engines_1 = require("./Engines");
+const Environments_1 = require("./Environments");
 const FileSource_1 = require("./FileSource");
 const FileSources_1 = require("./FileSources");
 const Home_1 = require("./Home");
@@ -26,6 +27,7 @@ class NavViewContent extends React.Component {
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/", component: Home_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/settings/project", component: ProjectSettings_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/connections/db", component: DatabaseConnections_1.default }),
+            React.createElement(react_router_dom_1.Route, { exact: true, path: "/environments", component: Environments_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/output/paths", component: OutputPaths_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/settings/package", component: PackageSettings_1.default }),
             React.createElement(react_router_dom_1.Route, { exact: true, path: "/sources/db", component: DatabaseSources_1.default }),

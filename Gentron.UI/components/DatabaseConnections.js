@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const hash = require("object-hash");
 const React = require("react");
+const PackageSettings_1 = require("../actions/PackageSettings");
 const ProjectSettings_1 = require("../actions/ProjectSettings");
 const redux_1 = require("redux");
 const metro_1 = require("./metro");
@@ -15,22 +16,49 @@ const connect_1 = require("../connect");
 const Gentron_Library_1 = require("../../Gentron.Library");
 const NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
 let DatabaseConnections = class DatabaseConnections extends React.Component {
-    constructor(props) {
+    constructor(props, state) {
         super(props);
+        this.state = {
+            EditingConnectionGroup: null
+        };
     }
     handleAddConnectionClick() {
-        const connectionGroup = new Gentron_Library_1.ConnectionGroup();
-        connectionGroup.Name = `DBConn${this.props.DatabaseConnections.length}`;
-        ["Dev", "Test", "Prod"].map((environment, i) => {
-            const dbConn = new Gentron_Library_1.DatabaseConnection();
-            dbConn.ConnectionString = hash(environment);
-            dbConn.Environment = environment;
-            connectionGroup.addOrUpdateConnection(dbConn);
-        });
-        this.props.addOrUpdateDatabaseConnectionGroup(connectionGroup);
+        this.handleOpenEditConnectionClick(new Gentron_Library_1.ConnectionGroup());
     }
     handleRemoveConnectionClick(connectionGroup) {
         this.props.removeDatabaseConnectionGroup(connectionGroup);
+    }
+    handleOpenEditConnectionClick(connectionGroup) {
+        this.setState((prevState) => {
+            return Object.assign({}, prevState, { EditingConnectionGroup: connectionGroup.clone() });
+        });
+    }
+    handleEditConnectionNameChange(name) {
+        const editingConnectionGrp = this.state.EditingConnectionGroup;
+        editingConnectionGrp.Name = name;
+        this.setState((prevState) => {
+            return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGrp });
+        });
+    }
+    handleEditConnectionStringChange(environment, connStr) {
+        this.setState((prevState) => {
+            return Object.assign({}, prevState, {
+                Connections: prevState.EditingConnectionGroup.Connections.map((conn, i) => {
+                    if (conn.Environment === environment.Name) {
+                        conn.ConnectionString = connStr;
+                    }
+                    return conn;
+                })
+            });
+        });
+    }
+    handleCloseEditConnectionClick(save) {
+        if (save) {
+            this.props.addOrUpdateDatabaseConnectionGroup(this.state.EditingConnectionGroup);
+        }
+        this.setState((prevState) => {
+            return Object.assign({}, prevState, { EditingConnectionGroup: null });
+        });
     }
     render() {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
@@ -46,17 +74,52 @@ let DatabaseConnections = class DatabaseConnections extends React.Component {
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", null,
-                                React.createElement("button", { className: "button", onClick: this.handleAddConnectionClick.bind(this) }, "Add Connection")),
+                                React.createElement("button", { className: "button", onClick: this.handleAddConnectionClick.bind(this) },
+                                    React.createElement("span", { className: "mif-add" }))),
                             React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `)),
                         this.props.DatabaseConnections.map((connection, i) => React.createElement("tr", { key: i },
-                            React.createElement("td", null, ` `),
+                            React.createElement("td", null,
+                                React.createElement("button", { className: "button", onClick: () => this.handleOpenEditConnectionClick(connection) },
+                                    React.createElement("span", { className: "mif-pencil" }))),
                             React.createElement("td", null, connection.Name),
                             React.createElement("td", null, connection.Connections.length),
                             React.createElement("td", null,
                                 React.createElement("a", { href: "#" },
-                                    React.createElement("button", { className: "button", onClick: this.handleRemoveConnectionClick.bind(this, connection) }, "Remove"))))))))));
+                                    React.createElement("button", { className: "button", onClick: this.handleRemoveConnectionClick.bind(this, connection) },
+                                        React.createElement("span", { className: "mif-bin" }))))))))),
+            Gentron_Library_1.Utilities.hasValue(this.state.EditingConnectionGroup)
+                ? (React.createElement(metro_1.Dialog, null,
+                    React.createElement(metro_1.DialogTitle, null, "Edit Connection"),
+                    React.createElement(metro_1.DialogContent, null,
+                        React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                            React.createElement(metro_1.Cell, null,
+                                React.createElement("label", null, "Connection Name"))),
+                        React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                            React.createElement(metro_1.Cell, null,
+                                React.createElement("input", { type: "text", "data-role": "input", "data-role-input": "true", onChange: (ev) => this.handleEditConnectionNameChange(ev.target.value), value: this.state.EditingConnectionGroup.Name }))),
+                        this.props.Environments.map((env, i) => {
+                            let currConnection = this.state.EditingConnectionGroup.Connections.find(conn => conn.Environment === env.Name);
+                            if (!Gentron_Library_1.Utilities.hasValue(currConnection)) {
+                                currConnection = new Gentron_Library_1.DatabaseConnection();
+                                currConnection.Environment = env.Name;
+                                this.state.EditingConnectionGroup.addOrUpdateConnection(currConnection);
+                            }
+                            return (React.createElement(React.Fragment, { key: i },
+                                React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                                    React.createElement(metro_1.Cell, null,
+                                        React.createElement("label", null,
+                                            env.Name,
+                                            " Connection String"))),
+                                React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                                    React.createElement(metro_1.Cell, null,
+                                        React.createElement("input", { type: "text", "data-role": "input", "data-role-input": "true", onChange: (ev) => this.handleEditConnectionStringChange(env, ev.target.value), value: currConnection.ConnectionString })))));
+                        })),
+                    React.createElement(metro_1.DialogAction, null,
+                        React.createElement("button", { className: "button", onClick: this.handleCloseEditConnectionClick.bind(this, false) }, "Cancel"),
+                        React.createElement("button", { className: "button", onClick: this.handleCloseEditConnectionClick.bind(this, true) }, "Save"))))
+                : null));
     }
 };
 DatabaseConnections = __decorate([
@@ -64,12 +127,15 @@ DatabaseConnections = __decorate([
 ], DatabaseConnections);
 exports.default = DatabaseConnections;
 function mapStateToProps(state) {
-    const _hash = hash(state.ProjectSettings.DatabaseConnections);
+    const _dbHash = hash(state.ProjectSettings.DatabaseConnections);
+    const _envHash = hash(state.PackageSettings.Environments);
+    const _hash = hash(_dbHash + _envHash);
     return {
         DatabaseConnections: state.ProjectSettings.DatabaseConnections,
+        Environments: state.PackageSettings.Environments,
         _hash: _hash
     };
 }
 function mapDispatchToProps(dispatch) {
-    return redux_1.bindActionCreators(ProjectSettings_1.ActionCreators, dispatch);
+    return redux_1.bindActionCreators(Object.assign({}, PackageSettings_1.ActionCreators, ProjectSettings_1.ActionCreators), dispatch);
 }

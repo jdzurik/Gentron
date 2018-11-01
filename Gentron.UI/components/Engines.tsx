@@ -1,17 +1,16 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
+import { Hash } from "../../Gentron.Library/types";
 import { Cell, Grid } from "./metro";
 import { connect } from "../connect";
-import { Engine, IEngine } from "../../Gentron.Library";
+import { IGentron, Engine, IEngine } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableEngines = Hash & {
-    Engines?: NonFunctionProperties<IEngine>[];
+    Engines?: IEngine[];
 };
 
 type EnginesProps = NullableEngines
@@ -91,7 +90,7 @@ export default class Engines extends React.Component<EnginesProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState): NullableEngines {
+function mapStateToProps(state: IGentron): NullableEngines {
     const _hash: string = hash(state.PackageSettings.Engines);
     return {
         Engines: state.PackageSettings.Engines,

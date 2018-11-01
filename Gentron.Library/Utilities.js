@@ -1,6 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Guid {
+class Utilities {
+    static hasValue(obj) {
+        return typeof (obj) !== typeof (undefined) && obj !== null;
+    }
+    static isBoolean(obj) {
+        return this.hasValue(obj) && typeof (obj) === typeof (true);
+    }
+    static isFunction(obj) {
+        return this.hasValue(obj) && typeof (obj) === typeof ((() => { }));
+    }
+    static isObject(obj) {
+        return this.hasValue(obj) && typeof (obj) === typeof ({});
+    }
+    static isNumber(obj) {
+        return this.hasValue(obj) && typeof (obj) === typeof (0);
+    }
+    static isString(obj) {
+        return this.hasValue(obj) && typeof (obj) === typeof ("");
+    }
     static newGuid() {
         return this._guidPlaceholder.replace(/[xy]/g, function (substring) {
             const rand = Math.random() * 16 | 0;
@@ -43,5 +61,5 @@ class Guid {
             hex[rand[15]]);
     }
 }
-Guid._guidPlaceholder = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
-exports.default = Guid;
+Utilities._guidPlaceholder = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
+exports.default = Utilities;

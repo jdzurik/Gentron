@@ -12,17 +12,15 @@ export class Engine extends SourceBase implements IEngine {
     /*
      *  Properties & Fields 
      */
-    //private _templates: ITemplate[];
+    private _templates: ITemplate[];
 
-    //public get Templates(): ITemplate[] {
-    //    return this._templates;
-    //}
+    public get Templates(): ITemplate[] {
+        return this._templates;
+    }
 
-    //public set Templates(value: ITemplate[]) {
-    //    this._templates = value;
-    //}
-
-    public Templates: ITemplate[];
+    public set Templates(value: ITemplate[]) {
+        this._templates = value;
+    }
 
 
     /*
@@ -30,7 +28,7 @@ export class Engine extends SourceBase implements IEngine {
      */
     public constructor() {
         super();
-        this.Templates = [];
+        this._templates = [];
     }
 
 

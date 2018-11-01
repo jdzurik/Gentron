@@ -1,9 +1,8 @@
 ﻿import * as PackageSettingsActions from '../actions/PackageSettings';
-import { NonFunctionProperties } from '../types';
-import { PackageSettings, IPackageSettings } from "../../Gentron.Library";
+import { NonFunctionProperties } from "../../Gentron.Library/types";
+import { PackageSettings, IPackageSettings, IEnvironment } from "../../Gentron.Library";
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
-import Templates from '../components/Templates';
 
 type PackageSettingsProps = NonFunctionProperties<IPackageSettings>;
 
@@ -28,6 +27,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -50,6 +50,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -73,6 +74,30 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case PackageSettingsActionNames.AddOrUpdateEnvironment:
+            let environmentFound: boolean = false;
+            for (let i: number = 0; i < state.Environments.length; ++i) {
+                if (state.Environments[i].ID === action.environment.ID) {
+                    state.Environments[i].update(action.environment);
+                    environmentFound = true;
+                    break;
+                }
+            }
+
+            if (!environmentFound) {
+                state.Environments.push(action.environment);
+            }
+
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -95,6 +120,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -117,6 +143,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -126,6 +153,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: action.packageName,
@@ -135,6 +163,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -156,6 +185,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -177,6 +207,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -199,6 +230,29 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case PackageSettingsActionNames.RemoveEnvironment:
+            let environmentIdx: number = -1;
+            for (let i: number = 0; i < state.Environments.length; ++i) {
+                if (state.Environments[i].ID === action.environment.ID) {
+                    environmentIdx = i;
+                    break;
+                }
+            }
+
+            if (environmentIdx >= 0) {
+                state.Environments.splice(environmentIdx, 1);
+            }
+
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -220,6 +274,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
@@ -241,6 +296,29 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             return {
                 DatabaseSources: state.DatabaseSources,
                 Engines: state.Engines,
+                Environments: state.Environments,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMeText: state.ReadMeText,
+            };
+        case PackageSettingsActionNames.ToggleActiveEnvironment:
+            for (let i: number = 0; i < state.Environments.length; ++i) {
+                const environment: IEnvironment = state.Environments[i];
+
+                if (environment.ID === action.environment.ID) {
+                    environment.update(action.environment);
+                }
+                else {
+                    environment.IsActive = false;
+                    environment.update(environment);
+                }
+            }
+
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                Environments: state.Environments,
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,

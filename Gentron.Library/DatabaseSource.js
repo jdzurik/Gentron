@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ConnectionGroup_1 = require("./ConnectionGroup");
 const _1 = require(".");
 const SourceBase_1 = require("./SourceBase");
 class DatabaseSource extends SourceBase_1.SourceBase {
@@ -18,17 +17,21 @@ class DatabaseSource extends SourceBase_1.SourceBase {
     }
     constructor() {
         super();
-        this._activeConnectionGroup = new ConnectionGroup_1.ConnectionGroup();
+        this._activeConnectionGroup = new _1.ConnectionGroup();
         this._script = new _1.File();
     }
     toJson() {
         throw new Error("Method not implemented");
     }
     update(databaseSource) {
+        if (typeof (databaseSource) === typeof (undefined) || databaseSource === null) {
+            return;
+        }
         this.ActiveConnectionGroup = databaseSource.ActiveConnectionGroup;
         this.IsActive = databaseSource.IsActive;
         this.Name = databaseSource.Name;
         this.Result = databaseSource.Result;
+        this.Script.update(databaseSource.Script);
     }
 }
 exports.DatabaseSource = DatabaseSource;

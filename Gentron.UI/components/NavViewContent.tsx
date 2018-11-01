@@ -1,11 +1,11 @@
 ﻿import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { Route } from 'react-router-dom';
 import DatabaseConnections from "./DatabaseConnections";
 import DatabaseSource from './DatabaseSource';
 import DatabaseSources from './DatabaseSources';
 import Engine from "./Engine";
 import Engines from "./Engines";
+import Environments from "./Environments";
 import FileSource from './FileSource';
 import FileSources from './FileSources';
 import Home from './Home';
@@ -37,6 +37,7 @@ export default class NavViewContent extends React.Component<NavViewContentProps>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/settings/project" component={ProjectSettings} />
                 <Route exact path="/connections/db" component={DatabaseConnections} />
+                <Route exact path="/environments" component={Environments} />
                 <Route exact path="/output/paths" component={OutputPaths} />
                 <Route exact path="/settings/package" component={PackageSettings} />
                 <Route exact path="/sources/db" component={DatabaseSources} />
