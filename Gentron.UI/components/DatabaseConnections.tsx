@@ -98,7 +98,6 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                     <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
-                                <th>{` `}</th>
                                 <th>Name</th>
                                 <th>Connections</th>
                                 <th>{` `}</th>
@@ -113,7 +112,6 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                 </td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
-                                <td>{` `}</td>
                             </tr>
                             {
                                 this.props.DatabaseConnections.map((connection: IConnectionGroup<IDatabaseConnection>, i: number) =>
@@ -123,8 +121,8 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                                 onClick={() => this.handleOpenEditConnectionClick(connection)}>
                                                 <span className="mif-pencil"></span>
                                             </button>
+                                            <span> {connection.Name}</span>
                                         </td>
-                                        <td>{connection.Name}</td>
                                         <td>{connection.Connections.length}</td>
                                         <td>
                                             <a href="#">
