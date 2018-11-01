@@ -298,14 +298,14 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
 
             const value: any = obj[key];
 
-            if ((Utilities.isPrimitive(value)) || Utilities.isFunction(value)) {
+            if ((Utilities.isPrimitive(value)) || (Utilities.isFunction(value) && includeFunctions)) {
                 ret[key] = value;
             }
             else if (Utilities.isArray(value)) {
                 ret[key] = [];
                 for (let i: number = 0; i < (value as JsonSerializable<T>[]).length; ++i) {
                     const arrValue: any = obj[key][i];
-                    if ((Utilities.isPrimitive(arrValue)) || Utilities.isFunction(arrValue)) {
+                    if ((Utilities.isPrimitive(arrValue)) || (Utilities.isFunction(arrValue) && includeFunctions)) {
                         ret[key].push(arrValue);
                     }
                     else if (Utilities.isObject(arrValue) && (arrValue as JsonSerializable<T>).toJson) {
