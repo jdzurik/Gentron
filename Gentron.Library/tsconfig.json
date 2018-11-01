@@ -4,7 +4,7 @@
     "allowJs": false,
     "lib": [
       "es2015",
-      "es6",
+      "es6"
     ],
     "module": "commonjs",
     "moduleResolution": "node",
@@ -15,10 +15,6 @@
     "strictPropertyInitialization": true,
     "target": "es6"
   },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
   "typeAcquisition": {
     "enable": true
   }

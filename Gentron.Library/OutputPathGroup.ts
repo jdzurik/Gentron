@@ -59,10 +59,6 @@ export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<
 
     }
 
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
     public clone(): IOutputPathGroup<TOutputPath> {
         const ret: OutputPathGroup<TOutputPath> = new OutputPathGroup<TOutputPath>();
 

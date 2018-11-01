@@ -66,10 +66,12 @@ else {
 
         initialState.PackageSettings.DatabaseSources.push(source);
     });
+
+    initialState = initialState.toJson(initialState, initialState.IgnoreFields, true) as ApplicationState;
 }
 
 //const initialState: ApplicationState = ((window as any).initialReduxState) || new Gentron() as ApplicationState;
-const store: AppStore = configureStore(history, initialState.toJson());
+const store: AppStore = configureStore(history, initialState);
 syncHistoryWithStore(store, history);
 const root: HTMLElement = document.createElement("div");
 const rootId: string = `appRoot${Date.now()}`;

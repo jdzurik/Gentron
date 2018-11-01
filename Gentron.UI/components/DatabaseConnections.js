@@ -98,7 +98,7 @@ let DatabaseConnections = class DatabaseConnections extends React.Component {
                             React.createElement(metro_1.Cell, null,
                                 React.createElement("input", { type: "text", "data-role": "input", "data-role-input": "true", onChange: (ev) => this.handleEditConnectionNameChange(ev.target.value), value: this.state.EditingConnectionGroup.Name }))),
                         this.props.Environments.map((env, i) => {
-                            let currConnection = this.state.EditingConnectionGroup.Connections.find(conn => conn.Environment === env.Name);
+                            let currConnection = this.state.EditingConnectionGroup.Connections.filter(conn => conn.Environment === env.Name)[0];
                             if (!Gentron_Library_1.Utilities.hasValue(currConnection)) {
                                 currConnection = new Gentron_Library_1.DatabaseConnection();
                                 currConnection.Environment = env.Name;

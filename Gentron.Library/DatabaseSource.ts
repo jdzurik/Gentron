@@ -48,11 +48,6 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
-
     public update(databaseSource: IDatabaseSource): void {
         if (typeof (databaseSource) === typeof (undefined) || databaseSource === null) {
             return;

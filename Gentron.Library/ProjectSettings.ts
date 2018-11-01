@@ -112,17 +112,6 @@ export class ProjectSettings extends JsonSerializable<IProjectSettings> implemen
         return ret;
     }
 
-    public toJson(): any {
-        return {
-            DatabaseConnections: this.DatabaseConnections,
-            FileConnections: this.FileConnections,
-            HttpConnections: this.HttpConnections,
-            LocalPackageFolder: this.LocalPackageFolder,
-            OutputPathGroups: this.OutputPathGroups,
-            RemotePackageLocation: this.RemotePackageLocation,
-        };
-    }
-
     public static toJson(obj: IProjectSettings): any {
         return {
             DatabaseConnections: obj.DatabaseConnections,

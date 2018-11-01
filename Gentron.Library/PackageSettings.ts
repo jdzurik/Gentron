@@ -128,18 +128,6 @@ export class PackageSettings extends JsonSerializable<IPackageSettings> implemen
         return ret;
     }
 
-    public toJson(): any {
-        return {
-            DatabaseSources: this.DatabaseSources,
-            Engines: this.Engines,
-            Environments: this.Environments,
-            FileSources: this.FileSources,
-            HttpSources: this.HttpSources,
-            PackageName: this.PackageName,
-            ReadMeText: this.ReadMeText
-        };
-    }
-
     public static toJson(obj: IPackageSettings): any {
         return {
             DatabaseSources: obj.DatabaseSources,

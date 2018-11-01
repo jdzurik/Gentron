@@ -98,7 +98,7 @@ let OutputPaths = class OutputPaths extends React.Component {
                             React.createElement(metro_1.Cell, null,
                                 React.createElement("input", { type: "text", "data-role": "input", "data-role-input": "true", onChange: (ev) => this.handleEditOutputPathGroupNameChange(ev.target.value), value: this.state.EditingOutputPathGroup.Name }))),
                         this.props.Environments.map((env, i) => {
-                            let currOutputPath = this.state.EditingOutputPathGroup.Paths.find(conn => conn.Environment === env.Name);
+                            let currOutputPath = this.state.EditingOutputPathGroup.Paths.filter(conn => conn.Environment === env.Name)[0];
                             if (!Gentron_Library_1.Utilities.hasValue(currOutputPath)) {
                                 currOutputPath = new Gentron_Library_1.OutputPath();
                                 currOutputPath.Environment = env.Name;

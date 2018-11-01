@@ -67,16 +67,16 @@ class JsonSerializable {
         return a !== a && b !== b;
     }
     ;
-    copyObject(obj) {
+    copyObject(obj, includeFunctions) {
         const ret = {};
         Object.setPrototypeOf(ret, obj);
-        const inheritedProps = this.getInheritedProps(obj);
+        const inheritedProps = this.getInheritedProps(obj, includeFunctions);
         for (let key of inheritedProps) {
             const value = obj[key];
             if (!Utilities_1.default.hasValue(value)) {
                 continue;
             }
-            if (Utilities_1.default.isPrimitive(value)) {
+            if (Utilities_1.default.isPrimitive(value) || (includeFunctions && Utilities_1.default.isFunction(value))) {
                 try {
                     ret[key] = value;
                 }
@@ -84,26 +84,31 @@ class JsonSerializable {
             }
             else if (Utilities_1.default.isObject(value)) {
                 try {
-                    ret[key] = this.copyObject(value);
+                    ret[key] = this.copyObject(value, includeFunctions);
                 }
                 catch (_b) { }
             }
         }
         return ret;
     }
-    getInheritedProps(obj) {
+    getInheritedProps(obj, includeFunctions) {
         const propNames = Object.getOwnPropertyNames(obj);
         let nonFnPropNames = propNames.filter((propName) => {
-            return !Utilities_1.default.isFunction(obj[propName]);
+            if (includeFunctions) {
+                return true;
+            }
+            else {
+                return !Utilities_1.default.isFunction(obj[propName]);
+            }
         });
         const proto = Object.getPrototypeOf(obj);
         if (proto !== Utilities_1.default.ObjectPrototype) {
-            nonFnPropNames = nonFnPropNames.concat(this.getInheritedProps(proto));
+            nonFnPropNames = nonFnPropNames.concat(this.getInheritedProps(proto, includeFunctions));
         }
         return nonFnPropNames;
     }
-    getPotentialMatches(obj, inheritedProps) {
-        const copy = this.copyObject(obj);
+    getPotentialMatches(obj, inheritedProps, includeFunctions) {
+        const copy = this.copyObject(obj, includeFunctions);
         const potentialMatches = [];
         for (let i = 0; i < inheritedProps.length; ++i) {
             for (let j = 0; j < inheritedProps.length; ++j) {
@@ -136,10 +141,10 @@ class JsonSerializable {
         }
         return potentialMatches;
     }
-    resolvePotentialMatches(obj, potentialMatches) {
+    resolvePotentialMatches(obj, potentialMatches, includeFunctions) {
         const matches = [];
         for (let key in potentialMatches) {
-            const copy = this.copyObject(obj);
+            const copy = this.copyObject(obj, includeFunctions);
             const potentialMatch = potentialMatches[key];
             const potentialPrivateKey = copy.propertyIsEnumerable(potentialMatch.Key1)
                 ? potentialMatch.Key1
@@ -189,9 +194,9 @@ class JsonSerializable {
         }
         return matches;
     }
-    toJson(obj = this) {
-        const inheritedProps = this.getInheritedProps(obj);
-        const potentialMatches = this.getPotentialMatches(obj, inheritedProps);
+    toJson(obj = this, ignoreFields = obj.IgnoreFields, includeFunctions = false) {
+        const inheritedProps = this.getInheritedProps(obj, includeFunctions);
+        const potentialMatches = this.getPotentialMatches(obj, inheritedProps, includeFunctions);
         potentialMatches.forEach((potentialMatch, i) => {
             const key1 = potentialMatch.Key1;
             if (obj.IgnoreFields.indexOf(key1) >= 0 && inheritedProps.indexOf(key1) >= 0) {
@@ -202,7 +207,7 @@ class JsonSerializable {
                 inheritedProps.splice(inheritedProps.indexOf(key2), 1);
             }
         });
-        const matches = this.resolvePotentialMatches(obj, potentialMatches);
+        const matches = this.resolvePotentialMatches(obj, potentialMatches, includeFunctions);
         for (let i = 0; i < matches.length; ++i) {
             const match = matches[i];
             const idx = inheritedProps.indexOf(match);
@@ -216,14 +221,14 @@ class JsonSerializable {
                 continue;
             }
             const value = obj[key];
-            if (Utilities_1.default.isPrimitive(value)) {
+            if ((Utilities_1.default.isPrimitive(value)) || Utilities_1.default.isFunction(value)) {
                 ret[key] = value;
             }
             else if (Utilities_1.default.isArray(value)) {
                 ret[key] = [];
                 for (let i = 0; i < value.length; ++i) {
                     const arrValue = obj[key][i];
-                    if (Utilities_1.default.isPrimitive(arrValue)) {
+                    if ((Utilities_1.default.isPrimitive(arrValue)) || Utilities_1.default.isFunction(arrValue)) {
                         ret[key].push(arrValue);
                     }
                     else if (Utilities_1.default.isObject(arrValue) && arrValue.toJson) {
@@ -238,4 +243,6 @@ class JsonSerializable {
         return ret;
     }
 }
+JsonSerializable._functionType = typeof (() => { });
+JsonSerializable._objectProto = Object.getPrototypeOf({});
 exports.default = JsonSerializable;

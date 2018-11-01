@@ -35,10 +35,6 @@ export class Engine extends SourceBase implements IEngine {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
     public update(engine: IEngine): void {
         this.IsActive = engine.IsActive;
         this.Name = engine.Name;

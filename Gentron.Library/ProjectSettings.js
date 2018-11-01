@@ -55,16 +55,6 @@ class ProjectSettings extends abstract_1.JsonSerializable {
         ret.RemotePackageLocation = obj.RemotePackageLocation;
         return ret;
     }
-    toJson() {
-        return {
-            DatabaseConnections: this.DatabaseConnections,
-            FileConnections: this.FileConnections,
-            HttpConnections: this.HttpConnections,
-            LocalPackageFolder: this.LocalPackageFolder,
-            OutputPathGroups: this.OutputPathGroups,
-            RemotePackageLocation: this.RemotePackageLocation,
-        };
-    }
     static toJson(obj) {
         return {
             DatabaseConnections: obj.DatabaseConnections,

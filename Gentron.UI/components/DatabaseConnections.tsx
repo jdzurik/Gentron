@@ -158,7 +158,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
 
                                     {
                                         this.props.Environments.map((env: IEnvironment, i: number) => {
-                                            let currConnection: IDatabaseConnection = this.state.EditingConnectionGroup.Connections.find(conn => conn.Environment === env.Name);
+                                            let currConnection: IDatabaseConnection = this.state.EditingConnectionGroup.Connections.filter(conn => conn.Environment === env.Name)[0];
 
                                             if (!Utilities.hasValue(currConnection)) {
                                                 currConnection = new DatabaseConnection();

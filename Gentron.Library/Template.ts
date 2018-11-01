@@ -55,10 +55,6 @@ export class Template extends JsonSerializable<ITemplate> implements ITemplate {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
     public update(template: ITemplate): void {
         this._name = template.Name;
         this._type = template.Type;

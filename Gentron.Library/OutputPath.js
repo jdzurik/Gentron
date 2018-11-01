@@ -19,9 +19,6 @@ class OutputPath extends abstract_1.Cloneable {
         this._environment = "";
         this._path = "";
     }
-    toJson() {
-        throw new Error("Method not implemented");
-    }
     clone() {
         const ret = new OutputPath();
         ret._cloneId = this._id;

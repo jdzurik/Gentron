@@ -127,9 +127,6 @@
     <TypeScriptCompile Include="components\NavViewPane.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="components\NavView.tsx">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="components\OutputPaths.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>

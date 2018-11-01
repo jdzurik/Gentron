@@ -21,9 +21,6 @@ class ConnectionGroup extends abstract_1.Cloneable {
     }
     removeConnection(connection) {
     }
-    toJson() {
-        throw new Error("Method not implemented");
-    }
     clone() {
         const ret = new ConnectionGroup();
         ret._cloneId = this.ID;

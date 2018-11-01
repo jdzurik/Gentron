@@ -12,6 +12,9 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
     /*
      *  Properties & Fields
      */
+    private static readonly _functionType = typeof (() => { });
+    private static readonly _objectProto = Object.getPrototypeOf({});
+
     public IgnoreFields: [keyof T];
 
 
@@ -107,11 +110,11 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
         return a !== a && b !== b;
     };
 
-    private copyObject<T extends JsonSerializable<T>>(obj: T): T {
+    private copyObject<T extends JsonSerializable<T>>(obj: T, includeFunctions: boolean): T {
         const ret: T = {} as T;
         (Object as any).setPrototypeOf(ret, obj);
 
-        const inheritedProps: [keyof T] = this.getInheritedProps(obj);
+        const inheritedProps: [keyof T] = this.getInheritedProps(obj, includeFunctions);
         for (let key of inheritedProps) {
             const value: any = obj[key];
 
@@ -119,14 +122,14 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
                 continue;
             }
 
-            if (Utilities.isPrimitive(value)) {
+            if (Utilities.isPrimitive(value) || (includeFunctions && Utilities.isFunction(value))) {
                 try {
                     ret[key] = value;
                 } catch { }
             }
             else if (Utilities.isObject(value)) {
                 try {
-                    ret[key] = this.copyObject(value);
+                    ret[key] = this.copyObject(value, includeFunctions);
                 } catch { }
             }
         }
@@ -134,24 +137,29 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
         return ret;
     }
 
-    private getInheritedProps<T extends JsonSerializable<T>>(obj: T | JsonSerializable<T>): [keyof T] {
+    private getInheritedProps<T extends JsonSerializable<T>>(obj: T | JsonSerializable<T>, includeFunctions: boolean): [keyof T] {
         const propNames: [keyof T] = Object.getOwnPropertyNames(obj) as [keyof T];
 
         let nonFnPropNames: [keyof T] = propNames.filter((propName: keyof JsonSerializable<T>) => {
-            return !Utilities.isFunction(obj[propName]);
+            if (includeFunctions) {
+                return true;
+            }
+            else {
+                return !Utilities.isFunction(obj[propName]);
+            }
         }) as [keyof T];
 
         const proto = Object.getPrototypeOf(obj);
 
         if (proto !== Utilities.ObjectPrototype) {
-            nonFnPropNames = nonFnPropNames.concat(this.getInheritedProps(proto) as [keyof T]) as [keyof T];
+            nonFnPropNames = nonFnPropNames.concat(this.getInheritedProps(proto, includeFunctions) as [keyof T]) as [keyof T];
         }
 
         return nonFnPropNames;
     }
 
-    private getPotentialMatches<T extends JsonSerializable<T>>(obj: T | JsonSerializable<T>, inheritedProps: [keyof JsonSerializable<T>]): PotentialPropertyMatch[] {
-        const copy: JsonSerializable<T> = this.copyObject(obj);
+    private getPotentialMatches<T extends JsonSerializable<T>>(obj: T | JsonSerializable<T>, inheritedProps: [keyof JsonSerializable<T>], includeFunctions: boolean): PotentialPropertyMatch[] {
+        const copy: JsonSerializable<T> = this.copyObject(obj, includeFunctions);
         const potentialMatches: PotentialPropertyMatch[] = [];
 
         for (let i: number = 0; i < inheritedProps.length; ++i) {
@@ -191,11 +199,11 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
         return potentialMatches;
     }
 
-    private resolvePotentialMatches<T extends JsonSerializable<T>>(obj: T | JsonSerializable<T>, potentialMatches: PotentialPropertyMatch[]): [keyof JsonSerializable<T>] {
+    private resolvePotentialMatches<T extends JsonSerializable<T>>(obj: T | JsonSerializable<T>, potentialMatches: PotentialPropertyMatch[], includeFunctions: boolean): [keyof JsonSerializable<T>] {
         const matches: string[] = [];
 
         for (let key in potentialMatches) {
-            const copy: JsonSerializable<T> = this.copyObject(obj);
+            const copy: JsonSerializable<T> = this.copyObject(obj, includeFunctions);
             const potentialMatch: PotentialPropertyMatch = potentialMatches[key];
 
             const potentialPrivateKey: string = copy.propertyIsEnumerable(potentialMatch.Key1)
@@ -255,11 +263,9 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
         return matches as [keyof JsonSerializable<T>];
     }
 
-    public toJson(this: JsonSerializable<T>, obj: JsonSerializable<T> = this): any {
-        const inheritedProps: [keyof JsonSerializable<T>] = this.getInheritedProps(obj);
-
-        const potentialMatches: PotentialPropertyMatch[] = this.getPotentialMatches(obj, inheritedProps);
-
+    public toJson(this: JsonSerializable<T>, obj: JsonSerializable<T> = this, ignoreFields: [keyof T] = obj.IgnoreFields, includeFunctions: boolean = false): any {
+        const inheritedProps: [keyof JsonSerializable<T>] = this.getInheritedProps(obj, includeFunctions);
+        const potentialMatches: PotentialPropertyMatch[] = this.getPotentialMatches(obj, inheritedProps, includeFunctions);
         potentialMatches.forEach((potentialMatch: PotentialPropertyMatch, i: number) => {
             const key1: keyof JsonSerializable<T> = potentialMatch.Key1 as keyof JsonSerializable<T>;
             if (obj.IgnoreFields.indexOf(key1) >= 0 && inheritedProps.indexOf(key1) >= 0) {
@@ -272,7 +278,7 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
             }
         });
 
-        const matches: [keyof JsonSerializable<T>] = this.resolvePotentialMatches(obj, potentialMatches);
+        const matches: [keyof JsonSerializable<T>] = this.resolvePotentialMatches(obj, potentialMatches, includeFunctions);
 
         for (let i: number = 0; i < matches.length; ++i) {
             const match: keyof JsonSerializable<T> = matches[i];
@@ -292,14 +298,14 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
 
             const value: any = obj[key];
 
-            if (Utilities.isPrimitive(value)) {
+            if ((Utilities.isPrimitive(value)) || Utilities.isFunction(value)) {
                 ret[key] = value;
             }
             else if (Utilities.isArray(value)) {
                 ret[key] = [];
                 for (let i: number = 0; i < (value as JsonSerializable<T>[]).length; ++i) {
                     const arrValue: any = obj[key][i];
-                    if (Utilities.isPrimitive(arrValue)) {
+                    if ((Utilities.isPrimitive(arrValue)) || Utilities.isFunction(arrValue)) {
                         ret[key].push(arrValue);
                     }
                     else if (Utilities.isObject(arrValue) && (arrValue as JsonSerializable<T>).toJson) {

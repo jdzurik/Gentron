@@ -158,7 +158,7 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
 
                                     {
                                         this.props.Environments.map((env: IEnvironment, i: number) => {
-                                            let currOutputPath: IOutputPath = this.state.EditingOutputPathGroup.Paths.find(conn => conn.Environment === env.Name);
+                                            let currOutputPath: IOutputPath = this.state.EditingOutputPathGroup.Paths.filter(conn => conn.Environment === env.Name)[0];
 
                                             if (!Utilities.hasValue(currOutputPath)) {
                                                 currOutputPath = new OutputPath();

@@ -1,12 +1,13 @@
 ﻿import * as PackageSettingsActions from '../actions/PackageSettings';
-import { NonFunctionProperties } from '../types';
+import { NonHashedProps } from '../types';
 import { PackageSettings, IPackageSettings, IEnvironment } from "../../Gentron.Library";
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
 
-type PackageSettingsProps = NonFunctionProperties<IPackageSettings>;
+type PackageSettingsProps = NonHashedProps<IPackageSettings>;
 
-const _unloadedPackageSettingsState: IPackageSettings = new PackageSettings();
+const _initial: IPackageSettings = new PackageSettings();
+const _unloadedPackageSettingsState: NonHashedProps<IPackageSettings> = _initial.toJson(_initial, _initial.IgnoreFields, true) as NonHashedProps<IPackageSettings>;
 
 export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsProps, action: PackageSettingsActions.KnownPackageSettingsAction) => {
     switch (action.type) {

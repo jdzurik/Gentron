@@ -25,7 +25,7 @@ let DatabaseSource = class DatabaseSource extends React.Component {
         this.props.addOrUpdateDatabaseSource(source);
     }
     handleActiveConnectionChange(ev) {
-        this.props.DatabaseSource.ActiveConnectionGroup = this.props.DatabaseConnections.find(x => x.ID === ev.target.value);
+        this.props.DatabaseSource.ActiveConnectionGroup = this.props.DatabaseConnections.filter(x => x.ID === ev.target.value)[0];
         this.props.addOrUpdateDatabaseSource(this.props.DatabaseSource);
     }
     render() {

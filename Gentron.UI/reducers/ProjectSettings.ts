@@ -1,12 +1,13 @@
 ﻿import * as ProjectSettingsActions from '../actions/ProjectSettings';
-import { NonFunctionProperties } from '../types';
+import { NonHashedProps } from '../types';
 import { ProjectSettings, IProjectSettings } from "../../Gentron.Library";
 import { ProjectSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
 
-type ProjectSettingsProps = NonFunctionProperties<IProjectSettings>;
+type ProjectSettingsProps = NonHashedProps<IProjectSettings>;
 
-const _unloadedProjectSettingsState: IProjectSettings = new ProjectSettings();
+const _initial: IProjectSettings = new ProjectSettings();
+const _unloadedProjectSettingsState: NonHashedProps<IProjectSettings> = _initial.toJson(_initial, _initial.IgnoreFields, true) as NonHashedProps<IProjectSettings>;
 
 export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsProps, action: ProjectSettingsActions.KnownProjectSettingsAction) => {
     switch (action.type) {

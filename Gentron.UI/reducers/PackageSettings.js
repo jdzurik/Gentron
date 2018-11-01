@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Gentron_Library_1 = require("../../Gentron.Library");
-const _unloadedPackageSettingsState = new Gentron_Library_1.PackageSettings();
+const _initial = new Gentron_Library_1.PackageSettings();
+const _unloadedPackageSettingsState = _initial.toJson(_initial, _initial.IgnoreFields, true);
 exports.reducer = (state, action) => {
     switch (action.type) {
         case "ADD_OR_UPDATE_DATABASE_SOURCE":

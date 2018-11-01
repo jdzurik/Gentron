@@ -69,7 +69,5 @@ export abstract class SourceBase extends JsonSerializable<ISourceBase> implement
     /*
      *  Methods
      */
-    public abstract toJson(): any;
-
     public abstract update(source: ISourceBase): void;
 }

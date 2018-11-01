@@ -1,7 +1,7 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
 import { ActionCreators } from "../actions/ProjectSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
+import { ApplicationState, HashedProps } from "../types";
 import { bindActionCreators } from 'redux';
 import { Cell, FolderInput, Grid, Row } from "./metro";
 import { connect } from "../connect";
@@ -9,7 +9,7 @@ import { IProjectSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type HashedIProjectSettings = Hash & NonFunctionProperties<IProjectSettings>
+type HashedIProjectSettings = HashedProps<IProjectSettings>
 
 type ProjectSettingsProps = HashedIProjectSettings
     & typeof ActionCreators

@@ -47,10 +47,6 @@ export class Environment extends Cloneable<IEnvironment> implements IEnvironment
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
     public clone(): IEnvironment {
         const ret: Environment = new Environment();
 

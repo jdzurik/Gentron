@@ -12,9 +12,6 @@ class Engine extends SourceBase_1.SourceBase {
         super();
         this._templates = [];
     }
-    toJson() {
-        throw new Error("Method not implemented");
-    }
     update(engine) {
         this.IsActive = engine.IsActive;
         this.Name = engine.Name;

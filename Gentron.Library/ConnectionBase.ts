@@ -32,8 +32,6 @@ export abstract class ConnectionBase extends Cloneable<IConnectionBase> implemen
     /*
      *  Methods
      */
-    public abstract toJson(): any;
-
     public abstract clone(): IConnectionBase;
 
     public abstract update(connection: IConnectionBase): void;

@@ -43,7 +43,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
     }
 
     private handleActiveConnectionChange(ev: React.ChangeEvent<HTMLSelectElement>): void {
-        this.props.DatabaseSource.ActiveConnectionGroup = this.props.DatabaseConnections.find(x => x.ID === ev.target.value);
+        this.props.DatabaseSource.ActiveConnectionGroup = this.props.DatabaseConnections.filter(x => x.ID === ev.target.value)[0];
         this.props.addOrUpdateDatabaseSource(this.props.DatabaseSource);
     }
 

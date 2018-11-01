@@ -8,10 +8,6 @@ export class FileSource extends SourceBase implements IFileSource {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
     public update(fileSource: IFileSource): void {
         this.IsActive = fileSource.IsActive;
         this.Name = fileSource.Name;

@@ -34,10 +34,6 @@ export class HttpConnection extends ConnectionBase implements IHttpConnection {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
     public clone(): HttpConnection {
         throw new Error("Method not implemented");
     }

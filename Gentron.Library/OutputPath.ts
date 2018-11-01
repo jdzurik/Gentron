@@ -48,10 +48,6 @@ export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
     public clone(): IOutputPath {
         const ret: OutputPath = new OutputPath();
 

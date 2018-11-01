@@ -47,10 +47,6 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
     public clone(): DatabaseConnection {
         const ret: DatabaseConnection = new DatabaseConnection();
 

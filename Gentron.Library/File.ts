@@ -13,7 +13,7 @@ export interface IFile extends IModifiable<IFile> {
      *  Methods
      */
     loadContentsSync(filePath?: string, setContents?: boolean): string;
-    loadContents(filePath?: string, setContents?: boolean): Promise<string>;
+    //loadContents(filePath?: string, setContents?: boolean): Promise<string>;
 }
 
 export class File implements IFile {
@@ -82,21 +82,21 @@ export class File implements IFile {
         }
     }
 
-    public async loadContents(filePath: string = this.Path || "", setContents: boolean = true): Promise<string> {
-        try {
-            const buf: Buffer = await fs.promises.readFile(filePath);
-            const contents: string = buf.toString();
+    //public async loadContents(filePath: string = this.Path || "", setContents: boolean = true): Promise<string> {
+    //    try {
+    //        const buf: Buffer = await fs.promises.readFile(filePath);
+    //        const contents: string = buf.toString();
 
-            if (setContents) {
-                this.Contents = contents;
-            }
+    //        if (setContents) {
+    //            this.Contents = contents;
+    //        }
 
-            return contents;
-        }
-        catch (e) {
-            return (e as NodeJS.ErrnoException).message.toString();
-        }
-    }
+    //        return contents;
+    //    }
+    //    catch (e) {
+    //        return (e as NodeJS.ErrnoException).message.toString();
+    //    }
+    //}
 
     public update(file: IFile): void {
         this.LastModified = file.LastModified;

@@ -8,5 +8,5 @@
     /*
      *  Methods
      */
-    toJson(): any;
+    toJson(this: IJsonSerializable<T>, obj: IJsonSerializable<T> , ignoreFields: [keyof T], includeFunctions: boolean): any;
 }

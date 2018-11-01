@@ -12,9 +12,6 @@ class FileConnection extends ConnectionBase_1.ConnectionBase {
         super();
         this._environment = "";
     }
-    toJson() {
-        throw new Error("Method not implemented");
-    }
     clone() {
         throw new Error("Method not implemented");
     }

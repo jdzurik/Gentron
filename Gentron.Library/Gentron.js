@@ -30,13 +30,6 @@ class Gentron extends abstract_1.JsonSerializable {
         ret.ProjectSettings = _1.ProjectSettings.fromJson(obj.ProjectSettings);
         return ret;
     }
-    toJson() {
-        return {
-            ID: this.ID,
-            PackageSettings: this.PackageSettings.toJson(),
-            ProjectSettings: this.ProjectSettings.toJson(),
-        };
-    }
     static toJson(obj) {
         return {
             ID: obj.ID,

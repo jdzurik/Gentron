@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Gentron_Library_1 = require("../../Gentron.Library");
-const _unloadedProjectSettingsState = new Gentron_Library_1.ProjectSettings();
+const _unloadedProjectSettingsState = new Gentron_Library_1.ProjectSettings().toJson();
 exports.reducer = (state, action) => {
     switch (action.type) {
         case "ADD_OR_UPDATE_DATABASE_CONNECTION_GROUP":

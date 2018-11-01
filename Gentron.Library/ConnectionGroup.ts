@@ -58,10 +58,6 @@ export class ConnectionGroup<TConnection extends IConnectionBase> extends Clonea
 
     }
 
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
     public clone(): IConnectionGroup<TConnection> {
         const ret: ConnectionGroup<TConnection> = new ConnectionGroup<TConnection>();
 

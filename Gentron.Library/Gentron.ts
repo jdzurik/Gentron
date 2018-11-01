@@ -66,14 +66,6 @@ export class Gentron extends JsonSerializable<IGentron> implements IGentron {
         return ret;
     }
 
-    public toJson(): any {
-        return {
-            ID: this.ID,
-            PackageSettings: this.PackageSettings.toJson(),
-            ProjectSettings: this.ProjectSettings.toJson(),
-        };
-    }
-
     public static toJson(obj: IGentron): any {
         return {
             ID: obj.ID,

@@ -65,17 +65,6 @@ class PackageSettings extends abstract_1.JsonSerializable {
         ret.ReadMeText = obj.ReadMeText;
         return ret;
     }
-    toJson() {
-        return {
-            DatabaseSources: this.DatabaseSources,
-            Engines: this.Engines,
-            Environments: this.Environments,
-            FileSources: this.FileSources,
-            HttpSources: this.HttpSources,
-            PackageName: this.PackageName,
-            ReadMeText: this.ReadMeText
-        };
-    }
     static toJson(obj) {
         return {
             DatabaseSources: obj.DatabaseSources,

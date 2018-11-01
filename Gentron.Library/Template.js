@@ -25,9 +25,6 @@ class Template extends abstract_1.JsonSerializable {
         this._name = "";
         this._type = Types_1.TemplateTypes.Partial;
     }
-    toJson() {
-        throw new Error("Method not implemented");
-    }
     update(template) {
         this._name = template.Name;
         this._type = template.Type;

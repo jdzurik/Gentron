@@ -1,3 +1,3 @@
-﻿import Cloneable from "./Cloneable";
-import JsonSerializable from "./JsonSerializable";
-export { Cloneable, JsonSerializable };
+﻿import JsonSerializable from "./JsonSerializable";
+import Cloneable from "./Cloneable";
+export { JsonSerializable, Cloneable };
