@@ -1,9 +1,5 @@
-﻿import { IConnectionGroup } from "./ConnectionGroup";
-import { IDatabaseConnection } from "./DatabaseConnection";
-import { IFileConnection } from "./FileConnection";
-import { IHttpConnection } from "./HttpConnection";
+﻿import { IConnectionGroup, IDatabaseConnection, IFileConnection, IHttpConnection, IOutputPath, IOutputPathGroup } from "./";
 import { IJsonSerializable } from "./interfaces";
-import { IOutputPath } from "./OutputPath";
 
 export interface IProjectSettings extends IJsonSerializable {
     /*
@@ -13,7 +9,7 @@ export interface IProjectSettings extends IJsonSerializable {
     FileConnections: IConnectionGroup<IFileConnection>[];
     HttpConnections: IConnectionGroup<IHttpConnection>[];
     LocalPackageFolder: string;
-    OutputPaths: IOutputPath[];
+    OutputPathGroups: IOutputPathGroup<IOutputPath>[];
     RemotePackageLocation: string;
 }
 
@@ -65,14 +61,14 @@ export class ProjectSettings implements IProjectSettings {
     }
 
 
-    private _outputPaths: IOutputPath[];
+    private _outputPathGroups: IOutputPathGroup<IOutputPath>[];
 
-    public get OutputPaths(): IOutputPath[] {
-        return this._outputPaths;
+    public get OutputPathGroups(): IOutputPathGroup<IOutputPath>[] {
+        return this._outputPathGroups;
     }
 
-    public set OutputPaths(value: IOutputPath[]) {
-        this._outputPaths = value;
+    public set OutputPathGroups(value: IOutputPathGroup<IOutputPath>[]) {
+        this._outputPathGroups = value;
     }
 
 
@@ -95,7 +91,7 @@ export class ProjectSettings implements IProjectSettings {
         this._fileConnections = [];
         this._httpConnections = [];
         this._localPackageFolder = "";
-        this._outputPaths = [];
+        this._outputPathGroups = [];
         this._remotePackageLocation = "";
     }
 
@@ -107,8 +103,10 @@ export class ProjectSettings implements IProjectSettings {
         const ret: IProjectSettings = new ProjectSettings();
 
         ret.DatabaseConnections = obj.DatabaseConnections;
+        ret.FileConnections = obj.FileConnections;
+        ret.HttpConnections = obj.HttpConnections;
         ret.LocalPackageFolder = obj.LocalPackageFolder;
-        ret.OutputPaths = obj.OutputPaths;
+        ret.OutputPathGroups = obj.OutputPathGroups;
         ret.RemotePackageLocation = obj.RemotePackageLocation;
 
         return ret;
@@ -120,7 +118,7 @@ export class ProjectSettings implements IProjectSettings {
             FileConnections: this.FileConnections,
             HttpConnections: this.HttpConnections,
             LocalPackageFolder: this.LocalPackageFolder,
-            OutputPaths: this.OutputPaths,
+            OutputPathGroups: this.OutputPathGroups,
             RemotePackageLocation: this.RemotePackageLocation,
         };
     }
@@ -131,7 +129,7 @@ export class ProjectSettings implements IProjectSettings {
             FileConnections: obj.FileConnections,
             HttpConnections: obj.HttpConnections,
             LocalPackageFolder: obj.LocalPackageFolder,
-            OutputPaths: obj.OutputPaths,
+            OutputPathGroups: obj.OutputPathGroups,
             RemotePackageLocation: obj.RemotePackageLocation,
         };
     }

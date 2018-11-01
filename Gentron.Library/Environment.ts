@@ -1,24 +1,17 @@
-﻿import { Utilities } from ".";
-import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
+﻿import { ICloneable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
+import { Cloneable } from "./abstract";
 
-export interface IEnvironment extends IActivateable, IJsonSerializable, Readonly<IIdentifiable>, IModifiable<IEnvironment> {
+export interface IEnvironment extends IActivateable, ICloneable<IEnvironment>, IJsonSerializable, IModifiable<IEnvironment> {
     /*
      *  Properties & Fields
      */
     Name: string;
 }
 
-export class Environment implements IEnvironment {
+export class Environment extends Cloneable<IEnvironment> implements IEnvironment {
     /*
      *  Properties & Fields
      */
-    private readonly _id: string;
-
-    public get ID(): string {
-        return this._id;
-    }
-
-
     private _isActive: boolean;
 
     public get IsActive(): boolean {
@@ -45,7 +38,7 @@ export class Environment implements IEnvironment {
      *  Constructors
      */
     public constructor() {
-        this._id = Utilities.newCryptoGuid();
+        super();
         this._isActive = false;
         this._name = "";
     }
@@ -56,6 +49,17 @@ export class Environment implements IEnvironment {
      */
     public toJson(): any {
         throw new Error("Method not implemented");
+    }
+
+    public clone(): IEnvironment {
+        const ret: Environment = new Environment();
+
+        ret._cloneId = this._id;
+        ret._isActive = this._isActive;
+        ret._isClone = true;
+        ret._name = this._name;
+
+        return ret;
     }
 
     public update(environment: IEnvironment): void {

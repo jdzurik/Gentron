@@ -2,15 +2,16 @@
 import * as React from "react";
 import { ActionCreators as PackageSettingsActionCreators } from "../actions/PackageSettings";
 import { ActionCreators as ProjectSettingsActionCreators } from "../actions/ProjectSettings";
-import { ApplicationState, Hash } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid } from "./metro";
+import { Hash } from "../../Gentron.Library/types";
 import { connect } from "../connect";
+import { IGentron } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableHomeProps = Hash & {
-    Gentron?: ApplicationState;
+    Gentron?: IGentron;
 }
 
 type HomeProps = NullableHomeProps
@@ -46,7 +47,7 @@ export default class Home extends React.Component<HomeProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState): NullableHomeProps {
+function mapStateToProps(state: IGentron): NullableHomeProps {
     const _hash: string = hash(state);
     return {
         Gentron: state,

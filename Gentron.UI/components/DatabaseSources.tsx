@@ -1,11 +1,11 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid, Switch } from "./metro";
 import { connect } from "../connect";
-import { DatabaseSource, IDatabaseSource } from "../../Gentron.Library";
+import { Hash } from "../../Gentron.Library/types";
+import { IGentron, DatabaseSource, IDatabaseSource } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -106,7 +106,7 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
     }
 }
 
-function mapStateToProps(state: ApplicationState): NullableDatabaseSources {
+function mapStateToProps(state: IGentron): NullableDatabaseSources {
     const _hash: string = hash(state.PackageSettings.DatabaseSources);
     return {
         DatabaseSources: state.PackageSettings.DatabaseSources,

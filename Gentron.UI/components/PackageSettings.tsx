@@ -1,11 +1,11 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IPackageSettings } from "../../Gentron.Library";
+import { Hash, NonFunctionProperties } from "../../Gentron.Library/types";
+import { IGentron, IPackageSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
@@ -88,7 +88,7 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
 }
 
 // Wire up the React component to the Redux store
-function mapStateToProps(state: ApplicationState): HashedIPackageSettings {
+function mapStateToProps(state: IGentron): HashedIPackageSettings {
     const _hash: string = hash(state.PackageSettings);
 
     return {

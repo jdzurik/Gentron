@@ -1,7 +1,7 @@
 ﻿import { IIdentifiable, IJsonSerializable } from "./interfaces";
 import { PackageSettings, IPackageSettings, ProjectSettings, IProjectSettings, Utilities } from ".";
 
-export interface IGentron extends IJsonSerializable, Readonly<IIdentifiable> {
+export interface IGentron extends IJsonSerializable, IIdentifiable {
     /*
      *  Properties & Fields 
      */

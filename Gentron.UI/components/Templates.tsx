@@ -1,16 +1,16 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { Template, ITemplate } from "../../Gentron.Library";
+import { Hash } from "../../Gentron.Library/types";
+import { IGentron, Template, ITemplate } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableTemplates = Hash & {
-    Templates?: NonFunctionProperties<ITemplate>[];
+    Templates?: ITemplate[];
 };
 
 type TemplatesProps = NullableTemplates
@@ -96,7 +96,7 @@ export default class Templates extends React.Component<TemplatesProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ engineid: string }>): NullableTemplates {
+function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ engineid: string }>): NullableTemplates {
     const engineid: string = routeComponentProps.match.params.engineid;
     const _hash: string = hash(state.PackageSettings.Engines[engineid].Templates);
     return {

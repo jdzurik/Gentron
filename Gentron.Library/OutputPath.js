@@ -1,15 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const _1 = require(".");
-class OutputPath {
-    get ID() {
-        return this._id;
+const abstract_1 = require("./abstract");
+class OutputPath extends abstract_1.Cloneable {
+    get Environment() {
+        return this._environment;
     }
-    get Name() {
-        return this._name;
-    }
-    set Name(value) {
-        this._name = value;
+    set Environment(value) {
+        this._environment = value;
     }
     get Path() {
         return this._path;
@@ -18,15 +15,23 @@ class OutputPath {
         this._path = value;
     }
     constructor() {
-        this._id = _1.Utilities.newCryptoGuid();
-        this._name = "";
+        super();
+        this._environment = "";
         this._path = "";
     }
     toJson() {
         throw new Error("Method not implemented");
     }
+    clone() {
+        const ret = new OutputPath();
+        ret._cloneId = this._id;
+        ret._isClone = true;
+        ret._environment = this._environment;
+        ret._path = this._path;
+        return ret;
+    }
     update(ouputPath) {
-        this._name = ouputPath.Name;
+        this._environment = ouputPath.Environment;
         this._path = ouputPath.Path;
     }
 }

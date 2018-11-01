@@ -2,11 +2,11 @@
 import * as React from "react";
 import { ActionCreators as PackageSettingsActionCreators } from "../actions/PackageSettings";
 import { ActionCreators as ProjectSettingsActionCreators } from "../actions/ProjectSettings";
-import { ApplicationState, Hash } from "../types";
 import { bindActionCreators } from "redux";
+import { Hash } from "../../Gentron.Library/types";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { ConnectionGroup, DatabaseConnection, IConnectionGroup, IDatabaseConnection, IEnvironment, Utilities } from "../../Gentron.Library";
+import { IGentron, ConnectionGroup, DatabaseConnection, IConnectionGroup, IDatabaseConnection, IEnvironment, Utilities } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -107,7 +107,9 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddConnectionClick.bind(this)}>Add Connection</button>
+                                    <button className="button" onClick={this.handleAddConnectionClick.bind(this)}>
+                                        <span className="mif-add"></span>
+                                    </button>
                                 </td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
@@ -119,14 +121,16 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                         <td>
                                             <button className="button"
                                                 onClick={() => this.handleOpenEditConnectionClick(connection)}>
-                                                Click
+                                                <span className="mif-pencil"></span>
                                             </button>
                                         </td>
                                         <td>{connection.Name}</td>
                                         <td>{connection.Connections.length}</td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveConnectionClick.bind(this, connection)}>Remove</button>
+                                                <button className="button" onClick={this.handleRemoveConnectionClick.bind(this, connection)}>
+                                                    <span className="mif-bin"></span>
+                                                </button>
                                             </a>
                                         </td>
                                     </tr>
@@ -206,7 +210,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
     }
 }
 
-function mapStateToProps(state: ApplicationState): NullableDatabaseConnections {
+function mapStateToProps(state: IGentron): NullableDatabaseConnections {
     const _dbHash: string = hash(state.ProjectSettings.DatabaseConnections);
     const _envHash: string = hash(state.PackageSettings.Environments);
     const _hash: string = hash(_dbHash + _envHash);

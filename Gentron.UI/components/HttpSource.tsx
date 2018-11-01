@@ -1,17 +1,17 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
-import { IHttpSource } from "../../Gentron.Library";
+import { Hash } from "../../Gentron.Library/types";
+import { IGentron, IHttpSource } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import SplitPane from "./SplitPane";
 
 type HashedHttpSource = Hash & {
-    HttpSource?: NonFunctionProperties<IHttpSource>;
+    HttpSource?: IHttpSource
 };
 
 type HttpSourceProps = HashedHttpSource
@@ -81,7 +81,7 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ id: string }>): HashedHttpSource {
+function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ id: string }>): HashedHttpSource {
     const id: string = routeComponentProps.match.params.id;
     const _hash: string = hash(state.PackageSettings.HttpSources[id] || "")
     return {

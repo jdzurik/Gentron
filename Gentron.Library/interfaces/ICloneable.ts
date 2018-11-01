@@ -1,4 +1,6 @@
-﻿export default interface ICloneable<T> {
+﻿import { IIdentifiable } from ".";
+
+export default interface ICloneable<T> extends IIdentifiable {
     /*
      *  Methods
      */

@@ -1,16 +1,16 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
-import { IEngine } from "../../Gentron.Library";
+import { Hash } from "../../Gentron.Library/types";
+import { IGentron, IEngine } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 
 type HashedEngine = Hash & {
-    Engine?: NonFunctionProperties<IEngine>;
+    Engine?: IEngine;
 };
 
 type EngineProps = HashedEngine
@@ -82,7 +82,7 @@ export default class Engine extends React.Component<EngineProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ id: string }>): HashedEngine {
+function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ id: string }>): HashedEngine {
     const id: string = routeComponentProps.match.params.id;
     const _hash: string = hash(state.PackageSettings.Engines[id] || "")
     return {

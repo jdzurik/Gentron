@@ -2,12 +2,16 @@
   "compileOnSave": true,
   "compilerOptions": {
     "allowJs": false,
+    //"baseUrl": "./",
     "experimentalDecorators": true,
     "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "removeComments": true,
+    //"paths": {
+    //  "*": [ "../Gentron.Library/types/*" ]
+    //},
     "sourceMap": false,
     "target": "es6"
   },
@@ -16,6 +20,6 @@
     "dist"
   ],
   "typeAcquisition": {
-    "enable": true 
-  }
+    "enable": true
+  },
 }

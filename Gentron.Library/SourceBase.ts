@@ -1,7 +1,7 @@
 ﻿import { Utilities } from ".";
 import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
 
-export interface ISourceBase extends IActivateable, IJsonSerializable, Readonly<IIdentifiable>, IModifiable<ISourceBase> {
+export interface ISourceBase extends IActivateable, IJsonSerializable, IIdentifiable, IModifiable<ISourceBase> {
     /*
      *  Properties & Fields 
      */

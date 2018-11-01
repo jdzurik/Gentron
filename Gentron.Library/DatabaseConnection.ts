@@ -54,10 +54,11 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
     public clone(): DatabaseConnection {
         const ret: DatabaseConnection = new DatabaseConnection();
 
+        ret._cloneId = this._id;
         ret._connectionString = this._connectionString;
         ret._environment = this._environment;
-        ret._id = this._id;
         ret._isActive = this._isActive;
+        ret._isClone = true;
 
         return ret;
     }

@@ -1,6 +1,4 @@
 ﻿import * as React from "react";
-import { HTMLProps } from "react";
-import { NonFunctionProperties } from "../../types";
 import { Cell, Row } from "../metro";
 import { Props, default as DefaultSplitPane } from "react-split-pane";
 

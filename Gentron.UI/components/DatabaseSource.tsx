@@ -2,11 +2,11 @@
 import * as React from "react";
 import { ActionCreators as PackageSettingsActionCreators } from "../actions/PackageSettings";
 import { ActionCreators as ProjectSettingsActionCreators } from "../actions/ProjectSettings";
-import { ApplicationState, Hash } from "../types";
 import { bindActionCreators } from "redux";
+import { Hash } from "../../Gentron.Library/types";
 import { Cell, FileInput, Grid, LinkButton, Row } from "./metro";
 import { connect } from "../connect";
-import { IConnectionGroup, IDatabaseConnection, IDatabaseSource } from "../../Gentron.Library";
+import { IGentron, IConnectionGroup, IDatabaseConnection, IDatabaseSource } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import SplitPane from "./SplitPane";
@@ -150,7 +150,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
     }
 }
 
-function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ id: string }>): DbSource {
+function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ id: string }>): DbSource {
     const id: string = routeComponentProps.match.params.id;
     const _hash: string = hash(state.PackageSettings.DatabaseSources[id] || "")
     return {

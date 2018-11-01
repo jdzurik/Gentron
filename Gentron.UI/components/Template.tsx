@@ -1,17 +1,17 @@
 ﻿import * as hash from "object-hash";
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
-import { ApplicationState, Hash, NonFunctionProperties } from "../types";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
-import { ITemplate } from "../../Gentron.Library";
+import { Hash } from "../../Gentron.Library/types";
+import { IGentron, ITemplate } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import SplitPane from "./SplitPane";
 import MonacoEditor from 'react-monaco-editor';
 
 type HashedTemplate = Hash & {
-    Template?: NonFunctionProperties<ITemplate>;
+    Template?: ITemplate;
 };
 
 type TemplateProps = HashedTemplate
@@ -81,7 +81,7 @@ export default class Template extends React.Component<TemplateProps> {
     }
 }
 
-function mapStateToProps(state: ApplicationState, routeComponentProps: RouteComponentProps<{ engineid: string, templateid: string }>): HashedTemplate {
+function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ engineid: string, templateid: string }>): HashedTemplate {
     const engineid: string = routeComponentProps.match.params.engineid;
     const templateid: string = routeComponentProps.match.params.templateid;
     const _hash: string = hash(state.PackageSettings.Engines[engineid].Templates[templateid] || "")

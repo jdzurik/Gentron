@@ -9,16 +9,15 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import { AnyAction, Store } from "redux";
-import { ApplicationState } from './types';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { Gentron, ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection, IEnvironment, Environment } from "../Gentron.Library";
-import { IDatabaseSource, DatabaseSource } from "../Gentron.Library/DatabaseSource";
+import { IDatabaseSource, IGentron, DatabaseSource } from "../Gentron.Library";
 import { Provider } from 'react-redux';
 import App from "./components/App";
 import configureStore from './store/configureStore';
 //import setupMenu from "./electronMenu";
 
-type AppStore = Store<ApplicationState, AnyAction> & { dispatch: {} };
+type AppStore = Store<IGentron, AnyAction> & { dispatch: {} };
 
 const syncHistoryWithStore = (store, history: MemoryHistory) => {
     const { routing } = store.getState();
@@ -33,7 +32,7 @@ const syncHistoryWithStore = (store, history: MemoryHistory) => {
 const history: MemoryHistory = createMemoryHistory();
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
-let initialState: ApplicationState;
+let initialState: IGentron;
 
 if (((window as any).initialReduxState)) {
     initialState = (window as any).initialReduxState;
@@ -68,7 +67,7 @@ else {
     });
 }
 
-//const initialState: ApplicationState = ((window as any).initialReduxState) || new Gentron() as ApplicationState;
+//const initialState: IGentron = ((window as any).initialReduxState) || new Gentron() as IGentron;
 const store: AppStore = configureStore(history, initialState.toJson());
 syncHistoryWithStore(store, history);
 const root: HTMLElement = document.createElement("div");

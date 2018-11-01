@@ -1,8 +1,12 @@
 ﻿import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
-import { TemplateTypes } from "./Types";
 import { Utilities } from ".";
 
-export interface ITemplate extends IJsonSerializable, Readonly<IIdentifiable>, IModifiable<ITemplate> {
+export enum TemplateTypes {
+    Partial,
+    Primary,
+}
+
+export interface ITemplate extends IJsonSerializable, IIdentifiable, IModifiable<ITemplate> {
     Name: string;
     Type: TemplateTypes;
 }

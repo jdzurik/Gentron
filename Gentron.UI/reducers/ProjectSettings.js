@@ -21,7 +21,7 @@ exports.reducer = (state, action) => {
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputPaths: state.OutputPaths,
+                OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER":
@@ -30,27 +30,27 @@ exports.reducer = (state, action) => {
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: action.localPackageFolder,
-                OutputPaths: state.OutputPaths,
+                OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
             };
-        case "ADD_OR_UPDATE_OUTPUT_PATH":
+        case "ADD_OR_UPDATE_OUTPUT_PATH_GROUP":
             let pathFound = false;
-            for (let i = 0; i < state.OutputPaths.length; ++i) {
-                if (state.OutputPaths[i].ID === action.outputPath.ID) {
-                    state.OutputPaths[i].update(action.outputPath);
+            for (let i = 0; i < state.OutputPathGroups.length; ++i) {
+                if (state.OutputPathGroups[i].ID === action.outputPathGroup.ID) {
+                    state.OutputPathGroups[i].update(action.outputPathGroup);
                     pathFound = true;
                     break;
                 }
             }
             if (!pathFound) {
-                state.OutputPaths.push(action.outputPath);
+                state.OutputPathGroups.push(action.outputPathGroup);
             }
             return {
                 DatabaseConnections: state.DatabaseConnections,
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputPaths: state.OutputPaths,
+                OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         case "ADD_OR_UPDATE_REMOTE_PACKAGE_LOCATION":
@@ -59,7 +59,7 @@ exports.reducer = (state, action) => {
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputPaths: state.OutputPaths,
+                OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: action.remotePackageLocation
             };
         case "REMOVE_DATABASE_CONNECTION_GROUP":
@@ -78,26 +78,26 @@ exports.reducer = (state, action) => {
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputPaths: state.OutputPaths,
+                OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
             };
-        case "REMOVE_OUTPUT_PATH":
+        case "REMOVE_OUTPUT_PATH_GROUP":
             let foundOutputPathIdx = -1;
-            for (let i = 0; i < state.OutputPaths.length; ++i) {
-                if (state.OutputPaths[i].ID === action.outputPath.ID) {
+            for (let i = 0; i < state.OutputPathGroups.length; ++i) {
+                if (state.OutputPathGroups[i].ID === action.outputPathGroup.ID) {
                     foundOutputPathIdx = i;
                     break;
                 }
             }
             if (foundOutputPathIdx >= 0) {
-                state.OutputPaths.splice(foundOutputPathIdx, 1);
+                state.OutputPathGroups.splice(foundOutputPathIdx, 1);
             }
             return {
                 DatabaseConnections: state.DatabaseConnections,
                 FileConnections: state.FileConnections,
                 HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
-                OutputPaths: state.OutputPaths,
+                OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
             };
         default:
