@@ -12,9 +12,6 @@ export default abstract class JsonSerializable<T extends IJsonSerializable<T>> i
     /*
      *  Properties & Fields
      */
-    private static readonly _functionType = typeof (() => { });
-    private static readonly _objectProto = Object.getPrototypeOf({});
-
     public IgnoreFields: [keyof T];
 
 
