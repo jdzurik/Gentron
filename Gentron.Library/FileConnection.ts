@@ -1,4 +1,5 @@
 ﻿import { ConnectionBase, IConnectionBase } from "./ConnectionBase";
+import { NonFunctionProperties } from "./types";
 
 export interface IFileConnection extends IConnectionBase {
     /*
@@ -34,8 +35,12 @@ export class FileConnection extends ConnectionBase implements IFileConnection {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public toJson(): NonFunctionProperties<IFileConnection> {
+        return {
+            Environment: this._environment,
+            ID: this._id,
+            IsActive: this._isActive
+        };
     }
 
     public clone(): FileConnection {

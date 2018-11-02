@@ -1,7 +1,8 @@
 ﻿import { IIdentifiable, IJsonSerializable } from "./interfaces";
 import { PackageSettings, IPackageSettings, ProjectSettings, IProjectSettings, Utilities } from ".";
+import { NonFunctionProperties } from "./types";
 
-export interface IGentron extends IJsonSerializable, IIdentifiable {
+export interface IGentron extends IJsonSerializable<IGentron>, IIdentifiable {
     /*
      *  Properties & Fields 
      */
@@ -55,28 +56,11 @@ export class Gentron implements IGentron {
     /*
      *  Methods
      */
-    public static fromJson(obj: any): IGentron {
-        const ret: IGentron = new Gentron(obj.ID);
-
-        ret.PackageSettings = PackageSettings.fromJson(obj.PackageSettings);
-        ret.ProjectSettings = ProjectSettings.fromJson(obj.ProjectSettings);
-
-        return ret;
-    }
-
-    public toJson(): any {
+    public toJson(): NonFunctionProperties<IGentron> {
         return {
-            ID: this.ID,
-            PackageSettings: this.PackageSettings.toJson(),
-            ProjectSettings: this.ProjectSettings.toJson(),
-        };
-    }
-
-    public static toJson(obj: IGentron): any {
-        return {
-            ID: obj.ID,
-            PackageSettings: PackageSettings.toJson(obj.PackageSettings),
-            ProjectSettings: ProjectSettings.toJson(obj.ProjectSettings),
+            ID: this._id,
+            PackageSettings: this._packageSettings.toJson() as IPackageSettings,
+            ProjectSettings: this._projectSettings.toJson() as IProjectSettings
         };
     }
 

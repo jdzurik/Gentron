@@ -1,12 +1,13 @@
 ﻿import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
 import { Utilities } from ".";
+import { NonFunctionProperties } from "./types";
 
 export enum TemplateTypes {
     Partial,
     Primary,
 }
 
-export interface ITemplate extends IJsonSerializable, IIdentifiable, IModifiable<ITemplate> {
+export interface ITemplate extends IJsonSerializable<ITemplate>, IIdentifiable, IModifiable<ITemplate> {
     Name: string;
     Type: TemplateTypes;
 }
@@ -57,8 +58,12 @@ export class Template implements ITemplate {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public toJson(): NonFunctionProperties<ITemplate> {
+        return {
+            ID: this._id,
+            Name: this._name,
+            Type: this._type
+        };
     }
 
     public update(template: ITemplate): void {

@@ -89,8 +89,6 @@ function mapStateToProps(state: IGentron): HashedIProjectSettings {
     const _hash: string = hash(state.ProjectSettings);
     return {
         DatabaseConnections: state.ProjectSettings.DatabaseConnections,
-        FileConnections: state.ProjectSettings.FileConnections,
-        HttpConnections: state.ProjectSettings.HttpConnections,
         LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
         OutputPathGroups: state.ProjectSettings.OutputPathGroups,
         RemotePackageLocation: state.ProjectSettings.RemotePackageLocation,

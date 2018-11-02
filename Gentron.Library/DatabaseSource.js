@@ -21,7 +21,14 @@ class DatabaseSource extends SourceBase_1.SourceBase {
         this._script = new _1.File();
     }
     toJson() {
-        throw new Error("Method not implemented");
+        return {
+            ActiveConnectionGroup: this._activeConnectionGroup.toJson(),
+            ID: this._id,
+            IsActive: this._isActive,
+            Name: this._name,
+            Result: this._result,
+            Script: this._script
+        };
     }
     update(databaseSource) {
         if (typeof (databaseSource) === typeof (undefined) || databaseSource === null) {

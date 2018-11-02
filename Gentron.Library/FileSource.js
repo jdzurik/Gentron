@@ -3,7 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SourceBase_1 = require("./SourceBase");
 class FileSource extends SourceBase_1.SourceBase {
     toJson() {
-        throw new Error("Method not implemented");
+        return {
+            ID: this._id,
+            IsActive: this._isActive,
+            Name: this._name,
+            Result: this._result
+        };
     }
     update(fileSource) {
         this.IsActive = fileSource.IsActive;

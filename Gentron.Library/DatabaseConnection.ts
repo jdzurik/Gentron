@@ -1,4 +1,5 @@
 ﻿import { ConnectionBase, IConnectionBase } from "./ConnectionBase";
+import { NonFunctionProperties } from "./types";
 
 export interface IDatabaseConnection extends IConnectionBase {
     /*
@@ -47,8 +48,13 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public toJson(): NonFunctionProperties<IDatabaseConnection> {
+        return {
+            ConnectionString: this._connectionString,
+            Environment: this._environment,
+            ID: this._id,
+            IsActive: this._isActive
+        };
     }
 
     public clone(): DatabaseConnection {

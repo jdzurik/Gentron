@@ -20,7 +20,12 @@ class DatabaseConnection extends ConnectionBase_1.ConnectionBase {
         this._environment = "";
     }
     toJson() {
-        throw new Error("Method not implemented");
+        return {
+            ConnectionString: this._connectionString,
+            Environment: this._environment,
+            ID: this._id,
+            IsActive: this._isActive
+        };
     }
     clone() {
         const ret = new DatabaseConnection();

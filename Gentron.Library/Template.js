@@ -28,7 +28,11 @@ class Template {
         this._type = TemplateTypes.Partial;
     }
     toJson() {
-        throw new Error("Method not implemented");
+        return {
+            ID: this._id,
+            Name: this._name,
+            Type: this._type
+        };
     }
     update(template) {
         this._name = template.Name;

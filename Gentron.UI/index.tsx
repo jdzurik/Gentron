@@ -68,7 +68,7 @@ else {
 }
 
 //const initialState: IGentron = ((window as any).initialReduxState) || new Gentron() as IGentron;
-const store: AppStore = configureStore(history, initialState.toJson());
+const store: AppStore = configureStore(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
 syncHistoryWithStore(store, history);
 const root: HTMLElement = document.createElement("div");
 const rootId: string = `appRoot${Date.now()}`;

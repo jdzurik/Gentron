@@ -1,7 +1,8 @@
 ﻿import { IActivateable, ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
 import { Cloneable } from "./abstract";
+import { NonFunctionProperties } from "./types";
 
-export interface IConnectionBase extends IActivateable, ICloneable<IConnectionBase>, IJsonSerializable, IModifiable<IConnectionBase> {
+export interface IConnectionBase extends IActivateable, ICloneable<IConnectionBase>, IJsonSerializable<IConnectionBase>, IModifiable<IConnectionBase> {
 
 }
 
@@ -32,7 +33,9 @@ export abstract class ConnectionBase extends Cloneable<IConnectionBase> implemen
     /*
      *  Methods
      */
-    public abstract toJson(): any;
+    //public abstract fromJson(json: NonFunctionProperties<IConnectionBase>): IConnectionBase;
+
+    public abstract toJson(): NonFunctionProperties<IConnectionBase>;
 
     public abstract clone(): IConnectionBase;
 

@@ -4,8 +4,9 @@ import { createStore, applyMiddleware, compose, combineReducers, StoreEnhancerSt
 import { History } from 'history';
 import { reducers } from "../reducers";
 import thunk from 'redux-thunk';
+import { NonFunctionProperties } from "../../Gentron.Library/types";
 
-export default function configureStore(history: History, initialState: IGentron) {
+export default function configureStore(history: History, initialState: NonFunctionProperties<IGentron>) {
     // Build middleware. These are functions that can process the actions before they reach the store.
     const windowIfDefined = typeof window === 'undefined' ? null : window as any;
 

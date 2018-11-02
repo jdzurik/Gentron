@@ -22,7 +22,11 @@ class OutputPathGroup extends abstract_1.Cloneable {
     removePath(connection) {
     }
     toJson() {
-        throw new Error("Method not implemented");
+        return {
+            ID: this._id,
+            Name: this._name,
+            Paths: this._paths
+        };
     }
     clone() {
         const ret = new OutputPathGroup();

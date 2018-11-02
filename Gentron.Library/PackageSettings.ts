@@ -1,7 +1,8 @@
 ﻿import { IDatabaseSource, IEngine, IFileSource, IHttpSource, IEnvironment } from ".";
 import { IJsonSerializable } from "./interfaces";
+import { NonFunctionProperties } from "./types";
 
-export interface IPackageSettings extends IJsonSerializable {
+export interface IPackageSettings extends IJsonSerializable<IPackageSettings> {
     /*
      *  Properties & Fields 
      */
@@ -112,41 +113,15 @@ export class PackageSettings implements IPackageSettings {
     /*
      *  Methods
      */
-    public static fromJson(obj: any): IPackageSettings {
-        const ret: IPackageSettings = new PackageSettings();
-
-        ret.DatabaseSources = obj.DatabaseSources;
-        ret.Engines = obj.Engines;
-        ret.Environments = obj.Environments;
-        ret.FileSources = obj.FileSources;
-        ret.HttpSources = obj.HttpSources;
-        ret.PackageName = obj.PackageName;
-        ret.ReadMeText = obj.ReadMeText;
-
-        return ret;
-    }
-
-    public toJson(): any {
+    public toJson(): NonFunctionProperties<IPackageSettings> {
         return {
-            DatabaseSources: this.DatabaseSources,
-            Engines: this.Engines,
-            Environments: this.Environments,
-            FileSources: this.FileSources,
-            HttpSources: this.HttpSources,
-            PackageName: this.PackageName,
-            ReadMeText: this.ReadMeText
-        };
-    }
-
-    public static toJson(obj: IPackageSettings): any {
-        return {
-            DatabaseSources: obj.DatabaseSources,
-            Engines: obj.Engines,
-            Environments: obj.Environments,
-            FileSources: obj.FileSources,
-            HttpSources: obj.HttpSources,
-            PackageName: obj.PackageName,
-            ReadMeText: obj.ReadMeText
+            DatabaseSources: this._databaseSources.map((source: IDatabaseSource, index: number) => source.toJson() as IDatabaseSource),
+            Engines: this._engines.map((source: IEngine, index: number) => source.toJson() as IEngine),
+            Environments: this._environments.map((source: IEnvironment, index: number) => source.toJson() as IEnvironment),
+            FileSources: this._fileSources.map((source: IFileSource, index: number) => source.toJson() as IFileSource),
+            HttpSources: this._httpSources.map((source: IHttpSource, index: number) => source.toJson() as IHttpSource),
+            PackageName: this._packageName,
+            ReadMeText: this._readMeText
         };
     }
 }

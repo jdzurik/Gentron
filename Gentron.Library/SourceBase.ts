@@ -1,7 +1,8 @@
 ﻿import { Utilities } from ".";
 import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
+import { NonFunctionProperties } from "./types";
 
-export interface ISourceBase extends IActivateable, IJsonSerializable, IIdentifiable, IModifiable<ISourceBase> {
+export interface ISourceBase extends IActivateable, IJsonSerializable<ISourceBase>, IIdentifiable, IModifiable<ISourceBase> {
     /*
      *  Properties & Fields 
      */
@@ -67,7 +68,7 @@ export abstract class SourceBase implements ISourceBase {
     /*
      *  Methods
      */
-    public abstract toJson(): any;
+    public abstract toJson(): NonFunctionProperties<ISourceBase>;
 
     public abstract update(source: ISourceBase): void;
 }

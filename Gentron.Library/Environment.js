@@ -20,7 +20,11 @@ class Environment extends abstract_1.Cloneable {
         this._name = "";
     }
     toJson() {
-        throw new Error("Method not implemented");
+        return {
+            ID: this._id,
+            IsActive: this._isActive,
+            Name: this._name,
+        };
     }
     clone() {
         const ret = new Environment();

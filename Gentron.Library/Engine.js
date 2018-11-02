@@ -13,7 +13,13 @@ class Engine extends SourceBase_1.SourceBase {
         this._templates = [];
     }
     toJson() {
-        throw new Error("Method not implemented");
+        return {
+            ID: this._id,
+            IsActive: this._isActive,
+            Name: this._name,
+            Result: this._result,
+            Templates: this._templates.map((template, index) => template.toJson())
+        };
     }
     update(engine) {
         this.IsActive = engine.IsActive;

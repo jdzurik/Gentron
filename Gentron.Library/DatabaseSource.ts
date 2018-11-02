@@ -1,5 +1,6 @@
 ﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, File, IFile, Utilities } from ".";
 import { ISourceBase, SourceBase } from "./SourceBase";
+import { NonFunctionProperties } from "./types";
 
 export interface IDatabaseSource extends ISourceBase {
     /*
@@ -48,8 +49,15 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public toJson(): NonFunctionProperties<IDatabaseSource> {
+        return {
+            ActiveConnectionGroup: this._activeConnectionGroup.toJson() as IConnectionGroup<IDatabaseConnection>,
+            ID: this._id,
+            IsActive: this._isActive,
+            Name: this._name,
+            Result: this._result,
+            Script: this._script
+        };
     }
 
 

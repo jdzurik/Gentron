@@ -52,37 +52,15 @@ class PackageSettings {
         this._packageName = "";
         this._readMeText = "";
     }
-    static fromJson(obj) {
-        const ret = new PackageSettings();
-        ret.DatabaseSources = obj.DatabaseSources;
-        ret.Engines = obj.Engines;
-        ret.Environments = obj.Environments;
-        ret.FileSources = obj.FileSources;
-        ret.HttpSources = obj.HttpSources;
-        ret.PackageName = obj.PackageName;
-        ret.ReadMeText = obj.ReadMeText;
-        return ret;
-    }
     toJson() {
         return {
-            DatabaseSources: this.DatabaseSources,
-            Engines: this.Engines,
-            Environments: this.Environments,
-            FileSources: this.FileSources,
-            HttpSources: this.HttpSources,
-            PackageName: this.PackageName,
-            ReadMeText: this.ReadMeText
-        };
-    }
-    static toJson(obj) {
-        return {
-            DatabaseSources: obj.DatabaseSources,
-            Engines: obj.Engines,
-            Environments: obj.Environments,
-            FileSources: obj.FileSources,
-            HttpSources: obj.HttpSources,
-            PackageName: obj.PackageName,
-            ReadMeText: obj.ReadMeText
+            DatabaseSources: this._databaseSources.map((source, index) => source.toJson()),
+            Engines: this._engines.map((source, index) => source.toJson()),
+            Environments: this._environments.map((source, index) => source.toJson()),
+            FileSources: this._fileSources.map((source, index) => source.toJson()),
+            HttpSources: this._httpSources.map((source, index) => source.toJson()),
+            PackageName: this._packageName,
+            ReadMeText: this._readMeText
         };
     }
 }

@@ -1,5 +1,6 @@
 ﻿import { ISourceBase, SourceBase } from "./SourceBase";
 import { ITemplate } from "./Template";
+import { NonFunctionProperties } from "./types";
 
 export interface IEngine extends ISourceBase {
     /*
@@ -35,8 +36,14 @@ export class Engine extends SourceBase implements IEngine {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public toJson(): NonFunctionProperties<IEngine> {
+        return {
+            ID: this._id,
+            IsActive: this._isActive,
+            Name: this._name,
+            Result: this._result,
+            Templates: this._templates.map((template: ITemplate, index: number) => template.toJson() as ITemplate)
+        };
     }
 
     public update(engine: IEngine): void {

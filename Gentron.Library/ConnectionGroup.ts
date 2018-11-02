@@ -1,8 +1,9 @@
 ﻿import { IConnectionBase } from "./ConnectionBase";
 import { ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
 import { Cloneable } from "./abstract";
+import { NonFunctionProperties } from "./types";
 
-export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IJsonSerializable, IModifiable<IConnectionGroup<TConnection>> {
+export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IJsonSerializable<IConnectionGroup<TConnection>>, IModifiable<IConnectionGroup<TConnection>> {
     /*
      *  Properties & Fields 
      */
@@ -58,8 +59,16 @@ export class ConnectionGroup<TConnection extends IConnectionBase> extends Clonea
 
     }
 
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public fromJson(json: NonFunctionProperties<IConnectionGroup<TConnection>>): IConnectionGroup<TConnection> {
+        return this;
+    }
+
+    public toJson(): NonFunctionProperties<IConnectionGroup<TConnection>> {
+        return {
+            Connections: this._connections.map((connection: TConnection, index: number) => connection.toJson() as TConnection),
+            ID: this._id,
+            Name: this._name
+        };
     }
 
     public clone(): IConnectionGroup<TConnection> {

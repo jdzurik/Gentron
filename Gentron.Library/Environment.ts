@@ -1,7 +1,8 @@
 ﻿import { ICloneable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
 import { Cloneable } from "./abstract";
+import { NonFunctionProperties } from "./types";
 
-export interface IEnvironment extends IActivateable, ICloneable<IEnvironment>, IJsonSerializable, IModifiable<IEnvironment> {
+export interface IEnvironment extends IActivateable, ICloneable<IEnvironment>, IJsonSerializable<IEnvironment>, IModifiable<IEnvironment> {
     /*
      *  Properties & Fields
      */
@@ -47,8 +48,12 @@ export class Environment extends Cloneable<IEnvironment> implements IEnvironment
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public toJson(): NonFunctionProperties<IEnvironment> {
+        return {
+            ID: this._id,
+            IsActive: this._isActive,
+            Name: this._name,
+        };
     }
 
     public clone(): IEnvironment {

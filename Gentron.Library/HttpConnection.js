@@ -13,7 +13,11 @@ class HttpConnection extends ConnectionBase_1.ConnectionBase {
         this._environment = "";
     }
     toJson() {
-        throw new Error("Method not implemented");
+        return {
+            Environment: this._environment,
+            ID: this._id,
+            IsActive: this._isActive
+        };
     }
     clone() {
         throw new Error("Method not implemented");

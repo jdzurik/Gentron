@@ -47,7 +47,7 @@ else {
         initialState.PackageSettings.DatabaseSources.push(source);
     });
 }
-const store = configureStore_1.default(history, initialState.toJson());
+const store = configureStore_1.default(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
 syncHistoryWithStore(store, history);
 const root = document.createElement("div");
 const rootId = `appRoot${Date.now()}`;
