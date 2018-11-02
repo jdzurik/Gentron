@@ -22,6 +22,11 @@ class Gentron {
         this._packageSettings = new _1.PackageSettings();
         this._projectSettings = new _1.ProjectSettings();
     }
+    fromJson(json) {
+        this._packageSettings = this._packageSettings.fromJson(json.PackageSettings);
+        this._projectSettings = this._projectSettings.fromJson(json.ProjectSettings);
+        return this;
+    }
     toJson() {
         return {
             ID: this._id,

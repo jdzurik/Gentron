@@ -48,6 +48,13 @@ export class Environment extends Cloneable<IEnvironment> implements IEnvironment
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IEnvironment>): IEnvironment {
+        this._isActive = json.IsActive;
+        this._name = json.Name;
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IEnvironment> {
         return {
             ID: this._id,

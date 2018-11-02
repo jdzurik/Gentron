@@ -19,6 +19,11 @@ class Environment extends abstract_1.Cloneable {
         this._isActive = false;
         this._name = "";
     }
+    fromJson(json) {
+        this._isActive = json.IsActive;
+        this._name = json.Name;
+        return this;
+    }
     toJson() {
         return {
             ID: this._id,

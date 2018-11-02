@@ -68,6 +68,8 @@ export abstract class SourceBase implements ISourceBase {
     /*
      *  Methods
      */
+    public abstract fromJson(json: NonFunctionProperties<ISourceBase>): ISourceBase;
+
     public abstract toJson(): NonFunctionProperties<ISourceBase>;
 
     public abstract update(source: ISourceBase): void;

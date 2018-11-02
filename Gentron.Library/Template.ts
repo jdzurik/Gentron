@@ -58,6 +58,13 @@ export class Template implements ITemplate {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<ITemplate>): ITemplate {
+        this._name = json.Name;
+        this._type = json.Type;
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<ITemplate> {
         return {
             ID: this._id,

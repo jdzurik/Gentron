@@ -33,7 +33,7 @@ export abstract class ConnectionBase extends Cloneable<IConnectionBase> implemen
     /*
      *  Methods
      */
-    //public abstract fromJson(json: NonFunctionProperties<IConnectionBase>): IConnectionBase;
+    public abstract fromJson(json: NonFunctionProperties<IConnectionBase>): IConnectionBase;
 
     public abstract toJson(): NonFunctionProperties<IConnectionBase>;
 

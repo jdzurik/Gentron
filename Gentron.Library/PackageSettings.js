@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const _1 = require(".");
 class PackageSettings {
     get DatabaseSources() {
         return this._databaseSources;
@@ -51,6 +52,16 @@ class PackageSettings {
         this._httpSources = [];
         this._packageName = "";
         this._readMeText = "";
+    }
+    fromJson(json) {
+        this._databaseSources = json.DatabaseSources.map((source, index) => new _1.DatabaseSource().fromJson(source));
+        this._engines = json.Engines.map((source, index) => new _1.Engine().fromJson(source));
+        this._environments = json.Environments.map((source, index) => new _1.Environment().fromJson(source));
+        this._fileSources = json.FileSources.map((source, index) => new _1.FileSource().fromJson(source));
+        this._httpSources = json.HttpSources.map((source, index) => new _1.HttpSource().fromJson(source));
+        this._packageName = json.PackageName;
+        this._readMeText = json.ReadMeText;
+        return this;
     }
     toJson() {
         return {

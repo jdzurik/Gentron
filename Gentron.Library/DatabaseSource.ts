@@ -49,6 +49,16 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IDatabaseSource>): IDatabaseSource {
+        this._activeConnectionGroup = this._activeConnectionGroup.fromJson(json.ActiveConnectionGroup);
+        this._isActive = json.IsActive;
+        this._name = json.Name;
+        this._result = json.Result;
+        this._script = this._script.fromJson(json.Script as NonFunctionProperties<IFile>);
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IDatabaseSource> {
         return {
             ActiveConnectionGroup: this._activeConnectionGroup.toJson() as IConnectionGroup<IDatabaseConnection>,
@@ -56,7 +66,7 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
             IsActive: this._isActive,
             Name: this._name,
             Result: this._result,
-            Script: this._script
+            Script: this._script.toJson() as IFile
         };
     }
 

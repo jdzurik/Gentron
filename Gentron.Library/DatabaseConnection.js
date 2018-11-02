@@ -19,6 +19,12 @@ class DatabaseConnection extends ConnectionBase_1.ConnectionBase {
         this._connectionString = "";
         this._environment = "";
     }
+    fromJson(json) {
+        this._connectionString = json.ConnectionString;
+        this._environment = json.Environment;
+        this._isActive = json.IsActive;
+        return this;
+    }
     toJson() {
         return {
             ConnectionString: this._connectionString,

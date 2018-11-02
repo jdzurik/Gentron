@@ -48,6 +48,15 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IDatabaseConnection>): IDatabaseConnection {
+        this._connectionString = json.ConnectionString;
+        this._environment = json.Environment;
+        this._isActive = json.IsActive;
+
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IDatabaseConnection> {
         return {
             ConnectionString: this._connectionString,

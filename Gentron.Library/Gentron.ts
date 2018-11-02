@@ -56,6 +56,13 @@ export class Gentron implements IGentron {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IGentron>): IGentron {
+        this._packageSettings = this._packageSettings.fromJson(json.PackageSettings);
+        this._projectSettings = this._projectSettings.fromJson(json.ProjectSettings);
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IGentron> {
         return {
             ID: this._id,

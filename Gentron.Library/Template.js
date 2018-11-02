@@ -27,6 +27,11 @@ class Template {
         this._name = "";
         this._type = TemplateTypes.Partial;
     }
+    fromJson(json) {
+        this._name = json.Name;
+        this._type = json.Type;
+        return this;
+    }
     toJson() {
         return {
             ID: this._id,

@@ -39,7 +39,17 @@ export default class Home extends React.Component<HomeProps> {
                     <NavViewContentHeaderRow iconClassName="mif-database" title="Home" />
 
                     <pre>
-                        {JSON.stringify(this.props.Gentron, null, 4)}
+                        {
+                            JSON.stringify(
+                                {
+                                    ID: this.props.Gentron.ID,
+                                    PackageSettings: this.props.Gentron.PackageSettings.toJson(),
+                                    ProjectSettings: this.props.Gentron.ProjectSettings.toJson()
+                                },
+                                null,
+                                4
+                            )
+                        }
                     </pre>
                 </Grid>
             </Cell>

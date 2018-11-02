@@ -35,6 +35,13 @@ export class FileConnection extends ConnectionBase implements IFileConnection {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IFileConnection>): IFileConnection {
+        this._environment = json.Environment;
+        this._isActive = json.IsActive;
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IFileConnection> {
         return {
             Environment: this._environment,

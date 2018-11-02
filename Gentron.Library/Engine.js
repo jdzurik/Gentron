@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const SourceBase_1 = require("./SourceBase");
+const Template_1 = require("./Template");
 class Engine extends SourceBase_1.SourceBase {
     get Templates() {
         return this._templates;
@@ -11,6 +12,13 @@ class Engine extends SourceBase_1.SourceBase {
     constructor() {
         super();
         this._templates = [];
+    }
+    fromJson(json) {
+        this._isActive = json.IsActive;
+        this._name = json.Name;
+        this._result = json.Result;
+        this._templates = json.Templates.map((template, index) => new Template_1.Template().fromJson(template));
+        return this;
     }
     toJson() {
         return {

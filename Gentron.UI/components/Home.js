@@ -22,7 +22,11 @@ let Home = class Home extends React.Component {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
                 React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-database", title: "Home" }),
-                React.createElement("pre", null, JSON.stringify(this.props.Gentron, null, 4)))));
+                React.createElement("pre", null, JSON.stringify({
+                    ID: this.props.Gentron.ID,
+                    PackageSettings: this.props.Gentron.PackageSettings.toJson(),
+                    ProjectSettings: this.props.Gentron.ProjectSettings.toJson()
+                }, null, 4)))));
     }
 };
 Home = __decorate([

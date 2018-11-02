@@ -7,6 +7,14 @@ export class FileSource extends SourceBase implements IFileSource {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IFileSource>): IFileSource {
+        this._isActive = json.IsActive;
+        this._name = json.Name;
+        this._result = json.Result;
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IFileSource> {
         return {
             ID: this._id,

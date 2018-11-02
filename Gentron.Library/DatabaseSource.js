@@ -20,6 +20,14 @@ class DatabaseSource extends SourceBase_1.SourceBase {
         this._activeConnectionGroup = new _1.ConnectionGroup();
         this._script = new _1.File();
     }
+    fromJson(json) {
+        this._activeConnectionGroup = this._activeConnectionGroup.fromJson(json.ActiveConnectionGroup);
+        this._isActive = json.IsActive;
+        this._name = json.Name;
+        this._result = json.Result;
+        this._script = this._script.fromJson(json.Script);
+        return this;
+    }
     toJson() {
         return {
             ActiveConnectionGroup: this._activeConnectionGroup.toJson(),
@@ -27,7 +35,7 @@ class DatabaseSource extends SourceBase_1.SourceBase {
             IsActive: this._isActive,
             Name: this._name,
             Result: this._result,
-            Script: this._script
+            Script: this._script.toJson()
         };
     }
     update(databaseSource) {

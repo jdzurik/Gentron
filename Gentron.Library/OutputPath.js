@@ -19,6 +19,11 @@ class OutputPath extends abstract_1.Cloneable {
         this._environment = "";
         this._path = "";
     }
+    fromJson(json) {
+        this._environment = json.Environment;
+        this._path = json.Path;
+        return this;
+    }
     toJson() {
         return {
             Environment: this._environment,

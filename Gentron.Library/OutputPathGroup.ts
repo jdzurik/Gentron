@@ -1,6 +1,6 @@
 ﻿import { Cloneable } from "./abstract";
 import { ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
-import { IOutputPath } from "./";
+import { IOutputPath, OutputPath } from "./";
 import { NonFunctionProperties } from "./types";
 
 export interface IOutputPathGroup<TOutputPath extends IOutputPath> extends ICloneable<IOutputPathGroup<TOutputPath>>, IJsonSerializable<IOutputPathGroup<TOutputPath>>, IModifiable<IOutputPathGroup<TOutputPath>> {
@@ -58,6 +58,13 @@ export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<
 
     public removePath(connection: TOutputPath): void {
 
+    }
+
+    public fromJson(json: NonFunctionProperties<IOutputPathGroup<TOutputPath>>): IOutputPathGroup<TOutputPath> {
+        this._name = json.Name;
+        this._paths = json.Paths.map((path: NonFunctionProperties<IOutputPath>, index: number) => new OutputPath().fromJson(path) as TOutputPath);
+
+        return this;
     }
 
     public toJson(): NonFunctionProperties<IOutputPathGroup<TOutputPath>> {

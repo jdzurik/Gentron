@@ -1,6 +1,8 @@
-﻿import { IConnectionGroup, IDatabaseConnection, IFileConnection, IHttpConnection, IOutputPath, IOutputPathGroup } from "./";
+﻿import { IConnectionGroup, IDatabaseConnection, IFileConnection, IHttpConnection, IOutputPath, IOutputPathGroup, ConnectionGroup } from "./";
 import { IJsonSerializable } from "./interfaces";
 import { NonFunctionProperties } from "./types";
+import { DatabaseConnection } from "./DatabaseConnection";
+import { OutputPathGroup } from "./OutputPathGroup";
 
 export interface IProjectSettings extends IJsonSerializable<IProjectSettings> {
     /*
@@ -74,6 +76,15 @@ export class ProjectSettings implements IProjectSettings {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IProjectSettings>): IProjectSettings {
+        this._databaseConnections = json.DatabaseConnections.map((group: NonFunctionProperties<IConnectionGroup<IDatabaseConnection>>, index: number) => new ConnectionGroup<IDatabaseConnection>().fromJson(group));
+        this._localPackageFolder = json.LocalPackageFolder;
+        this._outputPathGroups = json.OutputPathGroups.map((group: NonFunctionProperties<IOutputPathGroup<IOutputPath>>, index: number) => new OutputPathGroup<IOutputPath>().fromJson(group));
+        this._remotePackageLocation = json.RemotePackageLocation;
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IProjectSettings> {
         return {
             DatabaseConnections: this._databaseConnections.map((connection: IConnectionGroup<IDatabaseConnection>, index: number) => connection.toJson() as IConnectionGroup<IDatabaseConnection>),

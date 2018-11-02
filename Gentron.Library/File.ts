@@ -1,7 +1,8 @@
 ﻿import * as fs from "fs";
-import { IModifiable } from "./interfaces"
+import { IModifiable, IJsonSerializable } from "./interfaces"
+import { NonFunctionProperties } from "./types";
 
-export interface IFile extends IModifiable<IFile> {
+export interface IFile extends IJsonSerializable<IFile>, IModifiable<IFile> {
     /*
      *  Properties & Fields
      */
@@ -66,6 +67,22 @@ export class File implements IFile {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IFile>): File {
+        this._contents = json.Contents;
+        this._lastModified = json.LastModified;
+        this._path = json.Path;
+
+        return this;
+    }
+
+    public toJson(): NonFunctionProperties<IFile> {
+        return {
+            Contents: this.Contents,
+            LastModified: this.LastModified,
+            Path: this.Path
+        };
+    }
+
     public loadContentsSync(filePath: string = this.Path || "", setContents: boolean = true): string {
         try {
             const buf: Buffer = fs.readFileSync(filePath);

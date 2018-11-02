@@ -12,6 +12,11 @@ class FileConnection extends ConnectionBase_1.ConnectionBase {
         super();
         this._environment = "";
     }
+    fromJson(json) {
+        this._environment = json.Environment;
+        this._isActive = json.IsActive;
+        return this;
+    }
     toJson() {
         return {
             Environment: this._environment,

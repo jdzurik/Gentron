@@ -1,4 +1,4 @@
-﻿import { IDatabaseSource, IEngine, IFileSource, IHttpSource, IEnvironment } from ".";
+﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource, IDatabaseSource, IEngine, IEnvironment, IFileSource, IHttpSource } from ".";
 import { IJsonSerializable } from "./interfaces";
 import { NonFunctionProperties } from "./types";
 
@@ -113,6 +113,18 @@ export class PackageSettings implements IPackageSettings {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IPackageSettings>): IPackageSettings {
+        this._databaseSources = json.DatabaseSources.map((source: NonFunctionProperties<IDatabaseSource>, index: number) => new DatabaseSource().fromJson(source));
+        this._engines = json.Engines.map((source: NonFunctionProperties<IEngine>, index: number) => new Engine().fromJson(source));
+        this._environments = json.Environments.map((source: NonFunctionProperties<IEnvironment>, index: number) => new Environment().fromJson(source));
+        this._fileSources = json.FileSources.map((source: NonFunctionProperties<IFileSource>, index: number) => new FileSource().fromJson(source));
+        this._httpSources = json.HttpSources.map((source: NonFunctionProperties<IHttpSource>, index: number) => new HttpSource().fromJson(source));
+        this._packageName = json.PackageName;
+        this._readMeText = json.ReadMeText;
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IPackageSettings> {
         return {
             DatabaseSources: this._databaseSources.map((source: IDatabaseSource, index: number) => source.toJson() as IDatabaseSource),

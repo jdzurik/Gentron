@@ -9,6 +9,14 @@ export class HttpSource extends SourceBase implements IHttpSource {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IHttpSource>): IHttpSource {
+        this._isActive = json.IsActive;
+        this._name = json.Name;
+        this._result = json.Result;
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IHttpSource> {
         return {
             ID: this._id,

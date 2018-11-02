@@ -49,6 +49,13 @@ export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
     /*
      *  Methods
      */
+    public fromJson(json: NonFunctionProperties<IOutputPath>): IOutputPath {
+        this._environment = json.Environment;
+        this._path = json.Path;
+
+        return this;
+    }
+
     public toJson(): NonFunctionProperties<IOutputPath> {
         return {
             Environment: this._environment,

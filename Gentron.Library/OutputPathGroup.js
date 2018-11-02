@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const abstract_1 = require("./abstract");
+const _1 = require("./");
 class OutputPathGroup extends abstract_1.Cloneable {
     constructor() {
         super();
@@ -20,6 +21,11 @@ class OutputPathGroup extends abstract_1.Cloneable {
         this._paths.push(connection);
     }
     removePath(connection) {
+    }
+    fromJson(json) {
+        this._name = json.Name;
+        this._paths = json.Paths.map((path, index) => new _1.OutputPath().fromJson(path));
+        return this;
     }
     toJson() {
         return {
