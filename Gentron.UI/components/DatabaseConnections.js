@@ -34,10 +34,10 @@ let DatabaseConnections = class DatabaseConnections extends React.Component {
         });
     }
     handleEditConnectionNameChange(name) {
-        const editingConnectionGrp = this.state.EditingConnectionGroup;
-        editingConnectionGrp.Name = name;
+        const editingConnectionGroup = this.state.EditingConnectionGroup;
+        editingConnectionGroup.Name = name;
         this.setState((prevState) => {
-            return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGrp });
+            return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGroup });
         });
     }
     handleEditConnectionStringChange(environment, connStr) {

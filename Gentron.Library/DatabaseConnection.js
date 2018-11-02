@@ -19,6 +19,14 @@ class DatabaseConnection extends ConnectionBase_1.ConnectionBase {
         this._connectionString = "";
         this._environment = "";
     }
+    clone() {
+        const ret = new DatabaseConnection();
+        ret._connectionString = this._connectionString;
+        ret._environment = this._environment;
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+        return ret;
+    }
     fromJson(json) {
         this._connectionString = json.ConnectionString;
         this._environment = json.Environment;
@@ -33,14 +41,6 @@ class DatabaseConnection extends ConnectionBase_1.ConnectionBase {
             ID: this._id,
             IsActive: this._isActive
         };
-    }
-    clone() {
-        const ret = new DatabaseConnection();
-        ret._connectionString = this._connectionString;
-        ret._environment = this._environment;
-        ret._id = this._id;
-        ret._isActive = this._isActive;
-        return ret;
     }
     update(dbConnection) {
         this.ConnectionString = dbConnection.ConnectionString;

@@ -13,6 +13,17 @@ class Engine extends SourceBase_1.SourceBase {
         super();
         this._templates = [];
     }
+    clone() {
+        const ret = new Engine();
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+        ret._name = this._name;
+        ret._result = this._result;
+        ret._templates = this._templates.map((template, index) => {
+            return template.clone();
+        });
+        return ret;
+    }
     fromJson(json) {
         this._id = json.ID;
         this._isActive = json.IsActive;

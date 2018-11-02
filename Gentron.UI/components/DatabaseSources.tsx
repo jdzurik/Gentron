@@ -2,10 +2,10 @@
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
-import { Cell, Grid, Switch } from "./metro";
+import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row, Switch } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, DatabaseSource, IDatabaseSource } from "../../Gentron.Library";
+import { IGentron, DatabaseSource, IDatabaseSource, Utilities } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -17,13 +17,21 @@ type DatabaseSourcesProps = NullableDatabaseSources
     & typeof ActionCreators
     & RouteComponentProps<{}>;
 
+type DatabaseSourcesState = {
+    EditingSource: IDatabaseSource;
+};
+
 @connect<NullableDatabaseSources, {}, DatabaseSourcesProps>(mapStateToProps, mapDispatchToProps)
-export default class DatabaseSources extends React.Component<DatabaseSourcesProps> {
+export default class DatabaseSources extends React.Component<DatabaseSourcesProps, DatabaseSourcesState> {
     /*
      *  Constructors
      */
-    public constructor(props: DatabaseSourcesProps) {
+    public constructor(props: DatabaseSourcesProps, state: DatabaseSourcesState) {
         super(props);
+
+        this.state = {
+            EditingSource: null
+        };
     }
 
 
@@ -31,10 +39,7 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
      *  Methods
      */
     private handleAddSourceClick(): void {
-        const source: IDatabaseSource = new DatabaseSource();
-        source.Name = `DBSource${this.props.DatabaseSources.length}`;
-
-        this.props.addOrUpdateDatabaseSource(source);
+        this.handleOpenEditSourceClick(new DatabaseSource());
     }
 
     private handleToggleSourceIsActiveClick(source: IDatabaseSource, isActive: boolean): void {
@@ -46,6 +51,30 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
         this.props.removeDatabaseSource(source);
     }
 
+    private handleOpenEditSourceClick(source: IDatabaseSource): void {
+        this.setState((prevState: Readonly<DatabaseSourcesState>) => {
+            return Object.assign({}, prevState, { EditingSource: source.clone() });
+        });
+    }
+
+    private handleEditSourceNameChange(name: string): void {
+        const editingSource: IDatabaseSource = this.state.EditingSource;
+        editingSource.Name = name;
+        this.setState((prevState: Readonly<DatabaseSourcesState>) => {
+            return Object.assign({}, prevState, { EditingSource: editingSource });
+        });
+    }
+
+    private handleCloseEditSourceClick(save: boolean): void {
+        if (save) {
+            this.props.addOrUpdateDatabaseSource(this.state.EditingSource);
+        }
+
+        this.setState((prevState: Readonly<DatabaseSourcesState>) => {
+            return Object.assign({}, prevState, { EditingSource: null });
+        });
+    }
+
     public render(): JSX.Element {
         return (
             <Cell className="h-100">
@@ -55,7 +84,6 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                     <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
-                                <th>{` `}</th>
                                 <th>Name</th>
                                 <th>Active Connection</th>
                                 <th>Active?</th>
@@ -65,9 +93,10 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>Add Database Source</button>
+                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>
+                                        <span className="mif-add"></span>
+                                    </button>
                                 </td>
-                                <td>{` `}</td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>
@@ -78,11 +107,15 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                         <td>
                                             <Link to={`/sources/db/${i}`}>
                                                 <button className="button">
-                                                    View
+                                                    <span className="mif-enter"></span>
                                                 </button>
                                             </Link>
+                                            <button className="button ml-2"
+                                                onClick={() => this.handleOpenEditSourceClick(source)}>
+                                                <span className="mif-pencil"></span>
+                                            </button>
+                                            <span> {source.Name}</span>
                                         </td>
-                                        <td>{source.Name}</td>
                                         <td>{source.ActiveConnectionGroup.Name}</td>
                                         <td>
                                             <Switch
@@ -101,6 +134,38 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                         </tbody>
                     </table>
                 </Grid>
+
+                {
+                    Utilities.hasValue(this.state.EditingSource)
+                        ? (
+                            <Dialog>
+                                <DialogTitle>Edit Database Source</DialogTitle>
+                                <DialogContent>
+                                    <Row className="mb-2 mt-2">
+                                        <Cell>
+                                            <label>Source Name</label>
+                                        </Cell>
+                                    </Row>
+
+                                    <Row className="mb-2 mt-2">
+                                        <Cell>
+                                            <input type="text"
+                                                data-role="input"
+                                                data-role-input="true"
+                                                onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditSourceNameChange(ev.target.value)}
+                                                value={this.state.EditingSource.Name}
+                                            />
+                                        </Cell>
+                                    </Row>
+                                </DialogContent>
+                                <DialogAction>
+                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, false)}>Cancel</button>
+                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, true)}>Save</button>
+                                </DialogAction>
+                            </Dialog>
+                        )
+                        : null
+                }
             </Cell>
         );
     }

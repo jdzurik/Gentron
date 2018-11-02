@@ -48,6 +48,17 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
     /*
      *  Methods
      */
+    public clone(): IDatabaseConnection {
+        const ret: DatabaseConnection = new DatabaseConnection();
+
+        ret._connectionString = this._connectionString;
+        ret._environment = this._environment;
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+
+        return ret;
+    }
+
     public fromJson(json: NonFunctionProperties<IDatabaseConnection>): IDatabaseConnection {
         this._connectionString = json.ConnectionString;
         this._environment = json.Environment;
@@ -65,17 +76,6 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
             ID: this._id,
             IsActive: this._isActive
         };
-    }
-
-    public clone(): DatabaseConnection {
-        const ret: DatabaseConnection = new DatabaseConnection();
-
-        ret._connectionString = this._connectionString;
-        ret._environment = this._environment;
-        ret._id = this._id;
-        ret._isActive = this._isActive;
-
-        return ret;
     }
 
     public update(dbConnection: DatabaseConnection): void {

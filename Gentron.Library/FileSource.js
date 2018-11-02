@@ -2,6 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const SourceBase_1 = require("./SourceBase");
 class FileSource extends SourceBase_1.SourceBase {
+    clone() {
+        const ret = new FileSource();
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+        ret._name = this._name;
+        ret._result = this._result;
+        return ret;
+    }
     fromJson(json) {
         this._id = json.ID;
         this._isActive = json.IsActive;

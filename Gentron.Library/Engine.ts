@@ -36,6 +36,20 @@ export class Engine extends SourceBase implements IEngine {
     /*
      *  Methods
      */
+    public clone(): IEngine {
+        const ret: Engine = new Engine();
+
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+        ret._name = this._name;
+        ret._result = this._result;
+        ret._templates = this._templates.map((template: ITemplate, index: number) => {
+            return template.clone();
+        });
+
+        return ret;
+    }
+
     public fromJson(json: NonFunctionProperties<IEngine>): IEngine {
         this._id = json.ID;
         this._isActive = json.IsActive;

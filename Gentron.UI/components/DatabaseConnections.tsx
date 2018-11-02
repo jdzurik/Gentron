@@ -55,10 +55,10 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
     }
 
     private handleEditConnectionNameChange(name: string): void {
-        const editingConnectionGrp: IConnectionGroup<IDatabaseConnection> = this.state.EditingConnectionGroup;
-        editingConnectionGrp.Name = name;
+        const editingConnectionGroup: IConnectionGroup<IDatabaseConnection> = this.state.EditingConnectionGroup;
+        editingConnectionGroup.Name = name;
         this.setState((prevState: Readonly<DatabaseConnectionsState>) => {
-            return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGrp });
+            return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGroup });
         });
     }
 

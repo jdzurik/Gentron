@@ -7,6 +7,17 @@ export class FileSource extends SourceBase implements IFileSource {
     /*
      *  Methods
      */
+    public clone(): IFileSource {
+        const ret: FileSource = new FileSource();
+
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+        ret._name = this._name;
+        ret._result = this._result;
+
+        return ret;
+    }
+
     public fromJson(json: NonFunctionProperties<IFileSource>): IFileSource {
         this._id = json.ID;
         this._isActive = json.IsActive;

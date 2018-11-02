@@ -58,7 +58,9 @@ export default class Engines extends React.Component<EnginesProps> {
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddEngineClick.bind(this)}>Add Engine</button>
+                                    <button className="button" onClick={this.handleAddEngineClick.bind(this)}>
+                                        <span className="mif-add"></span>
+                                    </button>
                                 </td>
                                 <td>{` `}</td>
                                 <td>{` `}</td>

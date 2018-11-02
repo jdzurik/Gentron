@@ -21,6 +21,16 @@ class DatabaseSource extends SourceBase_1.SourceBase {
         this._activeConnectionGroup = new _1.ConnectionGroup(() => new DatabaseConnection_1.DatabaseConnection());
         this._script = new _1.File();
     }
+    clone() {
+        const ret = new DatabaseSource();
+        ret._activeConnectionGroup = this._activeConnectionGroup.clone();
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+        ret._name = this._name;
+        ret._result = this._result;
+        ret._script = this._script;
+        return ret;
+    }
     fromJson(json) {
         this._activeConnectionGroup = this._activeConnectionGroup.fromJson(json.ActiveConnectionGroup);
         this._isActive = json.IsActive;

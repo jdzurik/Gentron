@@ -1,8 +1,9 @@
 ﻿import { Utilities } from ".";
-import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable } from "./interfaces";
+import { IIdentifiable, IJsonSerializable, IModifiable, IActivateable, ICloneable } from "./interfaces";
 import { NonFunctionProperties } from "./types";
+import { Cloneable } from "./abstract";
 
-export interface ISourceBase extends IActivateable, IJsonSerializable<ISourceBase>, IIdentifiable, IModifiable<ISourceBase> {
+export interface ISourceBase extends IActivateable, ICloneable<ISourceBase>, IJsonSerializable<ISourceBase>, IModifiable<ISourceBase> {
     /*
      *  Properties & Fields 
      */
@@ -10,7 +11,7 @@ export interface ISourceBase extends IActivateable, IJsonSerializable<ISourceBas
     Result: string;
 }
 
-export abstract class SourceBase implements ISourceBase {
+export abstract class SourceBase extends Cloneable<ISourceBase> implements ISourceBase {
     /*
      *  Properties & Fields 
      */
@@ -58,6 +59,7 @@ export abstract class SourceBase implements ISourceBase {
      *  Constructors
      */
     public constructor() {
+        super();
         this._id = Utilities.newCryptoGuid();
         this._isActive = true;
         this._name = "";
@@ -68,6 +70,8 @@ export abstract class SourceBase implements ISourceBase {
     /*
      *  Methods
      */
+    public abstract clone(): ISourceBase;
+
     public abstract fromJson(json: NonFunctionProperties<ISourceBase>): ISourceBase;
 
     public abstract toJson(): NonFunctionProperties<ISourceBase>;

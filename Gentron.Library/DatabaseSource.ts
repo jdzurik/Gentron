@@ -50,6 +50,19 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
     /*
      *  Methods
      */
+    public clone(): IDatabaseSource {
+        const ret: DatabaseSource = new DatabaseSource();
+
+        ret._activeConnectionGroup = this._activeConnectionGroup.clone();
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+        ret._name = this._name;
+        ret._result = this._result;
+        ret._script = this._script;
+
+        return ret;
+    }
+
     public fromJson(json: NonFunctionProperties<IDatabaseSource>): IDatabaseSource {
         this._activeConnectionGroup = this._activeConnectionGroup.fromJson(json.ActiveConnectionGroup);
         this._isActive = json.IsActive;

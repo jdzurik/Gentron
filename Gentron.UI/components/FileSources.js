@@ -16,16 +16,41 @@ const Gentron_Library_1 = require("../../Gentron.Library");
 const react_router_dom_1 = require("react-router-dom");
 const NavViewContentHeaderRow_1 = require("./NavViewContentHeaderRow");
 let FileSources = class FileSources extends React.Component {
-    constructor(props) {
+    constructor(props, state) {
         super(props);
+        this.state = {
+            EditingSource: null
+        };
     }
     handleAddSourceClick() {
-        const source = new Gentron_Library_1.FileSource();
-        source.Name = `FileSource${this.props.FileSources.length}`;
+        this.handleOpenEditSourceClick(new Gentron_Library_1.FileSource());
+    }
+    handleToggleSourceIsActiveClick(source, isActive) {
+        source.IsActive = isActive;
         this.props.addOrUpdateFileSource(source);
     }
     handleRemoveSourceClick(source) {
         this.props.removeFileSource(source);
+    }
+    handleOpenEditSourceClick(source) {
+        this.setState((prevState) => {
+            return Object.assign({}, prevState, { EditingSource: source.clone() });
+        });
+    }
+    handleEditSourceNameChange(name) {
+        const editingSource = this.state.EditingSource;
+        editingSource.Name = name;
+        this.setState((prevState) => {
+            return Object.assign({}, prevState, { EditingSource: editingSource });
+        });
+    }
+    handleCloseEditSourceClick(save) {
+        if (save) {
+            this.props.addOrUpdateFileSource(this.state.EditingSource);
+        }
+        this.setState((prevState) => {
+            return Object.assign({}, prevState, { EditingSource: null });
+        });
     }
     render() {
         return (React.createElement(metro_1.Cell, { className: "h-100" },
@@ -34,23 +59,45 @@ let FileSources = class FileSources extends React.Component {
                 React.createElement("table", { className: "table striped table-border mt-4" },
                     React.createElement("thead", null,
                         React.createElement("tr", null,
-                            React.createElement("th", null, ` `),
                             React.createElement("th", null, "Name"),
+                            React.createElement("th", null, "Active?"),
                             React.createElement("th", null, ` `))),
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
                             React.createElement("td", null,
-                                React.createElement("button", { className: "button", onClick: this.handleAddSourceClick.bind(this) }, "Add File Source")),
+                                React.createElement("button", { className: "button", onClick: this.handleAddSourceClick.bind(this) },
+                                    React.createElement("span", { className: "mif-add" }))),
                             React.createElement("td", null, ` `),
                             React.createElement("td", null, ` `)),
                         this.props.FileSources.map((source, i) => React.createElement("tr", { key: i },
                             React.createElement("td", null,
                                 React.createElement(react_router_dom_1.Link, { to: `/sources/file/${i}` },
-                                    React.createElement("button", { className: "button" }, "View"))),
-                            React.createElement("td", null, source.Name),
+                                    React.createElement("button", { className: "button" },
+                                        React.createElement("span", { className: "mif-enter" }))),
+                                React.createElement("button", { className: "button ml-2", onClick: () => this.handleOpenEditSourceClick(source) },
+                                    React.createElement("span", { className: "mif-pencil" })),
+                                React.createElement("span", null,
+                                    " ",
+                                    source.Name)),
+                            React.createElement("td", null,
+                                React.createElement(metro_1.Switch, { checked: source.IsActive, onStateChanged: (isActive) => this.handleToggleSourceIsActiveClick(source, isActive) })),
                             React.createElement("td", null,
                                 React.createElement("a", { href: "#" },
-                                    React.createElement("button", { className: "button", onClick: this.handleRemoveSourceClick.bind(this, source) }, "Remove"))))))))));
+                                    React.createElement("button", { className: "button", onClick: this.handleRemoveSourceClick.bind(this, source) }, "Remove")))))))),
+            Gentron_Library_1.Utilities.hasValue(this.state.EditingSource)
+                ? (React.createElement(metro_1.Dialog, null,
+                    React.createElement(metro_1.DialogTitle, null, "Edit File Source"),
+                    React.createElement(metro_1.DialogContent, null,
+                        React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                            React.createElement(metro_1.Cell, null,
+                                React.createElement("label", null, "Source Name"))),
+                        React.createElement(metro_1.Row, { className: "mb-2 mt-2" },
+                            React.createElement(metro_1.Cell, null,
+                                React.createElement("input", { type: "text", "data-role": "input", "data-role-input": "true", onChange: (ev) => this.handleEditSourceNameChange(ev.target.value), value: this.state.EditingSource.Name })))),
+                    React.createElement(metro_1.DialogAction, null,
+                        React.createElement("button", { className: "button", onClick: this.handleCloseEditSourceClick.bind(this, false) }, "Cancel"),
+                        React.createElement("button", { className: "button", onClick: this.handleCloseEditSourceClick.bind(this, true) }, "Save"))))
+                : null));
     }
 };
 FileSources = __decorate([
