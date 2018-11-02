@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require("./");
+const DatabaseConnection_1 = require("./DatabaseConnection");
 const OutputPathGroup_1 = require("./OutputPathGroup");
 class ProjectSettings {
     get DatabaseConnections() {
@@ -34,9 +35,15 @@ class ProjectSettings {
         this._remotePackageLocation = "";
     }
     fromJson(json) {
-        this._databaseConnections = json.DatabaseConnections.map((group, index) => new _1.ConnectionGroup().fromJson(group));
+        this._databaseConnections = json.DatabaseConnections
+            .map((group, index) => {
+            return new _1.ConnectionGroup(() => new DatabaseConnection_1.DatabaseConnection()).fromJson(group);
+        });
         this._localPackageFolder = json.LocalPackageFolder;
-        this._outputPathGroups = json.OutputPathGroups.map((group, index) => new OutputPathGroup_1.OutputPathGroup().fromJson(group));
+        this._outputPathGroups = json.OutputPathGroups
+            .map((group, index) => {
+            return new OutputPathGroup_1.OutputPathGroup().fromJson(group);
+        });
         this._remotePackageLocation = json.RemotePackageLocation;
         return this;
     }

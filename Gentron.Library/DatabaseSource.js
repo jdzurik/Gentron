@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
 const SourceBase_1 = require("./SourceBase");
+const DatabaseConnection_1 = require("./DatabaseConnection");
 class DatabaseSource extends SourceBase_1.SourceBase {
     get ActiveConnectionGroup() {
         return this._activeConnectionGroup;
@@ -17,7 +18,7 @@ class DatabaseSource extends SourceBase_1.SourceBase {
     }
     constructor() {
         super();
-        this._activeConnectionGroup = new _1.ConnectionGroup();
+        this._activeConnectionGroup = new _1.ConnectionGroup(() => new DatabaseConnection_1.DatabaseConnection());
         this._script = new _1.File();
     }
     fromJson(json) {

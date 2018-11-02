@@ -23,7 +23,7 @@ let DatabaseConnections = class DatabaseConnections extends React.Component {
         };
     }
     handleAddConnectionClick() {
-        this.handleOpenEditConnectionClick(new Gentron_Library_1.ConnectionGroup());
+        this.handleOpenEditConnectionClick(new Gentron_Library_1.ConnectionGroup(() => new Gentron_Library_1.DatabaseConnection()));
     }
     handleRemoveConnectionClick(connectionGroup) {
         this.props.removeDatabaseConnectionGroup(connectionGroup);

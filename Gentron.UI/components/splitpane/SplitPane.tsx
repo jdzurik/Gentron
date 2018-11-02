@@ -38,7 +38,7 @@ export default class SplitPane extends React.PureComponent<SplitPaneProps> {
 
         let rowClassName: string = getClassNameFromProps("h-100", this.props.rowClassName, "mt-2");
         let cellClassName: string = getClassNameFromProps("", this.props.cellClassName);
-        let wrapperClassName: string = getClassNameFromProps("h-100 w-100", "border bd-grayWhite border-size-2");
+        let wrapperClassName: string = getClassNameFromProps("h-100 w-100", this.props.wrapperClassName, "border bd-grayWhite border-size-2");
 
         return (
             <Row className={rowClassName}>

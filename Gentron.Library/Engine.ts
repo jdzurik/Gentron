@@ -37,10 +37,13 @@ export class Engine extends SourceBase implements IEngine {
      *  Methods
      */
     public fromJson(json: NonFunctionProperties<IEngine>): IEngine {
+        this._id = json.ID;
         this._isActive = json.IsActive;
         this._name = json.Name;
         this._result = json.Result;
-        this._templates = json.Templates.map((template: NonFunctionProperties<ITemplate>, index: number) => new Template().fromJson(template));
+        this._templates = json.Templates.map((template: NonFunctionProperties<ITemplate>, index: number) => {
+            return new Template().fromJson(template);
+        });
 
         return this;
     }
@@ -51,7 +54,9 @@ export class Engine extends SourceBase implements IEngine {
             IsActive: this._isActive,
             Name: this._name,
             Result: this._result,
-            Templates: this._templates.map((template: ITemplate, index: number) => template.toJson() as ITemplate)
+            Templates: this._templates.map((template: ITemplate, index: number) => {
+                return template.toJson() as ITemplate;
+            })
         };
     }
 

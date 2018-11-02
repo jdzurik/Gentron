@@ -37,6 +37,7 @@ export class HttpConnection extends ConnectionBase implements IHttpConnection {
      */
     public fromJson(json: NonFunctionProperties<IHttpConnection>): IHttpConnection {
         this._environment = json.Environment;
+        this._id = json.ID;
         this._isActive = json.IsActive;
 
         return this;

@@ -14,10 +14,13 @@ class Engine extends SourceBase_1.SourceBase {
         this._templates = [];
     }
     fromJson(json) {
+        this._id = json.ID;
         this._isActive = json.IsActive;
         this._name = json.Name;
         this._result = json.Result;
-        this._templates = json.Templates.map((template, index) => new Template_1.Template().fromJson(template));
+        this._templates = json.Templates.map((template, index) => {
+            return new Template_1.Template().fromJson(template);
+        });
         return this;
     }
     toJson() {
@@ -26,7 +29,9 @@ class Engine extends SourceBase_1.SourceBase {
             IsActive: this._isActive,
             Name: this._name,
             Result: this._result,
-            Templates: this._templates.map((template, index) => template.toJson())
+            Templates: this._templates.map((template, index) => {
+                return template.toJson();
+            })
         };
     }
     update(engine) {

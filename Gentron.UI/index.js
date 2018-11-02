@@ -34,7 +34,7 @@ else {
         initialState.PackageSettings.Environments.push(environment);
     });
     ["CAUtils", "CASecurity"].map(db => {
-        const source = new Gentron_Library_1.ConnectionGroup();
+        const source = new Gentron_Library_1.ConnectionGroup(() => new Gentron_Library_1.DatabaseConnection());
         source.Name = db;
         initialState.PackageSettings.Environments.map(env => {
             const conn = new Gentron_Library_1.DatabaseConnection();

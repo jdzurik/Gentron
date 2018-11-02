@@ -1,6 +1,7 @@
 ﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, File, IFile, Utilities } from ".";
 import { ISourceBase, SourceBase } from "./SourceBase";
 import { NonFunctionProperties } from "./types";
+import { DatabaseConnection } from "./DatabaseConnection";
 
 export interface IDatabaseSource extends ISourceBase {
     /*
@@ -41,7 +42,7 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
      */
     public constructor() {
         super();
-        this._activeConnectionGroup = new ConnectionGroup<IDatabaseConnection>();
+        this._activeConnectionGroup = new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection());
         this._script = new File();
     }
 

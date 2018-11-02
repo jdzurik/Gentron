@@ -14,6 +14,7 @@ class FileConnection extends ConnectionBase_1.ConnectionBase {
     }
     fromJson(json) {
         this._environment = json.Environment;
+        this._id = json.ID;
         this._isActive = json.IsActive;
         return this;
     }

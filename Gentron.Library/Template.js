@@ -23,7 +23,7 @@ class Template {
         this._type = value;
     }
     constructor() {
-        this._id = _1.Utilities.newGuid();
+        this._id = _1.Utilities.newCryptoGuid();
         this._name = "";
         this._type = TemplateTypes.Partial;
     }

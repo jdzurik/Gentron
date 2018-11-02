@@ -18,7 +18,10 @@ let PackageSettings = class PackageSettings extends React.Component {
     constructor(props) {
         super(props);
     }
+    handleEditorMount(editor, monaco) {
+    }
     render() {
+        console.log("render");
         return (React.createElement(metro_1.Cell, { className: "h-100" },
             React.createElement(metro_1.Grid, { className: "w-100 h-100 p-3" },
                 React.createElement(NavViewContentHeaderRow_1.default, { iconClassName: "mif-gift", title: "Package Settings" }),
@@ -35,7 +38,7 @@ let PackageSettings = class PackageSettings extends React.Component {
                 React.createElement(metro_1.Row, { className: "h-100 mt-2" },
                     React.createElement(metro_1.Cell, null,
                         React.createElement("div", { className: "h-100 w-100 border bd-grayWhite border-size-2" },
-                            React.createElement(react_monaco_editor_1.default, { language: "markdown", value: (() => { }).toString(), options: {}, onChange: console.log, editorDidMount: () => { } })))))));
+                            React.createElement(react_monaco_editor_1.default, { language: "markdown", value: this.props.ReadMe, options: { wordWrap: `on` }, onChange: (value) => this.props.addOrUpdateReadMeText(value) })))))));
     }
 };
 PackageSettings = __decorate([
@@ -51,7 +54,7 @@ function mapStateToProps(state) {
         FileSources: state.PackageSettings.FileSources,
         HttpSources: state.PackageSettings.HttpSources,
         PackageName: state.PackageSettings.PackageName,
-        ReadMeText: state.PackageSettings.ReadMeText,
+        ReadMe: state.PackageSettings.ReadMe,
         _hash: _hash
     };
 }

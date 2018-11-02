@@ -14,7 +14,7 @@ export abstract class SourceBase implements ISourceBase {
     /*
      *  Properties & Fields 
      */
-    protected readonly _id: string;
+    protected _id: string;
 
     public get ID(): string {
         return this._id;

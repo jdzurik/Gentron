@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SourceBase_1 = require("./SourceBase");
 class HttpSource extends SourceBase_1.SourceBase {
     fromJson(json) {
+        this._id = json.ID;
         this._isActive = json.IsActive;
         this._name = json.Name;
         this._result = json.Result;

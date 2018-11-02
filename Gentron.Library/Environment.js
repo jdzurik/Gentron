@@ -20,6 +20,7 @@ class Environment extends abstract_1.Cloneable {
         this._name = "";
     }
     fromJson(json) {
+        this._id = json.ID;
         this._isActive = json.IsActive;
         this._name = json.Name;
         return this;
@@ -33,9 +34,8 @@ class Environment extends abstract_1.Cloneable {
     }
     clone() {
         const ret = new Environment();
-        ret._cloneId = this._id;
+        ret._id = this._id;
         ret._isActive = this._isActive;
-        ret._isClone = true;
         ret._name = this._name;
         return ret;
     }

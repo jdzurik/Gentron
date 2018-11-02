@@ -77,9 +77,15 @@ export class ProjectSettings implements IProjectSettings {
      *  Methods
      */
     public fromJson(json: NonFunctionProperties<IProjectSettings>): IProjectSettings {
-        this._databaseConnections = json.DatabaseConnections.map((group: NonFunctionProperties<IConnectionGroup<IDatabaseConnection>>, index: number) => new ConnectionGroup<IDatabaseConnection>().fromJson(group));
+        this._databaseConnections = json.DatabaseConnections
+            .map((group: NonFunctionProperties<IConnectionGroup<IDatabaseConnection>>, index: number) => {
+                return new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection()).fromJson(group)
+            });
         this._localPackageFolder = json.LocalPackageFolder;
-        this._outputPathGroups = json.OutputPathGroups.map((group: NonFunctionProperties<IOutputPathGroup<IOutputPath>>, index: number) => new OutputPathGroup<IOutputPath>().fromJson(group));
+        this._outputPathGroups = json.OutputPathGroups
+            .map((group: NonFunctionProperties<IOutputPathGroup<IOutputPath>>, index: number) => {
+                return new OutputPathGroup<IOutputPath>().fromJson(group)
+            });
         this._remotePackageLocation = json.RemotePackageLocation;
 
         return this;

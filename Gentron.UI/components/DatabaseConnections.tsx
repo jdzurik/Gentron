@@ -41,7 +41,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
      *  Methods
      */
     private handleAddConnectionClick(): void {
-        this.handleOpenEditConnectionClick(new ConnectionGroup<IDatabaseConnection>());
+        this.handleOpenEditConnectionClick(new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection()));
     }
 
     private handleRemoveConnectionClick(connectionGroup: IConnectionGroup<IDatabaseConnection>): void {

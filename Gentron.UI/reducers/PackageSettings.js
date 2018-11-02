@@ -23,7 +23,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "ADD_OR_UPDATE_ENGINE":
             let engineFound = false;
@@ -44,7 +44,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "ADD_OR_UPDATE_ENGINE_TEMPLATE":
             const engineId = parseInt(action.engineId, 10);
@@ -66,7 +66,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "ADD_OR_UPDATE_ENVIRONMENT":
             let environmentFound = false;
@@ -87,7 +87,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "ADD_OR_UPDATE_FILE_SOURCE":
             let fileSourceFound = false;
@@ -108,7 +108,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "ADD_OR_UPDATE_HTTP_SOURCE":
             let httpSourceFound = false;
@@ -129,7 +129,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "ADD_OR_UPDATE_PACKAGE_NAME":
             return {
@@ -139,7 +139,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: action.packageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "ADD_OR_UPDATE_READ_ME_TEXT":
             return {
@@ -149,7 +149,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: action.readMeText,
+                ReadMe: action.readMeText,
             };
         case "REMOVE_DATABASE_SOURCE":
             let dbSourceIdx = -1;
@@ -169,7 +169,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "REMOVE_ENGINE":
             let engineIdx = -1;
@@ -189,7 +189,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "REMOVE_ENGINE_TEMPLATE":
             let engineTemplateIdx = -1;
@@ -210,7 +210,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "REMOVE_ENVIRONMENT":
             let environmentIdx = -1;
@@ -230,7 +230,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "REMOVE_FILE_SOURCE":
             let fileSourceIdx = -1;
@@ -250,7 +250,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "REMOVE_HTTP_SOURCE":
             let httpSourceIdx = -1;
@@ -270,7 +270,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case "TOGGLE_ACTIVE_ENVIRONMENT":
             for (let i = 0; i < state.Environments.length; ++i) {
@@ -290,7 +290,7 @@ exports.reducer = (state, action) => {
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         default:
             const exhaustiveCheck = action;

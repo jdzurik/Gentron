@@ -20,7 +20,7 @@ class SplitPane extends React.PureComponent {
         };
         let rowClassName = getClassNameFromProps("h-100", this.props.rowClassName, "mt-2");
         let cellClassName = getClassNameFromProps("", this.props.cellClassName);
-        let wrapperClassName = getClassNameFromProps("h-100 w-100", "border bd-grayWhite border-size-2");
+        let wrapperClassName = getClassNameFromProps("h-100 w-100", this.props.wrapperClassName, "border bd-grayWhite border-size-2");
         return (React.createElement(metro_1.Row, { className: rowClassName },
             React.createElement(metro_1.Cell, { className: cellClassName },
                 React.createElement("div", { className: wrapperClassName },

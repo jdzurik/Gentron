@@ -51,6 +51,7 @@ export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
      */
     public fromJson(json: NonFunctionProperties<IOutputPath>): IOutputPath {
         this._environment = json.Environment;
+        this._id = json.ID;
         this._path = json.Path;
 
         return this;
@@ -67,9 +68,8 @@ export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
     public clone(): IOutputPath {
         const ret: OutputPath = new OutputPath();
 
-        ret._cloneId = this._id;
-        ret._isClone = true;
         ret._environment = this._environment;
+        ret._id = this._id;
         ret._path = this._path;
 
         return ret;

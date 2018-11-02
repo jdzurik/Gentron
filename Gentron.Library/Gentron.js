@@ -23,6 +23,7 @@ class Gentron {
         this._projectSettings = new _1.ProjectSettings();
     }
     fromJson(json) {
+        this._id = json.ID;
         this._packageSettings = this._packageSettings.fromJson(json.PackageSettings);
         this._projectSettings = this._projectSettings.fromJson(json.ProjectSettings);
         return this;

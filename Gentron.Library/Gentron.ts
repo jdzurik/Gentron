@@ -14,7 +14,7 @@ export class Gentron implements IGentron {
     /*
      *  Properties & Fields 
      */
-    private readonly _id: string;
+    protected _id: string;
 
     public get ID(): string {
         return this._id;
@@ -57,6 +57,7 @@ export class Gentron implements IGentron {
      *  Methods
      */
     public fromJson(json: NonFunctionProperties<IGentron>): IGentron {
+        this._id = json.ID;
         this._packageSettings = this._packageSettings.fromJson(json.PackageSettings);
         this._projectSettings = this._projectSettings.fromJson(json.ProjectSettings);
 

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const crypto = require("crypto");
 class Utilities {
     static hasValue(obj) {
         return typeof (obj) !== typeof (undefined) && obj !== null;
@@ -30,13 +31,11 @@ class Utilities {
     }
     static newCryptoGuid() {
         const hex = [];
-        for (var i = 0; i < 256; i++) {
+        for (let i = 0; i < 256; i++) {
             hex[i] = (i < 16 ? "0" : "") + (i).toString(16);
         }
         const rand = new Uint8Array(16);
-        for (let i = 0; i < rand.length; ++i) {
-            rand[i] = Math.floor(Math.random() * 10);
-        }
+        crypto.randomFillSync(rand);
         rand[6] = rand[6] & 0x0f | 0x40;
         rand[8] = rand[8] & 0x3f | 0x80;
         return (hex[rand[0]] +

@@ -41,14 +41,12 @@ export default class Utilities {
     public static newCryptoGuid(): string {
         const hex: string[] = [];
 
-        for (var i = 0; i < 256; i++) {
+        for (let i: number = 0; i < 256; i++) {
             hex[i] = (i < 16 ? "0" : "") + (i).toString(16);
         }
 
-        const rand: Uint8Array = new Uint8Array(16);
-        for (let i: number = 0; i < rand.length; ++i) {
-            rand[i] = Math.floor(Math.random() * 10);
-        }
+        const rand = new Uint8Array(16);
+        crypto.randomFillSync(rand);
 
         rand[6] = rand[6] & 0x0f | 0x40;
         rand[8] = rand[8] & 0x3f | 0x80;

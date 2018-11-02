@@ -31,7 +31,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.AddOrUpdateEngine:
             let engineFound: boolean = false;
@@ -54,7 +54,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.AddOrUpdateEngineTemplate:
             const engineId: number = parseInt(action.engineId, 10);
@@ -78,7 +78,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.AddOrUpdateEnvironment:
             let environmentFound: boolean = false;
@@ -101,7 +101,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.AddOrUpdateFileSource:
             let fileSourceFound: boolean = false;
@@ -124,7 +124,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.AddOrUpdateHttpSource:
             let httpSourceFound: boolean = false;
@@ -147,7 +147,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.AddOrUpdatePackageName:
             return {
@@ -157,7 +157,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: action.packageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.AddOrUpdateReadMeText:
             return {
@@ -167,7 +167,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: action.readMeText,
+                ReadMe: action.readMeText,
             };
         case PackageSettingsActionNames.RemoveDatabaseSource:
             let dbSourceIdx: number = -1;
@@ -189,7 +189,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.RemoveEngine:
             let engineIdx: number = -1;
@@ -211,7 +211,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.RemoveEngineTemplate:
             let engineTemplateIdx: number = -1;
@@ -234,7 +234,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.RemoveEnvironment:
             let environmentIdx: number = -1;
@@ -256,7 +256,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.RemoveFileSource:
             let fileSourceIdx: number = -1;
@@ -278,7 +278,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.RemoveHttpSource:
             let httpSourceIdx: number = -1;
@@ -300,7 +300,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         case PackageSettingsActionNames.ToggleActiveEnvironment:
             for (let i: number = 0; i < state.Environments.length; ++i) {
@@ -322,7 +322,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 FileSources: state.FileSources,
                 HttpSources: state.HttpSources,
                 PackageName: state.PackageName,
-                ReadMeText: state.ReadMeText,
+                ReadMe: state.ReadMe,
             };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above

@@ -38,11 +38,11 @@ class PackageSettings {
     set PackageName(value) {
         this._packageName = value;
     }
-    get ReadMeText() {
-        return this._readMeText;
+    get ReadMe() {
+        return this._readMe;
     }
-    set ReadMeText(value) {
-        this._readMeText = value;
+    set ReadMe(value) {
+        this._readMe = value;
     }
     constructor() {
         this._databaseSources = [];
@@ -51,27 +51,47 @@ class PackageSettings {
         this._fileSources = [];
         this._httpSources = [];
         this._packageName = "";
-        this._readMeText = "";
+        this._readMe = "";
     }
     fromJson(json) {
-        this._databaseSources = json.DatabaseSources.map((source, index) => new _1.DatabaseSource().fromJson(source));
-        this._engines = json.Engines.map((source, index) => new _1.Engine().fromJson(source));
-        this._environments = json.Environments.map((source, index) => new _1.Environment().fromJson(source));
-        this._fileSources = json.FileSources.map((source, index) => new _1.FileSource().fromJson(source));
-        this._httpSources = json.HttpSources.map((source, index) => new _1.HttpSource().fromJson(source));
+        this._databaseSources = json.DatabaseSources.map((source, index) => {
+            return new _1.DatabaseSource().fromJson(source);
+        });
+        this._engines = json.Engines.map((source, index) => {
+            return new _1.Engine().fromJson(source);
+        });
+        this._environments = json.Environments.map((source, index) => {
+            return new _1.Environment().fromJson(source);
+        });
+        this._fileSources = json.FileSources.map((source, index) => {
+            return new _1.FileSource().fromJson(source);
+        });
+        this._httpSources = json.HttpSources.map((source, index) => {
+            return new _1.HttpSource().fromJson(source);
+        });
         this._packageName = json.PackageName;
-        this._readMeText = json.ReadMeText;
+        this._readMe = json.ReadMe;
         return this;
     }
     toJson() {
         return {
-            DatabaseSources: this._databaseSources.map((source, index) => source.toJson()),
-            Engines: this._engines.map((source, index) => source.toJson()),
-            Environments: this._environments.map((source, index) => source.toJson()),
-            FileSources: this._fileSources.map((source, index) => source.toJson()),
-            HttpSources: this._httpSources.map((source, index) => source.toJson()),
+            DatabaseSources: this._databaseSources.map((source, index) => {
+                return source.toJson();
+            }),
+            Engines: this._engines.map((source, index) => {
+                return source.toJson();
+            }),
+            Environments: this._environments.map((source, index) => {
+                return source.toJson();
+            }),
+            FileSources: this._fileSources.map((source, index) => {
+                return source.toJson();
+            }),
+            HttpSources: this._httpSources.map((source, index) => {
+                return source.toJson();
+            }),
             PackageName: this._packageName,
-            ReadMeText: this._readMeText
+            ReadMe: this._readMe
         };
     }
 }

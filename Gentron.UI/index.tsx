@@ -47,7 +47,7 @@ else {
     });
 
     ["CAUtils", "CASecurity"].map(db => {
-        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
+        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection());
         source.Name = db;
 
         initialState.PackageSettings.Environments.map(env => {

@@ -49,7 +49,7 @@ export class Template implements ITemplate {
      *  Constructors
      */
     public constructor() {
-        this._id = Utilities.newGuid();
+        this._id = Utilities.newCryptoGuid();
         this._name = "";
         this._type = TemplateTypes.Partial;
     }
