@@ -121,7 +121,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                                 onClick={() => this.handleOpenEditConnectionClick(connection)}>
                                                 <span className="mif-pencil"></span>
                                             </button>
-                                            <span>{connection.Name}</span>
+                                            <span> {connection.Name}</span>
                                         </td>
                                         <td>{connection.Connections.length}</td>
                                         <td>
