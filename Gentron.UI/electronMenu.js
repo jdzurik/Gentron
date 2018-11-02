@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const electron_1 = require("electron");
+const { Menu } = window.require('electron').remote;
 function setupMenu() {
-    electron_1.Menu.setApplicationMenu(electron_1.Menu.buildFromTemplate([
+    Menu.setApplicationMenu(Menu.buildFromTemplate([
         {
             label: 'File',
             submenu: [
@@ -20,6 +20,7 @@ function setupMenu() {
                 },
                 {
                     label: 'Save As',
+                    accelerator: 'CmdOrCtrl+Shift+S',
                     click() {
                     }
                 },
@@ -61,17 +62,6 @@ function setupMenu() {
                 { role: 'close' }
             ]
         },
-        {
-            role: 'help',
-            submenu: [
-                {
-                    label: 'Learn More',
-                    click() {
-                        electron_1.shell.openExternal('');
-                    }
-                }
-            ]
-        }
     ]));
 }
 exports.default = setupMenu;

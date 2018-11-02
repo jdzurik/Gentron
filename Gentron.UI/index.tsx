@@ -15,7 +15,7 @@ import { IDatabaseSource, IGentron, DatabaseSource } from "../Gentron.Library";
 import { Provider } from 'react-redux';
 import App from "./components/App";
 import configureStore from './store/configureStore';
-//import setupMenu from "./electronMenu";
+import setupMenu from "./electronMenu";
 
 type AppStore = Store<IGentron, AnyAction> & { dispatch: {} };
 
@@ -26,7 +26,7 @@ const syncHistoryWithStore = (store, history: MemoryHistory) => {
     }
 };
 
-//setupMenu();
+setupMenu();
 
 // Create browser history to use in the Redux store
 const history: MemoryHistory = createMemoryHistory();

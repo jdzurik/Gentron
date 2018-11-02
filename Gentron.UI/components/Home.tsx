@@ -4,8 +4,8 @@ import { ActionCreators as PackageSettingsActionCreators } from "../actions/Pack
 import { ActionCreators as ProjectSettingsActionCreators } from "../actions/ProjectSettings";
 import { bindActionCreators } from "redux";
 import { Cell, Grid } from "./metro";
-import { Hash } from "../../Gentron.Library/types";
 import { connect } from "../connect";
+import { Hash } from "../../Gentron.Library/types";
 import { IGentron } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
@@ -33,6 +33,7 @@ export default class Home extends React.Component<HomeProps> {
      *  Methods
      */
     public render(): JSX.Element {
+        console.log(this.props.Gentron);
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
