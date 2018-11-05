@@ -1,27 +1,22 @@
-﻿import { IIdentifiable, IJsonSerializable, IModifiable } from "./interfaces";
+﻿import { IIdentifiable, IJsonSerializable, IModifiable, ICloneable } from "./interfaces";
 import { Utilities } from ".";
+import { NonFunctionProperties } from "./types";
+import { Cloneable } from "./abstract";
 
 export enum TemplateTypes {
     Partial,
     Primary,
 }
 
-export interface ITemplate extends IJsonSerializable, IIdentifiable, IModifiable<ITemplate> {
+export interface ITemplate extends ICloneable<ITemplate>, IJsonSerializable<ITemplate>, IModifiable<ITemplate> {
     Name: string;
     Type: TemplateTypes;
 }
 
-export class Template implements ITemplate {
+export class Template extends Cloneable<ITemplate> implements ITemplate {
     /*
      *  Properties & Fields
      */
-    private readonly _id: string;
-
-    public get ID(): string {
-        return this._id;
-    }
-
-
     private _name: string;
 
     public get Name(): string {
@@ -48,7 +43,8 @@ export class Template implements ITemplate {
      *  Constructors
      */
     public constructor() {
-        this._id = Utilities.newGuid();
+        super();
+        this._id = Utilities.newCryptoGuid();
         this._name = "";
         this._type = TemplateTypes.Partial;
     }
@@ -57,8 +53,29 @@ export class Template implements ITemplate {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public clone(): ITemplate {
+        const ret: Template = new Template();
+
+        ret._id = this._id;
+        ret._name = this._name;
+        ret._type = this._type;
+
+        return ret;
+    }
+
+    public fromJson(json: NonFunctionProperties<ITemplate>): ITemplate {
+        this._name = json.Name;
+        this._type = json.Type;
+
+        return this;
+    }
+
+    public toJson(): NonFunctionProperties<ITemplate> {
+        return {
+            ID: this._id,
+            Name: this._name,
+            Type: this._type
+        };
     }
 
     public update(template: ITemplate): void {

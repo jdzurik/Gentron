@@ -1,4 +1,5 @@
 ﻿import { ConnectionBase, IConnectionBase } from "./ConnectionBase";
+import { NonFunctionProperties } from "./types";
 
 export interface IHttpConnection extends IConnectionBase {
     /*
@@ -34,8 +35,20 @@ export class HttpConnection extends ConnectionBase implements IHttpConnection {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public fromJson(json: NonFunctionProperties<IHttpConnection>): IHttpConnection {
+        this._environment = json.Environment;
+        this._id = json.ID;
+        this._isActive = json.IsActive;
+
+        return this;
+    }
+
+    public toJson(): NonFunctionProperties<IHttpConnection> {
+        return {
+            Environment: this._environment,
+            ID: this._id,
+            IsActive: this._isActive
+        };
     }
 
     public clone(): HttpConnection {

@@ -45,8 +45,6 @@ function mapStateToProps(state) {
     const _hash = hash(state.ProjectSettings);
     return {
         DatabaseConnections: state.ProjectSettings.DatabaseConnections,
-        FileConnections: state.ProjectSettings.FileConnections,
-        HttpConnections: state.ProjectSettings.HttpConnections,
         LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
         OutputPathGroups: state.ProjectSettings.OutputPathGroups,
         RemotePackageLocation: state.ProjectSettings.RemotePackageLocation,

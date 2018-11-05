@@ -33,6 +33,19 @@ class File {
         this._lastModified = undefined;
         this._path = "";
     }
+    fromJson(json) {
+        this._contents = json.Contents;
+        this._lastModified = json.LastModified;
+        this._path = json.Path;
+        return this;
+    }
+    toJson() {
+        return {
+            Contents: this.Contents,
+            LastModified: this.LastModified,
+            Path: this.Path
+        };
+    }
     loadContentsSync(filePath = this.Path || "", setContents = true) {
         try {
             const buf = fs.readFileSync(filePath);

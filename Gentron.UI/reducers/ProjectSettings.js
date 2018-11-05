@@ -18,8 +18,6 @@ exports.reducer = (state, action) => {
             }
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
@@ -27,8 +25,6 @@ exports.reducer = (state, action) => {
         case "ADD_OR_UPDATE_LOCAL_PACKAGE_FOLDER":
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: action.localPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
@@ -47,8 +43,6 @@ exports.reducer = (state, action) => {
             }
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
@@ -56,8 +50,6 @@ exports.reducer = (state, action) => {
         case "ADD_OR_UPDATE_REMOTE_PACKAGE_LOCATION":
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: action.remotePackageLocation
@@ -75,8 +67,6 @@ exports.reducer = (state, action) => {
             }
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
@@ -94,8 +84,6 @@ exports.reducer = (state, action) => {
             }
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation

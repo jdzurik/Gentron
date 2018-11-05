@@ -1,4 +1,5 @@
 ﻿import { ConnectionBase, IConnectionBase } from "./ConnectionBase";
+import { NonFunctionProperties } from "./types";
 
 export interface IDatabaseConnection extends IConnectionBase {
     /*
@@ -47,20 +48,34 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
-    }
-
-    public clone(): DatabaseConnection {
+    public clone(): IDatabaseConnection {
         const ret: DatabaseConnection = new DatabaseConnection();
 
-        ret._cloneId = this._id;
         ret._connectionString = this._connectionString;
         ret._environment = this._environment;
+        ret._id = this._id;
         ret._isActive = this._isActive;
-        ret._isClone = true;
 
         return ret;
+    }
+
+    public fromJson(json: NonFunctionProperties<IDatabaseConnection>): IDatabaseConnection {
+        this._connectionString = json.ConnectionString;
+        this._environment = json.Environment;
+        this._id = json.ID;
+        this._isActive = json.IsActive;
+
+
+        return this;
+    }
+
+    public toJson(): NonFunctionProperties<IDatabaseConnection> {
+        return {
+            ConnectionString: this._connectionString,
+            Environment: this._environment,
+            ID: this._id,
+            IsActive: this._isActive
+        };
     }
 
     public update(dbConnection: DatabaseConnection): void {

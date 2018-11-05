@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
 const SourceBase_1 = require("./SourceBase");
+const DatabaseConnection_1 = require("./DatabaseConnection");
 class DatabaseSource extends SourceBase_1.SourceBase {
     get ActiveConnectionGroup() {
         return this._activeConnectionGroup;
@@ -17,11 +18,36 @@ class DatabaseSource extends SourceBase_1.SourceBase {
     }
     constructor() {
         super();
-        this._activeConnectionGroup = new _1.ConnectionGroup();
+        this._activeConnectionGroup = new _1.ConnectionGroup(() => new DatabaseConnection_1.DatabaseConnection());
         this._script = new _1.File();
     }
+    clone() {
+        const ret = new DatabaseSource();
+        ret._activeConnectionGroup = this._activeConnectionGroup.clone();
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+        ret._name = this._name;
+        ret._result = this._result;
+        ret._script = this._script;
+        return ret;
+    }
+    fromJson(json) {
+        this._activeConnectionGroup = this._activeConnectionGroup.fromJson(json.ActiveConnectionGroup);
+        this._isActive = json.IsActive;
+        this._name = json.Name;
+        this._result = json.Result;
+        this._script = this._script.fromJson(json.Script);
+        return this;
+    }
     toJson() {
-        throw new Error("Method not implemented");
+        return {
+            ActiveConnectionGroup: this._activeConnectionGroup.toJson(),
+            ID: this._id,
+            IsActive: this._isActive,
+            Name: this._name,
+            Result: this._result,
+            Script: this._script.toJson()
+        };
     }
     update(databaseSource) {
         if (typeof (databaseSource) === typeof (undefined) || databaseSource === null) {

@@ -41,7 +41,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
      *  Methods
      */
     private handleAddConnectionClick(): void {
-        this.handleOpenEditConnectionClick(new ConnectionGroup<IDatabaseConnection>());
+        this.handleOpenEditConnectionClick(new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection()));
     }
 
     private handleRemoveConnectionClick(connectionGroup: IConnectionGroup<IDatabaseConnection>): void {
@@ -55,10 +55,10 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
     }
 
     private handleEditConnectionNameChange(name: string): void {
-        const editingConnectionGrp: IConnectionGroup<IDatabaseConnection> = this.state.EditingConnectionGroup;
-        editingConnectionGrp.Name = name;
+        const editingConnectionGroup: IConnectionGroup<IDatabaseConnection> = this.state.EditingConnectionGroup;
+        editingConnectionGroup.Name = name;
         this.setState((prevState: Readonly<DatabaseConnectionsState>) => {
-            return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGrp });
+            return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGroup });
         });
     }
 
@@ -121,8 +121,8 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                                 onClick={() => this.handleOpenEditConnectionClick(connection)}>
                                                 <span className="mif-pencil"></span>
                                             </button>
+                                            <span> {connection.Name}</span>
                                         </td>
-                                        <td>{connection.Name}</td>
                                         <td>{connection.Connections.length}</td>
                                         <td>
                                             <a href="#">

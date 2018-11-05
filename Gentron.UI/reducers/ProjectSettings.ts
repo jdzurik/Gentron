@@ -26,8 +26,6 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
 
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
@@ -35,8 +33,6 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
         case ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction:
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: action.localPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
@@ -57,8 +53,6 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
 
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
@@ -66,8 +60,6 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
         case ProjectSettingsActionNames.AddOrUpdateRemotePackageLocationAction:
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: action.remotePackageLocation
@@ -87,8 +79,6 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
 
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
@@ -108,8 +98,6 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
 
             return {
                 DatabaseConnections: state.DatabaseConnections,
-                FileConnections: state.FileConnections,
-                HttpConnections: state.HttpConnections,
                 LocalPackageFolder: state.LocalPackageFolder,
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation

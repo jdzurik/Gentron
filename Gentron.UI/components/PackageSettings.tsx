@@ -9,7 +9,6 @@ import { IGentron, IPackageSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
-import SplitPane from "./SplitPane";
 
 type HashedIPackageSettings = Hash & NonFunctionProperties<IPackageSettings>
 
@@ -30,7 +29,12 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
     /*
      *  Methods
      */
+    private handleEditorMount(editor: any, monaco: any): void {
+    }
+
     public render(): JSX.Element {
+        console.log("render");
+
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
@@ -73,10 +77,9 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
                             <div className="h-100 w-100 border bd-grayWhite border-size-2">
                                 <MonacoEditor
                                     language="markdown"
-                                    value={(() => { }).toString()}
-                                    options={{}}
-                                    onChange={console.log}
-                                    editorDidMount={() => {}}
+                                    value={this.props.ReadMe}
+                                    options={{ wordWrap: `on` }}
+                                    onChange={(value: string) => this.props.addOrUpdateReadMeText(value)}
                                 />
                             </div>
                         </Cell>
@@ -98,7 +101,7 @@ function mapStateToProps(state: IGentron): HashedIPackageSettings {
         FileSources: state.PackageSettings.FileSources,
         HttpSources: state.PackageSettings.HttpSources,
         PackageName: state.PackageSettings.PackageName,
-        ReadMeText: state.PackageSettings.ReadMeText,
+        ReadMe: state.PackageSettings.ReadMe,
         _hash: _hash
     };
 }

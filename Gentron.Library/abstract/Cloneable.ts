@@ -1,20 +1,15 @@
-﻿import { ICloneable } from "../interfaces";
+﻿import { ICloneable, IIdentifiable } from "../interfaces";
 import { Utilities } from "../";
 
-export default abstract class Cloneable<T> implements ICloneable<T> {
+export default abstract class Cloneable<T> implements ICloneable<T>, IIdentifiable {
     /*
      *  Properties & Fields 
      */
-    protected readonly _id: string;
+    protected _id: string;
 
     public get ID(): string {
-        return (this._isClone && this._cloneId)
-            ? this._cloneId
-            : this._id;
+        return this._id;
     }
-
-    protected _cloneId: string = "";
-    protected _isClone: boolean = false;
 
 
     /*

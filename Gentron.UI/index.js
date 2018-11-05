@@ -13,12 +13,14 @@ const Gentron_Library_2 = require("../Gentron.Library");
 const react_redux_1 = require("react-redux");
 const App_1 = require("./components/App");
 const configureStore_1 = require("./store/configureStore");
+const electronMenu_1 = require("./electronMenu");
 const syncHistoryWithStore = (store, history) => {
     const { routing } = store.getState();
     if (routing && routing.location) {
         history.replace(routing.location);
     }
 };
+electronMenu_1.default();
 const history = history_1.createMemoryHistory();
 let initialState;
 if ((window.initialReduxState)) {
@@ -32,7 +34,7 @@ else {
         initialState.PackageSettings.Environments.push(environment);
     });
     ["CAUtils", "CASecurity"].map(db => {
-        const source = new Gentron_Library_1.ConnectionGroup();
+        const source = new Gentron_Library_1.ConnectionGroup(() => new Gentron_Library_1.DatabaseConnection());
         source.Name = db;
         initialState.PackageSettings.Environments.map(env => {
             const conn = new Gentron_Library_1.DatabaseConnection();
@@ -47,7 +49,7 @@ else {
         initialState.PackageSettings.DatabaseSources.push(source);
     });
 }
-const store = configureStore_1.default(history, initialState.toJson());
+const store = configureStore_1.default(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
 syncHistoryWithStore(store, history);
 const root = document.createElement("div");
 const rootId = `appRoot${Date.now()}`;

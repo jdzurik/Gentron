@@ -1,23 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const _1 = require("./");
+const DatabaseConnection_1 = require("./DatabaseConnection");
+const OutputPathGroup_1 = require("./OutputPathGroup");
 class ProjectSettings {
     get DatabaseConnections() {
         return this._databaseConnections;
     }
     set DatabaseConnections(value) {
         this._databaseConnections = value;
-    }
-    get FileConnections() {
-        return this._fileConnections;
-    }
-    set FileConnections(value) {
-        this._fileConnections = value;
-    }
-    get HttpConnections() {
-        return this._httpConnections;
-    }
-    set HttpConnections(value) {
-        this._httpConnections = value;
     }
     get LocalPackageFolder() {
         return this._localPackageFolder;
@@ -39,40 +30,29 @@ class ProjectSettings {
     }
     constructor() {
         this._databaseConnections = [];
-        this._fileConnections = [];
-        this._httpConnections = [];
         this._localPackageFolder = "";
         this._outputPathGroups = [];
         this._remotePackageLocation = "";
     }
-    static fromJson(obj) {
-        const ret = new ProjectSettings();
-        ret.DatabaseConnections = obj.DatabaseConnections;
-        ret.FileConnections = obj.FileConnections;
-        ret.HttpConnections = obj.HttpConnections;
-        ret.LocalPackageFolder = obj.LocalPackageFolder;
-        ret.OutputPathGroups = obj.OutputPathGroups;
-        ret.RemotePackageLocation = obj.RemotePackageLocation;
-        return ret;
+    fromJson(json) {
+        this._databaseConnections = json.DatabaseConnections
+            .map((group, index) => {
+            return new _1.ConnectionGroup(() => new DatabaseConnection_1.DatabaseConnection()).fromJson(group);
+        });
+        this._localPackageFolder = json.LocalPackageFolder;
+        this._outputPathGroups = json.OutputPathGroups
+            .map((group, index) => {
+            return new OutputPathGroup_1.OutputPathGroup().fromJson(group);
+        });
+        this._remotePackageLocation = json.RemotePackageLocation;
+        return this;
     }
     toJson() {
         return {
-            DatabaseConnections: this.DatabaseConnections,
-            FileConnections: this.FileConnections,
-            HttpConnections: this.HttpConnections,
-            LocalPackageFolder: this.LocalPackageFolder,
-            OutputPathGroups: this.OutputPathGroups,
-            RemotePackageLocation: this.RemotePackageLocation,
-        };
-    }
-    static toJson(obj) {
-        return {
-            DatabaseConnections: obj.DatabaseConnections,
-            FileConnections: obj.FileConnections,
-            HttpConnections: obj.HttpConnections,
-            LocalPackageFolder: obj.LocalPackageFolder,
-            OutputPathGroups: obj.OutputPathGroups,
-            RemotePackageLocation: obj.RemotePackageLocation,
+            DatabaseConnections: this._databaseConnections.map((connection, index) => connection.toJson()),
+            LocalPackageFolder: this._localPackageFolder,
+            OutputPathGroups: this._outputPathGroups.map((connection, index) => connection.toJson()),
+            RemotePackageLocation: this._remotePackageLocation
         };
     }
 }

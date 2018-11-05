@@ -1,7 +1,8 @@
 ﻿import { ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
 import { Cloneable } from "./abstract";
+import { NonFunctionProperties } from "./types";
 
-export interface IOutputPath extends ICloneable<IOutputPath>, IJsonSerializable, IModifiable<IOutputPath> {
+export interface IOutputPath extends ICloneable<IOutputPath>, IJsonSerializable<IOutputPath>, IModifiable<IOutputPath> {
     /*
      *  Properties & Fields
      */
@@ -48,16 +49,27 @@ export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public fromJson(json: NonFunctionProperties<IOutputPath>): IOutputPath {
+        this._environment = json.Environment;
+        this._id = json.ID;
+        this._path = json.Path;
+
+        return this;
+    }
+
+    public toJson(): NonFunctionProperties<IOutputPath> {
+        return {
+            Environment: this._environment,
+            ID: this._id,
+            Path: this._path
+        };
     }
 
     public clone(): IOutputPath {
         const ret: OutputPath = new OutputPath();
 
-        ret._cloneId = this._id;
-        ret._isClone = true;
         ret._environment = this._environment;
+        ret._id = this._id;
         ret._path = this._path;
 
         return ret;

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const _1 = require(".");
 class PackageSettings {
     get DatabaseSources() {
         return this._databaseSources;
@@ -37,11 +38,11 @@ class PackageSettings {
     set PackageName(value) {
         this._packageName = value;
     }
-    get ReadMeText() {
-        return this._readMeText;
+    get ReadMe() {
+        return this._readMe;
     }
-    set ReadMeText(value) {
-        this._readMeText = value;
+    set ReadMe(value) {
+        this._readMe = value;
     }
     constructor() {
         this._databaseSources = [];
@@ -50,39 +51,47 @@ class PackageSettings {
         this._fileSources = [];
         this._httpSources = [];
         this._packageName = "";
-        this._readMeText = "";
+        this._readMe = "";
     }
-    static fromJson(obj) {
-        const ret = new PackageSettings();
-        ret.DatabaseSources = obj.DatabaseSources;
-        ret.Engines = obj.Engines;
-        ret.Environments = obj.Environments;
-        ret.FileSources = obj.FileSources;
-        ret.HttpSources = obj.HttpSources;
-        ret.PackageName = obj.PackageName;
-        ret.ReadMeText = obj.ReadMeText;
-        return ret;
+    fromJson(json) {
+        this._databaseSources = json.DatabaseSources.map((source, index) => {
+            return new _1.DatabaseSource().fromJson(source);
+        });
+        this._engines = json.Engines.map((source, index) => {
+            return new _1.Engine().fromJson(source);
+        });
+        this._environments = json.Environments.map((source, index) => {
+            return new _1.Environment().fromJson(source);
+        });
+        this._fileSources = json.FileSources.map((source, index) => {
+            return new _1.FileSource().fromJson(source);
+        });
+        this._httpSources = json.HttpSources.map((source, index) => {
+            return new _1.HttpSource().fromJson(source);
+        });
+        this._packageName = json.PackageName;
+        this._readMe = json.ReadMe;
+        return this;
     }
     toJson() {
         return {
-            DatabaseSources: this.DatabaseSources,
-            Engines: this.Engines,
-            Environments: this.Environments,
-            FileSources: this.FileSources,
-            HttpSources: this.HttpSources,
-            PackageName: this.PackageName,
-            ReadMeText: this.ReadMeText
-        };
-    }
-    static toJson(obj) {
-        return {
-            DatabaseSources: obj.DatabaseSources,
-            Engines: obj.Engines,
-            Environments: obj.Environments,
-            FileSources: obj.FileSources,
-            HttpSources: obj.HttpSources,
-            PackageName: obj.PackageName,
-            ReadMeText: obj.ReadMeText
+            DatabaseSources: this._databaseSources.map((source, index) => {
+                return source.toJson();
+            }),
+            Engines: this._engines.map((source, index) => {
+                return source.toJson();
+            }),
+            Environments: this._environments.map((source, index) => {
+                return source.toJson();
+            }),
+            FileSources: this._fileSources.map((source, index) => {
+                return source.toJson();
+            }),
+            HttpSources: this._httpSources.map((source, index) => {
+                return source.toJson();
+            }),
+            PackageName: this._packageName,
+            ReadMe: this._readMe
         };
     }
 }

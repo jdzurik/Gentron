@@ -1,6 +1,9 @@
-﻿export default interface IJsonSerializable {
+﻿import { NonFunctionProperties } from "../types";
+
+export default interface IJsonSerializable<T> {
     /*
      *  Methods
      */
-    toJson(): any;
+    fromJson(json: NonFunctionProperties<T>): T;
+    toJson(): NonFunctionProperties<T>;
 }

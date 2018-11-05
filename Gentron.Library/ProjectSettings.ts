@@ -1,13 +1,14 @@
-﻿import { IConnectionGroup, IDatabaseConnection, IFileConnection, IHttpConnection, IOutputPath, IOutputPathGroup } from "./";
+﻿import { IConnectionGroup, IDatabaseConnection, IFileConnection, IHttpConnection, IOutputPath, IOutputPathGroup, ConnectionGroup } from "./";
 import { IJsonSerializable } from "./interfaces";
+import { NonFunctionProperties } from "./types";
+import { DatabaseConnection } from "./DatabaseConnection";
+import { OutputPathGroup } from "./OutputPathGroup";
 
-export interface IProjectSettings extends IJsonSerializable {
+export interface IProjectSettings extends IJsonSerializable<IProjectSettings> {
     /*
      *  Properties & Fields 
      */
     DatabaseConnections: IConnectionGroup<IDatabaseConnection>[];
-    FileConnections: IConnectionGroup<IFileConnection>[];
-    HttpConnections: IConnectionGroup<IHttpConnection>[];
     LocalPackageFolder: string;
     OutputPathGroups: IOutputPathGroup<IOutputPath>[];
     RemotePackageLocation: string;
@@ -25,28 +26,6 @@ export class ProjectSettings implements IProjectSettings {
 
     public set DatabaseConnections(value: IConnectionGroup<IDatabaseConnection>[]) {
         this._databaseConnections = value;
-    }
-
-
-    private _fileConnections: IConnectionGroup<IFileConnection>[];
-
-    public get FileConnections(): IConnectionGroup<IFileConnection>[] {
-        return this._fileConnections;
-    }
-
-    public set FileConnections(value: IConnectionGroup<IFileConnection>[]) {
-        this._fileConnections = value;
-    }
-
-
-    private _httpConnections: IConnectionGroup<IHttpConnection>[];
-
-    public get HttpConnections(): IConnectionGroup<IHttpConnection>[] {
-        return this._httpConnections;
-    }
-
-    public set HttpConnections(value: IConnectionGroup<IHttpConnection>[]) {
-        this._httpConnections = value;
     }
 
 
@@ -88,8 +67,6 @@ export class ProjectSettings implements IProjectSettings {
      */
     public constructor() {
         this._databaseConnections = [];
-        this._fileConnections = [];
-        this._httpConnections = [];
         this._localPackageFolder = "";
         this._outputPathGroups = [];
         this._remotePackageLocation = "";
@@ -99,38 +76,27 @@ export class ProjectSettings implements IProjectSettings {
     /*
      *  Methods
      */
-    public static fromJson(obj: any): IProjectSettings {
-        const ret: IProjectSettings = new ProjectSettings();
+    public fromJson(json: NonFunctionProperties<IProjectSettings>): IProjectSettings {
+        this._databaseConnections = json.DatabaseConnections
+            .map((group: NonFunctionProperties<IConnectionGroup<IDatabaseConnection>>, index: number) => {
+                return new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection()).fromJson(group)
+            });
+        this._localPackageFolder = json.LocalPackageFolder;
+        this._outputPathGroups = json.OutputPathGroups
+            .map((group: NonFunctionProperties<IOutputPathGroup<IOutputPath>>, index: number) => {
+                return new OutputPathGroup<IOutputPath>().fromJson(group)
+            });
+        this._remotePackageLocation = json.RemotePackageLocation;
 
-        ret.DatabaseConnections = obj.DatabaseConnections;
-        ret.FileConnections = obj.FileConnections;
-        ret.HttpConnections = obj.HttpConnections;
-        ret.LocalPackageFolder = obj.LocalPackageFolder;
-        ret.OutputPathGroups = obj.OutputPathGroups;
-        ret.RemotePackageLocation = obj.RemotePackageLocation;
-
-        return ret;
+        return this;
     }
 
-    public toJson(): any {
+    public toJson(): NonFunctionProperties<IProjectSettings> {
         return {
-            DatabaseConnections: this.DatabaseConnections,
-            FileConnections: this.FileConnections,
-            HttpConnections: this.HttpConnections,
-            LocalPackageFolder: this.LocalPackageFolder,
-            OutputPathGroups: this.OutputPathGroups,
-            RemotePackageLocation: this.RemotePackageLocation,
-        };
-    }
-
-    public static toJson(obj: IProjectSettings): any {
-        return {
-            DatabaseConnections: obj.DatabaseConnections,
-            FileConnections: obj.FileConnections,
-            HttpConnections: obj.HttpConnections,
-            LocalPackageFolder: obj.LocalPackageFolder,
-            OutputPathGroups: obj.OutputPathGroups,
-            RemotePackageLocation: obj.RemotePackageLocation,
+            DatabaseConnections: this._databaseConnections.map((connection: IConnectionGroup<IDatabaseConnection>, index: number) => connection.toJson() as IConnectionGroup<IDatabaseConnection>),
+            LocalPackageFolder: this._localPackageFolder,
+            OutputPathGroups: this._outputPathGroups.map((connection: IOutputPathGroup<IOutputPath>, index: number) => connection.toJson() as IOutputPathGroup<IOutputPath>),
+            RemotePackageLocation: this._remotePackageLocation
         };
     }
 }

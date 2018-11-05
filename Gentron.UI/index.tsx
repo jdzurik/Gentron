@@ -15,7 +15,7 @@ import { IDatabaseSource, IGentron, DatabaseSource } from "../Gentron.Library";
 import { Provider } from 'react-redux';
 import App from "./components/App";
 import configureStore from './store/configureStore';
-//import setupMenu from "./electronMenu";
+import setupMenu from "./electronMenu";
 
 type AppStore = Store<IGentron, AnyAction> & { dispatch: {} };
 
@@ -26,7 +26,7 @@ const syncHistoryWithStore = (store, history: MemoryHistory) => {
     }
 };
 
-//setupMenu();
+setupMenu();
 
 // Create browser history to use in the Redux store
 const history: MemoryHistory = createMemoryHistory();
@@ -47,7 +47,7 @@ else {
     });
 
     ["CAUtils", "CASecurity"].map(db => {
-        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
+        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection());
         source.Name = db;
 
         initialState.PackageSettings.Environments.map(env => {
@@ -68,7 +68,7 @@ else {
 }
 
 //const initialState: IGentron = ((window as any).initialReduxState) || new Gentron() as IGentron;
-const store: AppStore = configureStore(history, initialState.toJson());
+const store: AppStore = configureStore(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
 syncHistoryWithStore(store, history);
 const root: HTMLElement = document.createElement("div");
 const rootId: string = `appRoot${Date.now()}`;

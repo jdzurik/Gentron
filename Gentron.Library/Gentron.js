@@ -22,24 +22,17 @@ class Gentron {
         this._packageSettings = new _1.PackageSettings();
         this._projectSettings = new _1.ProjectSettings();
     }
-    static fromJson(obj) {
-        const ret = new Gentron(obj.ID);
-        ret.PackageSettings = _1.PackageSettings.fromJson(obj.PackageSettings);
-        ret.ProjectSettings = _1.ProjectSettings.fromJson(obj.ProjectSettings);
-        return ret;
+    fromJson(json) {
+        this._id = json.ID;
+        this._packageSettings = this._packageSettings.fromJson(json.PackageSettings);
+        this._projectSettings = this._projectSettings.fromJson(json.ProjectSettings);
+        return this;
     }
     toJson() {
         return {
-            ID: this.ID,
-            PackageSettings: this.PackageSettings.toJson(),
-            ProjectSettings: this.ProjectSettings.toJson(),
-        };
-    }
-    static toJson(obj) {
-        return {
-            ID: obj.ID,
-            PackageSettings: _1.PackageSettings.toJson(obj.PackageSettings),
-            ProjectSettings: _1.ProjectSettings.toJson(obj.ProjectSettings),
+            ID: this._id,
+            PackageSettings: this._packageSettings.toJson(),
+            ProjectSettings: this._projectSettings.toJson()
         };
     }
     static save() {

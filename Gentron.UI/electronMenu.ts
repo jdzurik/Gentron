@@ -1,4 +1,5 @@
-﻿import { Menu, shell } from "electron";
+﻿//import { Menu } from "electron";
+const { Menu } = (window as any).require('electron').remote;
 //import { Gentron } from "../Gentron.Library/Gentron";
 
 export default function setupMenu(): void {
@@ -22,6 +23,7 @@ export default function setupMenu(): void {
                 },
                 {
                     label: 'Save As',
+                    accelerator: 'CmdOrCtrl+Shift+S',
                     click() {
                         //Gentron.saveAs();
                     }
@@ -64,16 +66,16 @@ export default function setupMenu(): void {
                 { role: 'close' }
             ]
         },
-        {
-            role: 'help',
-            submenu: [
-                {
-                    label: 'Learn More',
-                    click() {
-                        shell.openExternal('')
-                    }
-                }
-            ]
-        }
+        //{
+        //    role: 'help',
+        //    submenu: [
+        //        {
+        //            label: 'Learn More',
+        //            click() {
+        //                shell.openExternal('')
+        //            }
+        //        }
+        //    ]
+        //}
     ]));
 }

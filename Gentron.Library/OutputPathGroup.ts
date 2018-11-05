@@ -1,8 +1,9 @@
 ﻿import { Cloneable } from "./abstract";
 import { ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
-import { IOutputPath } from "./";
+import { IOutputPath, OutputPath } from "./";
+import { NonFunctionProperties } from "./types";
 
-export interface IOutputPathGroup<TOutputPath extends IOutputPath> extends ICloneable<IOutputPathGroup<TOutputPath>>, IJsonSerializable, IModifiable<IOutputPathGroup<TOutputPath>> {
+export interface IOutputPathGroup<TOutputPath extends IOutputPath> extends ICloneable<IOutputPathGroup<TOutputPath>>, IJsonSerializable<IOutputPathGroup<TOutputPath>>, IModifiable<IOutputPathGroup<TOutputPath>> {
     /*
      *  Properties & Fields 
      */
@@ -59,23 +60,42 @@ export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<
 
     }
 
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public fromJson(json: NonFunctionProperties<IOutputPathGroup<TOutputPath>>): IOutputPathGroup<TOutputPath> {
+        this._id = json.ID;
+        this._name = json.Name;
+        this._paths = json.Paths.map((path: NonFunctionProperties<IOutputPath>, index: number) => {
+            return new OutputPath().fromJson(path) as TOutputPath;
+        });
+
+        return this;
+    }
+
+    public toJson(): NonFunctionProperties<IOutputPathGroup<TOutputPath>> {
+        return {
+            ID: this._id,
+            Name: this._name,
+            Paths: this._paths.map((path: TOutputPath, index: number) => {
+                return path.toJson() as TOutputPath;
+            })
+        };
     }
 
     public clone(): IOutputPathGroup<TOutputPath> {
         const ret: OutputPathGroup<TOutputPath> = new OutputPathGroup<TOutputPath>();
 
-        ret._cloneId = this.ID;
-        ret._isClone = true;
+        ret._id = this._id;
         ret._name = this._name;
-        ret._paths = this._paths.map((conn: TOutputPath, i: number) => conn.clone() as TOutputPath);
+        ret._paths = this._paths.map((conn: TOutputPath, i: number) => {
+            return conn.clone() as TOutputPath
+        });
 
         return ret;
     }
 
     public update(connection: IOutputPathGroup<TOutputPath>): void {
         this._name = connection.Name;
-        this._paths = connection.Paths.map((conn: TOutputPath, i: number) => conn.clone() as TOutputPath);
+        this._paths = connection.Paths.map((conn: TOutputPath, i: number) => {
+            return conn.clone() as TOutputPath
+        });
     }
 }

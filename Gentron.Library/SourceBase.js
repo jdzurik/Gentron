@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
-class SourceBase {
+const abstract_1 = require("./abstract");
+class SourceBase extends abstract_1.Cloneable {
     get ID() {
         return this._id;
     }
@@ -24,6 +25,7 @@ class SourceBase {
         this._result = value;
     }
     constructor() {
+        super();
         this._id = _1.Utilities.newCryptoGuid();
         this._isActive = true;
         this._name = "";

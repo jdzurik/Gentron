@@ -1,5 +1,7 @@
 ﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, File, IFile, Utilities } from ".";
 import { ISourceBase, SourceBase } from "./SourceBase";
+import { NonFunctionProperties } from "./types";
+import { DatabaseConnection } from "./DatabaseConnection";
 
 export interface IDatabaseSource extends ISourceBase {
     /*
@@ -40,7 +42,7 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
      */
     public constructor() {
         super();
-        this._activeConnectionGroup = new ConnectionGroup<IDatabaseConnection>();
+        this._activeConnectionGroup = new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection());
         this._script = new File();
     }
 
@@ -48,8 +50,38 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
     /*
      *  Methods
      */
-    public toJson(): any {
-        throw new Error("Method not implemented");
+    public clone(): IDatabaseSource {
+        const ret: DatabaseSource = new DatabaseSource();
+
+        ret._activeConnectionGroup = this._activeConnectionGroup.clone();
+        ret._id = this._id;
+        ret._isActive = this._isActive;
+        ret._name = this._name;
+        ret._result = this._result;
+        ret._script = this._script;
+
+        return ret;
+    }
+
+    public fromJson(json: NonFunctionProperties<IDatabaseSource>): IDatabaseSource {
+        this._activeConnectionGroup = this._activeConnectionGroup.fromJson(json.ActiveConnectionGroup);
+        this._isActive = json.IsActive;
+        this._name = json.Name;
+        this._result = json.Result;
+        this._script = this._script.fromJson(json.Script as NonFunctionProperties<IFile>);
+
+        return this;
+    }
+
+    public toJson(): NonFunctionProperties<IDatabaseSource> {
+        return {
+            ActiveConnectionGroup: this._activeConnectionGroup.toJson() as IConnectionGroup<IDatabaseConnection>,
+            ID: this._id,
+            IsActive: this._isActive,
+            Name: this._name,
+            Result: this._result,
+            Script: this._script.toJson() as IFile
+        };
     }
 
 
