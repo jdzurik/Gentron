@@ -1,7 +1,10 @@
 ﻿import * as crypto from "crypto";
+import { JSON } from "ta-json";
 
 export default class Utilities {
     private static _guidPlaceholder: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
+
+    public static readonly JSON: typeof JSON = JSON;
 
     public static hasValue(obj: any): boolean {
         return typeof (obj) !== typeof (undefined) && obj !== null;

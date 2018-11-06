@@ -1,6 +1,6 @@
 ﻿import { ISourceBase, SourceBase } from "./SourceBase";
 import { ITemplate, Template } from "./Template";
-import { NonFunctionProperties } from "./types";
+import { JsonObject, JsonProperty, JsonType } from "ta-json";
 
 export interface IEngine extends ISourceBase {
     /*
@@ -9,19 +9,14 @@ export interface IEngine extends ISourceBase {
     Templates: ITemplate[];
 }
 
+@JsonObject()
 export class Engine extends SourceBase implements IEngine {
     /*
      *  Properties & Fields 
      */
-    private _templates: ITemplate[];
-
-    public get Templates(): ITemplate[] {
-        return this._templates;
-    }
-
-    public set Templates(value: ITemplate[]) {
-        this._templates = value;
-    }
+    @JsonProperty()
+    @JsonType(Template)
+    public Templates: ITemplate[];
 
 
     /*
@@ -29,7 +24,7 @@ export class Engine extends SourceBase implements IEngine {
      */
     public constructor() {
         super();
-        this._templates = [];
+        this.Templates = [];
     }
 
 
@@ -40,39 +35,16 @@ export class Engine extends SourceBase implements IEngine {
         const ret: Engine = new Engine();
 
         ret._id = this._id;
-        ret._isActive = this._isActive;
-        ret._name = this._name;
-        ret._result = this._result;
-        ret._templates = this._templates.map((template: ITemplate, index: number) => {
+        ret.IsActive = this.IsActive;
+        ret.Name = this.Name;
+        ret.Result = this.Result;
+        ret.Templates = this.Templates.map((template: ITemplate, index: number) => {
             return template.clone();
         });
 
         return ret;
     }
 
-    public fromJson(json: NonFunctionProperties<IEngine>): IEngine {
-        this._id = json.ID;
-        this._isActive = json.IsActive;
-        this._name = json.Name;
-        this._result = json.Result;
-        this._templates = json.Templates.map((template: NonFunctionProperties<ITemplate>, index: number) => {
-            return new Template().fromJson(template);
-        });
-
-        return this;
-    }
-
-    public toJson(): NonFunctionProperties<IEngine> {
-        return {
-            ID: this._id,
-            IsActive: this._isActive,
-            Name: this._name,
-            Result: this._result,
-            Templates: this._templates.map((template: ITemplate, index: number) => {
-                return template.toJson() as ITemplate;
-            })
-        };
-    }
 
     public update(engine: IEngine): void {
         this.IsActive = engine.IsActive;

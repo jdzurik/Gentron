@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const crypto = require("crypto");
+const ta_json_1 = require("ta-json");
 class Utilities {
     static hasValue(obj) {
         return typeof (obj) !== typeof (undefined) && obj !== null;
@@ -61,4 +62,6 @@ class Utilities {
     }
 }
 Utilities._guidPlaceholder = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
+Utilities.JSON = ta_json_1.JSON;
 exports.default = Utilities;
+//# sourceMappingURL=Utilities.js.map

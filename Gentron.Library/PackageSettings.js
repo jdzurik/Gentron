@@ -1,98 +1,68 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
-class PackageSettings {
-    get DatabaseSources() {
-        return this._databaseSources;
-    }
-    set DatabaseSources(value) {
-        this._databaseSources = value;
-    }
-    get Engines() {
-        return this._engines;
-    }
-    set Engines(value) {
-        this._engines = value;
-    }
-    get Environments() {
-        return this._environments;
-    }
-    set Environments(value) {
-        this._environments = value;
-    }
-    get FileSources() {
-        return this._fileSources;
-    }
-    set FileSources(value) {
-        this._fileSources = value;
-    }
-    get HttpSources() {
-        return this._httpSources;
-    }
-    set HttpSources(value) {
-        this._httpSources = value;
-    }
-    get PackageName() {
-        return this._packageName;
-    }
-    set PackageName(value) {
-        this._packageName = value;
-    }
-    get ReadMe() {
-        return this._readMe;
-    }
-    set ReadMe(value) {
-        this._readMe = value;
-    }
+const ta_json_1 = require("ta-json");
+const abstract_1 = require("./abstract");
+let PackageSettings = class PackageSettings extends abstract_1.Cloneable {
     constructor() {
-        this._databaseSources = [];
-        this._engines = [];
-        this._environments = [];
-        this._fileSources = [];
-        this._httpSources = [];
-        this._packageName = "";
-        this._readMe = "";
+        super();
+        this.DatabaseSources = [];
+        this.Engines = [];
+        this.Environments = [];
+        this.FileSources = [];
+        this.HttpSources = [];
+        this.PackageName = "";
+        this.ReadMe = "";
     }
-    fromJson(json) {
-        this._databaseSources = json.DatabaseSources.map((source, index) => {
-            return new _1.DatabaseSource().fromJson(source);
-        });
-        this._engines = json.Engines.map((source, index) => {
-            return new _1.Engine().fromJson(source);
-        });
-        this._environments = json.Environments.map((source, index) => {
-            return new _1.Environment().fromJson(source);
-        });
-        this._fileSources = json.FileSources.map((source, index) => {
-            return new _1.FileSource().fromJson(source);
-        });
-        this._httpSources = json.HttpSources.map((source, index) => {
-            return new _1.HttpSource().fromJson(source);
-        });
-        this._packageName = json.PackageName;
-        this._readMe = json.ReadMe;
-        return this;
+    clone() {
+        throw new Error("Method not implemented");
     }
-    toJson() {
-        return {
-            DatabaseSources: this._databaseSources.map((source, index) => {
-                return source.toJson();
-            }),
-            Engines: this._engines.map((source, index) => {
-                return source.toJson();
-            }),
-            Environments: this._environments.map((source, index) => {
-                return source.toJson();
-            }),
-            FileSources: this._fileSources.map((source, index) => {
-                return source.toJson();
-            }),
-            HttpSources: this._httpSources.map((source, index) => {
-                return source.toJson();
-            }),
-            PackageName: this._packageName,
-            ReadMe: this._readMe
-        };
-    }
-}
+};
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.DatabaseSource),
+    __metadata("design:type", Array)
+], PackageSettings.prototype, "DatabaseSources", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.Engine),
+    __metadata("design:type", Array)
+], PackageSettings.prototype, "Engines", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.Environment),
+    __metadata("design:type", Array)
+], PackageSettings.prototype, "Environments", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.FileSource),
+    __metadata("design:type", Array)
+], PackageSettings.prototype, "FileSources", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.HttpSource),
+    __metadata("design:type", Array)
+], PackageSettings.prototype, "HttpSources", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], PackageSettings.prototype, "PackageName", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], PackageSettings.prototype, "ReadMe", void 0);
+PackageSettings = __decorate([
+    ta_json_1.JsonObject(),
+    __metadata("design:paramtypes", [])
+], PackageSettings);
 exports.PackageSettings = PackageSettings;
+//# sourceMappingURL=PackageSettings.js.map

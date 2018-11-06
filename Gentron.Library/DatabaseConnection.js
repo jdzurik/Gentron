@@ -1,51 +1,48 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var DatabaseConnection_1;
 const ConnectionBase_1 = require("./ConnectionBase");
-class DatabaseConnection extends ConnectionBase_1.ConnectionBase {
-    get ConnectionString() {
-        return this._connectionString;
-    }
-    set ConnectionString(value) {
-        this._connectionString = value;
-    }
-    get Environment() {
-        return this._environment;
-    }
-    set Environment(value) {
-        this._environment = value;
-    }
+const ta_json_1 = require("ta-json");
+let DatabaseConnection = DatabaseConnection_1 = class DatabaseConnection extends ConnectionBase_1.ConnectionBase {
     constructor() {
         super();
-        this._connectionString = "";
-        this._environment = "";
+        this.ConnectionString = "";
+        this.Environment = "";
     }
     clone() {
-        const ret = new DatabaseConnection();
-        ret._connectionString = this._connectionString;
-        ret._environment = this._environment;
+        const ret = new DatabaseConnection_1();
         ret._id = this._id;
-        ret._isActive = this._isActive;
+        ret.ConnectionString = this.ConnectionString;
+        ret.Environment = this.Environment;
+        ret.IsActive = this.IsActive;
         return ret;
     }
-    fromJson(json) {
-        this._connectionString = json.ConnectionString;
-        this._environment = json.Environment;
-        this._id = json.ID;
-        this._isActive = json.IsActive;
-        return this;
+    update(connection) {
+        this.ConnectionString = connection.ConnectionString;
+        this.Environment = connection.Environment;
+        this.IsActive = connection.IsActive;
     }
-    toJson() {
-        return {
-            ConnectionString: this._connectionString,
-            Environment: this._environment,
-            ID: this._id,
-            IsActive: this._isActive
-        };
-    }
-    update(dbConnection) {
-        this.ConnectionString = dbConnection.ConnectionString;
-        this.Environment = dbConnection.Environment;
-        this.IsActive = dbConnection.IsActive;
-    }
-}
+};
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], DatabaseConnection.prototype, "ConnectionString", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], DatabaseConnection.prototype, "Environment", void 0);
+DatabaseConnection = DatabaseConnection_1 = __decorate([
+    ta_json_1.JsonObject(),
+    __metadata("design:paramtypes", [])
+], DatabaseConnection);
 exports.DatabaseConnection = DatabaseConnection;
+//# sourceMappingURL=DatabaseConnection.js.map

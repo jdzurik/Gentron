@@ -1,5 +1,5 @@
 ﻿import { ConnectionBase, IConnectionBase } from "./ConnectionBase";
-import { NonFunctionProperties } from "./types";
+import { JsonObject, JsonProperty } from "ta-json";
 
 export interface IHttpConnection extends IConnectionBase {
     /*
@@ -8,19 +8,13 @@ export interface IHttpConnection extends IConnectionBase {
     Environment: string;
 }
 
+@JsonObject()
 export class HttpConnection extends ConnectionBase implements IHttpConnection {
     /*
      *  Properties & Fields 
      */
-    private _environment: string;
-
-    public get Environment(): string {
-        return this._environment;
-    }
-
-    public set Environment(value: string) {
-        this._environment = value;
-    }
+    @JsonProperty()
+    public Environment: string;
 
 
     /*
@@ -28,34 +22,26 @@ export class HttpConnection extends ConnectionBase implements IHttpConnection {
      */
     public constructor() {
         super();
-        this._environment = "";
+        this.Environment = "";
     }
 
 
     /*
      *  Methods
      */
-    public fromJson(json: NonFunctionProperties<IHttpConnection>): IHttpConnection {
-        this._environment = json.Environment;
-        this._id = json.ID;
-        this._isActive = json.IsActive;
-
-        return this;
-    }
-
-    public toJson(): NonFunctionProperties<IHttpConnection> {
-        return {
-            Environment: this._environment,
-            ID: this._id,
-            IsActive: this._isActive
-        };
-    }
-
     public clone(): HttpConnection {
-        throw new Error("Method not implemented");
+        const ret: HttpConnection = new HttpConnection();
+
+        ret._id = this._id;
+        ret.Environment = this.Environment;
+        ret.IsActive = this.IsActive;
+
+        return ret;
     }
 
-    public update(dbConnection: HttpConnection): void {
-        throw new Error("Method not implemented");
+
+    public update(connection: HttpConnection): void {
+        this.Environment = connection.Environment;
+        this.IsActive = connection.IsActive;
     }
 }

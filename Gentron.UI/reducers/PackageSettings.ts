@@ -6,7 +6,7 @@ import { Reducer } from 'redux';
 
 type PackageSettingsProps = NonFunctionProperties<IPackageSettings>;
 
-const _unloadedPackageSettingsState: IPackageSettings = new PackageSettings();
+const _unloadedPackageSettingsState: PackageSettingsProps = new PackageSettings() as PackageSettingsProps;
 
 export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsProps, action: PackageSettingsActions.KnownPackageSettingsAction) => {
     switch (action.type) {

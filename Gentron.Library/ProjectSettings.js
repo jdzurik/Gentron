@@ -1,59 +1,50 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require("./");
-const DatabaseConnection_1 = require("./DatabaseConnection");
-const OutputPathGroup_1 = require("./OutputPathGroup");
-class ProjectSettings {
-    get DatabaseConnections() {
-        return this._databaseConnections;
-    }
-    set DatabaseConnections(value) {
-        this._databaseConnections = value;
-    }
-    get LocalPackageFolder() {
-        return this._localPackageFolder;
-    }
-    set LocalPackageFolder(value) {
-        this._localPackageFolder = value;
-    }
-    get OutputPathGroups() {
-        return this._outputPathGroups;
-    }
-    set OutputPathGroups(value) {
-        this._outputPathGroups = value;
-    }
-    get RemotePackageLocation() {
-        return this._remotePackageLocation;
-    }
-    set RemotePackageLocation(value) {
-        this._remotePackageLocation = value;
-    }
+const ta_json_1 = require("ta-json");
+const abstract_1 = require("./abstract");
+let ProjectSettings = class ProjectSettings extends abstract_1.Cloneable {
     constructor() {
-        this._databaseConnections = [];
-        this._localPackageFolder = "";
-        this._outputPathGroups = [];
-        this._remotePackageLocation = "";
+        super();
+        this.DatabaseConnections = [];
+        this.LocalPackageFolder = "";
+        this.OutputPathGroups = [];
+        this.RemotePackageLocation = "";
     }
-    fromJson(json) {
-        this._databaseConnections = json.DatabaseConnections
-            .map((group, index) => {
-            return new _1.ConnectionGroup(() => new DatabaseConnection_1.DatabaseConnection()).fromJson(group);
-        });
-        this._localPackageFolder = json.LocalPackageFolder;
-        this._outputPathGroups = json.OutputPathGroups
-            .map((group, index) => {
-            return new OutputPathGroup_1.OutputPathGroup().fromJson(group);
-        });
-        this._remotePackageLocation = json.RemotePackageLocation;
-        return this;
+    clone() {
+        throw new Error("Method not implemented");
     }
-    toJson() {
-        return {
-            DatabaseConnections: this._databaseConnections.map((connection, index) => connection.toJson()),
-            LocalPackageFolder: this._localPackageFolder,
-            OutputPathGroups: this._outputPathGroups.map((connection, index) => connection.toJson()),
-            RemotePackageLocation: this._remotePackageLocation
-        };
-    }
-}
+};
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.ConnectionGroup),
+    __metadata("design:type", Array)
+], ProjectSettings.prototype, "DatabaseConnections", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], ProjectSettings.prototype, "LocalPackageFolder", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.OutputPathGroup),
+    __metadata("design:type", Array)
+], ProjectSettings.prototype, "OutputPathGroups", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], ProjectSettings.prototype, "RemotePackageLocation", void 0);
+ProjectSettings = __decorate([
+    ta_json_1.JsonObject(),
+    __metadata("design:paramtypes", [])
+], ProjectSettings);
 exports.ProjectSettings = ProjectSettings;
+//# sourceMappingURL=ProjectSettings.js.map

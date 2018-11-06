@@ -10,6 +10,8 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Gentron.UI", "Gentron.UI\Ge
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Gentron.Library", "Gentron.Library\Gentron.Library.njsproj", "{3FDD3DB4-DB93-4EEA-936D-66E74876BCEB}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Gentron.Library.Tests", "Gentron.Library.Tests\Gentron.Library.Tests.njsproj", "{8123FAE1-B3BB-4378-BC6A-0782E03D8A50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{3FDD3DB4-DB93-4EEA-936D-66E74876BCEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FDD3DB4-DB93-4EEA-936D-66E74876BCEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FDD3DB4-DB93-4EEA-936D-66E74876BCEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8123FAE1-B3BB-4378-BC6A-0782E03D8A50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8123FAE1-B3BB-4378-BC6A-0782E03D8A50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8123FAE1-B3BB-4378-BC6A-0782E03D8A50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8123FAE1-B3BB-4378-BC6A-0782E03D8A50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

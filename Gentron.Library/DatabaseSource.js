@@ -1,53 +1,33 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const _1 = require(".");
+var DatabaseSource_1;
+const _1 = require("./");
 const SourceBase_1 = require("./SourceBase");
-const DatabaseConnection_1 = require("./DatabaseConnection");
-class DatabaseSource extends SourceBase_1.SourceBase {
-    get ActiveConnectionGroup() {
-        return this._activeConnectionGroup;
-    }
-    set ActiveConnectionGroup(value) {
-        this._activeConnectionGroup = value;
-    }
-    get Script() {
-        return this._script;
-    }
-    set Script(value) {
-        this._script = value;
-    }
+const ta_json_1 = require("ta-json");
+let DatabaseSource = DatabaseSource_1 = class DatabaseSource extends SourceBase_1.SourceBase {
     constructor() {
         super();
-        this._activeConnectionGroup = new _1.ConnectionGroup(() => new DatabaseConnection_1.DatabaseConnection());
-        this._script = new _1.File();
+        this.ActiveConnectionGroup = new _1.ConnectionGroup();
+        this.Script = new _1.File();
     }
     clone() {
-        const ret = new DatabaseSource();
-        ret._activeConnectionGroup = this._activeConnectionGroup.clone();
+        const ret = new DatabaseSource_1();
         ret._id = this._id;
-        ret._isActive = this._isActive;
-        ret._name = this._name;
-        ret._result = this._result;
-        ret._script = this._script;
+        ret.ActiveConnectionGroup = this.ActiveConnectionGroup.clone();
+        ret.IsActive = this.IsActive;
+        ret.Name = this.Name;
+        ret.Result = this.Result;
+        ret.Script = this.Script;
         return ret;
-    }
-    fromJson(json) {
-        this._activeConnectionGroup = this._activeConnectionGroup.fromJson(json.ActiveConnectionGroup);
-        this._isActive = json.IsActive;
-        this._name = json.Name;
-        this._result = json.Result;
-        this._script = this._script.fromJson(json.Script);
-        return this;
-    }
-    toJson() {
-        return {
-            ActiveConnectionGroup: this._activeConnectionGroup.toJson(),
-            ID: this._id,
-            IsActive: this._isActive,
-            Name: this._name,
-            Result: this._result,
-            Script: this._script.toJson()
-        };
     }
     update(databaseSource) {
         if (typeof (databaseSource) === typeof (undefined) || databaseSource === null) {
@@ -59,5 +39,19 @@ class DatabaseSource extends SourceBase_1.SourceBase {
         this.Result = databaseSource.Result;
         this.Script.update(databaseSource.Script);
     }
-}
+};
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.ConnectionGroup),
+    __metadata("design:type", Object)
+], DatabaseSource.prototype, "ActiveConnectionGroup", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", Object)
+], DatabaseSource.prototype, "Script", void 0);
+DatabaseSource = DatabaseSource_1 = __decorate([
+    ta_json_1.JsonObject(),
+    __metadata("design:paramtypes", [])
+], DatabaseSource);
 exports.DatabaseSource = DatabaseSource;
+//# sourceMappingURL=DatabaseSource.js.map

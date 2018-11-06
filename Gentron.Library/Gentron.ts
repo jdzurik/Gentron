@@ -1,8 +1,9 @@
-﻿import { IIdentifiable, IJsonSerializable } from "./interfaces";
-import { PackageSettings, IPackageSettings, ProjectSettings, IProjectSettings, Utilities } from ".";
-import { NonFunctionProperties } from "./types";
+﻿import { IIdentifiable, ICloneable } from "./interfaces";
+import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities } from "./";
+import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
+import { Cloneable } from "./abstract";
 
-export interface IGentron extends IJsonSerializable<IGentron>, IIdentifiable {
+export interface IGentron extends ICloneable<IGentron> {
     /*
      *  Properties & Fields 
      */
@@ -10,10 +11,12 @@ export interface IGentron extends IJsonSerializable<IGentron>, IIdentifiable {
     ProjectSettings: IProjectSettings;
 }
 
-export class Gentron implements IGentron {
+@JsonObject()
+export class Gentron extends Cloneable<IGentron> implements IGentron {
     /*
      *  Properties & Fields 
      */
+    @JsonProperty("ID")
     protected _id: string;
 
     public get ID(): string {
@@ -21,55 +24,37 @@ export class Gentron implements IGentron {
     }
 
 
-    private _packageSettings: IPackageSettings;
+    @JsonProperty()
+    @JsonElementType(Cloneable)
+    //  Oddidity in TaJSON -- type must be set 
+    //  here and setting type(PackageSettings) 
+    //  does not work
+    public PackageSettings: IPackageSettings;
 
-    public get PackageSettings(): IPackageSettings {
-        return this._packageSettings;
-    }
-
-    public set PackageSettings(value: IPackageSettings) {
-        this._packageSettings = value;
-    }
-
-
-    private _projectSettings: IProjectSettings;
-
-    public get ProjectSettings(): IProjectSettings {
-        return this._projectSettings;
-    }
-
-    public set ProjectSettings(value: IProjectSettings) {
-        this._projectSettings = value;
-    }
+    @JsonProperty()
+    @JsonElementType(Cloneable)
+    //  Oddidity in TaJSON -- type must be set 
+    //  here and setting type(ProjectSettings) 
+    //  does not work
+    public ProjectSettings: IProjectSettings;
 
 
     /*
      *  Constructors
      */
-    public constructor(id?: string) {
-        this._id = id || Utilities.newCryptoGuid();
-        this._packageSettings = new PackageSettings();
-        this._projectSettings = new ProjectSettings();
+    public constructor() {
+        super();
+        this._id = Utilities.newCryptoGuid();
+        this.PackageSettings = new PackageSettings();
+        this.ProjectSettings = new ProjectSettings();
     }
 
 
     /*
      *  Methods
      */
-    public fromJson(json: NonFunctionProperties<IGentron>): IGentron {
-        this._id = json.ID;
-        this._packageSettings = this._packageSettings.fromJson(json.PackageSettings);
-        this._projectSettings = this._projectSettings.fromJson(json.ProjectSettings);
-
-        return this;
-    }
-
-    public toJson(): NonFunctionProperties<IGentron> {
-        return {
-            ID: this._id,
-            PackageSettings: this._packageSettings.toJson() as IPackageSettings,
-            ProjectSettings: this._projectSettings.toJson() as IProjectSettings
-        };
+    public clone(): IGentron {
+        throw new Error("Method not implemented");
     }
 
     public static save(): void {

@@ -1,7 +1,6 @@
-﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, File, IFile, Utilities } from ".";
+﻿import { ConnectionGroup, File, IConnectionGroup, IDatabaseConnection, IFile } from "./";
 import { ISourceBase, SourceBase } from "./SourceBase";
-import { NonFunctionProperties } from "./types";
-import { DatabaseConnection } from "./DatabaseConnection";
+import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 
 export interface IDatabaseSource extends ISourceBase {
     /*
@@ -11,30 +10,17 @@ export interface IDatabaseSource extends ISourceBase {
     Script?: IFile;
 }
 
+@JsonObject()
 export class DatabaseSource extends SourceBase implements IDatabaseSource {
     /*
      *  Properties & Fields 
      */
-    private _activeConnectionGroup: IConnectionGroup<IDatabaseConnection>;
+    @JsonProperty()
+    @JsonElementType(ConnectionGroup)
+    public ActiveConnectionGroup: IConnectionGroup<IDatabaseConnection>;
 
-    public get ActiveConnectionGroup(): IConnectionGroup<IDatabaseConnection> {
-        return this._activeConnectionGroup;
-    }
-
-    public set ActiveConnectionGroup(value: IConnectionGroup<IDatabaseConnection>) {
-        this._activeConnectionGroup = value;
-    }
-
-
-    private _script: IFile;
-
-    public get Script(): IFile {
-        return this._script;
-    }
-
-    public set Script(value: IFile) {
-        this._script = value;
-    }
+    @JsonProperty()
+    public Script: IFile;
 
 
     /*
@@ -42,8 +28,8 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
      */
     public constructor() {
         super();
-        this._activeConnectionGroup = new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection());
-        this._script = new File();
+        this.ActiveConnectionGroup = new ConnectionGroup<IDatabaseConnection>();
+        this.Script = new File();
     }
 
 
@@ -53,35 +39,14 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
     public clone(): IDatabaseSource {
         const ret: DatabaseSource = new DatabaseSource();
 
-        ret._activeConnectionGroup = this._activeConnectionGroup.clone();
         ret._id = this._id;
-        ret._isActive = this._isActive;
-        ret._name = this._name;
-        ret._result = this._result;
-        ret._script = this._script;
+        ret.ActiveConnectionGroup = this.ActiveConnectionGroup.clone();
+        ret.IsActive = this.IsActive;
+        ret.Name = this.Name;
+        ret.Result = this.Result;
+        ret.Script = this.Script;
 
         return ret;
-    }
-
-    public fromJson(json: NonFunctionProperties<IDatabaseSource>): IDatabaseSource {
-        this._activeConnectionGroup = this._activeConnectionGroup.fromJson(json.ActiveConnectionGroup);
-        this._isActive = json.IsActive;
-        this._name = json.Name;
-        this._result = json.Result;
-        this._script = this._script.fromJson(json.Script as NonFunctionProperties<IFile>);
-
-        return this;
-    }
-
-    public toJson(): NonFunctionProperties<IDatabaseSource> {
-        return {
-            ActiveConnectionGroup: this._activeConnectionGroup.toJson() as IConnectionGroup<IDatabaseConnection>,
-            ID: this._id,
-            IsActive: this._isActive,
-            Name: this._name,
-            Result: this._result,
-            Script: this._script.toJson() as IFile
-        };
     }
 
 

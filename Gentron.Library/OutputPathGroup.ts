@@ -1,9 +1,9 @@
 ﻿import { Cloneable } from "./abstract";
-import { ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
+import { ICloneable, IModifiable } from "./interfaces";
 import { IOutputPath, OutputPath } from "./";
-import { NonFunctionProperties } from "./types";
+import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
 
-export interface IOutputPathGroup<TOutputPath extends IOutputPath> extends ICloneable<IOutputPathGroup<TOutputPath>>, IJsonSerializable<IOutputPathGroup<TOutputPath>>, IModifiable<IOutputPathGroup<TOutputPath>> {
+export interface IOutputPathGroup<TOutputPath extends IOutputPath> extends ICloneable<IOutputPathGroup<TOutputPath>>, IModifiable<IOutputPathGroup<TOutputPath>> {
     /*
      *  Properties & Fields 
      */
@@ -17,26 +17,17 @@ export interface IOutputPathGroup<TOutputPath extends IOutputPath> extends IClon
     removePath(connection: TOutputPath): void;
 }
 
+@JsonObject()
 export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<IOutputPathGroup<TOutputPath>> implements IOutputPathGroup<TOutputPath> {
     /*
      *  Properties & Fields 
      */
-    private _name: string;
+    @JsonProperty()
+    public Name: string;
 
-    public get Name(): string {
-        return this._name;
-    }
-
-    public set Name(value: string) {
-        this._name = value;
-    }
-
-
-    private _paths: TOutputPath[];
-
-    public get Paths(): TOutputPath[] {
-        return (this._paths || []).slice();
-    }
+    @JsonProperty()
+    @JsonElementType(OutputPath)
+    public Paths: TOutputPath[];
 
 
     /*
@@ -44,8 +35,8 @@ export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<
      */
     public constructor() {
         super();
-        this._name = "";
-        this._paths = [];
+        this.Name = "";
+        this.Paths = [];
     }
 
 
@@ -53,48 +44,31 @@ export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<
      *  Methods
      */
     public addOrUpdatePath(connection: TOutputPath): void {
-        this._paths.push(connection);
+        this.Paths.push(connection);
     }
+
 
     public removePath(connection: TOutputPath): void {
 
     }
 
-    public fromJson(json: NonFunctionProperties<IOutputPathGroup<TOutputPath>>): IOutputPathGroup<TOutputPath> {
-        this._id = json.ID;
-        this._name = json.Name;
-        this._paths = json.Paths.map((path: NonFunctionProperties<IOutputPath>, index: number) => {
-            return new OutputPath().fromJson(path) as TOutputPath;
-        });
-
-        return this;
-    }
-
-    public toJson(): NonFunctionProperties<IOutputPathGroup<TOutputPath>> {
-        return {
-            ID: this._id,
-            Name: this._name,
-            Paths: this._paths.map((path: TOutputPath, index: number) => {
-                return path.toJson() as TOutputPath;
-            })
-        };
-    }
 
     public clone(): IOutputPathGroup<TOutputPath> {
         const ret: OutputPathGroup<TOutputPath> = new OutputPathGroup<TOutputPath>();
 
         ret._id = this._id;
-        ret._name = this._name;
-        ret._paths = this._paths.map((conn: TOutputPath, i: number) => {
+        ret.Name = this.Name;
+        ret.Paths = this.Paths.map((conn: TOutputPath, i: number) => {
             return conn.clone() as TOutputPath
         });
 
         return ret;
     }
 
+
     public update(connection: IOutputPathGroup<TOutputPath>): void {
-        this._name = connection.Name;
-        this._paths = connection.Paths.map((conn: TOutputPath, i: number) => {
+        this.Name = connection.Name;
+        this.Paths = connection.Paths.map((conn: TOutputPath, i: number) => {
             return conn.clone() as TOutputPath
         });
     }

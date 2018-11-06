@@ -1,8 +1,8 @@
 ﻿import * as fs from "fs";
-import { IModifiable, IJsonSerializable } from "./interfaces"
-import { NonFunctionProperties } from "./types";
+import { IModifiable } from "./interfaces"
+import { JsonObject, JsonProperty } from "ta-json";
 
-export interface IFile extends IJsonSerializable<IFile>, IModifiable<IFile> {
+export interface IFile extends IModifiable<IFile> {
     /*
      *  Properties & Fields
      */
@@ -17,72 +17,34 @@ export interface IFile extends IJsonSerializable<IFile>, IModifiable<IFile> {
     loadContents(filePath?: string, setContents?: boolean): Promise<string>;
 }
 
+@JsonObject()
 export class File implements IFile {
     /*
      *  Properties & Fields
      */
-    private _contents: string;
+    @JsonProperty()
+    public Contents: string;
 
-    public get Contents(): string {
-        return this._contents;
-    }
+    @JsonProperty()
+    public LastModified?: Date;
 
-    public set Contents(value: string) {
-        this._contents = value;
-    }
-
-
-    private _lastModified?: Date;
-
-    public get LastModified(): Date | undefined {
-        return this._lastModified;
-    }
-
-    public set LastModified(value: Date | undefined) {
-        this._lastModified = value;
-    }
-
-
-    private _path: string;
-
-    public get Path(): string {
-        return this._path;
-    }
-
-    public set Path(value: string) {
-        this._path = value;
-    }
+    @JsonProperty()
+    public Path: string;
 
 
     /*
      *  Constructors
      */
     public constructor() {
-        this._contents = "";
-        this._lastModified = undefined;
-        this._path = "";
+        this.Contents = "";
+        this.LastModified = undefined;
+        this.Path = "";
     }
 
 
     /*
      *  Methods
      */
-    public fromJson(json: NonFunctionProperties<IFile>): File {
-        this._contents = json.Contents;
-        this._lastModified = json.LastModified;
-        this._path = json.Path;
-
-        return this;
-    }
-
-    public toJson(): NonFunctionProperties<IFile> {
-        return {
-            Contents: this.Contents,
-            LastModified: this.LastModified,
-            Path: this.Path
-        };
-    }
-
     public loadContentsSync(filePath: string = this.Path || "", setContents: boolean = true): string {
         try {
             const buf: Buffer = fs.readFileSync(filePath);

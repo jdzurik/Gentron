@@ -47,7 +47,7 @@ else {
     });
 
     ["CAUtils", "CASecurity"].map(db => {
-        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection());
+        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
         source.Name = db;
 
         initialState.PackageSettings.Environments.map(env => {
@@ -68,13 +68,16 @@ else {
 }
 
 //const initialState: IGentron = ((window as any).initialReduxState) || new Gentron() as IGentron;
-const store: AppStore = configureStore(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
+//const store: AppStore = configureStore(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
+const store: AppStore = configureStore(history, initialState);
 syncHistoryWithStore(store, history);
+
 const root: HTMLElement = document.createElement("div");
 const rootId: string = `appRoot${Date.now()}`;
 root.id = rootId;
 root.className = "h-100 w-100";
 document.body.appendChild(root);
+
 ReactDOM.render(
     <Provider store={store}>
         <App history={history} />

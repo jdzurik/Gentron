@@ -5,6 +5,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const hash = require("object-hash");
 const React = require("react");
@@ -23,7 +26,7 @@ let DatabaseConnections = class DatabaseConnections extends React.Component {
         };
     }
     handleAddConnectionClick() {
-        this.handleOpenEditConnectionClick(new Gentron_Library_1.ConnectionGroup(() => new Gentron_Library_1.DatabaseConnection()));
+        this.handleOpenEditConnectionClick(new Gentron_Library_1.ConnectionGroup());
     }
     handleRemoveConnectionClick(connectionGroup) {
         this.props.removeDatabaseConnectionGroup(connectionGroup);
@@ -123,7 +126,8 @@ let DatabaseConnections = class DatabaseConnections extends React.Component {
     }
 };
 DatabaseConnections = __decorate([
-    connect_1.connect(mapStateToProps, mapDispatchToProps)
+    connect_1.connect(mapStateToProps, mapDispatchToProps),
+    __metadata("design:paramtypes", [Object, Object])
 ], DatabaseConnections);
 exports.default = DatabaseConnections;
 function mapStateToProps(state) {

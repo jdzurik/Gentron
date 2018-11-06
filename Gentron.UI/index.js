@@ -34,7 +34,7 @@ else {
         initialState.PackageSettings.Environments.push(environment);
     });
     ["CAUtils", "CASecurity"].map(db => {
-        const source = new Gentron_Library_1.ConnectionGroup(() => new Gentron_Library_1.DatabaseConnection());
+        const source = new Gentron_Library_1.ConnectionGroup();
         source.Name = db;
         initialState.PackageSettings.Environments.map(env => {
             const conn = new Gentron_Library_1.DatabaseConnection();
@@ -49,7 +49,7 @@ else {
         initialState.PackageSettings.DatabaseSources.push(source);
     });
 }
-const store = configureStore_1.default(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
+const store = configureStore_1.default(history, initialState);
 syncHistoryWithStore(store, history);
 const root = document.createElement("div");
 const rootId = `appRoot${Date.now()}`;

@@ -7,7 +7,7 @@ const IDReducer = (state, action) => {
         default:
             const exhaustiveCheck = action;
     }
-    return state || { ID: "" };
+    return state || "";
 };
 exports.reducers = {
     ID: IDReducer,

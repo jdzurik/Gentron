@@ -6,8 +6,9 @@ import { bindActionCreators } from "redux";
 import { Cell, Grid } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron } from "../../Gentron.Library";
+import { IGentron, Utilities, Gentron } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
+import JSONTree from "react-json-tree";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableHomeProps = Hash & {
@@ -34,24 +35,17 @@ export default class Home extends React.Component<HomeProps> {
      */
     public render(): JSX.Element {
         console.log(this.props.Gentron);
+        const state: IGentron = Utilities.JSON.deserialize(this.props.Gentron, Gentron);
+        console.log(state);
+        const taJson: string = (Utilities.JSON.stringify as any)({ ID: state.ID, PackageSettings: state.PackageSettings, ProjectSettings: state.ProjectSettings }, null, 4);
+        console.log(taJson);
+
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
                     <NavViewContentHeaderRow iconClassName="mif-database" title="Home" />
 
-                    <pre>
-                        {
-                            JSON.stringify(
-                                {
-                                    ID: this.props.Gentron.ID,
-                                    PackageSettings: this.props.Gentron.PackageSettings.toJson(),
-                                    ProjectSettings: this.props.Gentron.ProjectSettings.toJson()
-                                },
-                                null,
-                                4
-                            )
-                        }
-                    </pre>
+                    <JSONTree data={{ ID: state.ID, PackageSettings: state.PackageSettings, ProjectSettings: state.ProjectSettings }} />
                 </Grid>
             </Cell>
         );
