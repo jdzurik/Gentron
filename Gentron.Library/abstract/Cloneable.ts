@@ -1,25 +1,19 @@
 ﻿import { ICloneable, IIdentifiable } from "../interfaces";
-import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from "../";
+import { Identifiable } from "./";
+import { JsonObject } from "ta-json";
 
 @JsonObject()
-export default abstract class Cloneable<T> implements ICloneable<T>, IIdentifiable {
+export default abstract class Cloneable<T> extends Identifiable implements ICloneable<T>, IIdentifiable {
     /*
-     *  Properties & Fields 
+     *  Properties & Fields
      */
-    @JsonProperty("ID")
-    protected _id: string;
-
-    public get ID(): string {
-        return this._id;
-    }
 
 
     /*
      *  Constructors
      */
     public constructor() {
-        this._id = Utilities.newCryptoGuid();
+        super();
     }
 
 

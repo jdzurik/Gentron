@@ -41,6 +41,9 @@
     <TypeScriptCompile Include="abstract\Cloneable.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="abstract\Identifiable.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="abstract\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

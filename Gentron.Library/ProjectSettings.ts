@@ -1,9 +1,9 @@
 ﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, IOutputPath, IOutputPathGroup, OutputPathGroup } from "./";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import { Cloneable } from "./abstract";
-import { ICloneable } from "./interfaces";
+import { Identifiable } from "./abstract";
+import { IIdentifiable } from "./interfaces";
 
-export interface IProjectSettings extends ICloneable<IProjectSettings> {
+export interface IProjectSettings extends IIdentifiable {
     /*
      *  Properties & Fields 
      */
@@ -14,7 +14,7 @@ export interface IProjectSettings extends ICloneable<IProjectSettings> {
 }
 
 @JsonObject()
-export class ProjectSettings extends Cloneable<IProjectSettings> implements IProjectSettings {
+export class ProjectSettings extends Identifiable implements IProjectSettings {
     /*
      *  Properties & Fields 
      */
@@ -48,7 +48,4 @@ export class ProjectSettings extends Cloneable<IProjectSettings> implements IPro
     /*
      *  Methods
      */
-    public clone(): IProjectSettings {
-        throw new Error("Method not implemented");
-    }
 }

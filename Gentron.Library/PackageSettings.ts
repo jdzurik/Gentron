@@ -1,9 +1,9 @@
 ﻿import { IDatabaseSource, IEngine, IEnvironment, IFileSource, IHttpSource, DatabaseSource, Engine, Environment, FileSource, HttpSource } from ".";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import { Cloneable } from "./abstract";
-import { ICloneable } from "./interfaces";
+import { Identifiable } from "./abstract";
+import { IIdentifiable } from "./interfaces";
 
-export interface IPackageSettings extends ICloneable<IPackageSettings> {
+export interface IPackageSettings extends IIdentifiable {
     /*
      *  Properties & Fields 
      */
@@ -17,7 +17,7 @@ export interface IPackageSettings extends ICloneable<IPackageSettings> {
 }
 
 @JsonObject()
-export class PackageSettings extends Cloneable<IPackageSettings> implements IPackageSettings {
+export class PackageSettings extends Identifiable implements IPackageSettings {
     /*
      *  Properties & Fields 
      */
@@ -66,7 +66,4 @@ export class PackageSettings extends Cloneable<IPackageSettings> implements IPac
     /*
      *  Methods
      */
-    public clone(): IPackageSettings {
-        throw new Error("Method not implemented");
-    }
 }

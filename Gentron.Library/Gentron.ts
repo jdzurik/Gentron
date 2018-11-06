@@ -1,9 +1,9 @@
-﻿import { IIdentifiable, ICloneable } from "./interfaces";
+﻿import { IIdentifiable } from "./interfaces";
 import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities } from "./";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import { Cloneable } from "./abstract";
+import { Cloneable, Identifiable } from "./abstract";
 
-export interface IGentron extends ICloneable<IGentron> {
+export interface IGentron extends IIdentifiable {
     /*
      *  Properties & Fields 
      */
@@ -12,30 +12,22 @@ export interface IGentron extends ICloneable<IGentron> {
 }
 
 @JsonObject()
-export class Gentron extends Cloneable<IGentron> implements IGentron {
+export class Gentron extends Identifiable implements IGentron {
     /*
      *  Properties & Fields 
      */
-    @JsonProperty("ID")
-    protected _id: string;
-
-    public get ID(): string {
-        return this._id;
-    }
-
-
-    //  Oddidity in TaJSON -- type must be set 
-    //  here and setting type(PackageSettings) 
+    //  Oddidity in TaJSON -- type must be set here 
+    //  and setting JsonElementType(PackageSettings)
     //  does not work
     @JsonProperty()
-    @JsonElementType(Cloneable)
+    @JsonElementType(Identifiable)
     public PackageSettings: IPackageSettings;
 
-    //  Oddidity in TaJSON -- type must be set 
-    //  here and setting type(ProjectSettings) 
+    //  Oddidity in TaJSON -- type must be set here 
+    //  and setting JsonElementType(ProjectSettings)
     //  does not work
     @JsonProperty()
-    @JsonElementType(Cloneable)
+    @JsonElementType(Identifiable)
     public ProjectSettings: IProjectSettings;
 
 
@@ -53,10 +45,6 @@ export class Gentron extends Cloneable<IGentron> implements IGentron {
     /*
      *  Methods
      */
-    public clone(): IGentron {
-        throw new Error("Method not implemented");
-    }
-
     public static save(): void {
 
     }
