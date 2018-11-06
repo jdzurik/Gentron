@@ -24,18 +24,18 @@ export class Gentron extends Cloneable<IGentron> implements IGentron {
     }
 
 
-    @JsonProperty()
-    @JsonElementType(Cloneable)
     //  Oddidity in TaJSON -- type must be set 
     //  here and setting type(PackageSettings) 
     //  does not work
-    public PackageSettings: IPackageSettings;
-
     @JsonProperty()
     @JsonElementType(Cloneable)
+    public PackageSettings: IPackageSettings;
+
     //  Oddidity in TaJSON -- type must be set 
     //  here and setting type(ProjectSettings) 
     //  does not work
+    @JsonProperty()
+    @JsonElementType(Cloneable)
     public ProjectSettings: IProjectSettings;
 
 

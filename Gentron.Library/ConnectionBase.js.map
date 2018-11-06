@@ -1,1 +1,0 @@
-{"version":3,"file":"ConnectionBase.js","sourceRoot":"","sources":["ConnectionBase.ts"],"names":[],"mappings":";;;;;;;;;;;AACA,yCAAuC;AACvC,qCAAmD;AAKnD,IAAsB,cAAc,GAApC,MAAsB,cAAe,SAAQ,oBAA0B;IAWnE;QACI,KAAK,EAAE,CAAC;QACR,IAAI,CAAC,QAAQ,GAAG,IAAI,CAAC;IACzB,CAAC;CASJ,CAAA;AAlBG;IADC,sBAAY,EAAE;;gDACU;AALP,cAAc;IADnC,oBAAU,EAAE;;GACS,cAAc,CAuBnC;AAvBqB,wCAAc"}
