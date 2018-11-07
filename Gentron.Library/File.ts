@@ -1,7 +1,8 @@
 ﻿import * as fs from "fs";
+import { FileOperationResult, IFileOperationResult } from "./results";
 import { IModifiable } from "./interfaces"
 import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from ".";
+import { Utilities } from "./";
 
 export interface IFile extends IModifiable<IFile> {
     /*
@@ -14,8 +15,8 @@ export interface IFile extends IModifiable<IFile> {
     /*
      *  Methods
      */
-    loadContentsSync(filePath?: string, setContents?: boolean): string;
-    loadContents(filePath?: string, setContents?: boolean): Promise<string>;
+    loadContents(filePath?: string, setContents?: boolean): string;
+    loadContentsAsync(filePath?: string, setContents?: boolean): Promise<string>;
 }
 
 @JsonObject()
@@ -46,8 +47,53 @@ export class File implements IFile {
     /*
      *  Methods
      */
-    public loadContentsSync(filePath: string = this.Path || "", setContents: boolean = true): string {
+    public static read(filePath: string): IFileOperationResult<string> {
         try {
+            const buf: Buffer = fs.readFileSync(filePath);
+            const contents: string = buf.toString();
+
+            return FileOperationResult.ok(contents);
+        }
+        catch (e) {
+            return FileOperationResult.fail((e as NodeJS.ErrnoException).message.toString());
+        }
+    }
+
+    public static async readAsync(filePath: string): Promise<IFileOperationResult<string>> {
+        try {
+            const buf: Buffer = await fs.promises.readFile(filePath);
+            const contents: string = buf.toString();
+
+            return FileOperationResult.ok(contents);
+        }
+        catch (e) {
+            return FileOperationResult.fail((e as NodeJS.ErrnoException).message.toString());
+        }
+    }
+
+    public static write(filePath: string, fileContents: string): FileOperationResult<void> {
+        try {
+            fs.writeFileSync(filePath, fileContents);
+            return FileOperationResult.ok();
+        }
+        catch (e) {
+            return FileOperationResult.fail((e as NodeJS.ErrnoException).message.toString());
+        }
+    }
+
+    public static async writeAsync(filePath: string, fileContents: string): Promise<FileOperationResult<void>> {
+        try {
+            await fs.promises.writeFile(filePath, fileContents);
+            return FileOperationResult.ok();
+        }
+        catch (e) {
+            return FileOperationResult.fail((e as NodeJS.ErrnoException).message.toString());
+        }
+    }
+
+    public loadContents(filePath: string = this.Path || "", setContents: boolean = true): string {
+        try {
+
             const buf: Buffer = fs.readFileSync(filePath);
             const contents: string = buf.toString();
 
@@ -62,7 +108,7 @@ export class File implements IFile {
         }
     }
 
-    public async loadContents(filePath: string = this.Path || "", setContents: boolean = true): Promise<string> {
+    public async loadContentsAsync(filePath: string = this.Path || "", setContents: boolean = true): Promise<string> {
         try {
             const buf: Buffer = await fs.promises.readFile(filePath);
             const contents: string = buf.toString();
@@ -87,7 +133,7 @@ export class File implements IFile {
 
         if (this.Path !== file.Path) {
             this.Path = file.Path;
-            this.Contents = this.loadContentsSync();
+            this.Contents = this.loadContents();
         }
     }
 }

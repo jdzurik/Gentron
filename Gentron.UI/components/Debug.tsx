@@ -34,6 +34,7 @@ export default class Debug extends React.Component<DebugProps> {
      */
     public render(): JSX.Element {
         const stateObj: IGentron = {
+            ActiveProjectPath: this.props.Gentron.ActiveProjectPath,
             PackageSettings: this.props.Gentron.PackageSettings,
             ProjectSettings: this.props.Gentron.ProjectSettings
         };

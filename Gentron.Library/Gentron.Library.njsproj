@@ -104,6 +104,15 @@
     <TypeScriptCompile Include="OutputPathGroup.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="results\FileOperationResult.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="results\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="results\ResultBase.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="SourceBase.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -132,6 +141,7 @@
   <ItemGroup>
     <Folder Include="interfaces\" />
     <Folder Include="abstract\" />
+    <Folder Include="results\" />
     <Folder Include="types\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->

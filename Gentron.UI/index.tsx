@@ -4,6 +4,8 @@
 
 import * as metro4 from "metro4";
 (window as any).Metro = metro4;
+declare type TMetro = typeof import("metro4");
+declare const Metro: TMetro;
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -24,8 +26,6 @@ const syncHistoryWithStore = (store, history: MemoryHistory) => {
         history.replace(routing.location);
     }
 };
-
-setupMenu();
 
 // Create browser history to use in the Redux store
 const history: MemoryHistory = createMemoryHistory();
@@ -66,12 +66,12 @@ else {
     });
 }
 
-//const initialState: IGentron = ((window as any).initialReduxState) || new Gentron() as IGentron;
-//const store: AppStore = configureStore(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
 const store: AppStore = configureStore(history, initialState);
 syncHistoryWithStore(store, history);
 
-const root: HTMLElement = document.createElement("div");
+setupMenu(store);
+
+const root: HTMLDivElement = document.createElement("div");
 const rootId: string = `appRoot${Date.now()}`;
 root.id = rootId;
 root.className = "h-100 w-100";
@@ -84,15 +84,17 @@ ReactDOM.render(
     document.getElementById(rootId)
 );
 
-if ((module as any).hot) {
-    //(module as any).hot.accept();
-    (module as any).hot.accept("./components/App", () => {
-        const NewApp: typeof App = require("./components/App").default;
-        ReactDOM.render(
-            <Provider store={store}>
-                <NewApp history={history} />
-            </Provider>,
-            document.getElementById(rootId)
-        );   
-    });
+if (process.env.toString() !== "production") {
+    if ((module as any).hot) {
+        //(module as any).hot.accept();
+        (module as any).hot.accept("./components/App", () => {
+            const NewApp: typeof App = require("./components/App").default;
+            ReactDOM.render(
+                <Provider store={store}>
+                    <NewApp history={history} />
+                </Provider>,
+                document.getElementById(rootId)
+            );   
+        });
+    }
 }

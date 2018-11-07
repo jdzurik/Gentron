@@ -1,4 +1,8 @@
-﻿export const enum PackageSettingsActionNames {
+﻿export const enum GentronActionNames {
+    AddOrUpdateActiveProjectPath = "ADD_OR_UPDATE_ACTIVE_PROJECT_PATH",
+}
+
+export const enum PackageSettingsActionNames {
     AddOrUpdateDatabaseSource = "ADD_OR_UPDATE_DATABASE_SOURCE",
     AddOrUpdateEngine = "ADD_OR_UPDATE_ENGINE",
     AddOrUpdateEngineTemplate = "ADD_OR_UPDATE_ENGINE_TEMPLATE",

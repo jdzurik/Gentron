@@ -20,7 +20,7 @@ export default function configureStore(history: History, initialState: NonFuncti
 
     // Combine all reducers and instantiate the app-wide store instance
     const allReducers = buildRootReducer(reducers);
-    //const store1 = createStoreWithMiddleware(connectRouter(history)(allReducers), initialState) as Store<IGentron>;
+
     const store = createStore(
         connectRouter(history)(allReducers), // new root reducer with router state
         initialState,
@@ -31,16 +31,6 @@ export default function configureStore(history: History, initialState: NonFuncti
             ),
         ),
     )
-
-    // Enable Webpack hot module replacement for reducers
-    //if ((module as any).hot) {
-    //    //(module as any).hot.accept();
-    //    (module as any).hot.accept(['../reducers', '../index', '../components/Debug'], () => {
-    //        const nextRootReducer = require('../reducers').default;
-    //        console.log(nextRootReducer);
-    //        store.replaceReducer(buildRootReducer(nextRootReducer.reducers));
-    //    });
-    //}
 
     return store;
 }

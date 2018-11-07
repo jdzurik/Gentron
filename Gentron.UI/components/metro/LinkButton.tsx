@@ -1,5 +1,4 @@
 ﻿import * as React from "react";
-import { HTMLProps } from "react";
 import { Link } from "react-router-dom";
 
 interface LinkButtonProps extends React.HTMLProps<HTMLAnchorElement> {

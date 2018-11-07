@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='Run - Development' />
+/// <binding />
 import * as path from 'path';
 import * as webpack from 'webpack';
 import * as MonacoWebpackPlugin from "monaco-editor-webpack-plugin";

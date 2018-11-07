@@ -43,6 +43,9 @@
     </Content>
     <Content Include="package.json" />
     <Content Include="tsconfig.json" />
+    <TypeScriptCompile Include="actions\Gentron.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="actions\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -164,6 +167,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="main.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="reducers\Gentron.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="reducers\index.ts" />
