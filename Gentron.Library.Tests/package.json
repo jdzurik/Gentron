@@ -1,0 +1,12 @@
+{
+  "name": "gentron.library.tests",
+  "version": "0.0.0",
+  "description": "Gentron.Library.Tests",
+  "main": "app.js",
+  "author": {
+    "name": ""
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.0"
+  }
+}

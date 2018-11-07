@@ -2,9 +2,11 @@
   "compileOnSave": true,
   "compilerOptions": {
     "allowJs": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "lib": [
       "es2015",
-      "es6",
+      "es6"
     ],
     "module": "commonjs",
     "moduleResolution": "node",
@@ -13,7 +15,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "removeComments": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "target": "es6"

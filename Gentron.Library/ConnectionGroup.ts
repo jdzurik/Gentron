@@ -1,12 +1,10 @@
 ﻿import { IConnectionBase, ConnectionBase } from "./ConnectionBase";
-import { ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
+import { ICloneable, IModifiable } from "./interfaces";
 import { Cloneable } from "./abstract";
-import { NonFunctionProperties } from "./types";
-import { DatabaseConnection } from ".";
-import { FileConnection } from "./FileConnection";
-import { HttpConnection } from "./HttpConnection";
+import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
+import Utilities from "./Utilities";
 
-export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IJsonSerializable<IConnectionGroup<TConnection>>, IModifiable<IConnectionGroup<TConnection>> {
+export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IModifiable<IConnectionGroup<TConnection>> {
     /*
      *  Properties & Fields 
      */
@@ -20,39 +18,26 @@ export interface IConnectionGroup<TConnection extends IConnectionBase> extends I
     removeConnection(connection: TConnection): void;
 }
 
+@JsonObject()
 export class ConnectionGroup<TConnection extends IConnectionBase> extends Cloneable<IConnectionGroup<TConnection>> implements IConnectionGroup<TConnection> {
     /*
      *  Properties & Fields 
      */
-    private _connections: TConnection[];
+    @JsonProperty()
+    @JsonElementType(ConnectionBase)
+    public Connections: TConnection[];
 
-    public get Connections(): TConnection[] {
-        return (this._connections || []).slice();
-    }
-
-
-    private _genericConnectionConstructor: () => TConnection;
-
-
-    private _name: string;
-
-    public get Name(): string {
-        return this._name;
-    }
-
-    public set Name(value: string) {
-        this._name = value;
-    }
+    @JsonProperty()
+    public Name: string;
 
 
     /*
      *  Constructors
      */
-    public constructor(genericConnectionConstructor: () => TConnection) {
+    public constructor() {
         super();
-        this._connections = [];
-        this._genericConnectionConstructor = genericConnectionConstructor;
-        this._name = "";
+        this.Connections = [];
+        this.Name = "";
     }
 
 
@@ -60,49 +45,36 @@ export class ConnectionGroup<TConnection extends IConnectionBase> extends Clonea
      *  Methods
      */
     public addOrUpdateConnection(connection: TConnection): void {
-        this._connections.push(connection);
+        this.Connections.push(connection);
     }
+
 
     public removeConnection(connection: TConnection): void {
 
     }
 
-    public fromJson(json: NonFunctionProperties<IConnectionGroup<TConnection>>): IConnectionGroup<TConnection> {
-        this._connections = json.Connections.map((connection: TConnection, index: number) => {
-            return this._genericConnectionConstructor().fromJson(connection) as TConnection;
-        });
-        this._id = json.ID;
-        this._name = json.Name;
-
-        return this;
-    }
-
-    public toJson(): NonFunctionProperties<IConnectionGroup<TConnection>> {
-        return {
-            Connections: this._connections.map((connection: TConnection, index: number) => {
-                return connection.toJson() as TConnection;
-            }),
-            ID: this._id,
-            Name: this._name
-        };
-    }
 
     public clone(): IConnectionGroup<TConnection> {
-        const ret: ConnectionGroup<TConnection> = new ConnectionGroup<TConnection>(this._genericConnectionConstructor);
+        const ret: ConnectionGroup<TConnection> = new ConnectionGroup<TConnection>();
 
-        ret._connections = this._connections.map((conn: TConnection, i: number) => {
+        ret._id = this._id;
+        ret.Connections = this.Connections.map((conn: TConnection, i: number) => {
             return conn.clone() as TConnection;
         });
-        ret._id = this._id;
-        ret._name = this._name;
+        ret.Name = this.Name;
 
         return ret;
     }
 
-    public update(connection: IConnectionGroup<TConnection>): void {
-        this._connections = connection.Connections.map((conn: TConnection, i: number) => {
+
+    public update(connectionGroup: IConnectionGroup<TConnection>): void {
+        if (!Utilities.hasValue(connectionGroup)) {
+            return;
+        }
+
+        this.Connections = connectionGroup.Connections.map((conn: TConnection, i: number) => {
             return conn.clone() as TConnection;
         });
-        this._name = connection.Name;
+        this.Name = connectionGroup.Name;
     }
 }

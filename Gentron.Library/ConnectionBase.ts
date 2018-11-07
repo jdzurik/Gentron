@@ -1,24 +1,16 @@
-﻿import { IActivateable, ICloneable, IJsonSerializable, IModifiable } from "./interfaces";
+﻿import { IActivateable, ICloneable, IModifiable } from "./interfaces";
 import { Cloneable } from "./abstract";
-import { NonFunctionProperties } from "./types";
+import { JsonObject, JsonProperty } from "ta-json";
 
-export interface IConnectionBase extends IActivateable, ICloneable<IConnectionBase>, IJsonSerializable<IConnectionBase>, IModifiable<IConnectionBase> {
+export interface IConnectionBase extends IActivateable, ICloneable<IConnectionBase>, IModifiable<IConnectionBase> { }
 
-}
-
+@JsonObject()
 export abstract class ConnectionBase extends Cloneable<IConnectionBase> implements IConnectionBase {
     /*
      *  Properties & Fields 
      */
-    protected _isActive: boolean;
-
-    public get IsActive(): boolean {
-        return this._isActive;
-    }
-
-    public set IsActive(value: boolean) {
-        this._isActive = value;
-    }
+    @JsonProperty()
+    public IsActive: boolean;
 
 
     /*
@@ -26,17 +18,13 @@ export abstract class ConnectionBase extends Cloneable<IConnectionBase> implemen
      */
     public constructor() {
         super();
-        this._isActive = true;
+        this.IsActive = true;
     }
 
 
     /*
      *  Methods
      */
-    public abstract fromJson(json: NonFunctionProperties<IConnectionBase>): IConnectionBase;
-
-    public abstract toJson(): NonFunctionProperties<IConnectionBase>;
-
     public abstract clone(): IConnectionBase;
 
     public abstract update(connection: IConnectionBase): void;

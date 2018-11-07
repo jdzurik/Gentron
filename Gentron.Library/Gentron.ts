@@ -1,8 +1,7 @@
-﻿import { IIdentifiable, IJsonSerializable } from "./interfaces";
-import { PackageSettings, IPackageSettings, ProjectSettings, IProjectSettings, Utilities } from ".";
-import { NonFunctionProperties } from "./types";
+﻿import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities } from "./";
+import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
 
-export interface IGentron extends IJsonSerializable<IGentron>, IIdentifiable {
+export interface IGentron {
     /*
      *  Properties & Fields 
      */
@@ -10,68 +9,32 @@ export interface IGentron extends IJsonSerializable<IGentron>, IIdentifiable {
     ProjectSettings: IProjectSettings;
 }
 
+@JsonObject()
 export class Gentron implements IGentron {
     /*
      *  Properties & Fields 
      */
-    protected _id: string;
+    @JsonProperty()
+    @JsonElementType(PackageSettings)
+    public PackageSettings: IPackageSettings;
 
-    public get ID(): string {
-        return this._id;
-    }
-
-
-    private _packageSettings: IPackageSettings;
-
-    public get PackageSettings(): IPackageSettings {
-        return this._packageSettings;
-    }
-
-    public set PackageSettings(value: IPackageSettings) {
-        this._packageSettings = value;
-    }
-
-
-    private _projectSettings: IProjectSettings;
-
-    public get ProjectSettings(): IProjectSettings {
-        return this._projectSettings;
-    }
-
-    public set ProjectSettings(value: IProjectSettings) {
-        this._projectSettings = value;
-    }
+    @JsonProperty()
+    @JsonElementType(ProjectSettings)
+    public ProjectSettings: IProjectSettings;
 
 
     /*
      *  Constructors
      */
-    public constructor(id?: string) {
-        this._id = id || Utilities.newCryptoGuid();
-        this._packageSettings = new PackageSettings();
-        this._projectSettings = new ProjectSettings();
+    public constructor() {
+        this.PackageSettings = new PackageSettings();
+        this.ProjectSettings = new ProjectSettings();
     }
 
 
     /*
      *  Methods
      */
-    public fromJson(json: NonFunctionProperties<IGentron>): IGentron {
-        this._id = json.ID;
-        this._packageSettings = this._packageSettings.fromJson(json.PackageSettings);
-        this._projectSettings = this._projectSettings.fromJson(json.ProjectSettings);
-
-        return this;
-    }
-
-    public toJson(): NonFunctionProperties<IGentron> {
-        return {
-            ID: this._id,
-            PackageSettings: this._packageSettings.toJson() as IPackageSettings,
-            ProjectSettings: this._projectSettings.toJson() as IProjectSettings
-        };
-    }
-
     public static save(): void {
 
     }

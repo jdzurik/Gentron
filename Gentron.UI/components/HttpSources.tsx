@@ -122,7 +122,9 @@ export default class HttpSources extends React.Component<HttpSourcesProps, HttpS
                                         </td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>Remove</button>
+                                                <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>
+                                                    <span className="mif-bin"></span>
+                                                </button>
                                             </a>
                                         </td>
                                     </tr>

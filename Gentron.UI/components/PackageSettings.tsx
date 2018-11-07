@@ -4,13 +4,13 @@ import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { Hash, NonFunctionProperties } from "../../Gentron.Library/types";
+import { Hash, NonFunctionProperties, PrimitiveProperties } from "../../Gentron.Library/types";
 import { IGentron, IPackageSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type HashedIPackageSettings = Hash & NonFunctionProperties<IPackageSettings>
+type HashedIPackageSettings = Hash & PrimitiveProperties<IPackageSettings>
 
 type PackageSettingsProps = HashedIPackageSettings
     & typeof ActionCreators
@@ -33,8 +33,6 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
     }
 
     public render(): JSX.Element {
-        console.log("render");
-
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
@@ -95,11 +93,6 @@ function mapStateToProps(state: IGentron): HashedIPackageSettings {
     const _hash: string = hash(state.PackageSettings);
 
     return {
-        DatabaseSources: state.PackageSettings.DatabaseSources,
-        Engines: state.PackageSettings.Engines,
-        Environments: state.PackageSettings.Environments,
-        FileSources: state.PackageSettings.FileSources,
-        HttpSources: state.PackageSettings.HttpSources,
         PackageName: state.PackageSettings.PackageName,
         ReadMe: state.PackageSettings.ReadMe,
         _hash: _hash

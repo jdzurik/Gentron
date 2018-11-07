@@ -10,8 +10,7 @@ import * as ReactDOM from "react-dom";
 
 import { AnyAction, Store } from "redux";
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { Gentron, ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection, IEnvironment, Environment } from "../Gentron.Library";
-import { IDatabaseSource, IGentron, DatabaseSource } from "../Gentron.Library";
+import { ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection, IEnvironment, Environment, IDatabaseSource, DatabaseSource, PackageSettings, ProjectSettings, IGentron, Gentron } from "../Gentron.Library";
 import { Provider } from 'react-redux';
 import App from "./components/App";
 import configureStore from './store/configureStore';
@@ -47,7 +46,7 @@ else {
     });
 
     ["CAUtils", "CASecurity"].map(db => {
-        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>(() => new DatabaseConnection());
+        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
         source.Name = db;
 
         initialState.PackageSettings.Environments.map(env => {
@@ -62,22 +61,38 @@ else {
     ["", ""].map((db, i) => {
         const source: IDatabaseSource = new DatabaseSource();
         source.Name = `DBSource${i}`;
-
+        source.ActiveConnectionGroup = initialState.ProjectSettings.DatabaseConnections[Math.floor(Math.random() * initialState.ProjectSettings.DatabaseConnections.length)];
         initialState.PackageSettings.DatabaseSources.push(source);
     });
 }
 
 //const initialState: IGentron = ((window as any).initialReduxState) || new Gentron() as IGentron;
-const store: AppStore = configureStore(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
+//const store: AppStore = configureStore(history, { ID: initialState.ID, PackageSettings: initialState.PackageSettings, ProjectSettings: initialState.ProjectSettings });
+const store: AppStore = configureStore(history, initialState);
 syncHistoryWithStore(store, history);
+
 const root: HTMLElement = document.createElement("div");
 const rootId: string = `appRoot${Date.now()}`;
 root.id = rootId;
 root.className = "h-100 w-100";
 document.body.appendChild(root);
+
 ReactDOM.render(
     <Provider store={store}>
         <App history={history} />
     </Provider>,
     document.getElementById(rootId)
 );
+
+if ((module as any).hot) {
+    //(module as any).hot.accept();
+    (module as any).hot.accept("./components/App", () => {
+        const NewApp: typeof App = require("./components/App").default;
+        ReactDOM.render(
+            <Provider store={store}>
+                <NewApp history={history} />
+            </Provider>,
+            document.getElementById(rootId)
+        );   
+    });
+}

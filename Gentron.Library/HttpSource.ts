@@ -1,8 +1,10 @@
 ﻿import { ISourceBase, SourceBase } from "./SourceBase";
-import { NonFunctionProperties } from "./types";
+import { JsonObject } from "ta-json";
+import Utilities from "./Utilities";
 
 export interface IHttpSource extends ISourceBase { }
 
+@JsonObject()
 export class HttpSource extends SourceBase implements IHttpSource {
     /*
      *  Methods
@@ -11,32 +13,19 @@ export class HttpSource extends SourceBase implements IHttpSource {
         const ret: HttpSource = new HttpSource();
 
         ret._id = this._id;
-        ret._isActive = this._isActive;
-        ret._name = this._name;
-        ret._result = this._result;
+        ret.IsActive = this.IsActive;
+        ret.Name = this.Name;
+        ret.Result = this.Result;
 
         return ret;
     }
 
-    public fromJson(json: NonFunctionProperties<IHttpSource>): IHttpSource {
-        this._id = json.ID;
-        this._isActive = json.IsActive;
-        this._name = json.Name;
-        this._result = json.Result;
-
-        return this;
-    }
-
-    public toJson(): NonFunctionProperties<IHttpSource> {
-        return {
-            ID: this._id,
-            IsActive: this._isActive,
-            Name: this._name,
-            Result: this._result
-        };
-    }
 
     public update(httpSource: IHttpSource): void {
+        if (!Utilities.hasValue(httpSource)) {
+            return;
+        }
+
         this.IsActive = httpSource.IsActive;
         this.Name = httpSource.Name;
         this.Result = httpSource.Result;

@@ -10,10 +10,18 @@ const config: webpack.Configuration = {
         fs: "empty"
     },
     mode: "development",
-    entry: './index.js',
+    entry: {
+        app: ['webpack/hot/dev-server', './index.js'],
+    },
     output: {
+        path: path.resolve(__dirname, './built'),
         filename: './bundle.js',
-        path: path.resolve(__dirname, '.')
+        publicPath: 'http://localhost:8080/built/'
+    },
+    devServer: {
+        //hot: true,
+        //contentBase: path.resolve(__dirname, './built'),
+        publicPath: 'http://localhost:8080/built/'
     },
     resolve: {
         extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx']
@@ -39,7 +47,8 @@ const config: webpack.Configuration = {
             $: "jquery",
             jQuery: "jquery"
         }),
-        new MonacoWebpackPlugin({})
+        new MonacoWebpackPlugin({}),
+        //new webpack.HotModuleReplacementPlugin()
     ],
     target: "electron-renderer"
 }
