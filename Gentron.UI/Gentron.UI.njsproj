@@ -76,7 +76,7 @@
     <TypeScriptCompile Include="components\FileSources.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="components\Home.tsx">
+    <TypeScriptCompile Include="components\Debug.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="components\HttpSource.tsx">

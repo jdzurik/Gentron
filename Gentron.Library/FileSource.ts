@@ -1,5 +1,6 @@
 ﻿import { ISourceBase, SourceBase } from "./SourceBase";
 import { JsonObject } from "ta-json";
+import Utilities from "./Utilities";
 
 export interface IFileSource extends ISourceBase { }
 
@@ -21,6 +22,10 @@ export class FileSource extends SourceBase implements IFileSource {
 
 
     public update(fileSource: IFileSource): void {
+        if (!Utilities.hasValue(fileSource)) {
+            return;
+        }
+
         this.IsActive = fileSource.IsActive;
         this.Name = fileSource.Name;
         this.Result = fileSource.Result;

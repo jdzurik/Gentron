@@ -1,9 +1,7 @@
-﻿import { IIdentifiable } from "./interfaces";
-import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities } from "./";
+﻿import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities } from "./";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import { Cloneable, Identifiable } from "./abstract";
 
-export interface IGentron extends IIdentifiable {
+export interface IGentron {
     /*
      *  Properties & Fields 
      */
@@ -12,22 +10,16 @@ export interface IGentron extends IIdentifiable {
 }
 
 @JsonObject()
-export class Gentron extends Identifiable implements IGentron {
+export class Gentron implements IGentron {
     /*
      *  Properties & Fields 
      */
-    //  Oddidity in TaJSON -- type must be set here 
-    //  and setting JsonElementType(PackageSettings)
-    //  does not work
     @JsonProperty()
-    @JsonElementType(Identifiable)
+    @JsonElementType(PackageSettings)
     public PackageSettings: IPackageSettings;
 
-    //  Oddidity in TaJSON -- type must be set here 
-    //  and setting JsonElementType(ProjectSettings)
-    //  does not work
     @JsonProperty()
-    @JsonElementType(Identifiable)
+    @JsonElementType(ProjectSettings)
     public ProjectSettings: IProjectSettings;
 
 
@@ -35,8 +27,6 @@ export class Gentron extends Identifiable implements IGentron {
      *  Constructors
      */
     public constructor() {
-        super();
-        this._id = Utilities.newCryptoGuid();
         this.PackageSettings = new PackageSettings();
         this.ProjectSettings = new ProjectSettings();
     }

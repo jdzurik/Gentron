@@ -1,6 +1,7 @@
 ﻿import { ICloneable, IModifiable } from "./interfaces";
 import { Cloneable } from "./abstract";
 import { JsonObject, JsonProperty } from "ta-json";
+import { Utilities } from ".";
 
 export interface IOutputPath extends ICloneable<IOutputPath>, IModifiable<IOutputPath> {
     /*
@@ -45,8 +46,12 @@ export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
         return ret;
     }
 
-    public update(ouputPath: IOutputPath): void {
-        this.Environment = ouputPath.Environment;
-        this.Path = ouputPath.Path;
+    public update(outputPath: IOutputPath): void {
+        if (!Utilities.hasValue(outputPath)) {
+            return;
+        }
+
+        this.Environment = outputPath.Environment;
+        this.Path = outputPath.Path;
     }
 }

@@ -3,12 +3,12 @@ import { Route } from 'react-router-dom';
 import DatabaseConnections from "./DatabaseConnections";
 import DatabaseSource from './DatabaseSource';
 import DatabaseSources from './DatabaseSources';
+import Debug from './Debug';
 import Engine from "./Engine";
 import Engines from "./Engines";
 import Environments from "./Environments";
 import FileSource from './FileSource';
 import FileSources from './FileSources';
-import Home from './Home';
 import HttpSource from './HttpSource';
 import HttpSources from './HttpSources';
 import OutputPaths from "./OutputPaths";
@@ -34,7 +34,6 @@ export default class NavViewContent extends React.Component<NavViewContentProps>
     public render(): JSX.Element {
         return (
             <div className="navview-content d-flex flex-align-center flex-justify-center h-100">
-                <Route exact path="/" component={Home} />
                 <Route exact path="/settings/project" component={ProjectSettings} />
                 <Route exact path="/connections/db" component={DatabaseConnections} />
                 <Route exact path="/environments" component={Environments} />
@@ -50,6 +49,7 @@ export default class NavViewContent extends React.Component<NavViewContentProps>
                 <Route exact path="/engines/manage/:id" component={Engine} />
                 <Route exact path="/engines/manage/:engineid/templates" component={Templates} />
                 <Route exact path="/engines/manage/:engineid/templates/:templateid" component={Template} />
+                <Route exact path="/" component={Debug} />
             </div>
         );
     }

@@ -1,6 +1,7 @@
 ﻿import { ICloneable, IModifiable, IActivateable } from "./interfaces";
 import { Cloneable } from "./abstract";
 import { JsonObject, JsonProperty } from "ta-json";
+import { Utilities } from ".";
 
 export interface IEnvironment extends IActivateable, ICloneable<IEnvironment>, IModifiable<IEnvironment> {
     /*
@@ -45,6 +46,10 @@ export class Environment extends Cloneable<IEnvironment> implements IEnvironment
     }
 
     public update(environment: IEnvironment): void {
+        if (!Utilities.hasValue(environment)) {
+            return;
+        }
+
         this.IsActive = environment.IsActive;
         this.Name = environment.Name;
     }

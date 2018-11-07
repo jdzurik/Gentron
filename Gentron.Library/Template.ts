@@ -1,6 +1,7 @@
 ﻿import { Cloneable } from "./abstract";
 import { ICloneable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
+import { Utilities } from ".";
 
 export enum TemplateTypes {
     Partial,
@@ -49,6 +50,10 @@ export class Template extends Cloneable<ITemplate> implements ITemplate {
 
 
     public update(template: ITemplate): void {
+        if (!Utilities.hasValue(template)) {
+            return;
+        }
+
         this.Name = template.Name;
         this.Type = template.Type;
     }

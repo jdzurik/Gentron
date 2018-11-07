@@ -1,6 +1,6 @@
-﻿import { ConnectionGroup, File, IConnectionGroup, IDatabaseConnection, IFile } from "./";
+﻿import { ConnectionGroup, File, IConnectionGroup, IDatabaseConnection, IFile, DatabaseConnection, Utilities } from "./";
 import { ISourceBase, SourceBase } from "./SourceBase";
-import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
+import { JsonElementType, JsonObject, JsonProperty, JsonConverter, IPropertyConverter, JsonValue, JsonValueObject } from "ta-json";
 
 export interface IDatabaseSource extends ISourceBase {
     /*
@@ -10,6 +10,21 @@ export interface IDatabaseSource extends ISourceBase {
     Script?: IFile;
 }
 
+class ActiveConnectionGroupJsonConverter implements IPropertyConverter {
+    public serialize(property: IConnectionGroup<IDatabaseConnection>): JsonValue {
+        return {
+            ID: property.ID
+        };
+    }
+
+    public deserialize(_value: JsonValue) {
+        const value: IConnectionGroup<IDatabaseConnection> = _value as any as IConnectionGroup<IDatabaseConnection>;
+        const connectionGroup: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
+        (connectionGroup as any)._id = value.ID;
+        return connectionGroup;
+    }
+}
+
 @JsonObject()
 export class DatabaseSource extends SourceBase implements IDatabaseSource {
     /*
@@ -17,6 +32,7 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
      */
     @JsonProperty()
     @JsonElementType(ConnectionGroup)
+    @JsonConverter(ActiveConnectionGroupJsonConverter)
     public ActiveConnectionGroup: IConnectionGroup<IDatabaseConnection>;
 
     @JsonProperty()
@@ -51,7 +67,7 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
 
 
     public update(databaseSource: IDatabaseSource): void {
-        if (typeof (databaseSource) === typeof (undefined) || databaseSource === null) {
+        if (!Utilities.hasValue(databaseSource)) {
             return;
         }
 

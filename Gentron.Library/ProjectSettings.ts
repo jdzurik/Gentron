@@ -1,9 +1,7 @@
 ﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, IOutputPath, IOutputPathGroup, OutputPathGroup } from "./";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import { Identifiable } from "./abstract";
-import { IIdentifiable } from "./interfaces";
 
-export interface IProjectSettings extends IIdentifiable {
+export interface IProjectSettings {
     /*
      *  Properties & Fields 
      */
@@ -14,7 +12,7 @@ export interface IProjectSettings extends IIdentifiable {
 }
 
 @JsonObject()
-export class ProjectSettings extends Identifiable implements IProjectSettings {
+export class ProjectSettings implements IProjectSettings {
     /*
      *  Properties & Fields 
      */
@@ -37,7 +35,6 @@ export class ProjectSettings extends Identifiable implements IProjectSettings {
      *  Constructors
      */
     public constructor() {
-        super();
         this.DatabaseConnections = [];
         this.LocalPackageFolder = "";
         this.OutputPathGroups = [];

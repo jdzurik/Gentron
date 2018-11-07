@@ -2,6 +2,7 @@
 import { ICloneable, IModifiable } from "./interfaces";
 import { IOutputPath, OutputPath } from "./";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
+import Utilities from "./Utilities";
 
 export interface IOutputPathGroup<TOutputPath extends IOutputPath> extends ICloneable<IOutputPathGroup<TOutputPath>>, IModifiable<IOutputPathGroup<TOutputPath>> {
     /*
@@ -67,6 +68,10 @@ export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<
 
 
     public update(connection: IOutputPathGroup<TOutputPath>): void {
+        if (!Utilities.hasValue(connection)) {
+            return;
+        }
+
         this.Name = connection.Name;
         this.Paths = connection.Paths.map((conn: TOutputPath, i: number) => {
             return conn.clone() as TOutputPath

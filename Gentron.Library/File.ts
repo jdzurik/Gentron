@@ -1,6 +1,7 @@
 ﻿import * as fs from "fs";
 import { IModifiable } from "./interfaces"
 import { JsonObject, JsonProperty } from "ta-json";
+import { Utilities } from ".";
 
 export interface IFile extends IModifiable<IFile> {
     /*
@@ -78,6 +79,10 @@ export class File implements IFile {
     }
 
     public update(file: IFile): void {
+        if (!Utilities.hasValue(file)) {
+            return;
+        }
+
         this.LastModified = file.LastModified;
 
         if (this.Path !== file.Path) {

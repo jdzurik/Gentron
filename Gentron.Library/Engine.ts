@@ -1,6 +1,7 @@
 ﻿import { ISourceBase, SourceBase } from "./SourceBase";
 import { ITemplate, Template } from "./Template";
 import { JsonObject, JsonProperty, JsonType } from "ta-json";
+import { Utilities } from ".";
 
 export interface IEngine extends ISourceBase {
     /*
@@ -47,6 +48,10 @@ export class Engine extends SourceBase implements IEngine {
 
 
     public update(engine: IEngine): void {
+        if (!Utilities.hasValue(engine)) {
+            return;
+        }
+
         this.IsActive = engine.IsActive;
         this.Name = engine.Name;
         this.Result = engine.Result;

@@ -2,6 +2,7 @@
 import { ICloneable, IModifiable } from "./interfaces";
 import { Cloneable } from "./abstract";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
+import Utilities from "./Utilities";
 
 export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IModifiable<IConnectionGroup<TConnection>> {
     /*
@@ -66,10 +67,14 @@ export class ConnectionGroup<TConnection extends IConnectionBase> extends Clonea
     }
 
 
-    public update(connection: IConnectionGroup<TConnection>): void {
-        this.Connections = connection.Connections.map((conn: TConnection, i: number) => {
+    public update(connectionGroup: IConnectionGroup<TConnection>): void {
+        if (!Utilities.hasValue(connectionGroup)) {
+            return;
+        }
+
+        this.Connections = connectionGroup.Connections.map((conn: TConnection, i: number) => {
             return conn.clone() as TConnection;
         });
-        this.Name = connection.Name;
+        this.Name = connectionGroup.Name;
     }
 }

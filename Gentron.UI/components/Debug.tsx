@@ -3,29 +3,28 @@ import * as React from "react";
 import { ActionCreators as PackageSettingsActionCreators } from "../actions/PackageSettings";
 import { ActionCreators as ProjectSettingsActionCreators } from "../actions/ProjectSettings";
 import { bindActionCreators } from "redux";
-import { Cell, Grid } from "./metro";
+import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
 import { IGentron, Utilities, Gentron } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
-import JSONTree from "react-json-tree";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type NullableHomeProps = Hash & {
+type NullableDebugProps = Hash & {
     Gentron?: IGentron;
 }
 
-type HomeProps = NullableHomeProps
+type DebugProps = NullableDebugProps
     & typeof PackageSettingsActionCreators
     & typeof ProjectSettingsActionCreators
     & RouteComponentProps<{}>;
 
-@connect<NullableHomeProps, {}, HomeProps>(mapStateToProps, mapDispatchToProps)
-export default class Home extends React.Component<HomeProps> {
+@connect<NullableDebugProps, {}, DebugProps>(mapStateToProps, mapDispatchToProps)
+export default class Debug extends React.Component<DebugProps> {
     /*
      *  Constructors
      */
-    public constructor(props: HomeProps) {
+    public constructor(props: DebugProps) {
         super(props);
     }
 
@@ -34,25 +33,34 @@ export default class Home extends React.Component<HomeProps> {
      *  Methods
      */
     public render(): JSX.Element {
-        console.log(this.props.Gentron);
-        const state: IGentron = Utilities.JSON.deserialize(this.props.Gentron, Gentron);
-        console.log(state);
-        const taJson: string = (Utilities.JSON.stringify as any)({ ID: state.ID, PackageSettings: state.PackageSettings, ProjectSettings: state.ProjectSettings }, null, 4);
-        console.log(taJson);
+        const stateObj: IGentron = {
+            PackageSettings: this.props.Gentron.PackageSettings,
+            ProjectSettings: this.props.Gentron.ProjectSettings
+        };
+
+        const state: Gentron = Utilities.JSON.deserialize(stateObj, Gentron);
 
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-database" title="Home" />
+                    <NavViewContentHeaderRow iconClassName="mif-database" title="Debug" />
 
-                    <JSONTree data={{ ID: state.ID, PackageSettings: state.PackageSettings, ProjectSettings: state.ProjectSettings }} />
+                    <Row className="h-100 w-100">
+                        <Cell>
+                            <pre className="h-100 w-100">
+                                {
+                                    JSON.stringify(Utilities.JSON.serialize(state), null, 4)
+                                }
+                            </pre>
+                        </Cell>
+                    </Row>
                 </Grid>
             </Cell>
         );
     }
 }
 
-function mapStateToProps(state: IGentron): NullableHomeProps {
+function mapStateToProps(state: IGentron): NullableDebugProps {
     const _hash: string = hash(state);
     return {
         Gentron: state,

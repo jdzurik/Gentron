@@ -2,14 +2,14 @@
 import * as React from "react";
 import { ActionCreators } from "../actions/ProjectSettings";
 import { bindActionCreators } from 'redux';
-import { Hash, NonFunctionProperties } from "../../Gentron.Library/types";
+import { Hash, PrimitiveProperties } from "../../Gentron.Library/types";
 import { Cell, FolderInput, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { IGentron, IProjectSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type HashedIProjectSettings = Hash & NonFunctionProperties<IProjectSettings>
+type HashedIProjectSettings = Hash & PrimitiveProperties<IProjectSettings>
 
 type ProjectSettingsProps = HashedIProjectSettings
     & typeof ActionCreators
@@ -88,9 +88,7 @@ export default class ProjectSettings extends React.Component<ProjectSettingsProp
 function mapStateToProps(state: IGentron): HashedIProjectSettings {
     const _hash: string = hash(state.ProjectSettings);
     return {
-        DatabaseConnections: state.ProjectSettings.DatabaseConnections,
         LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
-        OutputPathGroups: state.ProjectSettings.OutputPathGroups,
         RemotePackageLocation: state.ProjectSettings.RemotePackageLocation,
         _hash: _hash
     };

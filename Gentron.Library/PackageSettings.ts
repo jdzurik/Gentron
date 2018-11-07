@@ -1,9 +1,7 @@
 ﻿import { IDatabaseSource, IEngine, IEnvironment, IFileSource, IHttpSource, DatabaseSource, Engine, Environment, FileSource, HttpSource } from ".";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import { Identifiable } from "./abstract";
-import { IIdentifiable } from "./interfaces";
 
-export interface IPackageSettings extends IIdentifiable {
+export interface IPackageSettings {
     /*
      *  Properties & Fields 
      */
@@ -17,7 +15,7 @@ export interface IPackageSettings extends IIdentifiable {
 }
 
 @JsonObject()
-export class PackageSettings extends Identifiable implements IPackageSettings {
+export class PackageSettings implements IPackageSettings {
     /*
      *  Properties & Fields 
      */
@@ -52,7 +50,6 @@ export class PackageSettings extends Identifiable implements IPackageSettings {
      *  Constructors
      */
     public constructor() {
-        super();
         this.DatabaseSources = [];
         this.Engines = [];
         this.Environments = [];

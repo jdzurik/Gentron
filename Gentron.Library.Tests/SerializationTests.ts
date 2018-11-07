@@ -1,11 +1,22 @@
 ﻿import * as readline from "readline";
-import { ConnectionGroup, DatabaseConnection, Environment, Gentron, IConnectionGroup, IDatabaseConnection, IEnvironment, IFileConnection, FileConnection } from "../Gentron.Library";
-import { DatabaseSource, IDatabaseSource, IGentron, Utilities } from "../Gentron.Library";
+import {
+    IConnectionGroup,
+    IDatabaseConnection,
+    IEnvironment,
+    IDatabaseSource, 
+    IGentron,
+    ConnectionGroup,
+    DatabaseConnection,
+    Environment,
+    DatabaseSource,
+    Gentron,
+    Utilities,
+} from "../Gentron.Library";
 
 function log<T>(title: string, data: T): void {
     try {
         console.log("***** " + title + "*****");
-        console.log((Utilities.JSON.stringify as any)(data, null, 4));
+        console.log(JSON.stringify(Utilities.JSON.serialize(data), null, 4));
         console.log();
     }
     catch (e) {

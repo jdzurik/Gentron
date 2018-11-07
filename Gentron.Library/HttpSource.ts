@@ -1,5 +1,6 @@
 ﻿import { ISourceBase, SourceBase } from "./SourceBase";
 import { JsonObject } from "ta-json";
+import Utilities from "./Utilities";
 
 export interface IHttpSource extends ISourceBase { }
 
@@ -21,6 +22,10 @@ export class HttpSource extends SourceBase implements IHttpSource {
 
 
     public update(httpSource: IHttpSource): void {
+        if (!Utilities.hasValue(httpSource)) {
+            return;
+        }
+
         this.IsActive = httpSource.IsActive;
         this.Name = httpSource.Name;
         this.Result = httpSource.Result;

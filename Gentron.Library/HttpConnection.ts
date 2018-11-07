@@ -1,5 +1,6 @@
 ﻿import { ConnectionBase, IConnectionBase } from "./ConnectionBase";
 import { JsonObject, JsonProperty } from "ta-json";
+import { Utilities } from ".";
 
 export interface IHttpConnection extends IConnectionBase {
     /*
@@ -41,6 +42,10 @@ export class HttpConnection extends ConnectionBase implements IHttpConnection {
 
 
     public update(connection: HttpConnection): void {
+        if (!Utilities.hasValue(connection)) {
+            return;
+        }
+
         this.Environment = connection.Environment;
         this.IsActive = connection.IsActive;
     }

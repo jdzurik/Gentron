@@ -38,13 +38,6 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
 
                 <ul className="navview-menu h-100">
                     <li>
-                        <Link to="/">
-                            <span className="icon"><span className="mif-home"></span></span>
-                            <span className="caption">Home</span>
-                        </Link>
-                    </li>
-
-                    <li>
                         <Link to="/settings/project">
                             <span className="icon"><span className="mif-drive2"></span></span>
                             <span className="caption">Project Settings</span>
@@ -82,7 +75,7 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                     <li>
                         <Link to="/sources/db">
                             <span className="icon"><span className="mif-database"></span></span>
-                            <span className="caption">Database Source</span>
+                            <span className="caption">Database Sources</span>
                         </Link>
                     </li>
 
@@ -165,6 +158,13 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                             )
                         )
                     }
+
+                    <li>
+                        <Link to="/">
+                            <span className="icon"><span className="mif-bug"></span></span>
+                            <span className="caption">Debug</span>
+                        </Link>
+                    </li>
                 </ul>
             </div>
         );
