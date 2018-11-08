@@ -2,8 +2,9 @@
 import * as path from "path";
 import { Gentron as GentronConstants, InfoMessages } from "./constants";
 import { IFileOperationResult, FileOperationResult, GentronFsResult, IGentronFsResult } from "./results";
-import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities, File } from "./";
+import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities, File, IDatabaseSource, IConnectionGroup } from "./";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
+import { IDatabaseConnection } from "./DatabaseConnection";
 
 export interface IGentron {
     /*
@@ -98,6 +99,7 @@ export class Gentron implements IGentron {
 
     public static open(fileName: string): IGentronFsResult<IGentron> {
         const ret: IGentron = new Gentron();
+        ret.ActiveProjectPath = fileName;
 
         const projectReadResult: IFileOperationResult<string> = File.read(fileName);
         if (projectReadResult.IsError) {
@@ -124,6 +126,13 @@ export class Gentron implements IGentron {
 
         try {
             ret.PackageSettings = Utilities.JSON.parse(packageReadResult.Result, PackageSettings);
+            ret.PackageSettings.DatabaseSources.forEach((source: IDatabaseSource, index: number) => {
+                const connection: IConnectionGroup<IDatabaseConnection> = ret.ProjectSettings.DatabaseConnections.filter((connection: IConnectionGroup<IDatabaseConnection>) => {
+                    return connection.ID === source.ActiveConnectionGroup.ID;
+                })[0];
+                source.ActiveConnectionGroup = connection;
+
+            });
         }
         catch (e) {
             return GentronFsResult.fail((e as NodeJS.ErrnoException).message);

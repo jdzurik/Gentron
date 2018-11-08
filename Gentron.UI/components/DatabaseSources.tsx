@@ -107,7 +107,7 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                         <td>
                                             <Link to={`/sources/db/${i}`}>
                                                 <button className="button">
-                                                    <span className="mif-enter"></span>
+                                                    <span className="mif-enlarge2"></span>
                                                 </button>
                                             </Link>
                                             <button className="button ml-2"

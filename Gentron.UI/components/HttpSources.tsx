@@ -105,7 +105,7 @@ export default class HttpSources extends React.Component<HttpSourcesProps, HttpS
                                         <td>
                                             <Link to={`/sources/http/${i}`}>
                                                 <button className="button">
-                                                    <span className="mif-enter"></span>
+                                                    <span className="mif-enlarge2"></span>
                                                 </button>
                                             </Link>
                                             <button className="button ml-2"

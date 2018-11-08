@@ -31,40 +31,9 @@ const syncHistoryWithStore = (store, history: MemoryHistory) => {
 const history: MemoryHistory = createMemoryHistory();
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
-let initialState: IGentron;
-
-if (((window as any).initialReduxState)) {
-    initialState = (window as any).initialReduxState;
-}
-else {
-    initialState = new Gentron();
-
-    ["Dev", "Test", "Prod"].map(env => {
-        const environment: IEnvironment = new Environment();
-        environment.Name = env;
-        initialState.PackageSettings.Environments.push(environment);
-    });
-
-    ["CAUtils", "CASecurity"].map(db => {
-        const source: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
-        source.Name = db;
-
-        initialState.PackageSettings.Environments.map(env => {
-            const conn: IDatabaseConnection = new DatabaseConnection();
-            conn.Environment = env.Name;
-            source.addOrUpdateConnection(conn);
-        });
-
-        initialState.ProjectSettings.DatabaseConnections.push(source);
-    });
-
-    ["", ""].map((db, i) => {
-        const source: IDatabaseSource = new DatabaseSource();
-        source.Name = `DBSource${i}`;
-        source.ActiveConnectionGroup = initialState.ProjectSettings.DatabaseConnections[Math.floor(Math.random() * initialState.ProjectSettings.DatabaseConnections.length)];
-        initialState.PackageSettings.DatabaseSources.push(source);
-    });
-}
+const initialState: IGentron = (((window as any).initialReduxState))
+    ? (window as any).initialReduxState
+    : new Gentron();
 
 const store: AppStore = configureStore(history, initialState);
 syncHistoryWithStore(store, history);
@@ -86,7 +55,6 @@ ReactDOM.render(
 
 if (process.env.toString() !== "production") {
     if ((module as any).hot) {
-        //(module as any).hot.accept();
         (module as any).hot.accept("./components/App", () => {
             const NewApp: typeof App = require("./components/App").default;
             ReactDOM.render(
