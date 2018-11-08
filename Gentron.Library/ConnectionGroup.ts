@@ -3,6 +3,7 @@ import { ICloneable, IModifiable } from "./interfaces";
 import { Cloneable } from "./abstract";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
 import Utilities from "./Utilities";
+import { DatabaseConnection } from "./DatabaseConnection";
 
 export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IModifiable<IConnectionGroup<TConnection>> {
     /*
@@ -24,7 +25,7 @@ export class ConnectionGroup<TConnection extends IConnectionBase> extends Clonea
      *  Properties & Fields 
      */
     @JsonProperty()
-    @JsonElementType(ConnectionBase)
+    @JsonElementType(DatabaseConnection)
     public Connections: TConnection[];
 
     @JsonProperty()
