@@ -1,5 +1,6 @@
 ﻿export const enum GentronActionNames {
     AddOrUpdateActiveProjectPath = "ADD_OR_UPDATE_ACTIVE_PROJECT_PATH",
+    OpenProject = "OPEN_PROJECT",
 }
 
 export const enum PackageSettingsActionNames {

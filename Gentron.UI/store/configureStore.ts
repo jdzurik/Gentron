@@ -2,7 +2,7 @@
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createStore, applyMiddleware, compose, combineReducers, StoreEnhancerStoreCreator, ReducersMapObject, StoreEnhancer, Store } from 'redux';
 import { History } from 'history';
-import { reducers } from "../reducers";
+import { appReducers, rootReducer } from "../reducers";
 import thunk from 'redux-thunk';
 import { NonFunctionProperties } from "../../Gentron.Library/types";
 
@@ -19,10 +19,10 @@ export default function configureStore(history: History, initialState: NonFuncti
             : (next: StoreEnhancerStoreCreator) => next)(createStore);
 
     // Combine all reducers and instantiate the app-wide store instance
-    const allReducers = buildRootReducer(reducers);
+    //const allReducers = buildRootReducer(appReducers);
 
     const store = createStore(
-        connectRouter(history)(allReducers), // new root reducer with router state
+        connectRouter(history)(rootReducer), // new root reducer with router state
         initialState,
         compose(
             applyMiddleware(

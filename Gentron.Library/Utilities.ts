@@ -1,34 +1,106 @@
-﻿import * as crypto from "crypto";
+﻿import * as fs from "fs";
+import * as path from "path";
+import * as crypto from "crypto";
 import { JSON } from "ta-json";
 
+type MkDirByPathArgs = {
+    isRelativeToScript?: boolean;
+};
+
 export default class Utilities {
+    /*
+     *  Properties & Fields
+     */
     private static _guidPlaceholder: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
 
     public static readonly JSON: typeof JSON = JSON;
 
+
+    /*
+     *  Constructors
+     */
+    public constructor() { }
+
+
+    /*
+     *  Properties & Fields
+     */
     public static hasValue(obj: any): boolean {
         return typeof (obj) !== typeof (undefined) && obj !== null;
     }
+
+
+    public static hasStringValue(obj: any): boolean {
+        return this.hasValue(obj) && obj.toString().length > 0;
+    }
+
 
     public static isBoolean(obj: any): boolean {
         return this.hasValue(obj) && typeof (obj) === typeof (true);
     }
 
+
     public static isFunction(obj: any): boolean {
         return this.hasValue(obj) && typeof (obj) === typeof ((() => { }));
     }
+
 
     public static isObject(obj: any): boolean {
         return this.hasValue(obj) && typeof (obj) === typeof ({});
     }
 
+
     public static isNumber(obj: any): boolean {
         return this.hasValue(obj) && typeof (obj) === typeof (0);
     }
 
+
     public static isString(obj: any): boolean {
         return this.hasValue(obj) && typeof (obj) === typeof ("");
     }
+
+
+    /*
+     *  Taken from: https://stackoverflow.com/questions/31645738/how-to-create-full-path-with-nodes-fs-mkdirsync
+     */
+    public static mkDirByPathSync(targetDir: string, args: MkDirByPathArgs = {}) {
+        const sep: "\\" | "/" = path.sep;
+        const initDir: string = path.isAbsolute(targetDir)
+            ? sep
+            : '';
+        const baseDir: string = args.isRelativeToScript
+            ? __dirname
+            : '.';
+
+        return targetDir.split(sep).reduce((parentDir: string, childDir: string) => {
+            const curDir: string = path.resolve(baseDir, parentDir, childDir);
+
+            try {
+                fs.mkdirSync(curDir);
+            } catch (err) {
+                //  curDir already exists!
+                if (err.code === "EEXIST") {
+                    return curDir;
+                }
+
+                //  To avoid `EISDIR` error on Mac and 
+                //  `EACCES`-- > `ENOENT` and`EPERM` on Windows.
+                if (err.code === 'ENOENT') {
+                    // Throw the original parentDir error on curDir `ENOENT` failure.
+                    throw new Error(`EACCES: permission denied, mkdir '${parentDir}'`);
+                }
+
+                const caughtErr: boolean = ['EACCES', 'EPERM', 'EISDIR'].indexOf(err.code) > -1;
+                if (!caughtErr || caughtErr && curDir === path.resolve(targetDir)) {
+                    // Throw if it's just the last created dir.
+                    throw err;
+                }
+            }
+
+            return curDir;
+        }, initDir);
+    }
+
 
     public static newGuid(): string {
         return this._guidPlaceholder.replace(/[xy]/g, function (substring: string) {

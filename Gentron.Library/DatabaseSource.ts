@@ -1,6 +1,6 @@
 ﻿import { ConnectionGroup, File, IConnectionGroup, IDatabaseConnection, IFile, DatabaseConnection, Utilities } from "./";
 import { ISourceBase, SourceBase } from "./SourceBase";
-import { JsonElementType, JsonObject, JsonProperty, JsonConverter, IPropertyConverter, JsonValue, JsonValueObject } from "ta-json";
+import { JsonElementType, JsonObject, JsonProperty, JsonConverter, IPropertyConverter, JsonValue, JsonValueObject, JsonType } from "ta-json";
 
 export interface IDatabaseSource extends ISourceBase {
     /*
@@ -36,6 +36,7 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
     public ActiveConnectionGroup: IConnectionGroup<IDatabaseConnection>;
 
     @JsonProperty()
+    @JsonType(File)
     public Script: IFile;
 
 

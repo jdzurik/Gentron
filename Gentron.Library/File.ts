@@ -1,4 +1,5 @@
 ﻿import * as fs from "fs";
+import * as path from "path";
 import { FileOperationResult, IFileOperationResult } from "./results";
 import { IModifiable } from "./interfaces"
 import { JsonObject, JsonProperty } from "ta-json";
@@ -71,12 +72,16 @@ export class File implements IFile {
         }
     }
 
-    public static write(filePath: string, fileContents: string): FileOperationResult<void> {
+    public static write(filePath: string, fileContents: string, mkDirIfNotExists: boolean = false): FileOperationResult<void> {
         try {
+            if (mkDirIfNotExists && !fs.existsSync(filePath.substring(0, filePath.lastIndexOf(path.sep)))) {
+                Utilities.mkDirByPathSync(filePath.substring(0, filePath.lastIndexOf(path.sep)));
+            }
             fs.writeFileSync(filePath, fileContents);
             return FileOperationResult.ok();
         }
         catch (e) {
+            console.error(e);
             return FileOperationResult.fail((e as NodeJS.ErrnoException).message.toString());
         }
     }

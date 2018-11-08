@@ -53,6 +53,15 @@
     <TypeScriptCompile Include="ConnectionGroup.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="constants\Gentron.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="constants\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="constants\InfoMessages.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="DatabaseConnection.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -107,6 +116,9 @@
     <TypeScriptCompile Include="results\FileOperationResult.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="results\GentronFsResult.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="results\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -141,8 +153,14 @@
   <ItemGroup>
     <Folder Include="interfaces\" />
     <Folder Include="abstract\" />
+    <Folder Include="constants\" />
     <Folder Include="results\" />
     <Folder Include="types\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="constants\ErrorMessages.ts">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

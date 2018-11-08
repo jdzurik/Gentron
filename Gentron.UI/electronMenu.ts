@@ -1,19 +1,23 @@
 ﻿declare type TMetro = typeof import("metro4");
 declare const Metro: TMetro;
 
-import { Store } from "redux";
+const { dialog, Menu } = (window as any).require('electron').remote;
 import { ActionCreators } from "./actions/Gentron";
-import { IGentron, Gentron } from "../Gentron.Library";
-import { IFileOperationResult } from "../Gentron.Library/results";
-const { dialog, getCurrentWindow, Menu } = (window as any).require('electron').remote;
+import { GentronActionNames } from "./constants/ActionNames";
+import { IGentronFsResult } from "../Gentron.Library/results";
+import { IGentron, Gentron, Utilities } from "../Gentron.Library";
+import { Store } from "redux";
 
 function saveInternal(state: IGentron) {
-    const saveResult: IFileOperationResult<void> = Gentron.save(state);
-    if (saveResult.IsError) {
-        Metro.toast.create(saveResult.ErrorMessage, null, null, "warning");
+    const writeResult: IGentronFsResult<void> = Gentron.save(state);
+    if (writeResult.IsError) {
+        Metro.toast.create(writeResult.ErrorMessage, null, 7500, "alert");
+    }
+    else if (Utilities.hasStringValue(writeResult.InfoMessage)) {
+        Metro.toast.create(writeResult.InfoMessage, null, 7500, "warning");
     }
     else {
-        Metro.toast.create("Saved Successfully!", null, null, "success");
+        Metro.toast.create("Saved Successfully!", null, 3000, "success");
     }
 }
 
@@ -45,8 +49,33 @@ function saveAs(store: Store<IGentron>): void {
     );
 }
 
-function open(): void {
-
+function open(store: Store<IGentron>): void {
+    dialog.showOpenDialog({
+            title: "Gentron Open",
+            filters: [
+                { name: 'Gentron Project', extensions: ['gproj'] },
+                { name: 'JSON', extensions: ['json'] }
+            ]
+        },
+        function (filePaths: string[]) {
+            if (filePaths && filePaths.length > 0) {
+                const readResult: IGentronFsResult<IGentron> = Gentron.open(filePaths[0]);
+                if (readResult.IsError) {
+                    Metro.toast.create(readResult.ErrorMessage, null, null, "warning");
+                    return;
+                }
+                else if (Utilities.hasStringValue(readResult.InfoMessage)) {
+                    Metro.toast.create(readResult.InfoMessage, null, 7500, "warning");
+                }
+                else {
+                    store.dispatch({
+                        newState: readResult.Result,
+                        type: GentronActionNames.OpenProject,
+                    });
+                }
+            }
+        }
+    );
 }
 
 export default function setupMenu(store: Store<IGentron>): void {
@@ -58,7 +87,7 @@ export default function setupMenu(store: Store<IGentron>): void {
                     label: 'Open',
                     accelerator: 'CmdOrCtrl+O',
                     click() {
-                        open();
+                        open(store);
                     }
                 },
                 {
@@ -113,16 +142,5 @@ export default function setupMenu(store: Store<IGentron>): void {
                 { role: 'close' }
             ]
         },
-        //{
-        //    role: 'help',
-        //    submenu: [
-        //        {
-        //            label: 'Learn More',
-        //            click() {
-        //                shell.openExternal('')
-        //            }
-        //        }
-        //    ]
-        //}
     ]));
 }

@@ -9,6 +9,7 @@ import { Hash } from "../../Gentron.Library/types";
 import { IGentron, Utilities, Gentron } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
+import Inspector, { chromeLight } from 'react-inspector';
 
 type NullableDebugProps = Hash & {
     Gentron?: IGentron;
@@ -48,11 +49,18 @@ export default class Debug extends React.Component<DebugProps> {
 
                     <Row className="h-100 w-100">
                         <Cell>
-                            <pre className="h-100 w-100">
-                                {
-                                    JSON.stringify(Utilities.JSON.serialize(state), null, 4)
-                                }
-                            </pre>
+                            <Inspector
+                                data={Utilities.JSON.serialize(state)}
+                                theme={{
+                                    ...chromeLight,
+                                    ...({
+                                        BASE_FONT_SIZE: `14px`,
+                                        BASE_LINE_HEIGHT: `18px`,
+                                        TREENODE_FONT_SIZE: `14px`,
+                                        TREENODE_LINE_HEIGHT: `18px`,
+                                    })
+                                }}
+                            />
                         </Cell>
                     </Row>
                 </Grid>
