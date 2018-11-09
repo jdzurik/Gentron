@@ -1,4 +1,4 @@
-﻿import { ConnectionGroup, DatabaseConnection, IOutputPath, IOutputPathGroup } from '../../Gentron.Library';
+﻿import { ConnectionGroup, DatabaseConnection, OutputPath, OutputPathGroup } from '../../Gentron.Library';
 import { ProjectSettingsActionNames } from "../constants/ActionNames";
 
 export interface AddOrUpdateDatabaseConnectionGroupAction {
@@ -12,7 +12,7 @@ export interface AddOrUpdateLocalPackageFolderAction {
 }
 
 export interface AddOrUpdateOutputPathGroupAction {
-    outputPathGroup: IOutputPathGroup<IOutputPath>;
+    outputPathGroup: OutputPathGroup<OutputPath>;
     type: ProjectSettingsActionNames.AddOrUpdateOutputPathGroupAction;
 }
 
@@ -27,7 +27,7 @@ export interface RemoveDatabaseConnectionGroupAction {
 }
 
 export interface RemoveOutputPathGroupAction {
-    outputPathGroup: IOutputPathGroup<IOutputPath>;
+    outputPathGroup: OutputPathGroup<OutputPath>;
     type: ProjectSettingsActionNames.RemoveOutputPathGroupAction;
 }
 
@@ -51,7 +51,7 @@ export const ActionCreators = {
             type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction
         };
     },
-    addOrUpdateOutputPathGroup: (outputPathGroup: IOutputPathGroup<IOutputPath>) => {
+    addOrUpdateOutputPathGroup: (outputPathGroup: OutputPathGroup<OutputPath>) => {
         return <AddOrUpdateOutputPathGroupAction>{
             outputPathGroup: outputPathGroup,
             type: ProjectSettingsActionNames.AddOrUpdateOutputPathGroupAction
@@ -69,7 +69,7 @@ export const ActionCreators = {
             type: ProjectSettingsActionNames.RemoveDatabaseConnectionGroup
         };
     },
-    removeOutputPathGroup: (outputPathGroup: IOutputPathGroup<IOutputPath>) => {
+    removeOutputPathGroup: (outputPathGroup: OutputPathGroup<OutputPath>) => {
         return <RemoveOutputPathGroupAction>{
             outputPathGroup: outputPathGroup,
             type: ProjectSettingsActionNames.RemoveOutputPathGroupAction

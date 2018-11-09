@@ -9,8 +9,8 @@ import { FileConnection } from "./FileConnection";
 import { FileSource } from "./FileSource";
 import { HttpConnection } from "./HttpConnection";
 import { HttpSource } from "./HttpSource";
-import { OutputPath, IOutputPath } from "./OutputPath";
-import { OutputPathGroup, IOutputPathGroup } from "./OutputPathGroup";
+import { OutputPath } from "./OutputPath";
+import { OutputPathGroup } from "./OutputPathGroup";
 import { PackageSettings, IPackageSettings } from "./PackageSettings";
 import { ProjectSettings, IProjectSettings } from "./ProjectSettings";
 import { Gentron, IGentron } from "./Gentron";
@@ -42,10 +42,8 @@ export {
     HttpSource,
 
     OutputPath,
-    IOutputPath,
 
     OutputPathGroup,
-    IOutputPathGroup,
 
     PackageSettings,
     IPackageSettings,
