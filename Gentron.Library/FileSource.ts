@@ -2,10 +2,10 @@
 import { JsonObject } from "ta-json";
 import Utilities from "./Utilities";
 
-export interface IFileSource extends ISourceBase { }
+export interface IFileSource extends ISourceBase<IFileSource> { }
 
 @JsonObject()
-export class FileSource extends SourceBase implements IFileSource {
+export class FileSource extends SourceBase<IFileSource> implements IFileSource {
     /*
      *  Methods
      */

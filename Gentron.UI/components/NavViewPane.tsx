@@ -16,23 +16,70 @@ type NullableSources = Hash & {
 
 type NavViewPaneProps = NullableSources;
 
+type NavViewState = {
+    isOpen?: boolean;
+}
+
 @connect<NullableSources, {}, NavViewPaneProps>(mapStateToProps, mapDispatchToProps)
-export default class NavViewPane extends React.Component<NavViewPaneProps> {
+export default class NavViewPane extends React.Component<NavViewPaneProps, NavViewState> {
+    /*
+     *  Properties & Fields
+     */
+    private nestedIconsOpenClassName: React.CSSProperties = {};
+    private nestedIconsClosedClassName: React.CSSProperties = {};
+
+
     /*
      *  Constructors
      */
     public constructor(props: NavViewPaneProps) {
         super(props);
+        this.state = {
+            isOpen: true
+        };
     }
 
 
     /*
      *  Methods
      */
+    private handleTogglePaneClick(): void {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
     public render(): JSX.Element {
+        const pl6ClassName: string = this.state.isOpen
+            ? "pl-6"
+            : "";
+
+        const pl9ClassName: string = this.state.isOpen
+            ? "pl-9"
+            : "";
+
+        const nestedIconStyle: React.CSSProperties = this.state.isOpen
+            ? {
+                fontSize: `16px`,
+                height: `16px`,
+                lineHeight: `16px`,
+                width: `16px`,
+            }
+            : {
+                fontSize: `10px`,
+                height: `10x`,
+                lineHeight: `10px`,
+                width: `10px`,
+            };
+        const nestedIcon = (iconClassName: string): JSX.Element => (
+            <span className="icon">
+                <span className={iconClassName} style={nestedIconStyle}></span>
+            </span>
+        );
+
         return (
             <div className="navview-pane h-100">
-                <button className="pull-button">
+                <button className="pull-button" onClick={(ev: React.MouseEvent<HTMLButtonElement>) => this.handleTogglePaneClick()}>
                     <span className="default-icon-menu"></span>
                 </button>
 
@@ -45,22 +92,22 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                     </li>
 
                     <li>
-                        <Link to="/connections/db" className="pl-7">
-                            <span className="icon"><span className="mif-settings-ethernet"></span></span>
+                        <Link to="/connections/db" className={pl6ClassName}>
+                            {nestedIcon(`mif-settings-ethernet`)}
                             <span className="caption">Connection Strings</span>
                         </Link>
                     </li>
 
                     <li>
-                        <Link to="/environments" className="pl-7">
-                            <span className="icon"><span className="mif-earth"></span></span>
+                        <Link to="/environments" className={pl6ClassName}>
+                            {nestedIcon(`mif-earth`)}
                             <span className="caption">Environments</span>
                         </Link>
                     </li>
 
                     <li>
-                        <Link to="/output/paths" className="pl-7">
-                            <span className="icon"><span className="mif-folder-open"></span></span>
+                        <Link to="/output/paths" className={pl6ClassName}>
+                            {nestedIcon(`mif-folder-open`)}
                             <span className="caption">Output Paths</span>
                         </Link>
                     </li>
@@ -82,8 +129,8 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                     {
                         this.props.DatabaseSources.map((connection, i) =>
                             <li key={i}>
-                                <Link to={`/sources/db/${i}`} className="pl-7">
-                                    <span className="icon"><span className="mif-database"></span></span>
+                                <Link to={`/sources/db/${i}`} className={pl6ClassName}>
+                                    {nestedIcon(`mif-database`)}
                                     <span className="caption">{connection.Name}</span>
                                 </Link>
                             </li>
@@ -100,8 +147,8 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                     {
                         this.props.FileSources.map((file, i) =>
                             <li key={i}>
-                                <Link to={`/sources/file/${i}`} className="pl-7">
-                                    <span className="icon"><span className="mif-file-code"></span></span>
+                                <Link to={`/sources/file/${i}`} className={pl6ClassName}>
+                                    {nestedIcon(`mif-file-code`)}
                                     <span className="caption">{file.Name}</span>
                                 </Link>
                             </li>
@@ -118,8 +165,8 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                     {
                         this.props.HttpSources.map((file, i) =>
                             <li key={i}>
-                                <Link to={`/sources/http/${i}`} className="pl-7">
-                                    <span className="icon"><span className="mif-http"></span></span>
+                                <Link to={`/sources/http/${i}`} className={pl6ClassName}>
+                                    {nestedIcon(`mif-http`)}
                                     <span className="caption">{file.Name}</span>
                                 </Link>
                             </li>
@@ -138,8 +185,8 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                             (
                                 <React.Fragment key={i}>
                                     <li>
-                                        <Link to={`/engines/manage/${i}`} className="pl-7">
-                                            <span className="icon"><span className="mif-drive-eta"></span></span>
+                                        <Link to={`/engines/manage/${i}`} className={pl6ClassName}>
+                                            {nestedIcon(`mif-drive-eta`)}
                                             <span className="caption">{engine.Name}</span>
                                         </Link>
                                     </li>
@@ -147,8 +194,8 @@ export default class NavViewPane extends React.Component<NavViewPaneProps> {
                                     {
                                         engine.Templates.map((template, j) => 
                                             <li key={j}>
-                                                <Link to={`/engines/manage/${i}/templates/${j}`} className="pl-10">
-                                                    <span className="icon"><span className="mif-embed2"></span></span>
+                                                <Link to={`/engines/manage/${i}/templates/${j}`} className={pl9ClassName}>
+                                                    {nestedIcon(`mif-embed2`)}
                                                     <span className="caption">{template.Name}</span>
                                                 </Link>
                                             </li>                                            

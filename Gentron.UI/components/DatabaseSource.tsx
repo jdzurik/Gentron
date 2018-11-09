@@ -41,9 +41,10 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
         this.props.addOrUpdateDatabaseSource(source);
     }
 
-    private handleScriptFileNameChange(source: IDatabaseSourceProperties, value: string): void {
+    private handleScriptFileNameChange(value: string): void {
+        const source: IDatabaseSource = this.props.DatabaseSource.clone();
         source.Script.Path = value;
-        this.props.addOrUpdateDatabaseSource(source as IDatabaseSource);
+        this.props.addOrUpdateDatabaseSource(source);
     }
 
     private handleActiveConnectionChange(ev: React.ChangeEvent<HTMLSelectElement>): void {
@@ -76,11 +77,14 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                     <Row className="mt-2 mb-2">
                         <Cell>
                             <select
-                                onChange={this.handleActiveConnectionChange.bind(this)}>
+                                onChange={this.handleActiveConnectionChange.bind(this)}
+                                value={this.props.DatabaseSource.ActiveConnectionGroup.ID}>
                                 {
-                                    this.props.DatabaseConnections.map((dbConn, i) =>
-                                        <option key={i} value={dbConn.ID}>{dbConn.Name}</option>
-                                    )
+                                    this.props.DatabaseConnections.map((connectionGroup: IConnectionGroup<IDatabaseConnection>, i: number) => {
+                                        return (
+                                            <option key={i} value={connectionGroup.ID}>{connectionGroup.Name}</option>
+                                        );
+                                    })
                                 }
                             </select>
                         </Cell>
@@ -94,7 +98,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                 </Cell>
                                 <Cell colSpan={8}>
                                     <FileInput
-                                        onFilePathChange={(value: string) => this.handleScriptFileNameChange(this.props.DatabaseSource, value)}
+                                        onFilePathChange={(value: string) => this.handleScriptFileNameChange(value)}
                                         value={this.props.DatabaseSource.Script.Path}
                                     />
                                 </Cell>

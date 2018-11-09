@@ -12,7 +12,7 @@ import * as ReactDOM from "react-dom";
 
 import { AnyAction, Store } from "redux";
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { ConnectionGroup, IConnectionGroup, DatabaseConnection, IDatabaseConnection, IEnvironment, Environment, IDatabaseSource, DatabaseSource, PackageSettings, ProjectSettings, IGentron, Gentron } from "../Gentron.Library";
+import { Gentron, IGentron } from "../Gentron.Library";
 import { Provider } from 'react-redux';
 import App from "./components/App";
 import configureStore from './store/configureStore';
@@ -53,16 +53,14 @@ ReactDOM.render(
     document.getElementById(rootId)
 );
 
-if (process.env.toString() !== "production") {
-    if ((module as any).hot) {
-        (module as any).hot.accept("./components/App", () => {
-            const NewApp: typeof App = require("./components/App").default;
-            ReactDOM.render(
-                <Provider store={store}>
-                    <NewApp history={history} />
-                </Provider>,
-                document.getElementById(rootId)
-            );   
-        });
-    }
+if (process.env.toString() !== "production" && (module as any).hot) {
+    (module as any).hot.accept("./components/App", () => {
+        const NewApp: typeof App = require("./components/App").default;
+        ReactDOM.render(
+            <Provider store={store}>
+                <NewApp history={history} />
+            </Provider>,
+            document.getElementById(rootId)
+        );   
+    });
 }

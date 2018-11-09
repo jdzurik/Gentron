@@ -3,7 +3,7 @@ import { IActivateable, ICloneable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
 import { Cloneable } from "./abstract";
 
-export interface ISourceBase extends IActivateable, ICloneable<ISourceBase>, IModifiable<ISourceBase> {
+export interface ISourceBase<T extends ISourceBase<T>> extends IActivateable, ICloneable<T>, IModifiable<T> {
     /*
      *  Properties & Fields 
      */
@@ -12,7 +12,7 @@ export interface ISourceBase extends IActivateable, ICloneable<ISourceBase>, IMo
 }
 
 @JsonObject()
-export abstract class SourceBase extends Cloneable<ISourceBase> implements ISourceBase {
+export abstract class SourceBase<T extends ISourceBase<T>> extends Cloneable<T> implements ISourceBase<T> {
     /*
      *  Properties & Fields 
      */
@@ -40,7 +40,7 @@ export abstract class SourceBase extends Cloneable<ISourceBase> implements ISour
     /*
      *  Methods
      */
-    public abstract clone(): ISourceBase;
+    public abstract clone(): T;
 
-    public abstract update(source: ISourceBase): void;
+    public abstract update(source: T): void;
 }

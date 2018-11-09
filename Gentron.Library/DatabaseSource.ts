@@ -2,7 +2,7 @@
 import { ISourceBase, SourceBase } from "./SourceBase";
 import { JsonElementType, JsonObject, JsonProperty, JsonConverter, IPropertyConverter, JsonValue, JsonValueObject, JsonType } from "ta-json";
 
-export interface IDatabaseSource extends ISourceBase {
+export interface IDatabaseSource extends ISourceBase<IDatabaseSource> {
     /*
      *  Properties & Fields 
      */
@@ -26,7 +26,7 @@ class ActiveConnectionGroupJsonConverter implements IPropertyConverter {
 }
 
 @JsonObject()
-export class DatabaseSource extends SourceBase implements IDatabaseSource {
+export class DatabaseSource extends SourceBase<IDatabaseSource> implements IDatabaseSource {
     /*
      *  Properties & Fields 
      */
@@ -61,7 +61,7 @@ export class DatabaseSource extends SourceBase implements IDatabaseSource {
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
         ret.Result = this.Result;
-        ret.Script = this.Script;
+        ret.Script = this.Script.clone();
 
         return ret;
     }

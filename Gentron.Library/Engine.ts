@@ -3,7 +3,7 @@ import { ITemplate, Template } from "./Template";
 import { JsonObject, JsonProperty, JsonType } from "ta-json";
 import { Utilities } from ".";
 
-export interface IEngine extends ISourceBase {
+export interface IEngine extends ISourceBase<IEngine> {
     /*
      *  Properties & Fields 
      */
@@ -11,7 +11,7 @@ export interface IEngine extends ISourceBase {
 }
 
 @JsonObject()
-export class Engine extends SourceBase implements IEngine {
+export class Engine extends SourceBase<IEngine> implements IEngine {
     /*
      *  Properties & Fields 
      */

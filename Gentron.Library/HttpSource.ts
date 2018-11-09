@@ -2,10 +2,10 @@
 import { JsonObject } from "ta-json";
 import Utilities from "./Utilities";
 
-export interface IHttpSource extends ISourceBase { }
+export interface IHttpSource extends ISourceBase<IHttpSource> { }
 
 @JsonObject()
-export class HttpSource extends SourceBase implements IHttpSource {
+export class HttpSource extends SourceBase<IHttpSource> implements IHttpSource {
     /*
      *  Methods
      */

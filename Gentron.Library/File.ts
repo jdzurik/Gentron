@@ -1,11 +1,12 @@
 ﻿import * as fs from "fs";
 import * as path from "path";
 import { FileOperationResult, IFileOperationResult } from "./results";
-import { IModifiable } from "./interfaces"
+import { IModifiable, ICloneable } from "./interfaces"
 import { JsonObject, JsonProperty } from "ta-json";
 import { Utilities } from "./";
+import { Cloneable } from "./abstract";
 
-export interface IFile extends IModifiable<IFile> {
+export interface IFile extends ICloneable<IFile>, IModifiable<IFile> {
     /*
      *  Properties & Fields
      */
@@ -21,7 +22,7 @@ export interface IFile extends IModifiable<IFile> {
 }
 
 @JsonObject()
-export class File implements IFile {
+export class File extends Cloneable<IFile> implements IFile {
     /*
      *  Properties & Fields
      */
@@ -39,6 +40,7 @@ export class File implements IFile {
      *  Constructors
      */
     public constructor() {
+        super();
         this.Contents = "";
         this.LastModified = undefined;
         this.Path = "";
@@ -96,9 +98,19 @@ export class File implements IFile {
         }
     }
 
+    public clone(): IFile {
+        const ret: File = new File();
+
+        ret._id = this._id;
+        ret.Contents = this.Contents;
+        ret.LastModified = this.LastModified;
+        ret.Path = this.Path;
+
+        return ret;
+    }
+
     public loadContents(filePath: string = this.Path || "", setContents: boolean = true): string {
         try {
-
             const buf: Buffer = fs.readFileSync(filePath);
             const contents: string = buf.toString();
 
@@ -138,7 +150,7 @@ export class File implements IFile {
 
         if (this.Path !== file.Path) {
             this.Path = file.Path;
-            this.Contents = this.loadContents();
+            this.loadContents();
         }
     }
 }
