@@ -1,16 +1,9 @@
-﻿import { ConnectionBase, IConnectionBase } from "./ConnectionBase";
+﻿import { ConnectionBase } from "./ConnectionBase";
 import { JsonObject, JsonProperty } from "ta-json";
 import { Utilities } from ".";
 
-export interface IFileConnection extends IConnectionBase {
-    /*
-     *  Properties & Fields 
-     */
-    Environment: string;
-}
-
 @JsonObject()
-export class FileConnection extends ConnectionBase implements IFileConnection {
+export class FileConnection extends ConnectionBase<FileConnection> {
     /*
      *  Properties & Fields 
      */

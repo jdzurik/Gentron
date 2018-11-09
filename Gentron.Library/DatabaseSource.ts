@@ -1,17 +1,17 @@
-﻿import { ConnectionGroup, File, IConnectionGroup, IDatabaseConnection, IFile, DatabaseConnection, Utilities } from "./";
+﻿import { ConnectionGroup, File, IFile, DatabaseConnection, Utilities } from "./";
+import { IPropertyConverter, JsonConverter, JsonElementType, JsonObject, JsonProperty, JsonType, JsonValue } from "ta-json";
 import { SourceBase } from "./SourceBase";
-import { JsonElementType, JsonObject, JsonProperty, JsonConverter, IPropertyConverter, JsonValue, JsonValueObject, JsonType } from "ta-json";
 
 class ActiveConnectionGroupJsonConverter implements IPropertyConverter {
-    public serialize(property: IConnectionGroup<IDatabaseConnection>): JsonValue {
+    public serialize(property: ConnectionGroup<DatabaseConnection>): JsonValue {
         return {
             ID: property.ID
         };
     }
 
     public deserialize(_value: JsonValue) {
-        const value: IConnectionGroup<IDatabaseConnection> = _value as any as IConnectionGroup<IDatabaseConnection>;
-        const connectionGroup: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
+        const value: ConnectionGroup<DatabaseConnection> = _value as any as ConnectionGroup<DatabaseConnection>;
+        const connectionGroup: ConnectionGroup<DatabaseConnection> = new ConnectionGroup<DatabaseConnection>();
         (connectionGroup as any)._id = value.ID;
         return connectionGroup;
     }
@@ -25,7 +25,7 @@ export class DatabaseSource extends SourceBase<DatabaseSource> {
     @JsonProperty()
     @JsonElementType(ConnectionGroup)
     @JsonConverter(ActiveConnectionGroupJsonConverter)
-    public ActiveConnectionGroup: IConnectionGroup<IDatabaseConnection>;
+    public ActiveConnectionGroup: ConnectionGroup<DatabaseConnection>;
 
     @JsonProperty()
     @JsonType(File)
@@ -37,7 +37,7 @@ export class DatabaseSource extends SourceBase<DatabaseSource> {
      */
     public constructor() {
         super();
-        this.ActiveConnectionGroup = new ConnectionGroup<IDatabaseConnection>();
+        this.ActiveConnectionGroup = new ConnectionGroup<DatabaseConnection>();
         this.Script = new File();
     }
 

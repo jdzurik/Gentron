@@ -1,11 +1,9 @@
-﻿import { IActivateable, ICloneable, IModifiable } from "./interfaces";
-import { Cloneable } from "./abstract";
+﻿import { Cloneable } from "./abstract";
+import { IActivateable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
 
-export interface IConnectionBase extends IActivateable, ICloneable<IConnectionBase>, IModifiable<IConnectionBase> { }
-
 @JsonObject()
-export abstract class ConnectionBase extends Cloneable<IConnectionBase> implements IConnectionBase {
+export abstract class ConnectionBase<T> extends Cloneable<T> implements IActivateable, IModifiable<T> {
     /*
      *  Properties & Fields 
      */
@@ -25,7 +23,7 @@ export abstract class ConnectionBase extends Cloneable<IConnectionBase> implemen
     /*
      *  Methods
      */
-    public abstract clone(): IConnectionBase;
+    public abstract clone(): T;
 
-    public abstract update(connection: IConnectionBase): void;
+    public abstract update(connection: T): void;
 }

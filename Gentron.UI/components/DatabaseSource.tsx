@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { Hash } from "../../Gentron.Library/types";
 import { Cell, FileInput, Grid, LinkButton, Row } from "./metro";
 import { connect } from "../connect";
-import { IGentron, IConnectionGroup, IDatabaseConnection, DatabaseSource as LibDatabaseSource } from "../../Gentron.Library";
+import { IGentron, ConnectionGroup, DatabaseConnection, DatabaseSource as LibDatabaseSource } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import SplitPane from "./SplitPane";
@@ -14,7 +14,7 @@ import SplitPane from "./SplitPane";
 type IDatabaseSourceProperties = LibDatabaseSource;
 
 type DbSource = Hash & {
-    DatabaseConnections?: IConnectionGroup<IDatabaseConnection>[];
+    DatabaseConnections?: ConnectionGroup<DatabaseConnection>[];
     DatabaseSource?: IDatabaseSourceProperties;
 };
 
@@ -80,7 +80,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                 onChange={this.handleActiveConnectionChange.bind(this)}
                                 value={this.props.DatabaseSource.ActiveConnectionGroup.ID}>
                                 {
-                                    this.props.DatabaseConnections.map((connectionGroup: IConnectionGroup<IDatabaseConnection>, i: number) => {
+                                    this.props.DatabaseConnections.map((connectionGroup: ConnectionGroup<DatabaseConnection>, i: number) => {
                                         return (
                                             <option key={i} value={connectionGroup.ID}>{connectionGroup.Name}</option>
                                         );

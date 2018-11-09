@@ -1,16 +1,9 @@
-﻿import { ConnectionBase, IConnectionBase } from "./ConnectionBase";
+﻿import { ConnectionBase } from "./ConnectionBase";
 import { JsonObject, JsonProperty } from "ta-json";
 import { Utilities } from ".";
 
-export interface IHttpConnection extends IConnectionBase {
-    /*
-     *  Properties & Fields 
-     */
-    Environment: string;
-}
-
 @JsonObject()
-export class HttpConnection extends ConnectionBase implements IHttpConnection {
+export class HttpConnection extends ConnectionBase<HttpConnection> {
     /*
      *  Properties & Fields 
      */

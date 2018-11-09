@@ -6,12 +6,12 @@ import { bindActionCreators } from "redux";
 import { Hash } from "../../Gentron.Library/types";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IGentron, ConnectionGroup, DatabaseConnection, IConnectionGroup, IDatabaseConnection, Environment, Utilities } from "../../Gentron.Library";
+import { IGentron, ConnectionGroup, DatabaseConnection, Environment, Utilities } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableDatabaseConnections = Hash & {
-    DatabaseConnections?: IConnectionGroup<IDatabaseConnection>[];
+    DatabaseConnections?: ConnectionGroup<DatabaseConnection>[];
     Environments?: Environment[];
 };
 
@@ -21,7 +21,7 @@ type DatabaseConnectionsProps = NullableDatabaseConnections
     & RouteComponentProps<{}>;
 
 type DatabaseConnectionsState = {
-    EditingConnectionGroup: IConnectionGroup<IDatabaseConnection>;
+    EditingConnectionGroup: ConnectionGroup<DatabaseConnection>;
 };
 
 @connect<NullableDatabaseConnections, {}, DatabaseConnectionsProps>(mapStateToProps, mapDispatchToProps)
@@ -41,21 +41,21 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
      *  Methods
      */
     private handleAddConnectionClick(): void {
-        this.handleOpenEditConnectionClick(new ConnectionGroup<IDatabaseConnection>());
+        this.handleOpenEditConnectionClick(new ConnectionGroup<DatabaseConnection>());
     }
 
-    private handleRemoveConnectionClick(connectionGroup: IConnectionGroup<IDatabaseConnection>): void {
+    private handleRemoveConnectionClick(connectionGroup: ConnectionGroup<DatabaseConnection>): void {
         this.props.removeDatabaseConnectionGroup(connectionGroup);
     }
 
-    private handleOpenEditConnectionClick(connectionGroup: IConnectionGroup<IDatabaseConnection>): void {
+    private handleOpenEditConnectionClick(connectionGroup: ConnectionGroup<DatabaseConnection>): void {
         this.setState((prevState: Readonly<DatabaseConnectionsState>) => {
             return Object.assign({}, prevState, { EditingConnectionGroup: connectionGroup.clone() });
         });
     }
 
     private handleEditConnectionNameChange(name: string): void {
-        const editingConnectionGroup: IConnectionGroup<IDatabaseConnection> = this.state.EditingConnectionGroup;
+        const editingConnectionGroup: ConnectionGroup<DatabaseConnection> = this.state.EditingConnectionGroup;
         editingConnectionGroup.Name = name;
         this.setState((prevState: Readonly<DatabaseConnectionsState>) => {
             return Object.assign({}, prevState, { EditingConnectionGroup: editingConnectionGroup });
@@ -68,7 +68,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                 {},
                 prevState,
                 {
-                    Connections: prevState.EditingConnectionGroup.Connections.map((conn: IDatabaseConnection, i: number) => {
+                    Connections: prevState.EditingConnectionGroup.Connections.map((conn: DatabaseConnection, i: number) => {
                         if (conn.Environment === environment.Name) {
                             conn.ConnectionString = connStr;
                         }
@@ -114,7 +114,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.DatabaseConnections.map((connection: IConnectionGroup<IDatabaseConnection>, i: number) =>
+                                this.props.DatabaseConnections.map((connection: ConnectionGroup<DatabaseConnection>, i: number) =>
                                     <tr key={i}>
                                         <td>
                                             <button className="button"
@@ -163,7 +163,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
 
                                     {
                                         this.props.Environments.map((env: Environment, i: number) => {
-                                            let currConnection: IDatabaseConnection = this.state.EditingConnectionGroup.Connections.find(conn => conn.Environment === env.Name);
+                                            let currConnection: DatabaseConnection = this.state.EditingConnectionGroup.Connections.find(conn => conn.Environment === env.Name);
 
                                             if (!Utilities.hasValue(currConnection)) {
                                                 currConnection = new DatabaseConnection();
