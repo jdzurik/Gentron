@@ -1,28 +1,13 @@
 ﻿import * as fs from "fs";
 import * as path from "path";
+import { Cloneable } from "./abstract";
 import { FileOperationResult, IFileOperationResult } from "./results";
-import { IModifiable, ICloneable } from "./interfaces"
+import { IModifiable } from "./interfaces"
 import { JsonObject, JsonProperty } from "ta-json";
 import { Utilities } from "./";
-import { Cloneable } from "./abstract";
-
-export interface IFile extends ICloneable<IFile>, IModifiable<IFile> {
-    /*
-     *  Properties & Fields
-     */
-    Contents: string;
-    LastModified?: Date;
-    Path: string;
-
-    /*
-     *  Methods
-     */
-    loadContents(filePath?: string, setContents?: boolean): string;
-    loadContentsAsync(filePath?: string, setContents?: boolean): Promise<string>;
-}
 
 @JsonObject()
-export class File extends Cloneable<IFile> implements IFile {
+export class File extends Cloneable<File> implements IModifiable<File> {
     /*
      *  Properties & Fields
      */
@@ -98,7 +83,7 @@ export class File extends Cloneable<IFile> implements IFile {
         }
     }
 
-    public clone(): IFile {
+    public clone(): File {
         const ret: File = new File();
 
         ret._id = this._id;
@@ -141,7 +126,7 @@ export class File extends Cloneable<IFile> implements IFile {
         }
     }
 
-    public update(file: IFile): void {
+    public update(file: File): void {
         if (!Utilities.hasValue(file)) {
             return;
         }

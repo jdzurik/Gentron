@@ -1,5 +1,5 @@
 ﻿import { Environment } from "./Environment";
-import { File, IFile } from "./File";
+import { File } from "./File";
 import { DatabaseConnection } from "./DatabaseConnection";
 import { ConnectionGroup } from "./ConnectionGroup";
 import { DatabaseSource } from "./DatabaseSource";
@@ -20,7 +20,6 @@ export {
     Environment,
 
     File,
-    IFile,
 
     DatabaseConnection,
 

@@ -1,4 +1,4 @@
-﻿import { ConnectionGroup, File, IFile, DatabaseConnection, Utilities } from "./";
+﻿import { ConnectionGroup, DatabaseConnection, File, Utilities } from "./";
 import { IPropertyConverter, JsonConverter, JsonElementType, JsonObject, JsonProperty, JsonType, JsonValue } from "ta-json";
 import { SourceBase } from "./SourceBase";
 
@@ -29,7 +29,7 @@ export class DatabaseSource extends SourceBase<DatabaseSource> {
 
     @JsonProperty()
     @JsonType(File)
-    public Script: IFile;
+    public Script: File;
 
 
     /*
@@ -69,6 +69,6 @@ export class DatabaseSource extends SourceBase<DatabaseSource> {
         this.Name = databaseSource.Name;
         this.Result = databaseSource.Result;
 
-        this.Script.update(databaseSource.Script as IFile);
+        this.Script.update(databaseSource.Script);
     }
 }
