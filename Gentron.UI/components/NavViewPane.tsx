@@ -4,14 +4,14 @@ import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
 import { Hash } from "../../Gentron.Library/types";
 import { connect } from "../connect";
-import { IGentron, IDatabaseSource, IEngine, IFileSource, IHttpSource } from "../../Gentron.Library";
+import { IGentron, DatabaseSource, Engine, FileSource, HttpSource } from "../../Gentron.Library";
 import { Link } from 'react-router-dom';
 
 type NullableSources = Hash & {
-    DatabaseSources?: IDatabaseSource[];
-    Engines?: IEngine[];
-    FileSources?: IFileSource[];
-    HttpSources?: IHttpSource[];
+    DatabaseSources?: DatabaseSource[];
+    Engines?: Engine[];
+    FileSources?: FileSource[];
+    HttpSources?: HttpSource[];
 };
 
 type NavViewPaneProps = NullableSources;
@@ -127,11 +127,11 @@ export default class NavViewPane extends React.Component<NavViewPaneProps, NavVi
                     </li>
 
                     {
-                        this.props.DatabaseSources.map((connection, i) =>
+                        this.props.DatabaseSources.map((source: DatabaseSource, i: number) =>
                             <li key={i}>
                                 <Link to={`/sources/db/${i}`} className={pl6ClassName}>
                                     {nestedIcon(`mif-database`)}
-                                    <span className="caption">{connection.Name}</span>
+                                    <span className="caption">{source.Name}</span>
                                 </Link>
                             </li>
                         )
@@ -145,11 +145,11 @@ export default class NavViewPane extends React.Component<NavViewPaneProps, NavVi
                     </li>
 
                     {
-                        this.props.FileSources.map((file, i) =>
+                        this.props.FileSources.map((source: FileSource, i: number) =>
                             <li key={i}>
                                 <Link to={`/sources/file/${i}`} className={pl6ClassName}>
                                     {nestedIcon(`mif-file-code`)}
-                                    <span className="caption">{file.Name}</span>
+                                    <span className="caption">{source.Name}</span>
                                 </Link>
                             </li>
                         )
@@ -163,11 +163,11 @@ export default class NavViewPane extends React.Component<NavViewPaneProps, NavVi
                     </li>
 
                     {
-                        this.props.HttpSources.map((file, i) =>
+                        this.props.HttpSources.map((source: HttpSource, i: number) =>
                             <li key={i}>
                                 <Link to={`/sources/http/${i}`} className={pl6ClassName}>
                                     {nestedIcon(`mif-http`)}
-                                    <span className="caption">{file.Name}</span>
+                                    <span className="caption">{source.Name}</span>
                                 </Link>
                             </li>
                         )
@@ -181,18 +181,18 @@ export default class NavViewPane extends React.Component<NavViewPaneProps, NavVi
                     </li>
 
                     {
-                        this.props.Engines.map((engine, i) =>
+                        this.props.Engines.map((source: Engine, i: number) =>
                             (
                                 <React.Fragment key={i}>
                                     <li>
                                         <Link to={`/engines/manage/${i}`} className={pl6ClassName}>
                                             {nestedIcon(`mif-drive-eta`)}
-                                            <span className="caption">{engine.Name}</span>
+                                            <span className="caption">{source.Name}</span>
                                         </Link>
                                     </li>
 
                                     {
-                                        engine.Templates.map((template, j) => 
+                                        source.Templates.map((template, j) => 
                                             <li key={j}>
                                                 <Link to={`/engines/manage/${i}/templates/${j}`} className={pl9ClassName}>
                                                     {nestedIcon(`mif-embed2`)}

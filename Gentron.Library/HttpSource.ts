@@ -1,15 +1,13 @@
-﻿import { ISourceBase, SourceBase } from "./SourceBase";
+﻿import { SourceBase } from "./SourceBase";
 import { JsonObject } from "ta-json";
 import Utilities from "./Utilities";
 
-export interface IHttpSource extends ISourceBase<IHttpSource> { }
-
 @JsonObject()
-export class HttpSource extends SourceBase<IHttpSource> implements IHttpSource {
+export class HttpSource extends SourceBase<HttpSource> {
     /*
      *  Methods
      */
-    public clone(): IHttpSource {
+    public clone(): HttpSource {
         const ret: HttpSource = new HttpSource();
 
         ret._id = this._id;
@@ -21,7 +19,7 @@ export class HttpSource extends SourceBase<IHttpSource> implements IHttpSource {
     }
 
 
-    public update(httpSource: IHttpSource): void {
+    public update(httpSource: HttpSource): void {
         if (!Utilities.hasValue(httpSource)) {
             return;
         }

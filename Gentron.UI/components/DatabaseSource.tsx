@@ -6,12 +6,12 @@ import { bindActionCreators } from "redux";
 import { Hash } from "../../Gentron.Library/types";
 import { Cell, FileInput, Grid, LinkButton, Row } from "./metro";
 import { connect } from "../connect";
-import { IGentron, IConnectionGroup, IDatabaseConnection, IDatabaseSource } from "../../Gentron.Library";
+import { IGentron, IConnectionGroup, IDatabaseConnection, DatabaseSource as LibDatabaseSource } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import SplitPane from "./SplitPane";
 
-type IDatabaseSourceProperties = IDatabaseSource;
+type IDatabaseSourceProperties = LibDatabaseSource;
 
 type DbSource = Hash & {
     DatabaseConnections?: IConnectionGroup<IDatabaseConnection>[];
@@ -36,13 +36,13 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
     /*
      *  Methods
      */
-    private handleNameClick(source: IDatabaseSource): void {
+    private handleNameClick(source: LibDatabaseSource): void {
         source.Name = "Test";
         this.props.addOrUpdateDatabaseSource(source);
     }
 
     private handleScriptFileNameChange(value: string): void {
-        const source: IDatabaseSource = this.props.DatabaseSource.clone();
+        const source: LibDatabaseSource = this.props.DatabaseSource.clone();
         source.Script.Path = value;
         this.props.addOrUpdateDatabaseSource(source);
     }

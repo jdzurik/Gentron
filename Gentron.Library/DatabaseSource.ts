@@ -1,14 +1,6 @@
 ﻿import { ConnectionGroup, File, IConnectionGroup, IDatabaseConnection, IFile, DatabaseConnection, Utilities } from "./";
-import { ISourceBase, SourceBase } from "./SourceBase";
+import { SourceBase } from "./SourceBase";
 import { JsonElementType, JsonObject, JsonProperty, JsonConverter, IPropertyConverter, JsonValue, JsonValueObject, JsonType } from "ta-json";
-
-export interface IDatabaseSource extends ISourceBase<IDatabaseSource> {
-    /*
-     *  Properties & Fields 
-     */
-    ActiveConnectionGroup: IConnectionGroup<IDatabaseConnection>;
-    Script?: IFile;
-}
 
 class ActiveConnectionGroupJsonConverter implements IPropertyConverter {
     public serialize(property: IConnectionGroup<IDatabaseConnection>): JsonValue {
@@ -26,7 +18,7 @@ class ActiveConnectionGroupJsonConverter implements IPropertyConverter {
 }
 
 @JsonObject()
-export class DatabaseSource extends SourceBase<IDatabaseSource> implements IDatabaseSource {
+export class DatabaseSource extends SourceBase<DatabaseSource> {
     /*
      *  Properties & Fields 
      */
@@ -53,7 +45,7 @@ export class DatabaseSource extends SourceBase<IDatabaseSource> implements IData
     /*
      *  Methods
      */
-    public clone(): IDatabaseSource {
+    public clone(): DatabaseSource {
         const ret: DatabaseSource = new DatabaseSource();
 
         ret._id = this._id;
@@ -67,7 +59,7 @@ export class DatabaseSource extends SourceBase<IDatabaseSource> implements IData
     }
 
 
-    public update(databaseSource: IDatabaseSource): void {
+    public update(databaseSource: DatabaseSource): void {
         if (!Utilities.hasValue(databaseSource)) {
             return;
         }
@@ -78,9 +70,5 @@ export class DatabaseSource extends SourceBase<IDatabaseSource> implements IData
         this.Result = databaseSource.Result;
 
         this.Script.update(databaseSource.Script as IFile);
-        //if (Utilities.hasValue(this.Script)
-        //    && Utilities.hasValue(databaseSource.Script)
-        //    && this.Script.Path !== databaseSource.Script.Path) {
-        //}
     }
 }

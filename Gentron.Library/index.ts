@@ -2,13 +2,13 @@
 import { File, IFile } from "./File";
 import { DatabaseConnection, IDatabaseConnection } from "./DatabaseConnection";
 import { ConnectionGroup, IConnectionGroup } from "./ConnectionGroup";
-import { DatabaseSource, IDatabaseSource } from "./DatabaseSource";
+import { DatabaseSource } from "./DatabaseSource";
 import { Template, ITemplate } from "./Template";
-import { Engine, IEngine } from "./Engine";
+import { Engine } from "./Engine";
 import { FileConnection, IFileConnection } from "./FileConnection";
-import { FileSource, IFileSource } from "./FileSource";
+import { FileSource } from "./FileSource";
 import { HttpConnection, IHttpConnection } from "./HttpConnection";
-import { HttpSource, IHttpSource } from "./HttpSource";
+import { HttpSource } from "./HttpSource";
 import { OutputPath, IOutputPath } from "./OutputPath";
 import { OutputPathGroup, IOutputPathGroup } from "./OutputPathGroup";
 import { PackageSettings, IPackageSettings } from "./PackageSettings";
@@ -30,25 +30,21 @@ export {
     IConnectionGroup,
 
     DatabaseSource,
-    IDatabaseSource,
 
     Template,
     ITemplate,
 
     Engine,
-    IEngine,
 
     FileConnection,
     IFileConnection,
 
     FileSource,
-    IFileSource,
 
     HttpConnection,
     IHttpConnection,
 
     HttpSource,
-    IHttpSource,
 
     OutputPath,
     IOutputPath,

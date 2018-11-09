@@ -1,15 +1,13 @@
-﻿import { ISourceBase, SourceBase } from "./SourceBase";
+﻿import { SourceBase } from "./SourceBase";
 import { JsonObject } from "ta-json";
 import Utilities from "./Utilities";
 
-export interface IFileSource extends ISourceBase<IFileSource> { }
-
 @JsonObject()
-export class FileSource extends SourceBase<IFileSource> implements IFileSource {
+export class FileSource extends SourceBase<FileSource> {
     /*
      *  Methods
      */
-    public clone(): IFileSource {
+    public clone(): FileSource {
         const ret: FileSource = new FileSource();
 
         ret._id = this._id;
@@ -21,7 +19,7 @@ export class FileSource extends SourceBase<IFileSource> implements IFileSource {
     }
 
 
-    public update(fileSource: IFileSource): void {
+    public update(fileSource: FileSource): void {
         if (!Utilities.hasValue(fileSource)) {
             return;
         }

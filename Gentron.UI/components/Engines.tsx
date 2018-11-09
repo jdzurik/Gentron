@@ -5,12 +5,12 @@ import { bindActionCreators } from "redux";
 import { Hash } from "../../Gentron.Library/types";
 import { Cell, Grid } from "./metro";
 import { connect } from "../connect";
-import { IGentron, Engine, IEngine } from "../../Gentron.Library";
+import { IGentron, Engine } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableEngines = Hash & {
-    Engines?: IEngine[];
+    Engines?: Engine[];
 };
 
 type EnginesProps = NullableEngines
@@ -31,13 +31,13 @@ export default class Engines extends React.Component<EnginesProps> {
      *  Methods
      */
     private handleAddEngineClick(): void {
-        const source: IEngine = new Engine();
+        const source: Engine = new Engine();
         source.Name = `Engine${this.props.Engines.length}`;
 
         this.props.addOrUpdateEngine(source);
     }
 
-    private handleRemoveEngineClick(source: IEngine): void {
+    private handleRemoveEngineClick(source: Engine): void {
         this.props.removeEngine(source);
     }
 

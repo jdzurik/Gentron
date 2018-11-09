@@ -4,13 +4,13 @@ import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, IEngine } from "../../Gentron.Library";
+import { IGentron, Engine as LibEngine } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 
 type HashedEngine = Hash & {
-    Engine?: IEngine;
+    Engine?: LibEngine;
 };
 
 type EngineProps = HashedEngine
@@ -30,7 +30,7 @@ export default class Engine extends React.Component<EngineProps> {
     /*
      *  Methods
      */
-    private handleNameClick(source: IEngine): void {
+    private handleNameClick(source: LibEngine): void {
         source.Name = "Test";
         this.props.addOrUpdateEngine(source);
     }

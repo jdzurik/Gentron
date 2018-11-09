@@ -1,15 +1,15 @@
-﻿import { IDatabaseSource, IEngine, IEnvironment, IFileSource, IHttpSource, DatabaseSource, Engine, Environment, FileSource, HttpSource } from ".";
+﻿import { IEnvironment, DatabaseSource, Engine, Environment, FileSource, HttpSource } from ".";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
 
 export interface IPackageSettings {
     /*
      *  Properties & Fields 
      */
-    DatabaseSources: IDatabaseSource[];
-    Engines: IEngine[];
+    DatabaseSources: DatabaseSource[];
+    Engines: Engine[];
     Environments: IEnvironment[];
-    FileSources: IFileSource[];
-    HttpSources: IHttpSource[];
+    FileSources: FileSource[];
+    HttpSources: HttpSource[];
     PackageName: string;
     ReadMe: string;
 }
@@ -21,11 +21,11 @@ export class PackageSettings implements IPackageSettings {
      */
     @JsonProperty()
     @JsonElementType(DatabaseSource)
-    public DatabaseSources: IDatabaseSource[];
+    public DatabaseSources: DatabaseSource[];
 
     @JsonProperty()
     @JsonElementType(Engine)
-    public Engines: IEngine[];
+    public Engines: Engine[];
 
     @JsonProperty()
     @JsonElementType(Environment)
@@ -33,11 +33,11 @@ export class PackageSettings implements IPackageSettings {
 
     @JsonProperty()
     @JsonElementType(FileSource)
-    public FileSources: IFileSource[];
+    public FileSources: FileSource[];
 
     @JsonProperty()
     @JsonElementType(HttpSource)
-    public HttpSources: IHttpSource[];
+    public HttpSources: HttpSource[];
 
     @JsonProperty()
     public PackageName: string;

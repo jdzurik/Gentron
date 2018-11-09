@@ -4,14 +4,14 @@ import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, IHttpSource } from "../../Gentron.Library";
+import { IGentron, HttpSource as LibHttpSource } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import SplitPane from "./SplitPane";
 
 type HashedHttpSource = Hash & {
-    HttpSource?: IHttpSource
+    HttpSource?: LibHttpSource
 };
 
 type HttpSourceProps = HashedHttpSource
@@ -31,7 +31,7 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
     /*
      *  Methods
      */
-    private handleNameClick(source: IHttpSource): void {
+    private handleNameClick(source: LibHttpSource): void {
         source.Name = "Test";
         this.props.addOrUpdateHttpSource(source);
     }

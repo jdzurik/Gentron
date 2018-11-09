@@ -2,7 +2,7 @@
 import * as path from "path";
 import { Gentron as GentronConstants, InfoMessages } from "./constants";
 import { IFileOperationResult, FileOperationResult, GentronFsResult, IGentronFsResult } from "./results";
-import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities, File, IDatabaseSource, IConnectionGroup } from "./";
+import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities, File, IConnectionGroup, DatabaseSource } from "./";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
 import { IDatabaseConnection } from "./DatabaseConnection";
 
@@ -126,7 +126,7 @@ export class Gentron implements IGentron {
 
         try {
             ret.PackageSettings = Utilities.JSON.parse(packageReadResult.Result, PackageSettings);
-            ret.PackageSettings.DatabaseSources.forEach((source: IDatabaseSource, index: number) => {
+            ret.PackageSettings.DatabaseSources.forEach((source: DatabaseSource, index: number) => {
                 const connection: IConnectionGroup<IDatabaseConnection> = ret.ProjectSettings.DatabaseConnections.filter((connection: IConnectionGroup<IDatabaseConnection>) => {
                     return connection.ID === source.ActiveConnectionGroup.ID;
                 })[0];

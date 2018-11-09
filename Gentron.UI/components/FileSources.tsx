@@ -5,12 +5,12 @@ import { bindActionCreators } from "redux";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row, Switch } from "./metro";
 import { Hash } from "../../Gentron.Library/types";
 import { connect } from "../connect";
-import { IGentron, FileSource, IFileSource, Utilities } from "../../Gentron.Library";
+import { IGentron, FileSource, Utilities } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableFileSources = Hash & {
-    FileSources?: IFileSource[];
+    FileSources?: FileSource[];
 };
 
 type FileSourcesProps = NullableFileSources
@@ -18,7 +18,7 @@ type FileSourcesProps = NullableFileSources
     & RouteComponentProps<{}>;
 
 type FileSourcesState = {
-    EditingSource: IFileSource;
+    EditingSource: FileSource;
 };
 
 @connect<NullableFileSources, {}, FileSourcesProps>(mapStateToProps, mapDispatchToProps)
@@ -42,23 +42,23 @@ export default class FileSources extends React.Component<FileSourcesProps, FileS
         this.handleOpenEditSourceClick(new FileSource());
     }
 
-    private handleToggleSourceIsActiveClick(source: IFileSource, isActive: boolean): void {
+    private handleToggleSourceIsActiveClick(source: FileSource, isActive: boolean): void {
         source.IsActive = isActive;
         this.props.addOrUpdateFileSource(source);
     }
 
-    private handleRemoveSourceClick(source: IFileSource): void {
+    private handleRemoveSourceClick(source: FileSource): void {
         this.props.removeFileSource(source);
     }
 
-    private handleOpenEditSourceClick(source: IFileSource): void {
+    private handleOpenEditSourceClick(source: FileSource): void {
         this.setState((prevState: Readonly<FileSourcesState>) => {
             return Object.assign({}, prevState, { EditingSource: source.clone() });
         });
     }
 
     private handleEditSourceNameChange(name: string): void {
-        const editingSource: IFileSource = this.state.EditingSource;
+        const editingSource: FileSource = this.state.EditingSource;
         editingSource.Name = name;
         this.setState((prevState: Readonly<FileSourcesState>) => {
             return Object.assign({}, prevState, { EditingSource: editingSource });
@@ -100,7 +100,7 @@ export default class FileSources extends React.Component<FileSourcesProps, FileS
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.FileSources.map((source, i) =>
+                                this.props.FileSources.map((source: FileSource, i: number) =>
                                     <tr key={i}>
                                         <td>
                                             <Link to={`/sources/file/${i}`}>

@@ -1,17 +1,10 @@
-﻿import { ISourceBase, SourceBase } from "./SourceBase";
+﻿import { SourceBase } from "./SourceBase";
 import { ITemplate, Template } from "./Template";
 import { JsonObject, JsonProperty, JsonType } from "ta-json";
 import { Utilities } from ".";
 
-export interface IEngine extends ISourceBase<IEngine> {
-    /*
-     *  Properties & Fields 
-     */
-    Templates: ITemplate[];
-}
-
 @JsonObject()
-export class Engine extends SourceBase<IEngine> implements IEngine {
+export class Engine extends SourceBase<Engine> {
     /*
      *  Properties & Fields 
      */
@@ -32,7 +25,7 @@ export class Engine extends SourceBase<IEngine> implements IEngine {
     /*
      *  Methods
      */
-    public clone(): IEngine {
+    public clone(): Engine {
         const ret: Engine = new Engine();
 
         ret._id = this._id;
@@ -47,7 +40,7 @@ export class Engine extends SourceBase<IEngine> implements IEngine {
     }
 
 
-    public update(engine: IEngine): void {
+    public update(engine: Engine): void {
         if (!Utilities.hasValue(engine)) {
             return;
         }
