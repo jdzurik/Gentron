@@ -1,4 +1,4 @@
-﻿import { DatabaseSource, Engine, FileSource, HttpSource, ITemplate, Environment } from '../../Gentron.Library';
+﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource, Template } from '../../Gentron.Library';
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 
 export interface AddOrUpdateDatabaseSourceAction {
@@ -13,7 +13,7 @@ export interface AddOrUpdateEngineAction {
 
 export interface AddOrUpdateEngineTemplateAction {
     engineId: string;
-    template: ITemplate;
+    template: Template;
     type: PackageSettingsActionNames.AddOrUpdateEngineTemplate;
 }
 
@@ -54,7 +54,7 @@ export interface RemoveEngineAction {
 
 export interface RemoveEngineTemplateAction {
     engineId: string;
-    template: ITemplate;
+    template: Template;
     type: PackageSettingsActionNames.RemoveEngineTemplate;
 }
 
@@ -107,7 +107,7 @@ export const ActionCreators = {
             type: PackageSettingsActionNames.AddOrUpdateEngine
         };
     },
-    addOrUpdateEngineTemplate: (engineId: string, template: ITemplate) => {
+    addOrUpdateEngineTemplate: (engineId: string, template: Template) => {
         return <AddOrUpdateEngineTemplateAction>{
             engineId: engineId,
             template: template,
@@ -156,7 +156,7 @@ export const ActionCreators = {
             type: PackageSettingsActionNames.RemoveEngine
         };
     },
-    removeEngineTemplate: (engineId: string, template: ITemplate) => {
+    removeEngineTemplate: (engineId: string, template: Template) => {
         return <RemoveEngineTemplateAction>{
             engineId: engineId,
             template: template,

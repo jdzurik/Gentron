@@ -3,7 +3,7 @@ import { File, IFile } from "./File";
 import { DatabaseConnection } from "./DatabaseConnection";
 import { ConnectionGroup } from "./ConnectionGroup";
 import { DatabaseSource } from "./DatabaseSource";
-import { Template, ITemplate } from "./Template";
+import { Template } from "./Template";
 import { Engine } from "./Engine";
 import { FileConnection } from "./FileConnection";
 import { FileSource } from "./FileSource";
@@ -29,7 +29,6 @@ export {
     DatabaseSource,
 
     Template,
-    ITemplate,
 
     Engine,
 

@@ -1,6 +1,6 @@
-﻿import { SourceBase } from "./SourceBase";
-import { ITemplate, Template } from "./Template";
-import { JsonObject, JsonProperty, JsonType } from "ta-json";
+﻿import { JsonObject, JsonProperty, JsonType } from "ta-json";
+import { SourceBase } from "./SourceBase";
+import { Template } from "./Template";
 import { Utilities } from ".";
 
 @JsonObject()
@@ -10,7 +10,7 @@ export class Engine extends SourceBase<Engine> {
      */
     @JsonProperty()
     @JsonType(Template)
-    public Templates: ITemplate[];
+    public Templates: Template[];
 
 
     /*
@@ -32,7 +32,7 @@ export class Engine extends SourceBase<Engine> {
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
         ret.Result = this.Result;
-        ret.Templates = this.Templates.map((template: ITemplate, index: number) => {
+        ret.Templates = this.Templates.map((template: Template, index: number) => {
             return template.clone();
         });
 

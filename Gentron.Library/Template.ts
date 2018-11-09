@@ -1,5 +1,5 @@
 ﻿import { Cloneable } from "./abstract";
-import { ICloneable, IModifiable } from "./interfaces";
+import { IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
 import { Utilities } from ".";
 
@@ -8,13 +8,8 @@ export enum TemplateTypes {
     Primary,
 }
 
-export interface ITemplate extends ICloneable<ITemplate>, IModifiable<ITemplate> {
-    Name: string;
-    Type: TemplateTypes;
-}
-
 @JsonObject()
-export class Template extends Cloneable<ITemplate> implements ITemplate {
+export class Template extends Cloneable<Template> implements IModifiable<Template> {
     /*
      *  Properties & Fields
      */
@@ -38,7 +33,7 @@ export class Template extends Cloneable<ITemplate> implements ITemplate {
     /*
      *  Methods
      */
-    public clone(): ITemplate {
+    public clone(): Template {
         const ret: Template = new Template();
 
         ret._id = this._id;
@@ -49,7 +44,7 @@ export class Template extends Cloneable<ITemplate> implements ITemplate {
     }
 
 
-    public update(template: ITemplate): void {
+    public update(template: Template): void {
         if (!Utilities.hasValue(template)) {
             return;
         }

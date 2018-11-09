@@ -4,14 +4,14 @@ import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, ITemplate } from "../../Gentron.Library";
+import { IGentron, Template as LibTemplate } from "../../Gentron.Library";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import SplitPane from "./SplitPane";
 import MonacoEditor from 'react-monaco-editor';
 
 type HashedTemplate = Hash & {
-    Template?: ITemplate;
+    Template?: LibTemplate;
 };
 
 type TemplateProps = HashedTemplate
@@ -31,7 +31,7 @@ export default class Template extends React.Component<TemplateProps> {
     /*
      *  Methods
      */
-    private handleNameClick(source: ITemplate): void {
+    private handleNameClick(source: LibTemplate): void {
         source.Name = "Test";
         this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, source);
     }

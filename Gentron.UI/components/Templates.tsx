@@ -5,12 +5,12 @@ import { bindActionCreators } from "redux";
 import { LinkButton, Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, Template, ITemplate } from "../../Gentron.Library";
+import { IGentron, Template } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableTemplates = Hash & {
-    Templates?: ITemplate[];
+    Templates?: Template[];
 };
 
 type TemplatesProps = NullableTemplates
@@ -31,13 +31,13 @@ export default class Templates extends React.Component<TemplatesProps> {
      *  Methods
      */
     private handleAddTemplateClick(): void {
-        const source: ITemplate = new Template();
+        const source: Template = new Template();
         source.Name = `Template${this.props.Templates.length}`;
 
         this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, source);
     }
 
-    private handleRemoveTemplateClick(source: ITemplate): void {
+    private handleRemoveTemplateClick(source: Template): void {
         this.props.removeEngineTemplate(this.props.match.params.engineid, source);
     }
 
@@ -70,7 +70,7 @@ export default class Templates extends React.Component<TemplatesProps> {
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.Templates.map((source, i) =>
+                                this.props.Templates.map((source: Template, i: number) =>
                                     <tr key={i}>
                                         <td>
                                             <Link to={`/engines/manage/${this.props.match.params.engineid}/templates/${i}`}>
