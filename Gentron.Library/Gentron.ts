@@ -2,7 +2,7 @@
 import * as path from "path";
 import { Gentron as GentronConstants, InfoMessages } from "./constants";
 import { IFileOperationResult, GentronFsResult, IGentronFsResult } from "./results";
-import { ConnectionGroup, DatabaseConnection, DatabaseSource, File, IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities } from "./";
+import { ConnectionGroup, DatabaseConnection, DatabaseSource, File, IProjectSettings, PackageSettings, ProjectSettings, Utilities } from "./";
 import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 
 export interface IGentron {
@@ -10,7 +10,7 @@ export interface IGentron {
      *  Properties & Fields 
      */
     ActiveProjectPath: string;
-    PackageSettings: IPackageSettings;
+    PackageSettings: PackageSettings;
     ProjectSettings: IProjectSettings;
 }
 
@@ -24,7 +24,7 @@ export class Gentron implements IGentron {
 
     @JsonProperty()
     @JsonElementType(PackageSettings)
-    public PackageSettings: IPackageSettings;
+    public PackageSettings: PackageSettings;
 
     @JsonProperty()
     @JsonElementType(ProjectSettings)
@@ -58,7 +58,7 @@ export class Gentron implements IGentron {
 
     public static save(iGentron: IGentron): IGentronFsResult<void> {
         const gentron: Gentron = this.deserialize(iGentron);
-        const packageSettings: IPackageSettings = gentron.PackageSettings;
+        const packageSettings: PackageSettings = gentron.PackageSettings;
         const projectSettings: IProjectSettings = gentron.ProjectSettings;
 
         let infoMessage: string = "";

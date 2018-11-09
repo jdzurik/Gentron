@@ -11,7 +11,7 @@ import { HttpConnection } from "./HttpConnection";
 import { HttpSource } from "./HttpSource";
 import { OutputPath } from "./OutputPath";
 import { OutputPathGroup } from "./OutputPathGroup";
-import { PackageSettings, IPackageSettings } from "./PackageSettings";
+import { PackageSettings } from "./PackageSettings";
 import { ProjectSettings, IProjectSettings } from "./ProjectSettings";
 import { Gentron, IGentron } from "./Gentron";
 import Utilities from "./Utilities";
@@ -44,7 +44,6 @@ export {
     OutputPathGroup,
 
     PackageSettings,
-    IPackageSettings,
 
     ProjectSettings,
     IProjectSettings,

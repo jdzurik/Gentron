@@ -1,21 +1,8 @@
 ﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource } from ".";
-import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-
-export interface IPackageSettings {
-    /*
-     *  Properties & Fields 
-     */
-    DatabaseSources: DatabaseSource[];
-    Engines: Engine[];
-    Environments: Environment[];
-    FileSources: FileSource[];
-    HttpSources: HttpSource[];
-    PackageName: string;
-    ReadMe: string;
-}
+import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 
 @JsonObject()
-export class PackageSettings implements IPackageSettings {
+export class PackageSettings {
     /*
      *  Properties & Fields 
      */

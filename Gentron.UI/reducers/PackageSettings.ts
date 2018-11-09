@@ -1,10 +1,10 @@
 ﻿import * as PackageSettingsActions from '../actions/PackageSettings';
 import { NonFunctionProperties } from "../../Gentron.Library/types";
-import { PackageSettings, IPackageSettings, Environment } from "../../Gentron.Library";
+import { PackageSettings, Environment } from "../../Gentron.Library";
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
 
-type PackageSettingsProps = NonFunctionProperties<IPackageSettings>;
+type PackageSettingsProps = NonFunctionProperties<PackageSettings>;
 
 const _unloadedPackageSettingsState: PackageSettingsProps = new PackageSettings() as PackageSettingsProps;
 

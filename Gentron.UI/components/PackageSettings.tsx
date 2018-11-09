@@ -4,13 +4,13 @@ import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { Hash, NonFunctionProperties, PrimitiveProperties } from "../../Gentron.Library/types";
-import { IGentron, IPackageSettings } from "../../Gentron.Library";
+import { Hash, PrimitiveProperties } from "../../Gentron.Library/types";
+import { IGentron, PackageSettings as LibPackageSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type HashedIPackageSettings = Hash & PrimitiveProperties<IPackageSettings>
+type HashedIPackageSettings = Hash & PrimitiveProperties<LibPackageSettings>
 
 type PackageSettingsProps = HashedIPackageSettings
     & typeof ActionCreators
