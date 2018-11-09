@@ -5,11 +5,11 @@ import { bindActionCreators } from 'redux';
 import { Hash, PrimitiveProperties } from "../../Gentron.Library/types";
 import { Cell, FolderInput, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IGentron, IProjectSettings } from "../../Gentron.Library";
+import { IGentron, ProjectSettings as LibProjectSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type HashedIProjectSettings = Hash & PrimitiveProperties<IProjectSettings>
+type HashedIProjectSettings = Hash & PrimitiveProperties<LibProjectSettings>
 
 type ProjectSettingsProps = HashedIProjectSettings
     & typeof ActionCreators

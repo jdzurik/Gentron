@@ -1,12 +1,12 @@
 ﻿import * as ProjectSettingsActions from '../actions/ProjectSettings';
 import { NonFunctionProperties } from "../../Gentron.Library/types";
-import { ProjectSettings, IProjectSettings } from "../../Gentron.Library";
+import { ProjectSettings } from "../../Gentron.Library";
 import { ProjectSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
 
-type ProjectSettingsProps = NonFunctionProperties<IProjectSettings>;
+type ProjectSettingsProps = NonFunctionProperties<ProjectSettings>;
 
-const _unloadedProjectSettingsState: IProjectSettings = new ProjectSettings();
+const _unloadedProjectSettingsState: ProjectSettings = new ProjectSettings();
 
 export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsProps, action: ProjectSettingsActions.KnownProjectSettingsAction) => {
     switch (action.type) {
