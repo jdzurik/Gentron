@@ -5,12 +5,12 @@ import { bindActionCreators } from "redux";
 import { Hash } from "../../Gentron.Library/types";
 import { Cell, Dialog, DialogAction, DialogContent, DialogTitle, Grid, Row, Switch } from "./metro";
 import { connect } from "../connect";
-import { IGentron, IEnvironment, Environment, Utilities } from "../../Gentron.Library";
+import { IGentron, Environment, Utilities } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableEnvironments = Hash & {
-    Environments?: IEnvironment[];
+    Environments?: Environment[];
 };
 
 type EnvironmentsProps = NullableEnvironments
@@ -18,7 +18,7 @@ type EnvironmentsProps = NullableEnvironments
     & RouteComponentProps<{}>;
 
 type EnvironmentsState = {
-    EditingEnvironment: IEnvironment;
+    EditingEnvironment: Environment;
 };
 
 @connect<NullableEnvironments, {}, EnvironmentsProps>(mapStateToProps, mapDispatchToProps)
@@ -41,23 +41,23 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
         this.handleOpenEditEnvironmentClick(new Environment());
     }
 
-    private handleToggleEnvironmentIsActiveClick(environment: IEnvironment, isActive: boolean): void {
+    private handleToggleEnvironmentIsActiveClick(environment: Environment, isActive: boolean): void {
         environment.IsActive = isActive;
         this.props.toggleActiveEnvironment(environment);
     }
 
-    private handleRemoveEnvironmentClick(Environment: IEnvironment): void {
+    private handleRemoveEnvironmentClick(Environment: Environment): void {
         this.props.removeEnvironment(Environment);
     }
 
-    private handleOpenEditEnvironmentClick(environment: IEnvironment): void {
+    private handleOpenEditEnvironmentClick(environment: Environment): void {
         this.setState({
             EditingEnvironment: environment.clone()
         });
     }
 
     private handleEditEnvironmentNameChange(name: string): void {
-        const editingEnvironment: IEnvironment = this.state.EditingEnvironment;
+        const editingEnvironment: Environment = this.state.EditingEnvironment;
         editingEnvironment.Name = name;
         this.setState({
             EditingEnvironment: editingEnvironment
@@ -99,7 +99,7 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.Environments.map((environment: IEnvironment, i: number) =>
+                                this.props.Environments.map((environment: Environment, i: number) =>
                                     <tr key={i}>
                                         <td>
                                             <button className="button"

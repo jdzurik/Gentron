@@ -6,13 +6,13 @@ import { bindActionCreators } from "redux";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, IEnvironment, Utilities, IOutputPathGroup, IOutputPath, OutputPathGroup, OutputPath } from "../../Gentron.Library";
+import { IGentron, Environment, Utilities, IOutputPathGroup, IOutputPath, OutputPathGroup, OutputPath } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableOutputPaths = Hash & {
     OutputPathGroups?: IOutputPathGroup<IOutputPath>[];
-    Environments?: IEnvironment[];
+    Environments?: Environment[];
 };
 
 type OutputPathsProps = NullableOutputPaths
@@ -62,7 +62,7 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
         });
     }
 
-    private handleEditOutputPathGroupPathChange(environment: IEnvironment, connStr): void {
+    private handleEditOutputPathGroupPathChange(environment: Environment, connStr): void {
         const editingOutputPathGroup: IOutputPathGroup<IOutputPath> = this.state.EditingOutputPathGroup;
         editingOutputPathGroup.Paths.forEach((path: IOutputPath, i: number) => {
             if (path.Environment === environment.Name) {
@@ -157,7 +157,7 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
                                     </Row>
 
                                     {
-                                        this.props.Environments.map((env: IEnvironment, i: number) => {
+                                        this.props.Environments.map((env: Environment, i: number) => {
                                             let currOutputPath: IOutputPath = this.state.EditingOutputPathGroup.Paths.find(conn => conn.Environment === env.Name);
 
                                             if (!Utilities.hasValue(currOutputPath)) {

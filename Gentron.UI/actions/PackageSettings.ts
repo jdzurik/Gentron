@@ -1,4 +1,4 @@
-﻿import { DatabaseSource, Engine, FileSource, HttpSource, ITemplate, IEnvironment } from '../../Gentron.Library';
+﻿import { DatabaseSource, Engine, FileSource, HttpSource, ITemplate, Environment } from '../../Gentron.Library';
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 
 export interface AddOrUpdateDatabaseSourceAction {
@@ -18,7 +18,7 @@ export interface AddOrUpdateEngineTemplateAction {
 }
 
 export interface AddOrUpdateEnvironmentAction {
-    environment: IEnvironment;
+    environment: Environment;
     type: PackageSettingsActionNames.AddOrUpdateEnvironment;
 }
 
@@ -59,7 +59,7 @@ export interface RemoveEngineTemplateAction {
 }
 
 export interface RemoveEnvironmentAction {
-    environment: IEnvironment;
+    environment: Environment;
     type: PackageSettingsActionNames.RemoveEnvironment;
 }
 
@@ -74,7 +74,7 @@ export interface RemoveHttpSourceAction {
 }
 
 export interface ToggleActiveEnvironmentAction {
-    environment: IEnvironment;
+    environment: Environment;
     type: PackageSettingsActionNames.ToggleActiveEnvironment;
 }
 
@@ -114,7 +114,7 @@ export const ActionCreators = {
             type: PackageSettingsActionNames.AddOrUpdateEngineTemplate
         };
     },
-    addOrUpdateEnvironment: (environment: IEnvironment) => {
+    addOrUpdateEnvironment: (environment: Environment) => {
         return <AddOrUpdateEnvironmentAction>{
             environment: environment,
             type: PackageSettingsActionNames.AddOrUpdateEnvironment
@@ -163,7 +163,7 @@ export const ActionCreators = {
             type: PackageSettingsActionNames.RemoveEngineTemplate
         };
     },
-    removeEnvironment: (environment: IEnvironment) => {
+    removeEnvironment: (environment: Environment) => {
         return <RemoveEnvironmentAction>{
             environment: environment,
             type: PackageSettingsActionNames.RemoveEnvironment
@@ -181,7 +181,7 @@ export const ActionCreators = {
             type: PackageSettingsActionNames.RemoveHttpSource
         };
     },
-    toggleActiveEnvironment: (environment: IEnvironment) => {
+    toggleActiveEnvironment: (environment: Environment) => {
         return <ToggleActiveEnvironmentAction>{
             environment: environment,
             type: PackageSettingsActionNames.ToggleActiveEnvironment

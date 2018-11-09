@@ -1,4 +1,4 @@
-﻿import { Environment, IEnvironment } from "./Environment";
+﻿import { Environment } from "./Environment";
 import { File, IFile } from "./File";
 import { DatabaseConnection, IDatabaseConnection } from "./DatabaseConnection";
 import { ConnectionGroup, IConnectionGroup } from "./ConnectionGroup";
@@ -18,7 +18,6 @@ import Utilities from "./Utilities";
 
 export {
     Environment,
-    IEnvironment,
 
     File,
     IFile,

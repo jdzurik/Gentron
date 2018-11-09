@@ -6,13 +6,13 @@ import { bindActionCreators } from "redux";
 import { Hash } from "../../Gentron.Library/types";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IGentron, ConnectionGroup, DatabaseConnection, IConnectionGroup, IDatabaseConnection, IEnvironment, Utilities } from "../../Gentron.Library";
+import { IGentron, ConnectionGroup, DatabaseConnection, IConnectionGroup, IDatabaseConnection, Environment, Utilities } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableDatabaseConnections = Hash & {
     DatabaseConnections?: IConnectionGroup<IDatabaseConnection>[];
-    Environments?: IEnvironment[];
+    Environments?: Environment[];
 };
 
 type DatabaseConnectionsProps = NullableDatabaseConnections
@@ -62,7 +62,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
         });
     }
 
-    private handleEditConnectionStringChange(environment: IEnvironment, connStr): void {
+    private handleEditConnectionStringChange(environment: Environment, connStr): void {
         this.setState((prevState: Readonly<DatabaseConnectionsState>) => {
             return Object.assign(
                 {},
@@ -162,7 +162,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                     </Row>
 
                                     {
-                                        this.props.Environments.map((env: IEnvironment, i: number) => {
+                                        this.props.Environments.map((env: Environment, i: number) => {
                                             let currConnection: IDatabaseConnection = this.state.EditingConnectionGroup.Connections.find(conn => conn.Environment === env.Name);
 
                                             if (!Utilities.hasValue(currConnection)) {

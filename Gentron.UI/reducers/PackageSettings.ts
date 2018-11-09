@@ -1,6 +1,6 @@
 ﻿import * as PackageSettingsActions from '../actions/PackageSettings';
 import { NonFunctionProperties } from "../../Gentron.Library/types";
-import { PackageSettings, IPackageSettings, IEnvironment } from "../../Gentron.Library";
+import { PackageSettings, IPackageSettings, Environment } from "../../Gentron.Library";
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
 
@@ -304,7 +304,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             };
         case PackageSettingsActionNames.ToggleActiveEnvironment:
             for (let i: number = 0; i < state.Environments.length; ++i) {
-                const environment: IEnvironment = state.Environments[i];
+                const environment: Environment = state.Environments[i];
 
                 if (environment.ID === action.environment.ID) {
                     environment.update(action.environment);

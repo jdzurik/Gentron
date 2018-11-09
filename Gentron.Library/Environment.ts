@@ -1,17 +1,10 @@
-﻿import { ICloneable, IModifiable, IActivateable } from "./interfaces";
-import { Cloneable } from "./abstract";
+﻿import { Cloneable } from "./abstract";
+import { IActivateable, ICloneable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
 import { Utilities } from ".";
 
-export interface IEnvironment extends IActivateable, ICloneable<IEnvironment>, IModifiable<IEnvironment> {
-    /*
-     *  Properties & Fields
-     */
-    Name: string;
-}
-
 @JsonObject()
-export class Environment extends Cloneable<IEnvironment> implements IEnvironment {
+export class Environment extends Cloneable<Environment> implements IActivateable, ICloneable<Environment>, IModifiable<Environment> {
     /*
      *  Properties & Fields
      */
@@ -35,7 +28,7 @@ export class Environment extends Cloneable<IEnvironment> implements IEnvironment
     /*
      *  Methods
      */
-    public clone(): IEnvironment {
+    public clone(): Environment {
         const ret: Environment = new Environment();
 
         ret._id = this._id;
@@ -45,7 +38,7 @@ export class Environment extends Cloneable<IEnvironment> implements IEnvironment
         return ret;
     }
 
-    public update(environment: IEnvironment): void {
+    public update(environment: Environment): void {
         if (!Utilities.hasValue(environment)) {
             return;
         }

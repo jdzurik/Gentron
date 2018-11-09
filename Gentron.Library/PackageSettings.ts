@@ -1,4 +1,4 @@
-﻿import { IEnvironment, DatabaseSource, Engine, Environment, FileSource, HttpSource } from ".";
+﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource } from ".";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
 
 export interface IPackageSettings {
@@ -7,7 +7,7 @@ export interface IPackageSettings {
      */
     DatabaseSources: DatabaseSource[];
     Engines: Engine[];
-    Environments: IEnvironment[];
+    Environments: Environment[];
     FileSources: FileSource[];
     HttpSources: HttpSource[];
     PackageName: string;
@@ -29,7 +29,7 @@ export class PackageSettings implements IPackageSettings {
 
     @JsonProperty()
     @JsonElementType(Environment)
-    public Environments: IEnvironment[];
+    public Environments: Environment[];
 
     @JsonProperty()
     @JsonElementType(FileSource)
