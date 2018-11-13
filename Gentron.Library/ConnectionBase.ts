@@ -3,7 +3,7 @@ import { IActivateable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
 
 @JsonObject()
-export abstract class ConnectionBase<T> extends Cloneable<T> implements IActivateable, IModifiable<T> {
+export default abstract class ConnectionBase<T> extends Cloneable<T> implements IActivateable, IModifiable<T> {
     /*
      *  Properties & Fields 
      */

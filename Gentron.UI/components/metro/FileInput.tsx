@@ -3,16 +3,17 @@ import * as React from "react";
 import { MouseEvent } from "react";
 import { Utilities } from "../../../Gentron.Library";
 
+type FileInputFilter = { name: string, extensions: string[] };
+
 type FileInputProps = {
+    filters?: FileInputFilter[],
     includeClearButton?: boolean;
     onFilePathChange: (value: string) => any;
     placeholder?: string;
     value?: string;
 };
 
-type FileInputState = {
-
-};
+type FileInputState = { };
 
 export default class FileInput extends React.Component<FileInputProps, FileInputState> {
     /*
@@ -28,6 +29,7 @@ export default class FileInput extends React.Component<FileInputProps, FileInput
      */
     private handleOpenDialogClick(ev: React.MouseEvent<HTMLButtonElement>): void {
         const dialogOpts: Electron.OpenDialogOptions = {
+            filters: this.props.filters,
             properties: [
                 "openFile",
                 "promptToCreate",
@@ -64,11 +66,12 @@ export default class FileInput extends React.Component<FileInputProps, FileInput
         return (
             <div className="input">
                 <input type="text"
-                    placeholder={this.props.placeholder}
-                    value={this.props.value}
-                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.onFilePathChange(ev.target.value)}
                     data-role="input"
                     data-role-input={true}
+                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.onFilePathChange(ev.target.value)}
+                    placeholder={this.props.placeholder}
+                    readOnly
+                    value={this.props.value}
                 />
                 <div className="button-group">
                     {clearBtn}

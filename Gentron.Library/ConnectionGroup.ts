@@ -1,12 +1,12 @@
 ﻿import { Cloneable } from "./abstract";
-import { ConnectionBase } from "./ConnectionBase";
 import { DatabaseConnection } from "./";
 import { IModifiable } from "./interfaces";
 import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
+import ConnectionBase from "./ConnectionBase";
 import Utilities from "./Utilities";
 
 @JsonObject()
-export class ConnectionGroup<TConnection extends ConnectionBase<TConnection>> extends Cloneable<ConnectionGroup<TConnection>> implements IModifiable<ConnectionGroup<TConnection>> {
+export default class ConnectionGroup<TConnection extends ConnectionBase<TConnection>> extends Cloneable<ConnectionGroup<TConnection>> implements IModifiable<ConnectionGroup<TConnection>> {
     /*
      *  Properties & Fields 
      */

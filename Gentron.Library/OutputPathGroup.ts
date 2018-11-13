@@ -1,11 +1,10 @@
 ﻿import { Cloneable } from "./abstract";
 import { IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import { OutputPath } from "./";
-import Utilities from "./Utilities";
+import { OutputPath, Utilities } from "./";
 
 @JsonObject()
-export class OutputPathGroup<TOutputPath extends OutputPath> extends Cloneable<OutputPathGroup<TOutputPath>> implements IModifiable<OutputPathGroup<TOutputPath>> {
+export default class OutputPathGroup<TOutputPath extends OutputPath> extends Cloneable<OutputPathGroup<TOutputPath>> implements IModifiable<OutputPathGroup<TOutputPath>> {
     /*
      *  Properties & Fields 
      */

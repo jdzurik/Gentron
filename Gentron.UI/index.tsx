@@ -31,7 +31,7 @@ const syncHistoryWithStore = (store, history: MemoryHistory) => {
 const history: MemoryHistory = createMemoryHistory();
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
-const initialState: IGentron = (((window as any).initialReduxState))
+const initialState: Gentron = (((window as any).initialReduxState))
     ? (window as any).initialReduxState
     : new Gentron();
 

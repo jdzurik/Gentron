@@ -1,13 +1,13 @@
 ﻿import * as fs from "fs";
 import * as path from "path";
 import { Cloneable } from "./abstract";
-import { FileOperationResult, IFileOperationResult } from "./results";
+import { Result } from "./results";
 import { IModifiable } from "./interfaces"
 import { JsonObject, JsonProperty } from "ta-json";
 import { Utilities } from "./";
 
 @JsonObject()
-export class File extends Cloneable<File> implements IModifiable<File> {
+export default class File extends Cloneable<File> implements IModifiable<File> {
     /*
      *  Properties & Fields
      */
@@ -35,51 +35,51 @@ export class File extends Cloneable<File> implements IModifiable<File> {
     /*
      *  Methods
      */
-    public static read(filePath: string): IFileOperationResult<string> {
+    public static read(filePath: string): Result<string> {
         try {
             const buf: Buffer = fs.readFileSync(filePath);
             const contents: string = buf.toString();
 
-            return FileOperationResult.ok(contents);
+            return Result.ok(contents);
         }
         catch (e) {
-            return FileOperationResult.fail((e as NodeJS.ErrnoException).message.toString());
+            return Result.fail((e as NodeJS.ErrnoException).message.toString());
         }
     }
 
-    public static async readAsync(filePath: string): Promise<IFileOperationResult<string>> {
+    public static async readAsync(filePath: string): Promise<Result<string>> {
         try {
             const buf: Buffer = await fs.promises.readFile(filePath);
             const contents: string = buf.toString();
 
-            return FileOperationResult.ok(contents);
+            return Result.ok(contents);
         }
         catch (e) {
-            return FileOperationResult.fail((e as NodeJS.ErrnoException).message.toString());
+            return Result.fail((e as NodeJS.ErrnoException).message.toString());
         }
     }
 
-    public static write(filePath: string, fileContents: string, mkDirIfNotExists: boolean = false): FileOperationResult<void> {
+    public static write(filePath: string, fileContents: string, mkDirIfNotExists: boolean = false): Result<void> {
         try {
             if (mkDirIfNotExists && !fs.existsSync(filePath.substring(0, filePath.lastIndexOf(path.sep)))) {
                 Utilities.mkDirByPathSync(filePath.substring(0, filePath.lastIndexOf(path.sep)));
             }
             fs.writeFileSync(filePath, fileContents);
-            return FileOperationResult.ok();
+            return Result.ok();
         }
         catch (e) {
             console.error(e);
-            return FileOperationResult.fail((e as NodeJS.ErrnoException).message.toString());
+            return Result.fail((e as NodeJS.ErrnoException).message.toString());
         }
     }
 
-    public static async writeAsync(filePath: string, fileContents: string): Promise<FileOperationResult<void>> {
+    public static async writeAsync(filePath: string, fileContents: string): Promise<Result<void>> {
         try {
             await fs.promises.writeFile(filePath, fileContents);
-            return FileOperationResult.ok();
+            return Result.ok();
         }
         catch (e) {
-            return FileOperationResult.fail((e as NodeJS.ErrnoException).message.toString());
+            return Result.fail((e as NodeJS.ErrnoException).message.toString());
         }
     }
 
@@ -135,7 +135,13 @@ export class File extends Cloneable<File> implements IModifiable<File> {
 
         if (this.Path !== file.Path) {
             this.Path = file.Path;
-            this.loadContents();
+
+            if (!Utilities.hasStringValue(this.Path.trim())) {
+                this.Contents = "";
+            }
+            else {
+                this.loadContents();
+            }
         }
     }
 }

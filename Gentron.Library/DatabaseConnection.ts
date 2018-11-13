@@ -1,9 +1,9 @@
-﻿import { ConnectionBase } from "./ConnectionBase";
-import { JsonObject, JsonProperty } from "ta-json";
+﻿import { JsonObject, JsonProperty } from "ta-json";
 import { Utilities } from ".";
+import ConnectionBase from "./ConnectionBase";
 
 @JsonObject()
-export class DatabaseConnection extends ConnectionBase<DatabaseConnection> {
+export default class DatabaseConnection extends ConnectionBase<DatabaseConnection> {
     /*
      *  Properties & Fields 
      */

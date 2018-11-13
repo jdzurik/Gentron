@@ -9,6 +9,7 @@ import { connect } from "../connect";
 import { IGentron, ConnectionGroup, DatabaseConnection, DatabaseSource as LibDatabaseSource } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
+import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 import SplitPane from "./SplitPane";
 
 type IDatabaseSourceProperties = LibDatabaseSource;
@@ -26,6 +27,14 @@ type DatabaseSourceProps = DbSource
 @connect<DbSource, {}, DatabaseSourceProps>(mapStateToProps, mapDispatchToProps)
 export default class DatabaseSource extends React.Component<DatabaseSourceProps> {
     /*
+     *  Properties & Fields
+     */
+    private static readonly fileInputFilters = [
+        { name: 'SQL', extensions: ['sql'] }
+    ];
+
+
+    /*
      *  Constructors
      */
     public constructor(props: DatabaseSourceProps) {
@@ -36,11 +45,6 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
     /*
      *  Methods
      */
-    private handleNameClick(source: LibDatabaseSource): void {
-        source.Name = "Test";
-        this.props.addOrUpdateDatabaseSource(source);
-    }
-
     private handleScriptFileNameChange(value: string): void {
         const source: LibDatabaseSource = this.props.DatabaseSource.clone();
         source.Script.Path = value;
@@ -59,14 +63,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row className="mb-2">
-                        <Cell colSpan={12}>
-                            <h3>
-                                <span className="mif-database mif-md mr-2"></span>
-                                <span onClick={this.handleNameClick.bind(this, this.props.DatabaseSource)}>{this.props.DatabaseSource.Name}</span>
-                            </h3>
-                        </Cell>
-                    </Row>
+                    <NavViewContentHeaderRow iconClassName="mif-database" title={this.props.DatabaseSource.Name} />
 
                     <Row className="mt-2 mb-2">
                         <Cell>
@@ -97,7 +94,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                     <div className="pos-center text-right">Database Script:</div>
                                 </Cell>
                                 <Cell colSpan={8}>
-                                    <FileInput
+                                    <FileInput filters={DatabaseSource.fileInputFilters}
                                         onFilePathChange={(value: string) => this.handleScriptFileNameChange(value)}
                                         value={this.props.DatabaseSource.Script.Path}
                                     />

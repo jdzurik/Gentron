@@ -1,9 +1,9 @@
-﻿import { SourceBase } from "./SourceBase";
-import { JsonObject } from "ta-json";
+﻿import { JsonObject } from "ta-json";
+import SourceBase from "./SourceBase";
 import Utilities from "./Utilities";
 
 @JsonObject()
-export class HttpSource extends SourceBase<HttpSource> {
+export default class HttpSource extends SourceBase<HttpSource> {
     /*
      *  Methods
      */

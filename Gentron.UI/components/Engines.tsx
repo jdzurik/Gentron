@@ -3,9 +3,9 @@ import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
 import { Hash } from "../../Gentron.Library/types";
-import { Cell, Grid } from "./metro";
+import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IGentron, Engine } from "../../Gentron.Library";
+import { IGentron, Engine, Utilities } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -17,28 +17,57 @@ type EnginesProps = NullableEngines
     & typeof ActionCreators
     & RouteComponentProps<{}>;
 
+type EnginesState = {
+    EditingSource: Engine;
+};
+
 @connect<NullableEngines, {}, EnginesProps>(mapStateToProps, mapDispatchToProps)
-export default class Engines extends React.Component<EnginesProps> {
+export default class Engines extends React.Component<EnginesProps, EnginesState> {
     /*
      *  Constructors
      */
-    public constructor(props: EnginesProps) {
+    public constructor(props: EnginesProps, state: EnginesState) {
         super(props);
+
+        this.state = {
+            EditingSource: null
+        };
     }
 
 
     /*
      *  Methods
      */
-    private handleAddEngineClick(): void {
-        const source: Engine = new Engine();
-        source.Name = `Engine${this.props.Engines.length}`;
-
-        this.props.addOrUpdateEngine(source);
+    private handleAddSourceClick(): void {
+        this.handleOpenEditSourceClick(new Engine());
     }
 
-    private handleRemoveEngineClick(source: Engine): void {
+    private handleRemoveSourceClick(source: Engine): void {
         this.props.removeEngine(source);
+    }
+
+    private handleOpenEditSourceClick(source: Engine): void {
+        this.setState((prevState: Readonly<EnginesState>) => {
+            return Object.assign({}, prevState, { EditingSource: source.clone() });
+        });
+    }
+
+    private handleEditSourceNameChange(name: string): void {
+        const editingSource: Engine = this.state.EditingSource;
+        editingSource.Name = name;
+        this.setState((prevState: Readonly<EnginesState>) => {
+            return Object.assign({}, prevState, { EditingSource: editingSource });
+        });
+    }
+
+    private handleCloseEditSourceClick(save: boolean): void {
+        if (save) {
+            this.props.addOrUpdateEngine(this.state.EditingSource);
+        }
+
+        this.setState((prevState: Readonly<EnginesState>) => {
+            return Object.assign({}, prevState, { EditingSource: null });
+        });
     }
 
     public render(): JSX.Element {
@@ -50,7 +79,6 @@ export default class Engines extends React.Component<EnginesProps> {
                     <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
-                                <th>{` `}</th>
                                 <th>Name</th>
                                 <th>{` `}</th>
                             </tr>
@@ -58,27 +86,32 @@ export default class Engines extends React.Component<EnginesProps> {
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddEngineClick.bind(this)}>
+                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>
                                         <span className="mif-add"></span>
                                     </button>
                                 </td>
                                 <td>{` `}</td>
-                                <td>{` `}</td>
                             </tr>
                             {
-                                this.props.Engines.map((source, i) =>
+                                this.props.Engines.map((source: Engine, i: number) =>
                                     <tr key={i}>
                                         <td>
                                             <Link to={`/engines/manage/${i}`}>
                                                 <button className="button">
-                                                    View
+                                                    <span className="mif-enlarge2"></span>
                                                 </button>
                                             </Link>
+                                            <button className="button ml-2"
+                                                onClick={() => this.handleOpenEditSourceClick(source)}>
+                                                <span className="mif-pencil"></span>
+                                            </button>
+                                            <span> {source.Name}</span>
                                         </td>
-                                        <td>{source.Name}</td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveEngineClick.bind(this, source)}>Remove</button>
+                                                <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>
+                                                    <span className="mif-bin"></span>
+                                                </button>
                                             </a>
                                         </td>
                                     </tr>
@@ -87,6 +120,38 @@ export default class Engines extends React.Component<EnginesProps> {
                         </tbody>
                     </table>
                 </Grid>
+
+                {
+                    Utilities.hasValue(this.state.EditingSource)
+                        ? (
+                            <Dialog>
+                                <DialogTitle>Edit Template Engine</DialogTitle>
+                                <DialogContent>
+                                    <Row className="mb-2 mt-2">
+                                        <Cell>
+                                            <label>Engine Name</label>
+                                        </Cell>
+                                    </Row>
+
+                                    <Row className="mb-2 mt-2">
+                                        <Cell>
+                                            <input type="text"
+                                                data-role="input"
+                                                data-role-input="true"
+                                                onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditSourceNameChange(ev.target.value)}
+                                                value={this.state.EditingSource.Name}
+                                            />
+                                        </Cell>
+                                    </Row>
+                                </DialogContent>
+                                <DialogAction>
+                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, false)}>Cancel</button>
+                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, true)}>Save</button>
+                                </DialogAction>
+                            </Dialog>
+                        )
+                        : null
+                }
             </Cell>
         );
     }

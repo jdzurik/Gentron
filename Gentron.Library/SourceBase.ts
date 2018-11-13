@@ -1,9 +1,10 @@
 ﻿import { Cloneable } from "./abstract";
 import { IActivateable, ICloneable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
+import { TDataSourceResult } from "./results";
 
 @JsonObject()
-export abstract class SourceBase<T> extends Cloneable<T> implements IActivateable, ICloneable<T>, IModifiable<T> {
+export default abstract class SourceBase<T> extends Cloneable<T> implements IActivateable, ICloneable<T>, IModifiable<T> {
     /*
      *  Properties & Fields 
      */
@@ -14,7 +15,7 @@ export abstract class SourceBase<T> extends Cloneable<T> implements IActivateabl
     public Name: string;
 
     @JsonProperty()
-    public Result: string;
+    public Result: TDataSourceResult;
 
 
     /*
@@ -24,7 +25,7 @@ export abstract class SourceBase<T> extends Cloneable<T> implements IActivateabl
         super();
         this.IsActive = true;
         this.Name = "";
-        this.Result = "";
+        this.Result = { Json: "", Object: null, Xml: "" };
     }
 
 

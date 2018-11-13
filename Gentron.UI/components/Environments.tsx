@@ -134,7 +134,7 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
                                 <DialogContent>
                                     <Row className="mb-2 mt-2">
                                         <Cell>
-                                            <label>Connection Name</label>
+                                            <label>Environment Name</label>
                                         </Cell>
                                     </Row>
 

@@ -1,9 +1,26 @@
-﻿import { SourceBase } from "./SourceBase";
-import { JsonObject } from "ta-json";
-import Utilities from "./Utilities";
+﻿import { JsonObject, JsonProperty, JsonType } from "ta-json";
+import SourceBase from "./SourceBase";
+import { File, Utilities } from "./";
 
 @JsonObject()
-export class FileSource extends SourceBase<FileSource> {
+export default class FileSource extends SourceBase<FileSource> {
+    /*
+     *  Properties & Fields
+     */
+    @JsonProperty()
+    @JsonType(File)
+    public DataFile: File;
+
+
+    /*
+     *  Constructors
+     */
+    public constructor() {
+        super();
+        this.DataFile = new File();
+    }
+
+
     /*
      *  Methods
      */
@@ -11,6 +28,7 @@ export class FileSource extends SourceBase<FileSource> {
         const ret: FileSource = new FileSource();
 
         ret._id = this._id;
+        ret.DataFile = this.DataFile.clone();
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
         ret.Result = this.Result;
@@ -27,5 +45,17 @@ export class FileSource extends SourceBase<FileSource> {
         this.IsActive = fileSource.IsActive;
         this.Name = fileSource.Name;
         this.Result = fileSource.Result;
+
+        this.DataFile.update(fileSource.DataFile);
+        if (this.DataFile.Contents) {
+            try {
+                this.Result.Json = this.DataFile.Contents;
+                this.Result.Object = JSON.parse(this.Result.Json);
+            }
+            catch (e) {
+                this.Result = {
+                    Json: "", Object: null, Xml: "" };
+            }
+        }
     }
 }

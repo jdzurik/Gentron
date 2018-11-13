@@ -5,8 +5,9 @@ import { History } from 'history';
 import { appReducers, rootReducer } from "../reducers";
 import thunk from 'redux-thunk';
 import { NonFunctionProperties } from "../../Gentron.Library/types";
+import { AnyAction } from "redux";
 
-export default function configureStore(history: History, initialState: NonFunctionProperties<IGentron>) {
+export default function configureStore(history: History, initialState: IGentron): Store<IGentron, AnyAction> & { dispatch: {} } {
     // Build middleware. These are functions that can process the actions before they reach the store.
     const windowIfDefined = typeof window === 'undefined' ? null : window as any;
 
@@ -32,7 +33,7 @@ export default function configureStore(history: History, initialState: NonFuncti
         ),
     )
 
-    return store;
+    return store as Store<IGentron, AnyAction> & { dispatch: {} };
 }
 
 function buildRootReducer(allReducers: ReducersMapObject) {

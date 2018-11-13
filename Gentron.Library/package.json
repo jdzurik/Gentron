@@ -7,8 +7,15 @@
     "name": "Thomas Foley"
   },
   "devDependencies": {
-    "@types/node": "^10.12.3",
-    "ta-json": "^2.5.0"
+    "@types/node": "^10.12.4",
+    "@types/xml2js": "^0.4.3",
+    "ta-json": "^2.5.0",
+    "tsxml": "^0.1.0",
+    "x2js": "^3.2.3",
+    "xml2js": "^0.4.19"
   },
-  "dependencies": {}
+  "dependencies": {
+    "msnodesqlv8": "^0.6.9",
+    "mssql": "^4.2.1"
+  }
 }

@@ -1,9 +1,9 @@
-﻿import { ConnectionBase } from "./ConnectionBase";
-import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from ".";
+﻿import { JsonObject, JsonProperty } from "ta-json";
+import { Utilities } from "./";
+import ConnectionBase from "./ConnectionBase";
 
 @JsonObject()
-export class FileConnection extends ConnectionBase<FileConnection> {
+export default class FileConnection extends ConnectionBase<FileConnection> {
     /*
      *  Properties & Fields 
      */

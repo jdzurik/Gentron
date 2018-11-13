@@ -1,13 +1,16 @@
 ﻿import { JsonObject, JsonProperty, JsonType } from "ta-json";
-import { SourceBase } from "./SourceBase";
-import { Template } from "./Template";
-import { Utilities } from ".";
+import { File, Template, Utilities } from "./";
+import SourceBase from "./SourceBase";
 
 @JsonObject()
-export class Engine extends SourceBase<Engine> {
+export default class Engine extends SourceBase<Engine> {
     /*
      *  Properties & Fields 
      */
+    @JsonProperty()
+    @JsonType(File)
+    public EngineCode: File;
+
     @JsonProperty()
     @JsonType(Template)
     public Templates: Template[];
@@ -18,6 +21,7 @@ export class Engine extends SourceBase<Engine> {
      */
     public constructor() {
         super();
+        this.EngineCode = new File();
         this.Templates = [];
     }
 
@@ -29,6 +33,7 @@ export class Engine extends SourceBase<Engine> {
         const ret: Engine = new Engine();
 
         ret._id = this._id;
+        ret.EngineCode = this.EngineCode.clone();
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
         ret.Result = this.Result;
@@ -45,6 +50,7 @@ export class Engine extends SourceBase<Engine> {
             return;
         }
 
+        this.EngineCode.update(engine.EngineCode);
         this.IsActive = engine.IsActive;
         this.Name = engine.Name;
         this.Result = engine.Result;

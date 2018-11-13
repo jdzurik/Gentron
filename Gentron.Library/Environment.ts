@@ -1,10 +1,10 @@
 ﻿import { Cloneable } from "./abstract";
 import { IActivateable, ICloneable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from ".";
+import { Utilities } from "./";
 
 @JsonObject()
-export class Environment extends Cloneable<Environment> implements IActivateable, ICloneable<Environment>, IModifiable<Environment> {
+export default class Environment extends Cloneable<Environment> implements IActivateable, ICloneable<Environment>, IModifiable<Environment> {
     /*
      *  Properties & Fields
      */

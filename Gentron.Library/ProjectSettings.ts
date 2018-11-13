@@ -2,7 +2,7 @@
 import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 
 @JsonObject()
-export class ProjectSettings {
+export default class ProjectSettings {
     /*
      *  Properties & Fields 
      */

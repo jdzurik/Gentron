@@ -2,10 +2,10 @@
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
-import { LinkButton, Cell, Grid, Row } from "./metro";
+import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, LinkButton, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, Template } from "../../Gentron.Library";
+import { IGentron, Template, Utilities } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -17,28 +17,57 @@ type TemplatesProps = NullableTemplates
     & typeof ActionCreators
     & RouteComponentProps<{ engineid: string }>;
 
+type TemplatesState = {
+    EditingSource: Template;
+};
+
 @connect<NullableTemplates, {}, TemplatesProps>(mapStateToProps, mapDispatchToProps)
-export default class Templates extends React.Component<TemplatesProps> {
+export default class Templates extends React.Component<TemplatesProps, TemplatesState> {
     /*
      *  Constructors
      */
-    public constructor(props: TemplatesProps) {
+    public constructor(props: TemplatesProps, state: TemplatesState) {
         super(props);
+
+        this.state = {
+            EditingSource: null
+        }
     }
 
 
     /*
      *  Methods
      */
-    private handleAddTemplateClick(): void {
-        const source: Template = new Template();
-        source.Name = `Template${this.props.Templates.length}`;
-
-        this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, source);
+    private handleAddSourceClick(): void {
+        this.handleOpenEditSourceClick(new Template());
     }
 
-    private handleRemoveTemplateClick(source: Template): void {
+    private handleRemoveSourceClick(source: Template): void {
         this.props.removeEngineTemplate(this.props.match.params.engineid, source);
+    }
+
+    private handleOpenEditSourceClick(source: Template): void {
+        this.setState((prevState: Readonly<TemplatesState>) => {
+            return Object.assign({}, prevState, { EditingSource: source.clone() });
+        });
+    }
+
+    private handleEditSourceNameChange(name: string): void {
+        const editingSource: Template = this.state.EditingSource;
+        editingSource.Name = name;
+        this.setState((prevState: Readonly<TemplatesState>) => {
+            return Object.assign({}, prevState, { EditingSource: editingSource });
+        });
+    }
+
+    private handleCloseEditSourceClick(save: boolean): void {
+        if (save) {
+            this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, this.state.EditingSource);
+        }
+
+        this.setState((prevState: Readonly<TemplatesState>) => {
+            return Object.assign({}, prevState, { EditingSource: null });
+        });
     }
 
     public render(): JSX.Element {
@@ -56,7 +85,6 @@ export default class Templates extends React.Component<TemplatesProps> {
                     <table className="table striped table-border mt-4">
                         <thead>
                             <tr>
-                                <th>{` `}</th>
                                 <th>Name</th>
                                 <th>{` `}</th>
                             </tr>
@@ -64,9 +92,10 @@ export default class Templates extends React.Component<TemplatesProps> {
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddTemplateClick.bind(this)}>Add Template</button>
+                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>
+                                        <span className="mif-add"></span>
+                                    </button>
                                 </td>
-                                <td>{` `}</td>
                                 <td>{` `}</td>
                             </tr>
                             {
@@ -75,14 +104,20 @@ export default class Templates extends React.Component<TemplatesProps> {
                                         <td>
                                             <Link to={`/engines/manage/${this.props.match.params.engineid}/templates/${i}`}>
                                                 <button className="button">
-                                                    View
+                                                    <span className="mif-enlarge2"></span>
                                                 </button>
                                             </Link>
+                                            <button className="button ml-2"
+                                                onClick={() => this.handleOpenEditSourceClick(source)}>
+                                                <span className="mif-pencil"></span>
+                                            </button>
+                                            <span> {source.Name}</span>
                                         </td>
-                                        <td>{source.Name}</td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveTemplateClick.bind(this, source)}>Remove</button>
+                                                <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>
+                                                    <span className="mif-bin"></span>
+                                                </button>
                                             </a>
                                         </td>
                                     </tr>
@@ -91,6 +126,38 @@ export default class Templates extends React.Component<TemplatesProps> {
                         </tbody>
                     </table>
                 </Grid>
+
+                {
+                    Utilities.hasValue(this.state.EditingSource)
+                        ? (
+                            <Dialog>
+                                <DialogTitle>Edit Engine Template</DialogTitle>
+                                <DialogContent>
+                                    <Row className="mb-2 mt-2">
+                                        <Cell>
+                                            <label>Template Name</label>
+                                        </Cell>
+                                    </Row>
+
+                                    <Row className="mb-2 mt-2">
+                                        <Cell>
+                                            <input type="text"
+                                                data-role="input"
+                                                data-role-input="true"
+                                                onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditSourceNameChange(ev.target.value)}
+                                                value={this.state.EditingSource.Name}
+                                            />
+                                        </Cell>
+                                    </Row>
+                                </DialogContent>
+                                <DialogAction>
+                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, false)}>Cancel</button>
+                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, true)}>Save</button>
+                                </DialogAction>
+                            </Dialog>
+                        )
+                        : null
+                }
             </Cell>
         );
     }

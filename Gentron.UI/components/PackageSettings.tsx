@@ -29,9 +29,6 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
     /*
      *  Methods
      */
-    private handleEditorMount(editor: any, monaco: any): void {
-    }
-
     public render(): JSX.Element {
         return (
             <Cell className="h-100">
@@ -45,25 +42,19 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
 
                         <Cell colSpan={9}>
                             <div className="input">
-                                <input type={`text`}
-                                    placeholder={`Package Name`}
+                                <input type="text"
+                                    placeholder="Package Name"
                                     value={this.props.PackageName}
                                     onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdatePackageName(ev.target.value || ``)}
-                                    data-role={`input`}
+                                    data-role="input"
                                     data-role-input={true}
                                 />
                                 <div className="button-group">
                                     <button className="button input-clear-button"
                                         tabIndex={-1}
-                                        type={`button`}
+                                        type="button"
                                         onClick={this.props.addOrUpdatePackageName.bind(this, null)}>
                                         <span className="default-icon-cross"></span>
-                                    </button>
-                                    <button className="button input-custom-button"
-                                        tabIndex={-1}
-                                        type={`button`}
-                                        onClick={console.log}>
-                                        <span className="mif-folder-open"></span>
                                     </button>
                                 </div>
                             </div>

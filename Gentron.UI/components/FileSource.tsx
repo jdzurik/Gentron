@@ -5,9 +5,10 @@ import { bindActionCreators } from "redux";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
 import { IGentron, FileSource as LibFileSource } from "../../Gentron.Library";
-import { LinkButton, Cell, Grid, Row } from "./metro";
+import { Cell, FileInput, Grid, LinkButton, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
+import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type HashedFileSource = Hash & {
     FileSource?: LibFileSource;
@@ -20,6 +21,14 @@ type FileSourceProps = HashedFileSource
 @connect<HashedFileSource, {}, FileSourceProps>(mapStateToProps, mapDispatchToProps)
 export default class FileSource extends React.Component<FileSourceProps> {
     /*
+     *  Properties & Fields
+     */
+    private static readonly fileInputFilters = [
+        { name: 'JSON', extensions: ['json'] }
+    ];
+
+
+    /*
      *  Constructors
      */
     public constructor(props: FileSourceProps) {
@@ -30,8 +39,9 @@ export default class FileSource extends React.Component<FileSourceProps> {
     /*
      *  Methods
      */
-    private handleNameClick(source: LibFileSource): void {
-        source.Name = "Test";
+    private handleDataFileNameChange(value: string): void {
+        const source: LibFileSource = this.props.FileSource.clone();
+        source.DataFile.Path = value;
         this.props.addOrUpdateFileSource(source);
     }
 
@@ -39,14 +49,7 @@ export default class FileSource extends React.Component<FileSourceProps> {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row className="mb-2">
-                        <Cell colSpan={12}>
-                            <h3>
-                                <span className="mif-file-code mif-md mr-2"></span>
-                                <span onClick={this.handleNameClick.bind(this, this.props.FileSource)}>{this.props.FileSource.Name}</span>
-                            </h3>
-                        </Cell>
-                    </Row>
+                    <NavViewContentHeaderRow iconClassName="mif-file-code" title={this.props.FileSource.Name} />
 
                     <Row className="mt-2 mb-2">
                         <Cell>
@@ -54,15 +57,27 @@ export default class FileSource extends React.Component<FileSourceProps> {
                         </Cell>
                     </Row>
 
+                    <Row className="mt-2 mb-2">
+                        <Cell colSpan={4}>
+                            <div className="pos-center text-right">JSON File:</div>
+                        </Cell>
+                        <Cell colSpan={8}>
+                            <FileInput filters={FileSource.fileInputFilters}
+                                onFilePathChange={(value: string) => this.handleDataFileNameChange(value)}
+                                value={this.props.FileSource.DataFile.Path}
+                            />
+                        </Cell>
+                    </Row>
+
                     <Row className="h-100 mt-2">
                         <Cell>
                             <div className="h-100 w-100 border bd-grayWhite border-size-2">
                                 <MonacoEditor
-                                    language="javascript"
-                                    value={(() => { }).toString()}
-                                    options={{}}
-                                    onChange={console.log}
-                                    editorDidMount={() => {}}
+                                    language="json"
+                                    value={this.props.FileSource.DataFile.Contents || `{\n}`}
+                                    options={{ wordWrap: `on` }}
+                                    onChange={() => { }}
+                                    editorDidMount={() => { }}
                                 />
                             </div>
                         </Cell>
