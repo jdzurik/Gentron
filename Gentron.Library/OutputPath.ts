@@ -1,18 +1,10 @@
-﻿import { ICloneable, IModifiable } from "./interfaces";
-import { Cloneable } from "./abstract";
+﻿import { Cloneable } from "./abstract";
+import { IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from ".";
-
-export interface IOutputPath extends ICloneable<IOutputPath>, IModifiable<IOutputPath> {
-    /*
-     *  Properties & Fields
-     */
-    Environment: string;
-    Path: string;
-}
+import { Utilities } from "./";
 
 @JsonObject()
-export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
+export default class OutputPath extends Cloneable<OutputPath> implements IModifiable<OutputPath> {
     /*
      *  Properties & Fields
      */
@@ -36,7 +28,7 @@ export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
     /*
      *  Methods
      */
-    public clone(): IOutputPath {
+    public clone(): OutputPath {
         const ret: OutputPath = new OutputPath();
 
         ret._id = this._id;
@@ -46,7 +38,7 @@ export class OutputPath extends Cloneable<IOutputPath> implements IOutputPath {
         return ret;
     }
 
-    public update(outputPath: IOutputPath): void {
+    public update(outputPath: OutputPath): void {
         if (!Utilities.hasValue(outputPath)) {
             return;
         }

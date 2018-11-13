@@ -1,10 +1,4 @@
-﻿export interface IResultBase<T> {
-    ErrorMessage: string;
-    IsError: boolean
-    Result: T;
-}
-
-export class ResultBase<T> implements IResultBase<T> {
+﻿export default class Result<T> {
     /*
      *  Properties & Fields
      */
@@ -26,8 +20,8 @@ export class ResultBase<T> implements IResultBase<T> {
     /*
      *  Methods
      */
-    public static fail<T>(errorMessage?: string, result?: T): IResultBase<T> {
-        const ret: IResultBase<T> = new ResultBase<T>();
+    public static fail<T>(errorMessage?: string, result?: T): Result<T> {
+        const ret: Result<T> = new Result<T>();
         ret.ErrorMessage = errorMessage || "Application Error";
         ret.IsError = true;
         ret.Result = result as any as T;
@@ -35,8 +29,8 @@ export class ResultBase<T> implements IResultBase<T> {
         return ret;
     }
 
-    public static ok<T>(result?: T): IResultBase<T> {
-        const ret: IResultBase<T> = new ResultBase<T>();
+    public static ok<T>(result?: T): Result<T> {
+        const ret: Result<T> = new Result<T>();
         ret.ErrorMessage = "";
         ret.IsError = false;
         ret.Result = result as any as T;

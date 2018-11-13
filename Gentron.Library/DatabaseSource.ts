@@ -1,43 +1,28 @@
-﻿import { ConnectionGroup, File, IConnectionGroup, IDatabaseConnection, IFile, DatabaseConnection, Utilities } from "./";
-import { ISourceBase, SourceBase } from "./SourceBase";
-import { JsonElementType, JsonObject, JsonProperty, JsonConverter, IPropertyConverter, JsonValue, JsonValueObject, JsonType } from "ta-json";
-
-export interface IDatabaseSource extends ISourceBase<IDatabaseSource> {
-    /*
-     *  Properties & Fields 
-     */
-    ActiveConnectionGroup: IConnectionGroup<IDatabaseConnection>;
-    Script?: IFile;
-}
-
-class ActiveConnectionGroupJsonConverter implements IPropertyConverter {
-    public serialize(property: IConnectionGroup<IDatabaseConnection>): JsonValue {
-        return {
-            ID: property.ID
-        };
-    }
-
-    public deserialize(_value: JsonValue) {
-        const value: IConnectionGroup<IDatabaseConnection> = _value as any as IConnectionGroup<IDatabaseConnection>;
-        const connectionGroup: IConnectionGroup<IDatabaseConnection> = new ConnectionGroup<IDatabaseConnection>();
-        (connectionGroup as any)._id = value.ID;
-        return connectionGroup;
-    }
-}
+﻿import * as MsSql from "mssql/msnodesqlv8";
+import { ActiveConnectionGroupConverter } from "./converters";
+import { ConnectionGroup, DatabaseConnection, File, Utilities } from "./";
+import { InfoMessages } from "./constants";
+import { JsonConverter, JsonElementType, JsonObject, JsonProperty, JsonType } from "ta-json";
+import { Result, TDataSourceResult } from "./results";
+import SourceBase from "./SourceBase";
+//const sql: MsSql.ConnectionPool = require("mssql/msnodesqlv8");
 
 @JsonObject()
-export class DatabaseSource extends SourceBase<IDatabaseSource> implements IDatabaseSource {
+export default class DatabaseSource extends SourceBase<DatabaseSource> {
     /*
      *  Properties & Fields 
      */
+    private static readonly _jsonColumnId: string = "JSON_F52E2B61-18A1-11d1-B105-00805F49916B";
+    private static readonly _xmlColumnId: string = "XML_F52E2B61-18A1-11d1-B105-00805F49916B";
+
     @JsonProperty()
     @JsonElementType(ConnectionGroup)
-    @JsonConverter(ActiveConnectionGroupJsonConverter)
-    public ActiveConnectionGroup: IConnectionGroup<IDatabaseConnection>;
+    @JsonConverter(ActiveConnectionGroupConverter)
+    public ActiveConnectionGroup: ConnectionGroup<DatabaseConnection>;
 
     @JsonProperty()
     @JsonType(File)
-    public Script: IFile;
+    public Script: File;
 
 
     /*
@@ -45,7 +30,7 @@ export class DatabaseSource extends SourceBase<IDatabaseSource> implements IData
      */
     public constructor() {
         super();
-        this.ActiveConnectionGroup = new ConnectionGroup<IDatabaseConnection>();
+        this.ActiveConnectionGroup = new ConnectionGroup<DatabaseConnection>();
         this.Script = new File();
     }
 
@@ -53,7 +38,7 @@ export class DatabaseSource extends SourceBase<IDatabaseSource> implements IData
     /*
      *  Methods
      */
-    public clone(): IDatabaseSource {
+    public clone(): DatabaseSource {
         const ret: DatabaseSource = new DatabaseSource();
 
         ret._id = this._id;
@@ -67,7 +52,95 @@ export class DatabaseSource extends SourceBase<IDatabaseSource> implements IData
     }
 
 
-    public update(databaseSource: IDatabaseSource): void {
+    private async onExecuteQueryFail(data: any, message: string, formatResults: boolean): Promise<Result<TDataSourceResult>> {
+        const error = {
+            Error: {
+                Message: message,
+                Data: `${data}`
+            }
+        };
+
+        const ret: TDataSourceResult = {
+            Json: (formatResults)
+                ? JSON.stringify(error, null, 4)
+                : JSON.stringify(error),
+            Object: null,
+            Xml: await Utilities.jsonToXmlStr(error, formatResults)
+        };
+
+        return Result.fail<TDataSourceResult>(message, ret);
+    }
+
+
+    //public async executeQuery(formatResults: boolean = true): Promise<Result<TDataSourceResult>> {
+    //    const connStr: string = this.ActiveConnectionGroup.Connections[0].ConnectionString;
+    //    const queryStr: string = this.Script.Contents;
+
+    //    let connPool: MsSql.ConnectionPool = null as any as MsSql.ConnectionPool;
+    //    let recordsets: MsSql.IRecordSet<any>;
+
+    //    try {
+    //        connPool = await new MsSql.ConnectionPool(connStr);
+    //        await connPool.connect();
+    //        const result: MsSql.IResult<any> = await new MsSql.Request(connPool).query(queryStr);
+    //        recordsets = await result.recordset;
+    //    }
+    //    catch (e) {
+    //        return await this.onExecuteQueryFail(queryStr, Utilities.getErrorMessage(e), formatResults);
+    //    }
+    //    finally {
+    //        if (Utilities.hasValue(connPool) && connPool.connected) {
+    //            await connPool.close();
+    //        }
+    //    }
+
+    //    if (!Utilities.hasValue(recordsets)) {
+    //        return await this.onExecuteQueryFail(queryStr, InfoMessages.QUERY_RESULTS_NULL, formatResults);
+    //    }
+
+    //    if (recordsets.length === 1) {
+    //        const recordset: any = recordsets[0];
+
+    //        const resultAsJson: any = recordset[DatabaseSource._jsonColumnId];
+    //        if (Utilities.hasValue(resultAsJson)) {
+    //            const ret: TDataSourceResult = {
+    //                Json: (formatResults)
+    //                    ? JSON.stringify(resultAsJson, null, 4)
+    //                    : JSON.stringify(resultAsJson),
+    //                Object: resultAsJson,
+    //                Xml: await Utilities.jsonStrToXmlStr(JSON.stringify(resultAsJson), formatResults)
+    //            };
+
+    //            return Result.ok<TDataSourceResult>(ret);
+    //        }
+
+    //        const resultAsXml: any = recordset[DatabaseSource._xmlColumnId];
+    //        if (Utilities.hasValue(resultAsXml)) {
+    //            const ret: TDataSourceResult = {
+    //                Json: Utilities.xmlStrToJsonStr(resultAsXml, formatResults),
+    //                Object: resultAsXml,
+    //                Xml: (formatResults)
+    //                    ? await Utilities.formatXml(resultAsXml)
+    //                    : resultAsXml
+    //            };
+
+    //            return Result.ok<TDataSourceResult>(ret);
+    //        }
+    //    }
+
+    //    const ret: TDataSourceResult = {
+    //        Json: (formatResults)
+    //            ? JSON.stringify(recordsets, null, 4)
+    //            : JSON.stringify(recordsets),
+    //        Object: recordsets,
+    //        Xml: await Utilities.jsonStrToXmlStr(JSON.stringify(recordsets), formatResults)
+    //    };
+
+    //    return Result.ok<TDataSourceResult>(ret);
+    //}
+
+
+    public update(databaseSource: DatabaseSource): void {
         if (!Utilities.hasValue(databaseSource)) {
             return;
         }
@@ -77,10 +150,6 @@ export class DatabaseSource extends SourceBase<IDatabaseSource> implements IData
         this.Name = databaseSource.Name;
         this.Result = databaseSource.Result;
 
-        this.Script.update(databaseSource.Script as IFile);
-        //if (Utilities.hasValue(this.Script)
-        //    && Utilities.hasValue(databaseSource.Script)
-        //    && this.Script.Path !== databaseSource.Script.Path) {
-        //}
+        this.Script.update(databaseSource.Script);
     }
-}
+}    

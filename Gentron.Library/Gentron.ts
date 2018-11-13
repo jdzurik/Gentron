@@ -1,18 +1,17 @@
 ﻿import * as fs from "fs";
 import * as path from "path";
+import { ConnectionGroup, DatabaseConnection, DatabaseSource, File, PackageSettings, ProjectSettings, Utilities } from "./";
+import { Result, TGentronFsResult } from "./results";
 import { Gentron as GentronConstants, InfoMessages } from "./constants";
-import { IFileOperationResult, FileOperationResult, GentronFsResult, IGentronFsResult } from "./results";
-import { IPackageSettings, IProjectSettings, PackageSettings, ProjectSettings, Utilities, File, IDatabaseSource, IConnectionGroup } from "./";
-import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import { IDatabaseConnection } from "./DatabaseConnection";
+import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 
 export interface IGentron {
     /*
      *  Properties & Fields 
      */
     ActiveProjectPath: string;
-    PackageSettings: IPackageSettings;
-    ProjectSettings: IProjectSettings;
+    PackageSettings: PackageSettings;
+    ProjectSettings: ProjectSettings;
 }
 
 @JsonObject()
@@ -25,11 +24,11 @@ export class Gentron implements IGentron {
 
     @JsonProperty()
     @JsonElementType(PackageSettings)
-    public PackageSettings: IPackageSettings;
+    public PackageSettings: PackageSettings;
 
     @JsonProperty()
     @JsonElementType(ProjectSettings)
-    public ProjectSettings: IProjectSettings;
+    public ProjectSettings: ProjectSettings;
 
 
     /*
@@ -46,7 +45,7 @@ export class Gentron implements IGentron {
      *  Methods
      */
     public static deserialize(gentron: IGentron): Gentron {
-        return Utilities.JSON.deserialize({
+        return Utilities.TaJson.deserialize({
             ActiveProjectPath: gentron.ActiveProjectPath,
             PackageSettings: gentron.PackageSettings,
             ProjectSettings: gentron.ProjectSettings
@@ -54,13 +53,13 @@ export class Gentron implements IGentron {
     }
 
     public static parse(gentronJson: string): Gentron {
-        return Utilities.JSON.parse(gentronJson, Gentron);
+        return Utilities.TaJson.parse(gentronJson, Gentron);
     }
 
-    public static save(iGentron: IGentron): IGentronFsResult<void> {
+    public static save(iGentron: IGentron): Result<TGentronFsResult> {
         const gentron: Gentron = this.deserialize(iGentron);
-        const packageSettings: IPackageSettings = gentron.PackageSettings;
-        const projectSettings: IProjectSettings = gentron.ProjectSettings;
+        const packageSettings: PackageSettings = gentron.PackageSettings;
+        const projectSettings: ProjectSettings = gentron.ProjectSettings;
 
         let infoMessage: string = "";
 
@@ -79,55 +78,56 @@ export class Gentron implements IGentron {
                 + path.sep + packageSettings.PackageName;
         }
 
-        const projectSettingsStr: string = JSON.stringify(Utilities.JSON.serialize(projectSettings), null, 4);
-        const projectSaveResult: IFileOperationResult<void> = File.write(iGentron.ActiveProjectPath, projectSettingsStr);
+        const projectSettingsStr: string = JSON.stringify(Utilities.TaJson.serialize(projectSettings), null, 4);
+        const projectSaveResult: Result<void> = File.write(iGentron.ActiveProjectPath, projectSettingsStr);
         if (projectSaveResult.IsError) {
-            return GentronFsResult.fail(projectSaveResult.ErrorMessage);
+            return Result.fail(projectSaveResult.ErrorMessage);
         }
 
-        const packageSettingsStr: string = JSON.stringify(Utilities.JSON.serialize(packageSettings), null, 4);
+        const packageSettingsStr: string = JSON.stringify(Utilities.TaJson.serialize(packageSettings), null, 4);
 
         const packageFilePath: string = projectSettings.LocalPackageFolder
             + path.sep + GentronConstants.DEFAULT_PACKAGE_NAME;
-        const packageSaveResult: IFileOperationResult<void> = File.write(packageFilePath, packageSettingsStr, true);
+        const packageSaveResult: Result<void> = File.write(packageFilePath, packageSettingsStr, true);
         if (packageSaveResult.IsError) {
-            return GentronFsResult.fail(packageSaveResult.ErrorMessage);
+            return Result.fail(packageSaveResult.ErrorMessage);
         }
 
-        return GentronFsResult.ok(void 0, infoMessage);
+        return Result.ok<TGentronFsResult>({ InfoMessage: infoMessage });
     }
 
-    public static open(fileName: string): IGentronFsResult<IGentron> {
+
+    public static open(fileName: string): Result<TGentronFsResult> {
         const ret: IGentron = new Gentron();
         ret.ActiveProjectPath = fileName;
 
-        const projectReadResult: IFileOperationResult<string> = File.read(fileName);
+        const projectReadResult: Result<string> = File.read(fileName);
         if (projectReadResult.IsError) {
-            return GentronFsResult.fail(projectReadResult.ErrorMessage);
+            return Result.fail(projectReadResult.ErrorMessage);
         }
 
         try {
-            ret.ProjectSettings = Utilities.JSON.parse(projectReadResult.Result, ProjectSettings);
+            ret.ProjectSettings = Utilities.TaJson.parse(projectReadResult.Result, ProjectSettings);
         }
         catch (e) {
-            return GentronFsResult.fail((e as NodeJS.ErrnoException).message);
+            return Result.fail((e as NodeJS.ErrnoException).message);
         }
 
         if (!Utilities.hasStringValue(ret.ProjectSettings.LocalPackageFolder)) {
-            return GentronFsResult.ok(ret, InfoMessages.LOCAL_PACKAGE_FOLDER_NOT_FOUND);
+            return Result.ok<TGentronFsResult>({ Gentron: ret, InfoMessage: InfoMessages.LOCAL_PACKAGE_FOLDER_NOT_FOUND });
         }
 
         const packageFilePath: string = ret.ProjectSettings.LocalPackageFolder
             + path.sep + GentronConstants.DEFAULT_PACKAGE_NAME;
-        const packageReadResult: IFileOperationResult<string> = File.read(packageFilePath);
+        const packageReadResult: Result<string> = File.read(packageFilePath);
         if (packageReadResult.IsError) {
-            return GentronFsResult.fail(packageReadResult.ErrorMessage);
+            return Result.fail(packageReadResult.ErrorMessage);
         }
 
         try {
-            ret.PackageSettings = Utilities.JSON.parse(packageReadResult.Result, PackageSettings);
-            ret.PackageSettings.DatabaseSources.forEach((source: IDatabaseSource, index: number) => {
-                const connection: IConnectionGroup<IDatabaseConnection> = ret.ProjectSettings.DatabaseConnections.filter((connection: IConnectionGroup<IDatabaseConnection>) => {
+            ret.PackageSettings = Utilities.TaJson.parse(packageReadResult.Result, PackageSettings);
+            ret.PackageSettings.DatabaseSources.forEach((source: DatabaseSource, index: number) => {
+                const connection: ConnectionGroup<DatabaseConnection> = ret.ProjectSettings.DatabaseConnections.filter((connection: ConnectionGroup<DatabaseConnection>) => {
                     return connection.ID === source.ActiveConnectionGroup.ID;
                 })[0];
                 source.ActiveConnectionGroup = connection;
@@ -135,9 +135,9 @@ export class Gentron implements IGentron {
             });
         }
         catch (e) {
-            return GentronFsResult.fail((e as NodeJS.ErrnoException).message);
+            return Result.fail((e as NodeJS.ErrnoException).message);
         }
 
-        return GentronFsResult.ok(ret);
+        return Result.ok<TGentronFsResult>({ Gentron: ret });
     }
 }

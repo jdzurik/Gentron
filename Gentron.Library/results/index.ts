@@ -1,12 +1,17 @@
-﻿import { ResultBase, IResultBase } from "./ResultBase";
-import { FileOperationResult, IFileOperationResult } from "./FileOperationResult";
-import { GentronFsResult, IGentronFsResult } from "./GentronFsResult";
+﻿import Result from "./Result";
+import { IGentron } from "../";
+
+export type TGentronFsResult = {
+    InfoMessage?: string;
+    Gentron?: IGentron;
+};
+
+export type TDataSourceResult = {
+    Json: string;
+    Object: any;
+    Xml: string;
+}
 
 export {
-    ResultBase,
-    IResultBase,
-    FileOperationResult,
-    IFileOperationResult,
-    GentronFsResult,
-    IGentronFsResult
+    Result
 };

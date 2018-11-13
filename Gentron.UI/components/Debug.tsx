@@ -40,7 +40,7 @@ export default class Debug extends React.Component<DebugProps> {
             ProjectSettings: this.props.Gentron.ProjectSettings
         };
 
-        const state: Gentron = Utilities.JSON.deserialize(stateObj, Gentron);
+        const state: Gentron = Utilities.TaJson.deserialize(stateObj, Gentron);
 
         return (
             <Cell className="h-100">
@@ -50,7 +50,7 @@ export default class Debug extends React.Component<DebugProps> {
                     <Row className="h-100 w-100">
                         <Cell>
                             <Inspector
-                                data={Utilities.JSON.serialize(state)}
+                                data={Utilities.TaJson.serialize(state)}
                                 theme={{
                                     ...chromeLight,
                                     ...({

@@ -6,13 +6,13 @@ import { bindActionCreators } from "redux";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, IEnvironment, Utilities, IOutputPathGroup, IOutputPath, OutputPathGroup, OutputPath } from "../../Gentron.Library";
+import { IGentron, Environment, Utilities, OutputPathGroup, OutputPath } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableOutputPaths = Hash & {
-    OutputPathGroups?: IOutputPathGroup<IOutputPath>[];
-    Environments?: IEnvironment[];
+    OutputPathGroups?: OutputPathGroup<OutputPath>[];
+    Environments?: Environment[];
 };
 
 type OutputPathsProps = NullableOutputPaths
@@ -21,7 +21,7 @@ type OutputPathsProps = NullableOutputPaths
     & RouteComponentProps<{}>;
 
 type OutputPathsState = {
-    EditingOutputPathGroup: IOutputPathGroup<IOutputPath>;
+    EditingOutputPathGroup: OutputPathGroup<OutputPath>;
 };
 
 @connect<NullableOutputPaths, {}, OutputPathsProps>(mapStateToProps, mapDispatchToProps)
@@ -41,30 +41,30 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
      *  Methods
      */
     private handleAddOutputPathGroupClick(): void {
-        this.handleOpenEditOutputPathGroupClick(new OutputPathGroup<IOutputPath>());
+        this.handleOpenEditOutputPathGroupClick(new OutputPathGroup<OutputPath>());
     }
 
-    private handleRemoveOutputPathGroupClick(outputPathGroup: IOutputPathGroup<IOutputPath>): void {
+    private handleRemoveOutputPathGroupClick(outputPathGroup: OutputPathGroup<OutputPath>): void {
         this.props.removeOutputPathGroup(outputPathGroup);
     }
 
-    private handleOpenEditOutputPathGroupClick(outputPathGroup: IOutputPathGroup<IOutputPath>): void {
+    private handleOpenEditOutputPathGroupClick(outputPathGroup: OutputPathGroup<OutputPath>): void {
         this.setState({
             EditingOutputPathGroup: outputPathGroup.clone()
         });
     }
 
     private handleEditOutputPathGroupNameChange(name: string): void {
-        const editingOutputPathGroup: IOutputPathGroup<IOutputPath> = this.state.EditingOutputPathGroup;
+        const editingOutputPathGroup: OutputPathGroup<OutputPath> = this.state.EditingOutputPathGroup;
         editingOutputPathGroup.Name = name;
         this.setState({
             EditingOutputPathGroup: editingOutputPathGroup
         });
     }
 
-    private handleEditOutputPathGroupPathChange(environment: IEnvironment, connStr): void {
-        const editingOutputPathGroup: IOutputPathGroup<IOutputPath> = this.state.EditingOutputPathGroup;
-        editingOutputPathGroup.Paths.forEach((path: IOutputPath, i: number) => {
+    private handleEditOutputPathGroupPathChange(environment: Environment, connStr): void {
+        const editingOutputPathGroup: OutputPathGroup<OutputPath> = this.state.EditingOutputPathGroup;
+        editingOutputPathGroup.Paths.forEach((path: OutputPath, i: number) => {
             if (path.Environment === environment.Name) {
                 path.Path = connStr;
             }
@@ -109,20 +109,20 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.OutputPathGroups.map((outputPath: IOutputPathGroup<IOutputPath>, i: number) =>
+                                this.props.OutputPathGroups.map((outputPathGroup: OutputPathGroup<OutputPath>, i: number) =>
                                     <tr key={i}>
                                         <td>
                                             <button className="button"
-                                                onClick={() => this.handleOpenEditOutputPathGroupClick(outputPath)}>
+                                                onClick={() => this.handleOpenEditOutputPathGroupClick(outputPathGroup)}>
                                                 <span className="mif-pencil"></span>
                                             </button>
-                                            <span> {outputPath.Name}</span>
+                                            <span> {outputPathGroup.Name}</span>
                                         </td>
                                         <td>
-                                            {outputPath.Paths.length}
+                                            {outputPathGroup.Paths.length}
                                         </td>
                                         <td>
-                                            <button className="button" onClick={this.handleRemoveOutputPathGroupClick.bind(this, outputPath)}>
+                                            <button className="button" onClick={this.handleRemoveOutputPathGroupClick.bind(this, outputPathGroup)}>
                                                 <span className="mif-bin"></span>
                                             </button>
                                         </td>
@@ -157,8 +157,8 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
                                     </Row>
 
                                     {
-                                        this.props.Environments.map((env: IEnvironment, i: number) => {
-                                            let currOutputPath: IOutputPath = this.state.EditingOutputPathGroup.Paths.find(conn => conn.Environment === env.Name);
+                                        this.props.Environments.map((env: Environment, i: number) => {
+                                            let currOutputPath: OutputPath = this.state.EditingOutputPathGroup.Paths.find(conn => conn.Environment === env.Name);
 
                                             if (!Utilities.hasValue(currOutputPath)) {
                                                 currOutputPath = new OutputPath();

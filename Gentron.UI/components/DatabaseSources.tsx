@@ -5,12 +5,12 @@ import { bindActionCreators } from "redux";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row, Switch } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, DatabaseSource, IDatabaseSource, Utilities } from "../../Gentron.Library";
+import { IGentron, DatabaseSource, Utilities } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableDatabaseSources = Hash & {
-    DatabaseSources?: IDatabaseSource[];
+    DatabaseSources?: DatabaseSource[];
 };
 
 type DatabaseSourcesProps = NullableDatabaseSources
@@ -18,7 +18,7 @@ type DatabaseSourcesProps = NullableDatabaseSources
     & RouteComponentProps<{}>;
 
 type DatabaseSourcesState = {
-    EditingSource: IDatabaseSource;
+    EditingSource: DatabaseSource;
 };
 
 @connect<NullableDatabaseSources, {}, DatabaseSourcesProps>(mapStateToProps, mapDispatchToProps)
@@ -42,23 +42,23 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
         this.handleOpenEditSourceClick(new DatabaseSource());
     }
 
-    private handleToggleSourceIsActiveClick(source: IDatabaseSource, isActive: boolean): void {
+    private handleToggleSourceIsActiveClick(source: DatabaseSource, isActive: boolean): void {
         source.IsActive = isActive;
         this.props.addOrUpdateDatabaseSource(source);
     }
 
-    private handleRemoveSourceClick(source: IDatabaseSource): void {
+    private handleRemoveSourceClick(source: DatabaseSource): void {
         this.props.removeDatabaseSource(source);
     }
 
-    private handleOpenEditSourceClick(source: IDatabaseSource): void {
+    private handleOpenEditSourceClick(source: DatabaseSource): void {
         this.setState((prevState: Readonly<DatabaseSourcesState>) => {
             return Object.assign({}, prevState, { EditingSource: source.clone() });
         });
     }
 
     private handleEditSourceNameChange(name: string): void {
-        const editingSource: IDatabaseSource = this.state.EditingSource;
+        const editingSource: DatabaseSource = this.state.EditingSource;
         editingSource.Name = name;
         this.setState((prevState: Readonly<DatabaseSourcesState>) => {
             return Object.assign({}, prevState, { EditingSource: editingSource });
@@ -102,7 +102,7 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.DatabaseSources.map((source, i) =>
+                                this.props.DatabaseSources.map((source: DatabaseSource, i: number) =>
                                     <tr key={i}>
                                         <td>
                                             <Link to={`/sources/db/${i}`}>

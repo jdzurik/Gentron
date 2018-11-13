@@ -1,31 +1,21 @@
-﻿import { ConnectionGroup, IConnectionGroup, IDatabaseConnection, IOutputPath, IOutputPathGroup, OutputPathGroup } from "./";
-import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-
-export interface IProjectSettings {
-    /*
-     *  Properties & Fields 
-     */
-    DatabaseConnections: IConnectionGroup<IDatabaseConnection>[];
-    LocalPackageFolder: string;
-    OutputPathGroups: IOutputPathGroup<IOutputPath>[];
-    RemotePackageLocation: string;
-}
+﻿import { ConnectionGroup, DatabaseConnection, OutputPath, OutputPathGroup } from "./";
+import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 
 @JsonObject()
-export class ProjectSettings implements IProjectSettings {
+export default class ProjectSettings {
     /*
      *  Properties & Fields 
      */
     @JsonProperty()
     @JsonElementType(ConnectionGroup)
-    public DatabaseConnections: IConnectionGroup<IDatabaseConnection>[];
+    public DatabaseConnections: ConnectionGroup<DatabaseConnection>[];
 
     @JsonProperty()
     public LocalPackageFolder: string;
 
     @JsonProperty()
     @JsonElementType(OutputPathGroup)
-    public OutputPathGroups: IOutputPathGroup<IOutputPath>[];
+    public OutputPathGroups: OutputPathGroup<OutputPath>[];
 
     @JsonProperty()
     public RemotePackageLocation: string;

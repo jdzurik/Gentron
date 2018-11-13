@@ -62,6 +62,15 @@
     <TypeScriptCompile Include="constants\InfoMessages.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="converters\ActiveConnectionGroupConverter.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="converters\FileJsonConverter.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="converters\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="DatabaseConnection.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -113,16 +122,10 @@
     <TypeScriptCompile Include="OutputPathGroup.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="results\FileOperationResult.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
-    <TypeScriptCompile Include="results\GentronFsResult.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="results\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="results\ResultBase.ts">
+    <TypeScriptCompile Include="results\Result.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="SourceBase.ts">
@@ -154,6 +157,7 @@
     <Folder Include="interfaces\" />
     <Folder Include="abstract\" />
     <Folder Include="constants\" />
+    <Folder Include="converters\" />
     <Folder Include="results\" />
     <Folder Include="types\" />
   </ItemGroup>

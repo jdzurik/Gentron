@@ -5,12 +5,12 @@ import { bindActionCreators } from "redux";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row, Switch } from "./metro";
 import { Hash } from "../../Gentron.Library/types";
 import { connect } from "../connect";
-import { IGentron, HttpSource, IHttpSource, Utilities } from "../../Gentron.Library";
+import { IGentron, HttpSource, Utilities } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableHttpSources = Hash & {
-    HttpSources?: IHttpSource[];
+    HttpSources?: HttpSource[];
 };
 
 type HttpSourcesProps = NullableHttpSources
@@ -18,7 +18,7 @@ type HttpSourcesProps = NullableHttpSources
     & RouteComponentProps<{}>;
 
 type HttpSourcesState = {
-    EditingSource: IHttpSource;
+    EditingSource: HttpSource;
 };
 
 @connect<NullableHttpSources, {}, HttpSourcesProps>(mapStateToProps, mapDispatchToProps)
@@ -42,23 +42,23 @@ export default class HttpSources extends React.Component<HttpSourcesProps, HttpS
         this.handleOpenEditSourceClick(new HttpSource());
     }
 
-    private handleToggleSourceIsActiveClick(source: IHttpSource, isActive: boolean): void {
+    private handleToggleSourceIsActiveClick(source: HttpSource, isActive: boolean): void {
         source.IsActive = isActive;
         this.props.addOrUpdateHttpSource(source);
     }
 
-    private handleRemoveSourceClick(source: IHttpSource): void {
+    private handleRemoveSourceClick(source: HttpSource): void {
         this.props.removeHttpSource(source);
     }
 
-    private handleOpenEditSourceClick(source: IHttpSource): void {
+    private handleOpenEditSourceClick(source: HttpSource): void {
         this.setState((prevState: Readonly<HttpSourcesState>) => {
             return Object.assign({}, prevState, { EditingSource: source.clone() });
         });
     }
 
     private handleEditSourceNameChange(name: string): void {
-        const editingSource: IHttpSource = this.state.EditingSource;
+        const editingSource: HttpSource = this.state.EditingSource;
         editingSource.Name = name;
         this.setState((prevState: Readonly<HttpSourcesState>) => {
             return Object.assign({}, prevState, { EditingSource: editingSource });
@@ -100,7 +100,7 @@ export default class HttpSources extends React.Component<HttpSourcesProps, HttpS
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.HttpSources.map((source, i) =>
+                                this.props.HttpSources.map((source: HttpSource, i: number) =>
                                     <tr key={i}>
                                         <td>
                                             <Link to={`/sources/http/${i}`}>

@@ -1,17 +1,9 @@
-﻿import { ConnectionBase, IConnectionBase } from "./ConnectionBase";
-import { JsonObject, JsonProperty } from "ta-json";
+﻿import { JsonObject, JsonProperty } from "ta-json";
 import { Utilities } from ".";
-
-export interface IDatabaseConnection extends IConnectionBase {
-    /*
-     *  Properties & Fields 
-     */
-    ConnectionString: string;
-    Environment: string;
-}
+import ConnectionBase from "./ConnectionBase";
 
 @JsonObject()
-export class DatabaseConnection extends ConnectionBase implements IDatabaseConnection {
+export default class DatabaseConnection extends ConnectionBase<DatabaseConnection> {
     /*
      *  Properties & Fields 
      */
@@ -35,7 +27,7 @@ export class DatabaseConnection extends ConnectionBase implements IDatabaseConne
     /*
      *  Methods
      */
-    public clone(): IDatabaseConnection {
+    public clone(): DatabaseConnection {
         const ret: DatabaseConnection = new DatabaseConnection();
 
         ret._id = this._id;

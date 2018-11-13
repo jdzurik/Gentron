@@ -1,10 +1,10 @@
 ﻿import * as PackageSettingsActions from '../actions/PackageSettings';
 import { NonFunctionProperties } from "../../Gentron.Library/types";
-import { PackageSettings, IPackageSettings, IEnvironment } from "../../Gentron.Library";
+import { PackageSettings, Environment } from "../../Gentron.Library";
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
 
-type PackageSettingsProps = NonFunctionProperties<IPackageSettings>;
+type PackageSettingsProps = NonFunctionProperties<PackageSettings>;
 
 const _unloadedPackageSettingsState: PackageSettingsProps = new PackageSettings() as PackageSettingsProps;
 
@@ -13,15 +13,15 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.AddOrUpdateDatabaseSource:
             let dbSourceFound: boolean = false;
             for (let i: number = 0; i < state.DatabaseSources.length; ++i) {
-                if (state.DatabaseSources[i].ID === action.databaseSource.ID) {
-                    state.DatabaseSources[i].update(action.databaseSource);
+                if (state.DatabaseSources[i].ID === action.source.ID) {
+                    state.DatabaseSources[i].update(action.source);
                     dbSourceFound = true;
                     break;
                 }
             }
 
             if (!dbSourceFound) {
-                state.DatabaseSources.push(action.databaseSource);
+                state.DatabaseSources.push(action.source);
             }
 
             return {
@@ -36,15 +36,15 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.AddOrUpdateEngine:
             let engineFound: boolean = false;
             for (let i: number = 0; i < state.Engines.length; ++i) {
-                if (state.Engines[i].ID === action.engine.ID) {
-                    state.Engines[i].update(action.engine);
+                if (state.Engines[i].ID === action.source.ID) {
+                    state.Engines[i].update(action.source);
                     engineFound= true;
                     break;
                 }
             }
 
             if (!engineFound) {
-                state.Engines.push(action.engine);
+                state.Engines.push(action.source);
             }
 
             return {
@@ -106,15 +106,15 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.AddOrUpdateFileSource:
             let fileSourceFound: boolean = false;
             for (let i: number = 0; i < state.FileSources.length; ++i) {
-                if (state.FileSources[i].ID === action.fileSource.ID) {
-                    state.FileSources[i].update(action.fileSource);
+                if (state.FileSources[i].ID === action.source.ID) {
+                    state.FileSources[i].update(action.source);
                     fileSourceFound = true;
                     break;
                 }
             }
 
             if (!fileSourceFound) {
-                state.FileSources.push(action.fileSource);
+                state.FileSources.push(action.source);
             }
 
             return {
@@ -129,15 +129,15 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.AddOrUpdateHttpSource:
             let httpSourceFound: boolean = false;
             for (let i: number = 0; i < state.HttpSources.length; ++i) {
-                if (state.HttpSources[i].ID === action.httpSource.ID) {
-                    state.HttpSources[i].update(action.httpSource);
+                if (state.HttpSources[i].ID === action.source.ID) {
+                    state.HttpSources[i].update(action.source);
                     httpSourceFound = true;
                     break;
                 }
             }
 
             if (!httpSourceFound) {
-                state.HttpSources.push(action.httpSource);
+                state.HttpSources.push(action.source);
             }
 
             return {
@@ -172,7 +172,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.RemoveDatabaseSource:
             let dbSourceIdx: number = -1;
             for (let i: number = 0; i < state.DatabaseSources.length; ++i) {
-                if (state.DatabaseSources[i].ID === action.databaseSource.ID) {
+                if (state.DatabaseSources[i].ID === action.source.ID) {
                     dbSourceIdx = i;
                     break;
                 }
@@ -194,7 +194,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.RemoveEngine:
             let engineIdx: number = -1;
             for (let i: number = 0; i < state.Engines.length; ++i) {
-                if (state.Engines[i].ID === action.engine.ID) {
+                if (state.Engines[i].ID === action.source.ID) {
                     engineIdx = i;
                     break;
                 }
@@ -261,7 +261,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.RemoveFileSource:
             let fileSourceIdx: number = -1;
             for (let i: number = 0; i < state.FileSources.length; ++i) {
-                if (state.FileSources[i].ID === action.fileSource.ID) {
+                if (state.FileSources[i].ID === action.source.ID) {
                     fileSourceIdx = i;
                     break;
                 }
@@ -283,7 +283,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
         case PackageSettingsActionNames.RemoveHttpSource:
             let httpSourceIdx: number = -1;
             for (let i: number = 0; i < state.HttpSources.length; ++i) {
-                if (state.HttpSources[i].ID === action.httpSource.ID) {
+                if (state.HttpSources[i].ID === action.source.ID) {
                     httpSourceIdx = i;
                     break;
                 }
@@ -304,7 +304,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             };
         case PackageSettingsActionNames.ToggleActiveEnvironment:
             for (let i: number = 0; i < state.Environments.length; ++i) {
-                const environment: IEnvironment = state.Environments[i];
+                const environment: Environment = state.Environments[i];
 
                 if (environment.ID === action.environment.ID) {
                     environment.update(action.environment);

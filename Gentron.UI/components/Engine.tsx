@@ -4,13 +4,14 @@ import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, IEngine } from "../../Gentron.Library";
-import { LinkButton, Cell, Grid, Row } from "./metro";
+import { IGentron, Engine as LibEngine } from "../../Gentron.Library";
+import { Cell, FileInput, Grid, LinkButton, Row } from "./metro";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
+import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type HashedEngine = Hash & {
-    Engine?: IEngine;
+    Engine?: LibEngine;
 };
 
 type EngineProps = HashedEngine
@@ -19,6 +20,14 @@ type EngineProps = HashedEngine
 
 @connect<HashedEngine, {}, EngineProps>(mapStateToProps, mapDispatchToProps)
 export default class Engine extends React.Component<EngineProps> {
+    /*
+     *  Properties & Fields
+     */
+    private static readonly fileInputFilters = [
+        { name: 'JavaScript', extensions: ['js'] }
+    ];
+
+
     /*
      *  Constructors
      */
@@ -30,8 +39,9 @@ export default class Engine extends React.Component<EngineProps> {
     /*
      *  Methods
      */
-    private handleNameClick(source: IEngine): void {
-        source.Name = "Test";
+    private handleDataFileNameChange(value: string): void {
+        const source: LibEngine = this.props.Engine.clone();
+        source.EngineCode.Path = value;
         this.props.addOrUpdateEngine(source);
     }
 
@@ -39,14 +49,7 @@ export default class Engine extends React.Component<EngineProps> {
         return (
             <Cell className="h-100">
                 <Grid className="w-100 h-100 p-3">
-                    <Row className="mb-2">
-                        <Cell colSpan={12}>
-                            <h3>
-                                <span className="mif-drive-eta mif-md mr-2"></span>
-                                <span onClick={this.handleNameClick.bind(this, this.props.Engine)}>{this.props.Engine.Name}</span>
-                            </h3>
-                        </Cell>
-                    </Row>
+                    <NavViewContentHeaderRow iconClassName="mif-drive-eta" title={this.props.Engine.Name} />
 
                     <Row className="mt-2 mb-2">
                         <Cell>
@@ -63,14 +66,26 @@ export default class Engine extends React.Component<EngineProps> {
                         </Cell>
                     </Row>
 
+                    <Row className="mt-2 mb-2">
+                        <Cell colSpan={4}>
+                            <div className="pos-center text-right">Engine Code:</div>
+                        </Cell>
+                        <Cell colSpan={8}>
+                            <FileInput filters={Engine.fileInputFilters}
+                                onFilePathChange={(value: string) => this.handleDataFileNameChange(value)}
+                                value={this.props.Engine.EngineCode.Path}
+                            />
+                        </Cell>
+                    </Row>
+
                     <Row className="h-100 mt-2">
                         <Cell>
                             <div className="h-100 w-100 border bd-grayWhite border-size-2">
                                 <MonacoEditor
                                     language="javascript"
-                                    value={(() => { }).toString()}
-                                    options={{}}
-                                    onChange={console.log}
+                                    value={this.props.Engine.EngineCode.Contents || (() => { }).toString()}
+                                    options={{ wordWrap: `on` }}
+                                    onChange={() => { }}
                                     editorDidMount={() => {}}
                                 />
                             </div>

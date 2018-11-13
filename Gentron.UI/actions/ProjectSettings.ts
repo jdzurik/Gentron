@@ -1,8 +1,8 @@
-﻿import { IConnectionGroup, IDatabaseConnection, IOutputPath, IOutputPathGroup } from '../../Gentron.Library';
+﻿import { ConnectionGroup, DatabaseConnection, OutputPath, OutputPathGroup } from '../../Gentron.Library';
 import { ProjectSettingsActionNames } from "../constants/ActionNames";
 
 export interface AddOrUpdateDatabaseConnectionGroupAction {
-    databaseConnectionGroup: IConnectionGroup<IDatabaseConnection>;
+    databaseConnectionGroup: ConnectionGroup<DatabaseConnection>;
     type: ProjectSettingsActionNames.AddOrUpdateDatabaseConnectionGroup;
 }
 
@@ -12,7 +12,7 @@ export interface AddOrUpdateLocalPackageFolderAction {
 }
 
 export interface AddOrUpdateOutputPathGroupAction {
-    outputPathGroup: IOutputPathGroup<IOutputPath>;
+    outputPathGroup: OutputPathGroup<OutputPath>;
     type: ProjectSettingsActionNames.AddOrUpdateOutputPathGroupAction;
 }
 
@@ -22,12 +22,12 @@ export interface AddOrUpdateRemotePackageLocationAction {
 }
 
 export interface RemoveDatabaseConnectionGroupAction {
-    databaseConnectionGroup: IConnectionGroup<IDatabaseConnection>;
+    databaseConnectionGroup: ConnectionGroup<DatabaseConnection>;
     type: ProjectSettingsActionNames.RemoveDatabaseConnectionGroup;
 }
 
 export interface RemoveOutputPathGroupAction {
-    outputPathGroup: IOutputPathGroup<IOutputPath>;
+    outputPathGroup: OutputPathGroup<OutputPath>;
     type: ProjectSettingsActionNames.RemoveOutputPathGroupAction;
 }
 
@@ -39,7 +39,7 @@ export type KnownProjectSettingsAction = AddOrUpdateDatabaseConnectionGroupActio
     | RemoveOutputPathGroupAction;
 
 export const ActionCreators = {
-    addOrUpdateDatabaseConnectionGroup: (databaseSource: IConnectionGroup<IDatabaseConnection>) => {
+    addOrUpdateDatabaseConnectionGroup: (databaseSource: ConnectionGroup<DatabaseConnection>) => {
         return <AddOrUpdateDatabaseConnectionGroupAction>{
             databaseConnectionGroup: databaseSource,
             type: ProjectSettingsActionNames.AddOrUpdateDatabaseConnectionGroup
@@ -51,7 +51,7 @@ export const ActionCreators = {
             type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction
         };
     },
-    addOrUpdateOutputPathGroup: (outputPathGroup: IOutputPathGroup<IOutputPath>) => {
+    addOrUpdateOutputPathGroup: (outputPathGroup: OutputPathGroup<OutputPath>) => {
         return <AddOrUpdateOutputPathGroupAction>{
             outputPathGroup: outputPathGroup,
             type: ProjectSettingsActionNames.AddOrUpdateOutputPathGroupAction
@@ -63,13 +63,13 @@ export const ActionCreators = {
             type: ProjectSettingsActionNames.AddOrUpdateRemotePackageLocationAction
         };
     },
-    removeDatabaseConnectionGroup: (databaseSource: IConnectionGroup<IDatabaseConnection>) => {
+    removeDatabaseConnectionGroup: (databaseSource: ConnectionGroup<DatabaseConnection>) => {
         return <RemoveDatabaseConnectionGroupAction>{
             databaseConnectionGroup: databaseSource,
             type: ProjectSettingsActionNames.RemoveDatabaseConnectionGroup
         };
     },
-    removeOutputPathGroup: (outputPathGroup: IOutputPathGroup<IOutputPath>) => {
+    removeOutputPathGroup: (outputPathGroup: OutputPathGroup<OutputPath>) => {
         return <RemoveOutputPathGroupAction>{
             outputPathGroup: outputPathGroup,
             type: ProjectSettingsActionNames.RemoveOutputPathGroupAction

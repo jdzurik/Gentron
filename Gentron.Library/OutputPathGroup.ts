@@ -1,25 +1,10 @@
 ﻿import { Cloneable } from "./abstract";
-import { ICloneable, IModifiable } from "./interfaces";
-import { IOutputPath, OutputPath } from "./";
+import { IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import Utilities from "./Utilities";
-
-export interface IOutputPathGroup<TOutputPath extends IOutputPath> extends ICloneable<IOutputPathGroup<TOutputPath>>, IModifiable<IOutputPathGroup<TOutputPath>> {
-    /*
-     *  Properties & Fields 
-     */
-    Paths: TOutputPath[];
-    Name: string;
-
-    /*
-     *  Methods
-     */
-    addOrUpdatePath(connection: TOutputPath): void;
-    removePath(connection: TOutputPath): void;
-}
+import { OutputPath, Utilities } from "./";
 
 @JsonObject()
-export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<IOutputPathGroup<TOutputPath>> implements IOutputPathGroup<TOutputPath> {
+export default class OutputPathGroup<TOutputPath extends OutputPath> extends Cloneable<OutputPathGroup<TOutputPath>> implements IModifiable<OutputPathGroup<TOutputPath>> {
     /*
      *  Properties & Fields 
      */
@@ -44,17 +29,17 @@ export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<
     /*
      *  Methods
      */
-    public addOrUpdatePath(connection: TOutputPath): void {
-        this.Paths.push(connection);
+    public addOrUpdatePath(path: TOutputPath): void {
+        this.Paths.push(path);
     }
 
 
-    public removePath(connection: TOutputPath): void {
+    public removePath(path: TOutputPath): void {
 
     }
 
 
-    public clone(): IOutputPathGroup<TOutputPath> {
+    public clone(): OutputPathGroup<TOutputPath> {
         const ret: OutputPathGroup<TOutputPath> = new OutputPathGroup<TOutputPath>();
 
         ret._id = this._id;
@@ -67,7 +52,7 @@ export class OutputPathGroup<TOutputPath extends IOutputPath> extends Cloneable<
     }
 
 
-    public update(connection: IOutputPathGroup<TOutputPath>): void {
+    public update(connection: OutputPathGroup<TOutputPath>): void {
         if (!Utilities.hasValue(connection)) {
             return;
         }

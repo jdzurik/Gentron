@@ -1,26 +1,12 @@
-﻿import { IConnectionBase, ConnectionBase } from "./ConnectionBase";
-import { ICloneable, IModifiable } from "./interfaces";
-import { Cloneable } from "./abstract";
-import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
+﻿import { Cloneable } from "./abstract";
+import { DatabaseConnection } from "./";
+import { IModifiable } from "./interfaces";
+import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
+import ConnectionBase from "./ConnectionBase";
 import Utilities from "./Utilities";
-import { DatabaseConnection } from "./DatabaseConnection";
-
-export interface IConnectionGroup<TConnection extends IConnectionBase> extends ICloneable<IConnectionGroup<TConnection>>, IModifiable<IConnectionGroup<TConnection>> {
-    /*
-     *  Properties & Fields 
-     */
-    Connections: TConnection[];
-    Name: string;
-
-    /*
-     *  Methods
-     */
-    addOrUpdateConnection(connection: TConnection): void;
-    removeConnection(connection: TConnection): void;
-}
 
 @JsonObject()
-export class ConnectionGroup<TConnection extends IConnectionBase> extends Cloneable<IConnectionGroup<TConnection>> implements IConnectionGroup<TConnection> {
+export default class ConnectionGroup<TConnection extends ConnectionBase<TConnection>> extends Cloneable<ConnectionGroup<TConnection>> implements IModifiable<ConnectionGroup<TConnection>> {
     /*
      *  Properties & Fields 
      */
@@ -55,7 +41,7 @@ export class ConnectionGroup<TConnection extends IConnectionBase> extends Clonea
     }
 
 
-    public clone(): IConnectionGroup<TConnection> {
+    public clone(): ConnectionGroup<TConnection> {
         const ret: ConnectionGroup<TConnection> = new ConnectionGroup<TConnection>();
 
         ret._id = this._id;
@@ -68,7 +54,7 @@ export class ConnectionGroup<TConnection extends IConnectionBase> extends Clonea
     }
 
 
-    public update(connectionGroup: IConnectionGroup<TConnection>): void {
+    public update(connectionGroup: ConnectionGroup<TConnection>): void {
         if (!Utilities.hasValue(connectionGroup)) {
             return;
         }

@@ -1,35 +1,34 @@
-﻿import { IDatabaseSource } from '../../Gentron.Library/DatabaseSource';
-import { IEngine, IFileSource, IHttpSource, ITemplate, IEnvironment } from '../../Gentron.Library';
+﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource, Template } from '../../Gentron.Library';
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 
 export interface AddOrUpdateDatabaseSourceAction {
-    databaseSource: IDatabaseSource;
+    source: DatabaseSource;
     type: PackageSettingsActionNames.AddOrUpdateDatabaseSource;
 }
 
 export interface AddOrUpdateEngineAction {
-    engine: IEngine;
+    source: Engine;
     type: PackageSettingsActionNames.AddOrUpdateEngine;
 }
 
 export interface AddOrUpdateEngineTemplateAction {
     engineId: string;
-    template: ITemplate;
+    template: Template;
     type: PackageSettingsActionNames.AddOrUpdateEngineTemplate;
 }
 
 export interface AddOrUpdateEnvironmentAction {
-    environment: IEnvironment;
+    environment: Environment;
     type: PackageSettingsActionNames.AddOrUpdateEnvironment;
 }
 
 export interface AddOrUpdateFileSourceAction {
-    fileSource: IFileSource;
+    source: FileSource;
     type: PackageSettingsActionNames.AddOrUpdateFileSource;
 }
 
 export interface AddOrUpdateHttpSourceAction {
-    httpSource: IHttpSource;
+    source: HttpSource;
     type: PackageSettingsActionNames.AddOrUpdateHttpSource;
 }
 
@@ -44,38 +43,38 @@ export interface AddOrUpdateReadMeTextAction {
 }
 
 export interface RemoveDatabaseSourceAction {
-    databaseSource: IDatabaseSource;
+    source: DatabaseSource;
     type: PackageSettingsActionNames.RemoveDatabaseSource;
 }
 
 export interface RemoveEngineAction {
-    engine: IEngine;
+    source: Engine;
     type: PackageSettingsActionNames.RemoveEngine;
 }
 
 export interface RemoveEngineTemplateAction {
     engineId: string;
-    template: ITemplate;
+    template: Template;
     type: PackageSettingsActionNames.RemoveEngineTemplate;
 }
 
 export interface RemoveEnvironmentAction {
-    environment: IEnvironment;
+    environment: Environment;
     type: PackageSettingsActionNames.RemoveEnvironment;
 }
 
 export interface RemoveFileSourceAction {
-    fileSource: IFileSource;
+    source: FileSource;
     type: PackageSettingsActionNames.RemoveFileSource;
 }
 
 export interface RemoveHttpSourceAction {
-    httpSource: IHttpSource;
+    source: HttpSource;
     type: PackageSettingsActionNames.RemoveHttpSource;
 }
 
 export interface ToggleActiveEnvironmentAction {
-    environment: IEnvironment;
+    environment: Environment;
     type: PackageSettingsActionNames.ToggleActiveEnvironment;
 }
 
@@ -96,40 +95,40 @@ export type KnownPackageSettingsAction = AddOrUpdateDatabaseSourceAction
     | ToggleActiveEnvironmentAction;
 
 export const ActionCreators = {
-    addOrUpdateDatabaseSource: (databaseSource: IDatabaseSource) => {
+    addOrUpdateDatabaseSource: (source: DatabaseSource) => {
         return <AddOrUpdateDatabaseSourceAction>{
-            databaseSource: databaseSource,
+            source: source,
             type: PackageSettingsActionNames.AddOrUpdateDatabaseSource
         };
     },
-    addOrUpdateEngine: (engine: IEngine) => {
+    addOrUpdateEngine: (source: Engine) => {
         return <AddOrUpdateEngineAction>{
-            engine: engine,
+            source: source,
             type: PackageSettingsActionNames.AddOrUpdateEngine
         };
     },
-    addOrUpdateEngineTemplate: (engineId: string, template: ITemplate) => {
+    addOrUpdateEngineTemplate: (engineId: string, template: Template) => {
         return <AddOrUpdateEngineTemplateAction>{
             engineId: engineId,
             template: template,
             type: PackageSettingsActionNames.AddOrUpdateEngineTemplate
         };
     },
-    addOrUpdateEnvironment: (environment: IEnvironment) => {
+    addOrUpdateEnvironment: (environment: Environment) => {
         return <AddOrUpdateEnvironmentAction>{
             environment: environment,
             type: PackageSettingsActionNames.AddOrUpdateEnvironment
         };
     },
-    addOrUpdateFileSource: (fileSource: IFileSource) => {
+    addOrUpdateFileSource: (source: FileSource) => {
         return <AddOrUpdateFileSourceAction>{
-            fileSource: fileSource,
+            source: source,
             type: PackageSettingsActionNames.AddOrUpdateFileSource
         };
     },
-    addOrUpdateHttpSource: (httpSource: IHttpSource) => {
+    addOrUpdateHttpSource: (httpSource: HttpSource) => {
         return <AddOrUpdateHttpSourceAction>{
-            httpSource: httpSource,
+            source: httpSource,
             type: PackageSettingsActionNames.AddOrUpdateHttpSource
         };
     },
@@ -145,44 +144,44 @@ export const ActionCreators = {
             type: PackageSettingsActionNames.AddOrUpdateReadMeText
         };
     },
-    removeDatabaseSource: (databaseSource: IDatabaseSource) => {
+    removeDatabaseSource: (source: DatabaseSource) => {
         return <RemoveDatabaseSourceAction>{
-            databaseSource: databaseSource,
+            source: source,
             type: PackageSettingsActionNames.RemoveDatabaseSource
         };
     },
-    removeEngine: (engine: IEngine) => {
+    removeEngine: (source: Engine) => {
         return <RemoveEngineAction>{
-            engine: engine,
+            source: source,
             type: PackageSettingsActionNames.RemoveEngine
         };
     },
-    removeEngineTemplate: (engineId: string, template: ITemplate) => {
+    removeEngineTemplate: (engineId: string, template: Template) => {
         return <RemoveEngineTemplateAction>{
             engineId: engineId,
             template: template,
             type: PackageSettingsActionNames.RemoveEngineTemplate
         };
     },
-    removeEnvironment: (environment: IEnvironment) => {
+    removeEnvironment: (environment: Environment) => {
         return <RemoveEnvironmentAction>{
             environment: environment,
             type: PackageSettingsActionNames.RemoveEnvironment
         };
     },
-    removeFileSource: (fileSource: IFileSource) => {
+    removeFileSource: (source: FileSource) => {
         return <RemoveFileSourceAction>{
-            fileSource: fileSource,
+            source: source,
             type: PackageSettingsActionNames.RemoveFileSource
         };
     },
-    removeHttpSource: (httpSource: IHttpSource) => {
+    removeHttpSource: (source: HttpSource) => {
         return <RemoveHttpSourceAction>{
-            httpSource: httpSource,
+            source: source,
             type: PackageSettingsActionNames.RemoveHttpSource
         };
     },
-    toggleActiveEnvironment: (environment: IEnvironment) => {
+    toggleActiveEnvironment: (environment: Environment) => {
         return <ToggleActiveEnvironmentAction>{
             environment: environment,
             type: PackageSettingsActionNames.ToggleActiveEnvironment

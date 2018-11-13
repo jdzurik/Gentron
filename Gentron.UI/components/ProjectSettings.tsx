@@ -5,11 +5,11 @@ import { bindActionCreators } from 'redux';
 import { Hash, PrimitiveProperties } from "../../Gentron.Library/types";
 import { Cell, FolderInput, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IGentron, IProjectSettings } from "../../Gentron.Library";
+import { IGentron, ProjectSettings as LibProjectSettings } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
-type HashedIProjectSettings = Hash & PrimitiveProperties<IProjectSettings>
+type HashedIProjectSettings = Hash & PrimitiveProperties<LibProjectSettings>
 
 type ProjectSettingsProps = HashedIProjectSettings
     & typeof ActionCreators
@@ -55,23 +55,23 @@ export default class ProjectSettings extends React.Component<ProjectSettingsProp
 
                         <Cell colSpan={9}>
                             <div className="input">
-                                <input type={`text`}
-                                    placeholder={`Remote Package Location`}
+                                <input type="text"
+                                    placeholder="Remote Package Location"
                                     value={this.props.RemotePackageLocation}
                                     onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdateRemotePackageLocation(ev.target.value || ``)}
-                                    data-role={`input`}
+                                    data-role="input"
                                     data-role-input={true}
                                 />
                                 <div className="button-group">
                                     <button className="button input-clear-button"
                                         tabIndex={-1}
-                                        type={`button`}
+                                        type="button"
                                         onClick={this.props.addOrUpdateRemotePackageLocation.bind(this, null)}>
                                         <span className="default-icon-cross"></span>
                                     </button>
                                     <button className="button input-custom-button"
                                         tabIndex={-1}
-                                        type={`button`}
+                                        type="button"
                                         onClick={console.log}>
                                         <span className="mif-folder-open"></span>
                                     </button>

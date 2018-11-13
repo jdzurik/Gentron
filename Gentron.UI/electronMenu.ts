@@ -4,17 +4,17 @@ declare const Metro: TMetro;
 const { dialog, Menu } = (window as any).require('electron').remote;
 import { ActionCreators } from "./actions/Gentron";
 import { GentronActionNames } from "./constants/ActionNames";
-import { IGentronFsResult } from "../Gentron.Library/results";
+import { Result, TGentronFsResult } from "../Gentron.Library/results";
 import { IGentron, Gentron, Utilities } from "../Gentron.Library";
 import { Store } from "redux";
 
 function saveInternal(state: IGentron) {
-    const writeResult: IGentronFsResult<void> = Gentron.save(state);
+    const writeResult: Result<TGentronFsResult> = Gentron.save(state);
     if (writeResult.IsError) {
         Metro.toast.create(writeResult.ErrorMessage, null, 7500, "alert");
     }
-    else if (Utilities.hasStringValue(writeResult.InfoMessage)) {
-        Metro.toast.create(writeResult.InfoMessage, null, 7500, "warning");
+    else if (Utilities.hasStringValue(writeResult.Result.InfoMessage)) {
+        Metro.toast.create(writeResult.Result.InfoMessage, null, 7500, "warning");
     }
     else {
         Metro.toast.create("Saved Successfully!", null, 3000, "success");
@@ -59,17 +59,17 @@ function open(store: Store<IGentron>): void {
         },
         function (filePaths: string[]) {
             if (filePaths && filePaths.length > 0) {
-                const readResult: IGentronFsResult<IGentron> = Gentron.open(filePaths[0]);
+                const readResult: Result<TGentronFsResult> = Gentron.open(filePaths[0]);
                 if (readResult.IsError) {
                     Metro.toast.create(readResult.ErrorMessage, null, null, "warning");
                     return;
                 }
-                else if (Utilities.hasStringValue(readResult.InfoMessage)) {
-                    Metro.toast.create(readResult.InfoMessage, null, 7500, "warning");
+                else if (Utilities.hasStringValue(readResult.Result.InfoMessage)) {
+                    Metro.toast.create(readResult.Result.InfoMessage, null, 7500, "warning");
                 }
                 else {
                     store.dispatch({
-                        newState: readResult.Result,
+                        newState: readResult.Result.Gentron,
                         type: GentronActionNames.OpenProject,
                     });
                 }
