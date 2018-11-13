@@ -84,7 +84,7 @@ export default class Engine extends React.Component<EngineProps> {
                                 <MonacoEditor
                                     language="javascript"
                                     value={this.props.Engine.EngineCode.Contents || (() => { }).toString()}
-                                    options={{ wordWrap: `on` }}
+                                    options={{ automaticLayout: true, wordWrap: `on` }}
                                     onChange={() => { }}
                                     editorDidMount={() => {}}
                                 />

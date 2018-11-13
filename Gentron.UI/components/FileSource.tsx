@@ -75,7 +75,7 @@ export default class FileSource extends React.Component<FileSourceProps> {
                                 <MonacoEditor
                                     language="json"
                                     value={this.props.FileSource.DataFile.Contents || `{\n}`}
-                                    options={{ wordWrap: `on` }}
+                                    options={{ automaticLayout: true, wordWrap: `on` }}
                                     onChange={() => { }}
                                     editorDidMount={() => { }}
                                 />

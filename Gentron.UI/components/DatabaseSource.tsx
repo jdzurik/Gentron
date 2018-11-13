@@ -106,7 +106,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                     <MonacoEditor
                                         language="sql"
                                         value={this.props.DatabaseSource.Script.Contents || (() => { }).toString()}
-                                        options={{wordWrap: `on`}}
+                                        options={{ automaticLayout: true, wordWrap: `on` }}
                                         onChange={() => { }}
                                         editorDidMount={() => {}}
                                     />
@@ -129,7 +129,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                         editorDidMount={() => { }}
                                         language="json"
                                         onChange={console.log}
-                                        options={{ readOnly: true, wordWrap: `on` }}
+                                        options={{ automaticLayout: true, readOnly: true, wordWrap: `on` }}
                                         value={`{\n\t"Data": "Execute Query to view JSON results"\n}`}
                                     />
                                 </div>
@@ -138,7 +138,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                         editorDidMount={() => { }}
                                         language="xml"
                                         onChange={console.log}
-                                        options={{ readOnly: true, wordWrap: `on` }}
+                                        options={{ automaticLayout: true, readOnly: true, wordWrap: `on` }}
                                         value={`<Root>\n\t<Data>Execute Query to view XML results</Data>\n</Root>`}
                                     />
                                 </div>

@@ -33,6 +33,50 @@ export default class Template extends React.Component<TemplateProps> {
     /*
      *  Methods
      */
+    private handleEditorWillMount(monaco: any): void {
+        if (!Utilities.hasObjectValue(this.props.Results)) {
+            return;
+        }
+
+        const getProps = (obj: any) => {
+            const props = {};
+
+            for (let propName in obj) {
+                const prop: any = obj[propName];
+                const propType: string = typeof (prop);
+                if (Utilities.isPrimitive(prop)) {
+                    props[propName] = propType;
+                }
+                else if (Utilities.isObject(prop)) {
+                    const newProp = getProps(prop);
+                    let equal: boolean = false;
+                    for (let key in props) {
+                        if (Utilities.equal(props[key], newProp)) {
+                            equal = true;
+                            break;
+                        }
+                    }
+
+                    if (!equal) {
+                        props[propName] = newProp;
+                    }
+                }
+            }
+
+            return props;
+        }
+
+
+        const props = getProps(this.props.Results);
+        console.log(props);
+        monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+            schemas: [{
+                schema: props
+            }]
+        });
+    }
+
+
     private handleDataFileNameChange(value: string): void {
         const source: LibTemplate = this.props.Template.clone();
         source.TemplateCode.Path = value;
@@ -71,16 +115,17 @@ export default class Template extends React.Component<TemplateProps> {
                             <MonacoEditor
                                 language="plaintext"
                                 value={this.props.Template.TemplateCode.Contents || ``}
-                                options={{wordWrap: `on`}}
+                                options={{ automaticLayout: true, wordWrap: `on` }}
                                 onChange={() => { }}
                                 editorDidMount={() => { }}
+                                editorWillMount={/*this.handleEditorWillMount.bind(this)*/ () => { }}
                             />
                         </div>
                         <div className="h-100 w-100">
                             <MonacoEditor
                                 language="javascript"
                                 value={results}
-                                options={{ readOnly: true, wordWrap: `on` }}
+                                options={{ automaticLayout: true, readOnly: true, wordWrap: `on` }}
                                 editorDidMount={() => {}}
                             />
                         </div>

@@ -67,7 +67,7 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
                                 <MonacoEditor
                                     language="markdown"
                                     value={this.props.ReadMe}
-                                    options={{ wordWrap: `on` }}
+                                    options={{ automaticLayout: true, wordWrap: `on` }}
                                     onChange={(value: string) => this.props.addOrUpdateReadMeText(value)}
                                 />
                             </div>

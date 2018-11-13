@@ -49,8 +49,8 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
                             <MonacoEditor
                                 language="javascript"
                                 value={(() => { }).toString()}
-                                options={{readOnly: true, wordWrap: `on`}}
-                                onChange={console.log}
+                                options={{ automaticLayout: true, readOnly: true, wordWrap: `on` }}
+                                onChange={() => { }}
                                 editorDidMount={() => {}}
                             />
                         </div>
@@ -58,8 +58,8 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
                             <MonacoEditor
                                 language="json"
                                 value={(() => { }).toString()}
-                                options={{ readOnly: true, wordWrap: `on` }}
-                                onChange={console.log}
+                                options={{ automaticLayout: true, readOnly: true, wordWrap: `on` }}
+                                onChange={() => { }}
                                 editorDidMount={() => {}}
                             />
                         </div>
