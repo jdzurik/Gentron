@@ -7,8 +7,6 @@ import * as metro4 from "metro4";
 declare type TMetro = typeof import("metro4");
 declare const Metro: TMetro;
 
-//const DatabaseSource = require('../Gentron.Library/DatabaseSource').default;
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 

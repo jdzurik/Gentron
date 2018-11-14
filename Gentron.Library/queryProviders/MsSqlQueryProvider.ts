@@ -21,7 +21,7 @@ export default class MsSqlQueryProvider implements IQueryProvider {
     /*
      *  Methods
      */
-    private async onExecuteQueryFail(data: any, message: string, formatResults: boolean): Promise<Result<TDataSourceResult>> {
+    public async onExecuteQueryFail(data: any, message: string, formatResults: boolean): Promise<Result<TDataSourceResult>> {
         const error = {
             Error: {
                 Message: message,
@@ -81,9 +81,20 @@ export default class MsSqlQueryProvider implements IQueryProvider {
 
             const resultAsXml: any = recordset[MsSqlQueryProvider._xmlColumnId];
             if (Utilities.hasValue(resultAsXml)) {
+                const jsonStr: string = Utilities.xmlStrToJsonStr(resultAsXml, formatResults);
+
+                let jsonObj: any;
+                try {
+                    jsonObj = JSON.parse(jsonStr);
+                }
+                catch (e) {
+                    jsonObj = null;
+                }
+                
+
                 const ret: TDataSourceResult = {
-                    Json: Utilities.xmlStrToJsonStr(resultAsXml, formatResults),
-                    Object: resultAsXml,
+                    Json: jsonStr,
+                    Object: jsonObj,
                     Xml: (formatResults)
                         ? await Utilities.formatXml(resultAsXml)
                         : resultAsXml

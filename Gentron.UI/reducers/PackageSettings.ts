@@ -170,6 +170,32 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
                 PackageName: state.PackageName,
                 ReadMe: action.readMeText,
             };
+        case PackageSettingsActionNames.ExecuteDatabaseSourceQueryStart:
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                Environments: state.Environments,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMe: state.ReadMe,
+            };
+        case PackageSettingsActionNames.ExecuteDatabaseSourceQueryComplete:
+            for (let i: number = 0; i < state.DatabaseSources.length; ++i) {
+                if (state.DatabaseSources[i].ID === action.source.ID) {
+                    state.DatabaseSources[i].update(action.source);
+                }
+            }
+
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                Environments: state.Environments,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMe: state.ReadMe,
+            };
         case PackageSettingsActionNames.RemoveDatabaseSource:
             let dbSourceIdx: number = -1;
             for (let i: number = 0; i < state.DatabaseSources.length; ++i) {

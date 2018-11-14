@@ -24,7 +24,11 @@ export default abstract class SourceBase<T> extends Cloneable<T> implements IAct
         super();
         this.IsActive = true;
         this.Name = "";
-        this.Result = { Json: "", Object: null, Xml: "" };
+        this.Result = {
+            Json: "",
+            Object: null,
+            Xml: ""
+        };
     }
 
 

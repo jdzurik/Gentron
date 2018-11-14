@@ -1,7 +1,7 @@
-﻿import { JsonObject, JsonProperty, JsonType, JsonConverter } from "ta-json";
-import { File, Template, Utilities } from "./";
-import SourceBase from "./SourceBase";
+﻿import { File, Template, Utilities } from "./";
 import { FileJsonConverter } from "./converters";
+import { JsonConverter, JsonObject, JsonProperty, JsonType } from "ta-json";
+import SourceBase from "./SourceBase";
 
 @JsonObject()
 export default class Engine extends SourceBase<Engine> {

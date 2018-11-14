@@ -1,6 +1,5 @@
 ﻿import { ActiveConnectionGroupConverter, FileJsonConverter } from "./converters";
 import { ConnectionGroup, DatabaseConnection, File, Utilities } from "./";
-import { InfoMessages } from "./constants";
 import { JsonConverter, JsonElementType, JsonObject, JsonProperty, JsonType } from "ta-json";
 import { Result, TDataSourceResult } from "./results";
 import IQueryProvider from "./queryProviders/IQueryProvider";
@@ -51,8 +50,17 @@ export default class DatabaseSource extends SourceBase<DatabaseSource> {
     }
 
 
-    public async executeScript(): Promise<Result<TDataSourceResult>> {
-        return await DatabaseSource._msSqlQueryProvider.executeQuery(this.ActiveConnectionGroup.Connections[0].ConnectionString, this.Script.Contents, true);
+    public async executeScript(): Promise<void> {
+        let result: Result<TDataSourceResult>;
+
+        try {
+            result = await DatabaseSource._msSqlQueryProvider.executeQuery(this.ActiveConnectionGroup.Connections[0].ConnectionString, this.Script.Contents, true);
+        }
+        catch (e) {
+            result = await DatabaseSource._msSqlQueryProvider.onExecuteQueryFail(this.Script.Contents, Utilities.getErrorMessage(e), true);
+        }
+
+        this.Result = result.Result;
     }
 
 

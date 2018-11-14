@@ -1,4 +1,6 @@
-﻿export const swapBtnProps = (arr: any[], index: number, direction: "down" | "up"): { disabled?: boolean, readOnly?: boolean } => {
+﻿import { SwapSourcesDirection } from "../../Gentron.Library/types";
+
+export const swapBtnProps = (arr: any[], index: number, direction: SwapSourcesDirection): { disabled?: boolean, readOnly?: boolean } => {
     if (arr.length < 2) {
         return { disabled: true, readOnly: true };
     }

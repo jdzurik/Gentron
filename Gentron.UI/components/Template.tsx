@@ -139,9 +139,10 @@ export default class Template extends React.Component<TemplateProps> {
 function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ engineid: string, templateid: string }>): HashedTemplate {
     const engineid: string = routeComponentProps.match.params.engineid;
     const templateid: string = routeComponentProps.match.params.templateid;
-    const _hash: string = hash(state.PackageSettings.Engines[engineid].Templates[templateid] || "")
-    const packageSettings: PackageSettings = Utilities.TaJson.deserialize(state.PackageSettings, PackageSettings);
 
+    const _hash: string = hash(state.PackageSettings.Engines[engineid].Templates[templateid] || "");
+    const packageSettings: PackageSettings = Utilities.TaJson.deserialize(state.PackageSettings, PackageSettings);
+    packageSettings.mergeResults(state.PackageSettings);
     return {
         Results: packageSettings.buildDataSourceResults(),
         Template: state.PackageSettings.Engines[engineid].Templates[templateid],

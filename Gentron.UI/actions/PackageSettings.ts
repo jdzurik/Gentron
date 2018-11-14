@@ -1,6 +1,8 @@
 ﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource, Template } from '../../Gentron.Library';
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import SourceBase from '../../Gentron.Library/SourceBase';
+import { SwapSourcesDirection } from '../../Gentron.Library/types';
+import { Dispatch } from 'redux';
 
 export interface AddOrUpdateDatabaseSourceAction {
     source: DatabaseSource;
@@ -43,6 +45,16 @@ export interface AddOrUpdateReadMeTextAction {
     type: PackageSettingsActionNames.AddOrUpdateReadMeText;
 }
 
+export interface ExecuteDatabaseSourceQueryStartAction {
+    source: DatabaseSource;
+    type: PackageSettingsActionNames.ExecuteDatabaseSourceQueryStart;
+}
+
+export interface ExecuteDatabaseSourceQueryCompleteAction {
+    source: DatabaseSource;
+    type: PackageSettingsActionNames.ExecuteDatabaseSourceQueryComplete;
+}
+
 export interface RemoveDatabaseSourceAction {
     source: DatabaseSource;
     type: PackageSettingsActionNames.RemoveDatabaseSource;
@@ -74,7 +86,7 @@ export interface RemoveHttpSourceAction {
     type: PackageSettingsActionNames.RemoveHttpSource;
 }
 
-type SwapSourcesDirection = "down" | "up";
+
 
 export interface SwapPackageItemSourceOrderAction<TPackageItem extends SourceBase<TPackageItem>> {
     array: Array<TPackageItem>;
@@ -96,6 +108,8 @@ export type KnownPackageSettingsAction = AddOrUpdateDatabaseSourceAction
     | AddOrUpdateHttpSourceAction
     | AddOrUpdatePackageNameAction
     | AddOrUpdateReadMeTextAction
+    | ExecuteDatabaseSourceQueryStartAction
+    | ExecuteDatabaseSourceQueryCompleteAction
     | RemoveDatabaseSourceAction
     | RemoveEngineAction
     | RemoveEngineTemplateAction
@@ -153,6 +167,29 @@ export const ActionCreators = {
         return <AddOrUpdateReadMeTextAction>{
             readMeText: readMeText,
             type: PackageSettingsActionNames.AddOrUpdateReadMeText
+        };
+    },
+    executeDatabaseSourceQuery: (source: DatabaseSource) => {
+        return (dispatch: Dispatch) => {
+            dispatch({ type: PackageSettingsActionNames.ExecuteDatabaseSourceQueryStart });
+
+            source.executeScript()
+                .then(() => {
+                    dispatch(
+                        <ExecuteDatabaseSourceQueryCompleteAction>
+                        {
+                            type: PackageSettingsActionNames.ExecuteDatabaseSourceQueryComplete,
+                            source: source
+                        });
+                })
+                .catch((err) => {
+                    dispatch(
+                        <ExecuteDatabaseSourceQueryCompleteAction>
+                        {
+                            type: PackageSettingsActionNames.ExecuteDatabaseSourceQueryComplete,
+                            source: source
+                        });
+                });
         };
     },
     removeDatabaseSource: (source: DatabaseSource) => {
