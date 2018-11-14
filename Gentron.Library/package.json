@@ -17,6 +17,6 @@
   },
   "dependencies": {
     "msnodesqlv8": "^0.6.9",
-    "mssql": "4.2.1"
+    "mssql": "^4.2.3"
   }
 }

@@ -122,6 +122,12 @@
     <TypeScriptCompile Include="OutputPathGroup.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="queryProviders\IQueryProvider.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="queryProviders\MsSqlQueryProvider.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="results\index.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -158,6 +164,7 @@
     <Folder Include="abstract\" />
     <Folder Include="constants\" />
     <Folder Include="converters\" />
+    <Folder Include="queryProviders\" />
     <Folder Include="results\" />
     <Folder Include="types\" />
   </ItemGroup>
