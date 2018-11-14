@@ -18,6 +18,7 @@ export const enum PackageSettingsActionNames {
     RemoveEnvironment = "REMOVE_ENVIRONMENT",
     RemoveFileSource = "REMOVE_FILE_SOURCE",
     RemoveHttpSource = "REMOVE_HTTP_SOURCE",
+    SwapPackageItemSourceOrder = "SWAP_PACKAGE_ITEM_SOURCE_ORDER",
     ToggleActiveEnvironment = "TOGGLE_ACTIVE_ENVIRONMENT",
 }
 
@@ -29,4 +30,5 @@ export const enum ProjectSettingsActionNames {
     AddOrUpdateRemotePackageLocationAction = "ADD_OR_UPDATE_REMOTE_PACKAGE_LOCATION",
     RemoveDatabaseConnectionGroup = "REMOVE_DATABASE_CONNECTION_GROUP",
     RemoveOutputPathGroupAction = "REMOVE_OUTPUT_PATH_GROUP",
+    SwapProjectItemSourceOrder = "SWAP_PROJECT_ITEM_SOURCE_ORDER",
 }

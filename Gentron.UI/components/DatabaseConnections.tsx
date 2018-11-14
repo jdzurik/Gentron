@@ -3,6 +3,7 @@ import * as React from "react";
 import { ActionCreators as PackageSettingsActionCreators } from "../actions/PackageSettings";
 import { ActionCreators as ProjectSettingsActionCreators } from "../actions/ProjectSettings";
 import { bindActionCreators } from "redux";
+import { ButtonHelpers } from "../helpers";
 import { Hash } from "../../Gentron.Library/types";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
@@ -114,19 +115,25 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.DatabaseConnections.map((connection: ConnectionGroup<DatabaseConnection>, i: number) =>
+                                this.props.DatabaseConnections.map((connection: ConnectionGroup<DatabaseConnection>, i: number, array: ConnectionGroup<DatabaseConnection>[]) =>
                                     <tr key={i}>
                                         <td>
-                                            <button className="button"
-                                                onClick={() => this.handleOpenEditConnectionClick(connection)}>
-                                                <span className="mif-pencil"></span>
-                                            </button>
-                                            <span> {connection.Name}</span>
+                                            <span>{connection.Name}</span>
                                         </td>
                                         <td>{connection.Connections.length}</td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveConnectionClick.bind(this, connection)}>
+                                                <button className="button"
+                                                    onClick={() => this.handleOpenEditConnectionClick(connection)}>
+                                                    <span className="mif-pencil"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
+                                                    <span className="mif-arrow-down"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
+                                                    <span className="mif-arrow-up"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.handleRemoveConnectionClick.bind(this, connection)}>
                                                     <span className="mif-bin"></span>
                                                 </button>
                                             </a>

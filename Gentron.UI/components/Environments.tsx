@@ -2,9 +2,10 @@
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
-import { Hash } from "../../Gentron.Library/types";
+import { ButtonHelpers } from "../helpers";
 import { Cell, Dialog, DialogAction, DialogContent, DialogTitle, Grid, Row, Switch } from "./metro";
 import { connect } from "../connect";
+import { Hash } from "../../Gentron.Library/types";
 import { IGentron, Environment, Utilities } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
@@ -99,14 +100,10 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.Environments.map((environment: Environment, i: number) =>
+                                this.props.Environments.map((environment: Environment, i: number, array: Environment[]) =>
                                     <tr key={i}>
                                         <td>
-                                            <button className="button"
-                                                onClick={() => this.handleOpenEditEnvironmentClick(environment)}>
-                                                <span className="mif-pencil"></span>
-                                            </button>
-                                            <span> {environment.Name}</span>
+                                            <span>{environment.Name}</span>
                                         </td>
                                         <td>
                                             <Switch
@@ -115,7 +112,17 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
                                             />
                                         </td>
                                         <td>
-                                            <button className="button" onClick={this.handleRemoveEnvironmentClick.bind(this, environment)}>
+                                            <button className="button"
+                                                onClick={() => this.handleOpenEditEnvironmentClick(environment)}>
+                                                <span className="mif-pencil"></span>
+                                            </button>
+                                            <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
+                                                <span className="mif-arrow-down"></span>
+                                            </button>
+                                            <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
+                                                <span className="mif-arrow-up"></span>
+                                            </button>
+                                            <button className="button ml-2" onClick={this.handleRemoveEnvironmentClick.bind(this, environment)}>
                                                 <span className="mif-bin"></span>
                                             </button>
                                         </td>

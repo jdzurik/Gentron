@@ -31,12 +31,22 @@ export interface RemoveOutputPathGroupAction {
     type: ProjectSettingsActionNames.RemoveOutputPathGroupAction;
 }
 
+type SwapSourcesDirection = "down" | "up";
+
+export interface SwapProjectItemSourceOrderAction<TProjectItem> {
+    array: Array<TProjectItem>;
+    index: number;
+    direction: SwapSourcesDirection;
+    type: ProjectSettingsActionNames.SwapProjectItemSourceOrder;
+}
+
 export type KnownProjectSettingsAction = AddOrUpdateDatabaseConnectionGroupAction
     | AddOrUpdateLocalPackageFolderAction
     | AddOrUpdateOutputPathGroupAction
     | AddOrUpdateRemotePackageLocationAction
     | RemoveDatabaseConnectionGroupAction
-    | RemoveOutputPathGroupAction;
+    | RemoveOutputPathGroupAction
+    | SwapProjectItemSourceOrderAction<any>;
 
 export const ActionCreators = {
     addOrUpdateDatabaseConnectionGroup: (databaseSource: ConnectionGroup<DatabaseConnection>) => {
@@ -73,6 +83,14 @@ export const ActionCreators = {
         return <RemoveOutputPathGroupAction>{
             outputPathGroup: outputPathGroup,
             type: ProjectSettingsActionNames.RemoveOutputPathGroupAction
+        };
+    },
+    swapProjectItemSourceOrder: <T>(array: T[], index: number, direction: SwapSourcesDirection) => {
+        return <SwapProjectItemSourceOrderAction<T>>{
+            array: array,
+            index: index,
+            direction: direction,
+            type: ProjectSettingsActionNames.SwapProjectItemSourceOrder
         };
     },
 };

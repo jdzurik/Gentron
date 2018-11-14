@@ -103,19 +103,16 @@ export default class Templates extends React.Component<TemplatesProps, Templates
                                     <tr key={i}>
                                         <td>
                                             <Link to={`/engines/manage/${this.props.match.params.engineid}/templates/${i}`}>
-                                                <button className="button">
-                                                    <span className="mif-enlarge2"></span>
-                                                </button>
+                                                <span>{source.Name}</span>
                                             </Link>
-                                            <button className="button ml-2"
-                                                onClick={() => this.handleOpenEditSourceClick(source)}>
-                                                <span className="mif-pencil"></span>
-                                            </button>
-                                            <span> {source.Name}</span>
                                         </td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>
+                                                <button className="button"
+                                                    onClick={() => this.handleOpenEditSourceClick(source)}>
+                                                    <span className="mif-pencil"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.handleRemoveSourceClick.bind(this, source)}>
                                                     <span className="mif-bin"></span>
                                                 </button>
                                             </a>

@@ -102,6 +102,30 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
                 OutputPathGroups: state.OutputPathGroups,
                 RemotePackageLocation: state.RemotePackageLocation
             };
+        case ProjectSettingsActionNames.SwapProjectItemSourceOrder:
+            const swapArray = action.array;
+            const swapIndex: number = action.index;
+            const swapDirection: string = action.direction;
+
+            if (swapDirection === "down" && (swapIndex >= 0 && swapIndex < (swapArray.length - 1))) {
+                const source = swapArray[swapIndex];
+                const swap = swapArray[swapIndex + 1];
+                swapArray[swapIndex] = swap;
+                swapArray[swapIndex + 1] = source;
+            }
+            else if (swapDirection === "up" && (swapIndex > 0 && swapIndex <= (swapArray.length - 1))) {
+                const source = swapArray[swapIndex];
+                const swap = swapArray[swapIndex - 1];
+                swapArray[swapIndex] = swap;
+                swapArray[swapIndex - 1] = source;
+            }
+
+            return {
+                DatabaseConnections: state.DatabaseConnections,
+                LocalPackageFolder: state.LocalPackageFolder,
+                OutputPathGroups: state.OutputPathGroups,
+                RemotePackageLocation: state.RemotePackageLocation
+            };
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
             const exhaustiveCheck: never = action as never;

@@ -2,9 +2,10 @@
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
+import { ButtonHelpers } from "../helpers";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row, Switch } from "./metro";
-import { Hash } from "../../Gentron.Library/types";
 import { connect } from "../connect";
+import { Hash } from "../../Gentron.Library/types";
 import { IGentron, HttpSource, Utilities } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
@@ -100,19 +101,12 @@ export default class HttpSources extends React.Component<HttpSourcesProps, HttpS
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.HttpSources.map((source: HttpSource, i: number) =>
+                                this.props.HttpSources.map((source: HttpSource, i: number, array: HttpSource[]) =>
                                     <tr key={i}>
                                         <td>
                                             <Link to={`/sources/http/${i}`}>
-                                                <button className="button">
-                                                    <span className="mif-enlarge2"></span>
-                                                </button>
+                                                <span>{source.Name}</span>
                                             </Link>
-                                            <button className="button ml-2"
-                                                onClick={() => this.handleOpenEditSourceClick(source)}>
-                                                <span className="mif-pencil"></span>
-                                            </button>
-                                            <span> {source.Name}</span>
                                         </td>
                                         <td>
                                             <Switch
@@ -122,7 +116,17 @@ export default class HttpSources extends React.Component<HttpSourcesProps, HttpS
                                         </td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>
+                                                <button className="button"
+                                                    onClick={() => this.handleOpenEditSourceClick(source)}>
+                                                    <span className="mif-pencil"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
+                                                    <span className="mif-arrow-down"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
+                                                    <span className="mif-arrow-up"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.handleRemoveSourceClick.bind(this, source)}>
                                                     <span className="mif-bin"></span>
                                                 </button>
                                             </a>

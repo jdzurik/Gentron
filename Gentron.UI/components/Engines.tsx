@@ -2,9 +2,10 @@
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
-import { Hash } from "../../Gentron.Library/types";
+import { ButtonHelpers } from "../helpers";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
+import { Hash } from "../../Gentron.Library/types";
 import { IGentron, Engine, Utilities } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
@@ -93,23 +94,26 @@ export default class Engines extends React.Component<EnginesProps, EnginesState>
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.Engines.map((source: Engine, i: number) =>
+                                this.props.Engines.map((source: Engine, i: number, array: Engine[]) =>
                                     <tr key={i}>
                                         <td>
                                             <Link to={`/engines/manage/${i}`}>
-                                                <button className="button">
-                                                    <span className="mif-enlarge2"></span>
-                                                </button>
+                                                <span>{source.Name}</span>
                                             </Link>
-                                            <button className="button ml-2"
-                                                onClick={() => this.handleOpenEditSourceClick(source)}>
-                                                <span className="mif-pencil"></span>
-                                            </button>
-                                            <span> {source.Name}</span>
                                         </td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>
+                                                <button className="button"
+                                                    onClick={() => this.handleOpenEditSourceClick(source)}>
+                                                    <span className="mif-pencil"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
+                                                    <span className="mif-arrow-down"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
+                                                    <span className="mif-arrow-up"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.handleRemoveSourceClick.bind(this, source)}>
                                                     <span className="mif-bin"></span>
                                                 </button>
                                             </a>

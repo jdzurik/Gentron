@@ -48,7 +48,6 @@ const config: webpack.Configuration = {
             jQuery: "jquery"
         }),
         new MonacoWebpackPlugin({}),
-        //new webpack.HotModuleReplacementPlugin()
     ],
     target: "electron-renderer"
 }

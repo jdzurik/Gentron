@@ -6,6 +6,7 @@ import { bindActionCreators } from "redux";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
+import { ButtonHelpers } from "../helpers";
 import { IGentron, Environment, Utilities, OutputPathGroup, OutputPath } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
@@ -109,20 +110,26 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.OutputPathGroups.map((outputPathGroup: OutputPathGroup<OutputPath>, i: number) =>
+                                this.props.OutputPathGroups.map((outputPathGroup: OutputPathGroup<OutputPath>, i: number, array: OutputPathGroup<OutputPath>[]) =>
                                     <tr key={i}>
                                         <td>
-                                            <button className="button"
-                                                onClick={() => this.handleOpenEditOutputPathGroupClick(outputPathGroup)}>
-                                                <span className="mif-pencil"></span>
-                                            </button>
-                                            <span> {outputPathGroup.Name}</span>
+                                            <span>{outputPathGroup.Name}</span>
                                         </td>
                                         <td>
                                             {outputPathGroup.Paths.length}
                                         </td>
                                         <td>
-                                            <button className="button" onClick={this.handleRemoveOutputPathGroupClick.bind(this, outputPathGroup)}>
+                                            <button className="button"
+                                                onClick={() => this.handleOpenEditOutputPathGroupClick(outputPathGroup)}>
+                                                <span className="mif-pencil"></span>
+                                            </button>
+                                            <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
+                                                <span className="mif-arrow-down"></span>
+                                            </button>
+                                            <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
+                                                <span className="mif-arrow-up"></span>
+                                            </button>
+                                            <button className="button ml-2" onClick={this.handleRemoveOutputPathGroupClick.bind(this, outputPathGroup)}>
                                                 <span className="mif-bin"></span>
                                             </button>
                                         </td>

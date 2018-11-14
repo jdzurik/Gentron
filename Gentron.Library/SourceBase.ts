@@ -14,7 +14,6 @@ export default abstract class SourceBase<T> extends Cloneable<T> implements IAct
     @JsonProperty()
     public Name: string;
 
-    @JsonProperty()
     public Result: TDataSourceResult;
 
 

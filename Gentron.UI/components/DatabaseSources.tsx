@@ -2,6 +2,7 @@
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
+import { ButtonHelpers } from "../helpers";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row, Switch } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
@@ -102,19 +103,12 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                 <td>{` `}</td>
                             </tr>
                             {
-                                this.props.DatabaseSources.map((source: DatabaseSource, i: number) =>
+                                this.props.DatabaseSources.map((source: DatabaseSource, i: number, array: DatabaseSource[]) =>
                                     <tr key={i}>
                                         <td>
                                             <Link to={`/sources/db/${i}`}>
-                                                <button className="button">
-                                                    <span className="mif-enlarge2"></span>
-                                                </button>
+                                                <span>{source.Name}</span>
                                             </Link>
-                                            <button className="button ml-2"
-                                                onClick={() => this.handleOpenEditSourceClick(source)}>
-                                                <span className="mif-pencil"></span>
-                                            </button>
-                                            <span> {source.Name}</span>
                                         </td>
                                         <td>{source.ActiveConnectionGroup.Name}</td>
                                         <td>
@@ -125,7 +119,17 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                         </td>
                                         <td>
                                             <a href="#">
-                                                <button className="button" onClick={this.handleRemoveSourceClick.bind(this, source)}>
+                                                <button className="button"
+                                                    onClick={() => this.handleOpenEditSourceClick(source)}>
+                                                    <span className="mif-pencil"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
+                                                    <span className="mif-arrow-down"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
+                                                    <span className="mif-arrow-up"></span>
+                                                </button>
+                                                <button className="button ml-2" onClick={this.handleRemoveSourceClick.bind(this, source)}>
                                                     <span className="mif-bin"></span>
                                                 </button>
                                             </a>

@@ -1,6 +1,7 @@
-﻿import { JsonObject, JsonProperty, JsonType } from "ta-json";
+﻿import { JsonObject, JsonProperty, JsonType, JsonConverter } from "ta-json";
 import SourceBase from "./SourceBase";
 import { File, Utilities } from "./";
+import { FileJsonConverter } from "./converters";
 
 @JsonObject()
 export default class FileSource extends SourceBase<FileSource> {
@@ -9,6 +10,7 @@ export default class FileSource extends SourceBase<FileSource> {
      */
     @JsonProperty()
     @JsonType(File)
+    @JsonConverter(FileJsonConverter)
     public DataFile: File;
 
 

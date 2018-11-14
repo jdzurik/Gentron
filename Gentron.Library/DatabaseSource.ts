@@ -1,11 +1,11 @@
-﻿import * as MsSql from "mssql/msnodesqlv8";
-import { ActiveConnectionGroupConverter } from "./converters";
+﻿//import * as MsSql from "mssql/msnodesqlv8";
+import { ActiveConnectionGroupConverter, FileJsonConverter } from "./converters";
 import { ConnectionGroup, DatabaseConnection, File, Utilities } from "./";
 import { InfoMessages } from "./constants";
 import { JsonConverter, JsonElementType, JsonObject, JsonProperty, JsonType } from "ta-json";
 import { Result, TDataSourceResult } from "./results";
 import SourceBase from "./SourceBase";
-//const sql: MsSql.ConnectionPool = require("mssql/msnodesqlv8");
+//const sql = require('mssql/msnodesqlv8');
 
 @JsonObject()
 export default class DatabaseSource extends SourceBase<DatabaseSource> {
@@ -22,6 +22,7 @@ export default class DatabaseSource extends SourceBase<DatabaseSource> {
 
     @JsonProperty()
     @JsonType(File)
+    @JsonConverter(FileJsonConverter)
     public Script: File;
 
 

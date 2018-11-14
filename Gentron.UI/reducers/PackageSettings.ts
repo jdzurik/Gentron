@@ -3,6 +3,7 @@ import { NonFunctionProperties } from "../../Gentron.Library/types";
 import { PackageSettings, Environment } from "../../Gentron.Library";
 import { PackageSettingsActionNames } from "../constants/ActionNames";
 import { Reducer } from 'redux';
+import SourceBase from '../../Gentron.Library/SourceBase';
 
 type PackageSettingsProps = NonFunctionProperties<PackageSettings>;
 
@@ -291,6 +292,33 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
 
             if (httpSourceIdx >= 0) {
                 state.HttpSources.splice(httpSourceIdx, 1);
+            }
+
+            return {
+                DatabaseSources: state.DatabaseSources,
+                Engines: state.Engines,
+                Environments: state.Environments,
+                FileSources: state.FileSources,
+                HttpSources: state.HttpSources,
+                PackageName: state.PackageName,
+                ReadMe: state.ReadMe,
+            };
+        case PackageSettingsActionNames.SwapPackageItemSourceOrder:
+            const swapArray = action.array;
+            const swapIndex: number = action.index;
+            const swapDirection: string = action.direction;
+
+            if (swapDirection === "down" && (swapIndex >= 0 && swapIndex < (swapArray.length - 1))) {
+                const source = swapArray[swapIndex];
+                const swap = swapArray[swapIndex + 1];
+                swapArray[swapIndex] = swap;
+                swapArray[swapIndex + 1] = source;
+            }
+            else if (swapDirection === "up" && (swapIndex > 0 && swapIndex <= (swapArray.length - 1))) {
+                const source = swapArray[swapIndex];
+                const swap = swapArray[swapIndex - 1];
+                swapArray[swapIndex] = swap;
+                swapArray[swapIndex - 1] = source;
             }
 
             return {

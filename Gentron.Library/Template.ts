@@ -1,7 +1,8 @@
 ﻿import { Cloneable } from "./abstract";
 import { IModifiable } from "./interfaces";
-import { JsonObject, JsonProperty, JsonType } from "ta-json";
+import { JsonObject, JsonProperty, JsonType, JsonConverter } from "ta-json";
 import { File, Utilities } from "./";
+import { FileJsonConverter } from "./converters";
 
 enum TemplateTypes {
     Partial,
@@ -18,6 +19,7 @@ export default class Template extends Cloneable<Template> implements IModifiable
 
     @JsonProperty()
     @JsonType(File)
+    @JsonConverter(FileJsonConverter)
     public TemplateCode: File;
 
     @JsonProperty()

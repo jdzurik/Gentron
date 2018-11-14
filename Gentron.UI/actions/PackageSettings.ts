@@ -1,5 +1,6 @@
 ﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource, Template } from '../../Gentron.Library';
 import { PackageSettingsActionNames } from "../constants/ActionNames";
+import SourceBase from '../../Gentron.Library/SourceBase';
 
 export interface AddOrUpdateDatabaseSourceAction {
     source: DatabaseSource;
@@ -73,6 +74,15 @@ export interface RemoveHttpSourceAction {
     type: PackageSettingsActionNames.RemoveHttpSource;
 }
 
+type SwapSourcesDirection = "down" | "up";
+
+export interface SwapPackageItemSourceOrderAction<TPackageItem extends SourceBase<TPackageItem>> {
+    array: Array<TPackageItem>;
+    index: number;
+    direction: SwapSourcesDirection;
+    type: PackageSettingsActionNames.SwapPackageItemSourceOrder;
+}
+
 export interface ToggleActiveEnvironmentAction {
     environment: Environment;
     type: PackageSettingsActionNames.ToggleActiveEnvironment;
@@ -92,6 +102,7 @@ export type KnownPackageSettingsAction = AddOrUpdateDatabaseSourceAction
     | RemoveEnvironmentAction
     | RemoveFileSourceAction
     | RemoveHttpSourceAction
+    | SwapPackageItemSourceOrderAction<any>
     | ToggleActiveEnvironmentAction;
 
 export const ActionCreators = {
@@ -179,6 +190,14 @@ export const ActionCreators = {
         return <RemoveHttpSourceAction>{
             source: source,
             type: PackageSettingsActionNames.RemoveHttpSource
+        };
+    },
+    swapProjectItemSourceOrder: <T extends SourceBase<T>>(array: T[], index: number, direction: SwapSourcesDirection) => {
+        return <SwapPackageItemSourceOrderAction<T>>{
+            array: array,
+            index: index, 
+            direction: direction,
+            type: PackageSettingsActionNames.SwapPackageItemSourceOrder
         };
     },
     toggleActiveEnvironment: (environment: Environment) => {

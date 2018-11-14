@@ -377,4 +377,63 @@ export default class Utilities {
                 : error;
         }
     }
+
+    public static compareDates(date1: Date, date2: Date): number {
+        if (date1.getUTCFullYear() < date2.getUTCFullYear()) {
+            return -1;
+        }
+
+        if (date1.getUTCFullYear() === date2.getUTCFullYear()) {
+            if (date1.getUTCMonth() < date2.getUTCMonth()) {
+                return -1;
+            }
+
+            if (date1.getUTCMonth() === date2.getUTCMonth()) {
+                if (date1.getUTCDate() < date2.getUTCDate()) {
+                    return -1;
+                }
+
+                if (date1.getUTCDate() === date2.getUTCDate()) {
+                    if (date1.getUTCHours() < date2.getUTCHours()) {
+                        return -1;
+                    }
+
+                    if (date1.getUTCHours() === date2.getUTCHours()) {
+                        if (date1.getUTCMinutes() < date2.getUTCMinutes()) {
+                            return -1;
+                        }
+
+                        if (date1.getUTCMinutes() === date2.getUTCMinutes()) {
+                            if (date1.getUTCSeconds() < date2.getUTCSeconds()) {
+                                return -1;
+                            }
+
+                            if (date1.getUTCSeconds() === date2.getUTCSeconds()) {
+                                if (date1.getUTCMilliseconds() < date2.getUTCMilliseconds()) {
+                                    return -1;
+                                }
+
+                                if (date1.getUTCMilliseconds() === date2.getUTCMilliseconds()) {
+                                    return 0;
+                                }
+
+                                return 1;
+                            }
+
+                            return 1;
+                        }
+
+                        return 1;
+                    }
+                    return 1;
+                }
+
+                return 1;
+            }
+
+            return 1;
+        }
+
+        return 1;
+    }
 }

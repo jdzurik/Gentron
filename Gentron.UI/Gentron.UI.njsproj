@@ -163,6 +163,12 @@
     <TypeScriptCompile Include="electronMenu.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="helpers\ButtonHelper.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="helpers\index.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="index.tsx">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -187,6 +193,7 @@
     <Folder Include="actions\" />
     <Folder Include="components\SplitPane\" />
     <Folder Include="constants\" />
+    <Folder Include="helpers\" />
     <Folder Include="store\" />
     <Folder Include="reducers\" />
   </ItemGroup>

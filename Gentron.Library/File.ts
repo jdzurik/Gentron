@@ -94,35 +94,63 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
         return ret;
     }
 
-    public loadContents(filePath: string = this.Path || "", setContents: boolean = true): string {
+    public loadContents(): void {
+        if (!Utilities.hasStringValue(this.Path)) {
+            return;
+        }
+
         try {
-            const buf: Buffer = fs.readFileSync(filePath);
-            const contents: string = buf.toString();
+            const buf: Buffer = fs.readFileSync(this.Path);
+            this.Contents = buf.toString();
 
-            if (setContents) {
-                this.Contents = contents;
-            }
-
-            return contents;
+            const stats: fs.Stats = fs.statSync(this.Path);
+            this.LastModified = stats.mtime;
         }
         catch (e) {
-            return (e as NodeJS.ErrnoException).message.toString();
+            console.error(e);
         }
     }
 
-    public async loadContentsAsync(filePath: string = this.Path || "", setContents: boolean = true): Promise<string> {
+    public async loadContentsAsync(): Promise<void> {
+        if (!Utilities.hasStringValue(this.Path)) {
+            return;
+        }
+
         try {
-            const buf: Buffer = await fs.promises.readFile(filePath);
-            const contents: string = buf.toString();
+            const buf: Buffer = await fs.promises.readFile(this.Path);
+            this.Contents = buf.toString();
 
-            if (setContents) {
-                this.Contents = contents;
-            }
-
-            return contents;
+            const stats: fs.Stats = await fs.promises.stat(this.Path);
+            this.LastModified = stats.mtime;
         }
         catch (e) {
-            return (e as NodeJS.ErrnoException).message.toString();
+            console.error(e);
+        }
+    }
+
+    public writeContents(): void {
+        if (!Utilities.hasStringValue(this.Path)) {
+            return;
+        }
+
+        try {
+            fs.writeFileSync(this.Path, this.Contents);
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
+    public async writeContentsAsync(): Promise<void> {
+        if (!Utilities.hasStringValue(this.Path)) {
+            return;
+        }
+
+        try {
+            await fs.promises.writeFile(this.Path, this.Contents);
+        }
+        catch (e) {
+            console.error(e);
         }
     }
 

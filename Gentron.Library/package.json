@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@types/mssql": "^4.0.10",
-    "@types/node": "^10.12.4",
+    "@types/node": "^10.12.7",
     "@types/xml2js": "^0.4.3",
     "ta-json": "^2.5.0",
     "tsxml": "^0.1.0",
@@ -17,6 +17,6 @@
   },
   "dependencies": {
     "msnodesqlv8": "^0.6.9",
-    "mssql": "^4.2.1"
+    "mssql": "4.2.1"
   }
 }
