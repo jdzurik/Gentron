@@ -1,3 +1,0 @@
-﻿# Gentron.Library.Tests
-
-
