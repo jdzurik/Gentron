@@ -12,6 +12,8 @@ export const enum PackageSettingsActionNames {
     AddOrUpdateHttpSource = "ADD_OR_UPDATE_HTTP_SOURCE",
     AddOrUpdatePackageName = "ADD_OR_UPDATE_PACKAGE_NAME",
     AddOrUpdateReadMeText = "ADD_OR_UPDATE_READ_ME_TEXT",
+    ExecuteDatabaseSourceQueryStart = "EXECUTE_DATABASE_SOUCE_QUERY_START",
+    ExecuteDatabaseSourceQueryComplete = "EXECUTE_DATABASE_SOUCE_QUERY_COMPLETE",
     RemoveDatabaseSource = "REMOVE_DATABASE_SOURCE",
     RemoveEngine = "REMOVE_ENGINE",
     RemoveEngineTemplate = "REMOVE_ENGINE_TEMPLATE",

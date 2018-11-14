@@ -55,12 +55,6 @@ export default class PackageSettings {
     public buildDataSourceResults(): any {
         let ret: { [s: string]: any } = {};
 
-        const hasResult = (resultObj: TDataSourceResult) => {
-            return Utilities.hasValue(resultObj)
-                && Utilities.hasStringValue(resultObj.Json)
-                && Utilities.hasStringValue(resultObj.Object);
-        };
-
         const buildSourceResults = <T extends SourceBase<T>>(builder: { [s: string]: TDataSourceResult }, sources: SourceBase<T>[]) => {
             for (let i: number = 0; i < sources.length; ++i) {
                 if (!sources[i].IsActive) {
@@ -68,7 +62,7 @@ export default class PackageSettings {
                 }
 
                 const source: SourceBase<T> = sources[i];
-                if (hasResult(source.Result)) {
+                if (Utilities.hasObjectValue(source.Result) && Utilities.hasObjectValue(source.Result.Object)) {
                     builder[source.Name] = source.Result.Object;
                 }
             }
@@ -77,7 +71,36 @@ export default class PackageSettings {
         buildSourceResults(ret, this.DatabaseSources);
         buildSourceResults(ret, this.FileSources);
         buildSourceResults(ret, this.HttpSources);
-
+        
         return ret;
+    }
+
+
+    public mergeResults(packageSettingsJson: PackageSettings): void {
+        if (!Utilities.hasObjectValue(packageSettingsJson)) {
+            return;
+        }
+
+        const mergeSourceResults = (thisSources: any[], thatSources: any[]): void => {
+            if (Utilities.hasObjectValue(thisSources) && Utilities.hasObjectValue(thatSources)) {
+                for (let i: number = 0; i < thisSources.length; ++i) {
+                    const thisSource: DatabaseSource = thisSources[i];
+
+                    for (let j: number = 0; j < thatSources.length; ++j) {
+                        const thatSource: DatabaseSource = thatSources[j];
+
+                        if (thisSource.ID === thatSource.ID)  {
+                            if (!Utilities.hasObjectValue(thisSource.Result) && Utilities.hasObjectValue(thatSource.Result)) {
+                                thisSource.Result = thatSource.Result;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        mergeSourceResults(this.DatabaseSources, packageSettingsJson.DatabaseSources);
+        mergeSourceResults(this.FileSources, packageSettingsJson.FileSources);
+        mergeSourceResults(this.HttpSources, packageSettingsJson.HttpSources);
     }
 }

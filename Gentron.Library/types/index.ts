@@ -1,4 +1,6 @@
-﻿export type Nullable<T> = { [P in keyof T]: T[P] | null };
+﻿export type SwapSourcesDirection = "down" | "up";
+
+export type Nullable<T> = { [P in keyof T]: T[P] | null };
 export type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T];
 export type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>;
 export type Hash = { _hash?: string };

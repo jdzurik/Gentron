@@ -1,7 +1,7 @@
-﻿import { JsonObject, JsonProperty, JsonType, JsonConverter } from "ta-json";
-import SourceBase from "./SourceBase";
-import { File, Utilities } from "./";
+﻿import { File, Utilities } from "./";
 import { FileJsonConverter } from "./converters";
+import { JsonConverter, JsonObject, JsonProperty, JsonType, OnDeserialized } from "ta-json";
+import SourceBase from "./SourceBase";
 
 @JsonObject()
 export default class FileSource extends SourceBase<FileSource> {
@@ -36,6 +36,31 @@ export default class FileSource extends SourceBase<FileSource> {
         ret.Result = this.Result;
 
         return ret;
+    }
+
+
+    @OnDeserialized()
+    public onDeserialized(): void {
+        this.Result = {
+            Json: "",
+            Object: null,
+            Xml: ""
+        };
+
+        if (Utilities.hasObjectValue(this.DataFile)
+            && Utilities.hasStringValue(this.DataFile.Path)
+            && Utilities.hasStringValue(this.DataFile.Contents)) {
+
+            try {
+                const parsed: any = JSON.parse(this.DataFile.Contents);
+                this.Result = {
+                    Json: JSON.stringify(parsed, null, 4),
+                    Object: parsed,
+                    Xml: ""
+                };
+            }
+            catch { }
+        }
     }
 
 

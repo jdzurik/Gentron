@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { Hash } from "../../Gentron.Library/types";
 import { Cell, FileInput, Grid, LinkButton, Row } from "./metro";
 import { connect } from "../connect";
-import { IGentron, ConnectionGroup, DatabaseConnection, DatabaseSource as LibDatabaseSource } from "../../Gentron.Library";
+import { IGentron, ConnectionGroup, DatabaseConnection, DatabaseSource as LibDatabaseSource, Utilities } from "../../Gentron.Library";
 import { RouteComponentProps } from "react-router";
 import MonacoEditor from 'react-monaco-editor';
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
@@ -56,9 +56,20 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
         this.props.addOrUpdateDatabaseSource(this.props.DatabaseSource);
     }
 
+    private handleExecuteQueryClick(ev: React.MouseEvent<HTMLButtonElement>): void {
+        this.props.executeDatabaseSourceQuery(this.props.DatabaseSource);
+    }
+
     public render(): JSX.Element {
         const jsonEditorContainerId: string = `databaseSourceJsonResultsEditorContainer${this.props.match.params.id}`;
+        const jsonResult: string = (Utilities.isObject(this.props.DatabaseSource.Result))
+            ? this.props.DatabaseSource.Result.Json || '{\n\t"Data": "Execute Query to view JSON results"\n}'
+            : '{\n\t"Data": "Execute Query to view JSON results"\n}';
+
         const xmlEditorContainerId: string = `databaseSourceXmlResultsEditorContainer${this.props.match.params.id}`;
+        const xmlResult: string = (Utilities.isObject(this.props.DatabaseSource.Result))
+            ? this.props.DatabaseSource.Result.Xml || '<Root>\n\t<Data>Execute Query to view XML results</Data>\n</Root>'
+            : '<Root>\n\t<Data>Execute Query to view XML results</Data>\n</Root>'
 
         return (
             <Cell className="h-100">
@@ -128,23 +139,29 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                                     <MonacoEditor
                                         editorDidMount={() => { }}
                                         language="json"
-                                        onChange={console.log}
+                                        onChange={() => { }}
                                         options={{ automaticLayout: true, readOnly: true, wordWrap: `on` }}
-                                        value={`{\n\t"Data": "Execute Query to view JSON results"\n}`}
+                                        value={jsonResult}
                                     />
                                 </div>
                                 <div className="h-100" id={xmlEditorContainerId}>
                                     <MonacoEditor
                                         editorDidMount={() => { }}
                                         language="xml"
-                                        onChange={console.log}
+                                        onChange={() => { }}
                                         options={{ automaticLayout: true, readOnly: true, wordWrap: `on` }}
-                                        value={`<Root>\n\t<Data>Execute Query to view XML results</Data>\n</Root>`}
+                                        value={xmlResult}
                                     />
                                 </div>
                             </div>
                         </div>
                     </SplitPane>
+
+                    <Row className="mt-2 mb-2">
+                        <Cell colSpan={6}>
+                            <button className="button" onClick={(ev: React.MouseEvent<HTMLButtonElement>) => this.handleExecuteQueryClick(ev)}>Execute Query</button>
+                        </Cell>
+                    </Row>
                 </Grid>
             </Cell>
         );
@@ -153,7 +170,8 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
 
 function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ id: string }>): DbSource {
     const id: string = routeComponentProps.match.params.id;
-    const _hash: string = hash(state.PackageSettings.DatabaseSources[id] || "")
+    const _hash: string = hash(state.PackageSettings.DatabaseSources[id] || "");
+    
     return {
         DatabaseConnections: state.ProjectSettings.DatabaseConnections,
         DatabaseSource: state.PackageSettings.DatabaseSources[id],

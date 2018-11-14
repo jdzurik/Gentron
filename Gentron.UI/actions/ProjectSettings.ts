@@ -1,5 +1,6 @@
 ﻿import { ConnectionGroup, DatabaseConnection, OutputPath, OutputPathGroup } from '../../Gentron.Library';
 import { ProjectSettingsActionNames } from "../constants/ActionNames";
+import { SwapSourcesDirection } from '../../Gentron.Library/types';
 
 export interface AddOrUpdateDatabaseConnectionGroupAction {
     databaseConnectionGroup: ConnectionGroup<DatabaseConnection>;
@@ -30,8 +31,6 @@ export interface RemoveOutputPathGroupAction {
     outputPathGroup: OutputPathGroup<OutputPath>;
     type: ProjectSettingsActionNames.RemoveOutputPathGroupAction;
 }
-
-type SwapSourcesDirection = "down" | "up";
 
 export interface SwapProjectItemSourceOrderAction<TProjectItem> {
     array: Array<TProjectItem>;
