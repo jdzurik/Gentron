@@ -14,7 +14,7 @@ import * as ReactDOM from "react-dom";
 
 import { AnyAction, Store } from "redux";
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { Gentron, IGentron } from "../Gentron.Library";
+import { Gentron, IGentron, DatabaseSource } from "../Gentron.Library";
 import { Provider } from 'react-redux';
 import App from "./components/App";
 import configureStore from './store/configureStore';
@@ -47,6 +47,8 @@ const rootId: string = `appRoot${Date.now()}`;
 root.id = rootId;
 root.className = "h-100 w-100";
 document.body.appendChild(root);
+
+(DatabaseSource as any)._msSqlQueryProvider = new (window as any).MsSqlQueryProvider();
 
 ReactDOM.render(
     <Provider store={store}>
