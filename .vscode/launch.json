@@ -1,23 +1,20 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
             "type": "node",
             "request": "launch",
             "name": "Electron: Main",
+            "preLaunchTask": "Webpack -- All",
             "protocol": "inspector",
-            "runtimeExecutable": "${workspaceFolder}\\Gentron.UI\\node_modules\\.bin\\electron.cmd",
+            "runtimeExecutable": "${workspaceFolder}/Gentron.UI/node_modules/.bin/electron",
             "runtimeArgs": [
+                "--serve",
                 "--remote-debugging-port=9223",
                 "."
             ],
-            "program": "${workspaceFolder}\\Gentron.UI\\main.js",
-            "trace": true,
             "windows": {
-                "runtimeExecutable": "${workspaceFolder}\\Gentron.UI\\node_modules\\.bin\\electron.cmd"
+                "runtimeExecutable": "${workspaceFolder}/Gentron.UI/node_modules/.bin/electron.cmd"
             }
         },
         {
@@ -25,7 +22,7 @@
             "type": "chrome",
             "request": "attach",
             "port": 9223,
-            "webRoot": "${workspaceFolder}\\Gentron.UI",
+            "webRoot": "${workspaceFolder}/Gentron.UI",
             "timeout": 30000
         }
     ],
@@ -35,7 +32,7 @@
             "configurations": [
                 "Electron: Main",
                 "Electron: Renderer"
-            ]
+            ],
         }
-    ]  
+    ]
 }

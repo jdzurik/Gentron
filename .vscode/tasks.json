@@ -23,16 +23,30 @@
                 "Install Library Packages",
                 "Install UI Packages"
             ],
-            "problemMatcher": [
-                "$tsc"
-            ]
+            "problemMatcher": []
         },
         {
-            "label": "Webpack",
+            "label": "Webpack -- Set Environment",
+            "type": "shell",
+            "command": "cmd",
+            "args": ["/c", "SET", "NODE_ENV=development"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Webpack -- Dev Server",
             "type": "npm",
             "script": "build",
             "path": "Gentron.UI/",
-            "problemMatcher": []
+            "problemMatcher": [],
+        },        
+        {
+            "label": "Webpack -- All",
+            "dependsOn": [
+                "Webpack -- Set Environment",
+                "Webpack -- Dev Server"
+            ],
+            "problemMatcher": [],
         },
     ]
 }
+//cmd /c SET NODE_ENV=development&& webpack-dev-server --hot --colors
