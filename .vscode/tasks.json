@@ -4,46 +4,111 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Install Library Packages",
+            "type": "typescript",
+            "label": "Build -- Library",
+            "tsconfig": "Gentron.Library\\tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "type": "typescript",
+            "label": "Build -- UI",
+            "tsconfig": "Gentron.UI\\tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "label": "Build -- All",
+            "dependsOn": [
+                "Build -- Library",
+                "Build -- UI"
+            ],
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "type": "typescript",
+            "label": "Watch -- Library",
+            "tsconfig": "Gentron.Library\\tsconfig.json",
+            "option": "watch",
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        },
+        {
+            "type": "typescript",
+            "label": "Watch -- UI",
+            "tsconfig": "Gentron.UI\\tsconfig.json",
+            "option": "watch",
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        },
+        {
+            "label": "Watch -- All",
+            "dependsOn": [
+                "Watch -- Library",
+                "Watch -- UI"
+            ],
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        },
+        {
+            "label": "Install Packages -- Library",
             "type": "npm",
             "script": "install",
             "path": "Gentron.Library/",
             "problemMatcher": []
         },
         {
-            "label": "Install UI Packages",
+            "label": "Install Packages -- UI",
             "type": "npm",
             "script": "install",
             "path": "Gentron.UI/",
             "problemMatcher": []
         },
         {
-            "label": "Install Packages",
+            "label": "Install Packages -- All",
             "dependsOn": [
-                "Install Library Packages",
-                "Install UI Packages"
+                "Install Packages -- Library",
+                "Install Packages -- UI"
             ],
             "problemMatcher": []
         },
         {
-            "label": "Webpack -- Set Environment",
-            "type": "shell",
-            "command": "cmd",
-            "args": ["/c", "SET", "NODE_ENV=development"],
-            "problemMatcher": []
-        },
-        {
-            "label": "Webpack -- Dev Server",
+            "label": "Webpack -- Build",
             "type": "npm",
+            "promptOnClose": false,
             "script": "build",
             "path": "Gentron.UI/",
             "problemMatcher": [],
+        },
+        {
+            "label": "Webpack -- Build All",
+            "dependsOn": [
+                "Build -- All",
+                // "Webpack -- Set Environment",
+                "Webpack -- Build"
+            ],
+            "problemMatcher": [],
         },        
+        {
+            "label": "Webpack -- Serve",
+            "type": "npm",
+            "script": "start",
+            "path": "Gentron.UI/",
+            "problemMatcher": [],
+        },
         {
             "label": "Webpack -- All",
             "dependsOn": [
-                "Webpack -- Set Environment",
-                "Webpack -- Dev Server"
+                "Watch -- All",
+                // "Webpack -- Set Environment",
+                "Webpack -- Serve"
             ],
             "problemMatcher": [],
         },

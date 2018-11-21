@@ -7,8 +7,8 @@
     "name": "Thomas Foley"
   },
   "scripts": {
-    "build": "webpack-dev-server --config webpack.config.js --hot --colors",
-    "start": "electron ."
+    "start": "webpack-dev-server --mode development --config webpack.config.js --hot --colors",
+    "build": "webpack --mode development --config webpack.config.js"
   },
   "devDependencies": {
     "@types/react-dom": "^16.0.9",
