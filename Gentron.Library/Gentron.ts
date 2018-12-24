@@ -14,6 +14,8 @@ export interface IGentron {
     ProjectSettings: ProjectSettings;
 }
 
+
+
 @JsonObject()
 export class Gentron implements IGentron {
     /*
@@ -140,4 +142,17 @@ export class Gentron implements IGentron {
 
         return Result.ok<TGentronFsResult>({ Gentron: ret });
     }
+
+
+    //public static Run(Gen: Gentron): Result<TGentronFsResult> {
+
+    //    if (Gen.ActiveProjectPath != "") {
+    //        this.op
+    //    }
+    //    if (this.ActiveProjectPath != "") {
+
+    //    }
+    //}
+    
 }
+

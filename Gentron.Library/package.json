@@ -16,7 +16,7 @@
     "xml2js": "^0.4.19"
   },
   "dependencies": {
-    "msnodesqlv8": "^0.6.9",
+    "msnodesqlv8": "^0.6.11",
     "mssql": "^4.2.3",
     "typescript": "^3.1.6"
   }

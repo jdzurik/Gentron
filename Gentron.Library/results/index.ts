@@ -1,5 +1,6 @@
 ﻿import Result from "./Result";
-import { IGentron } from "../";
+import FileResult from "./FileResult";
+import { IGentron, File } from "../";
 
 export type TGentronFsResult = {
     InfoMessage?: string;
@@ -11,6 +12,11 @@ export type TDataSourceResult = {
     Object: any;
     Xml: string;
 }
+
+export type TGentronResult = {
+    InfoMessage?: string;
+    Files: FileResult[];
+};
 
 export {
     Result

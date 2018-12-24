@@ -25,20 +25,20 @@ function createWindow() {
     });
 
 
-    try {
-        //  React
-        BrowserWindow.addDevToolsExtension(
-            "C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.4.2_0"
-        );
+    //try {
+    //    //  React
+    //    BrowserWindow.addDevToolsExtension(
+    //        "C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.4.2_0"
+    //    );
 
-        //  Redux
-        BrowserWindow.addDevToolsExtension(
-            "C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\lmhkpmbekcpmknklioeibfkpmmfibljd\\2.15.3_0"
-        );
-    }
-    catch (e) {
-        console.log((e as NodeJS.ErrnoException).message);
-    }
+    //    //  Redux
+    //    BrowserWindow.addDevToolsExtension(
+    //        "C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\lmhkpmbekcpmknklioeibfkpmmfibljd\\2.15.3_0"
+    //    );
+    //}
+    //catch (e) {
+    //    console.log((e as NodeJS.ErrnoException).message);
+    //}
 }
 
 // This method will be called when Electron has finished

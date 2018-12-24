@@ -18,7 +18,7 @@
     "@types/react-router-redux": "^5.0.16",
     "connected-react-router": "^4.5.0",
     "css-loader": "^1.0.0",
-    "electron": "latest",
+    "electron": "^3.0.10",
     "history": "^4.7.2",
     "metro4": "^4.2.26",
     "monaco-editor-webpack-plugin": "^1.5.4",
