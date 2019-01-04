@@ -1,5 +1,6 @@
 ﻿import Environment from "./Environment";
 import File from "./File";
+import EngineCodeFile from "./EngineCodeFile";
 import DatabaseConnection from "./DatabaseConnection";
 import ConnectionGroup from "./ConnectionGroup";
 import DatabaseSource from "./DatabaseSource";
@@ -14,12 +15,14 @@ import OutputPathGroup from "./OutputPathGroup";
 import PackageSettings from "./PackageSettings";
 import ProjectSettings from "./ProjectSettings";
 import { Gentron, IGentron } from "./Gentron";
-import Utilities from "./Utilities";
+import { GuidUtils, ObjectUtils, SerializationUtils, IOUtils, VMUtils } from "./utils";
 
 export {
     Environment,
 
     File,
+
+    EngineCodeFile,
 
     DatabaseConnection,
 
@@ -50,5 +53,9 @@ export {
     Gentron,
     IGentron,
 
-    Utilities,
+    GuidUtils,
+    IOUtils,
+    ObjectUtils,
+    SerializationUtils,
+    VMUtils,
 };

@@ -31,43 +31,43 @@ export default class PackageSettings extends React.Component<PackageSettingsProp
      */
     public render(): JSX.Element {
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-gift" title="Package Settings" />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-gift' title='Package Settings' />
 
-                    <Row className="mb-2">
-                        <label className="cell-3 text-right">
+                    <Row className='mb-2'>
+                        <label className='cell-3 text-right'>
                             Package Name
                         </label>
 
                         <Cell colSpan={9}>
-                            <div className="input">
-                                <input type="text"
-                                    placeholder="Package Name"
+                            <div className='input'>
+                                <input type='text'
+                                    placeholder='Package Name'
                                     value={this.props.PackageName}
-                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdatePackageName(ev.target.value || ``)}
-                                    data-role="input"
+                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdatePackageName(ev.target.value || '')}
+                                    data-role='input'
                                     data-role-input={true}
                                 />
-                                <div className="button-group">
-                                    <button className="button input-clear-button"
+                                <div className='button-group'>
+                                    <button className='button input-clear-button'
                                         tabIndex={-1}
-                                        type="button"
+                                        type='button'
                                         onClick={this.props.addOrUpdatePackageName.bind(this, null)}>
-                                        <span className="default-icon-cross"></span>
+                                        <span className='default-icon-cross'></span>
                                     </button>
                                 </div>
                             </div>
                         </Cell>
                     </Row>
 
-                    <Row className="h-100 mt-2">
+                    <Row className='h-100 mt-2'>
                         <Cell>
-                            <div className="h-100 w-100 border bd-grayWhite border-size-2">
+                            <div className='h-100 w-100 border bd-grayWhite border-size-2'>
                                 <MonacoEditor
-                                    language="markdown"
+                                    language='markdown'
                                     value={this.props.ReadMe}
-                                    options={{ automaticLayout: true, wordWrap: `on` }}
+                                    options={{ automaticLayout: true, wordWrap: 'on' }}
                                     onChange={(value: string) => this.props.addOrUpdateReadMeText(value)}
                                 />
                             </div>

@@ -16,11 +16,7 @@ export default class Grid extends React.PureComponent<GridProps> {
      *  Methods
      */
     public render(): JSX.Element {
-        let className: string = "";
-
-        if (className.length === 0) {
-            className = `grid`;
-        }
+        let className: string = 'grid';
 
         if (this.props.className && this.props.className.length > 0) {
             className += ` ${this.props.className}`;

@@ -1,7 +1,7 @@
 ﻿import { Cloneable } from "./abstract";
 import { IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty, JsonType, JsonConverter } from "ta-json";
-import { File, Utilities } from "./";
+import { File, ObjectUtils } from "./";
 import { FileJsonConverter } from "./converters";
 
 enum TemplateTypes {
@@ -31,7 +31,7 @@ export default class Template extends Cloneable<Template> implements IModifiable
      */
     public constructor() {
         super();
-        this.Name = "";
+        this.Name = '';
         this.TemplateCode = new File();
         this.Type = TemplateTypes.Partial;
     }
@@ -53,7 +53,7 @@ export default class Template extends Cloneable<Template> implements IModifiable
 
 
     public update(template: Template): void {
-        if (!Utilities.hasValue(template)) {
+        if (!ObjectUtils.hasValue(template)) {
             return;
         }
 

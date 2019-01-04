@@ -30,50 +30,50 @@ export default class ProjectSettings extends React.Component<ProjectSettingsProp
      */
     public render(): JSX.Element {
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-drive2" title="Project Settings" />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-drive2' title='Project Settings' />
 
-                    <Row className="mb-2">
-                        <label className="cell-3 text-right">
+                    <Row className='mb-2'>
+                        <label className='cell-3 text-right'>
                             Local Package Folder
                         </label>
 
                         <Cell colSpan={9}>
                             <FolderInput
                                 onFolderPathChange={(value: string) => this.props.addOrUpdateLocalPackageFolder(value)}
-                                placeholder="Local Package Folder"
+                                placeholder='Local Package Folder'
                                 value={this.props.LocalPackageFolder}
                             />
                         </Cell>
                     </Row>
 
-                    <Row className="mb-2">
-                        <label className="cell-3 text-right">
+                    <Row className='mb-2'>
+                        <label className='cell-3 text-right'>
                             Remote Package Location
                         </label>
 
                         <Cell colSpan={9}>
-                            <div className="input">
-                                <input type="text"
-                                    placeholder="Remote Package Location"
+                            <div className='input'>
+                                <input type='text'
+                                    placeholder='Remote Package Location'
                                     value={this.props.RemotePackageLocation}
-                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdateRemotePackageLocation(ev.target.value || ``)}
-                                    data-role="input"
+                                    onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.addOrUpdateRemotePackageLocation(ev.target.value || '')}
+                                    data-role='input'
                                     data-role-input={true}
                                 />
-                                <div className="button-group">
-                                    <button className="button input-clear-button"
+                                <div className='button-group'>
+                                    <button className='button input-clear-button'
                                         tabIndex={-1}
-                                        type="button"
+                                        type='button'
                                         onClick={this.props.addOrUpdateRemotePackageLocation.bind(this, null)}>
-                                        <span className="default-icon-cross"></span>
+                                        <span className='default-icon-cross'></span>
                                     </button>
-                                    <button className="button input-custom-button"
+                                    <button className='button input-custom-button'
                                         tabIndex={-1}
-                                        type="button"
+                                        type='button'
                                         onClick={console.log}>
-                                        <span className="mif-folder-open"></span>
+                                        <span className='mif-folder-open'></span>
                                     </button>
                                 </div>
                             </div>

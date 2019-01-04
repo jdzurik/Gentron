@@ -1,5 +1,5 @@
 ﻿import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from ".";
+import { ObjectUtils } from ".";
 import ConnectionBase from "./ConnectionBase";
 
 @JsonObject()
@@ -19,8 +19,8 @@ export default class DatabaseConnection extends ConnectionBase<DatabaseConnectio
      */
     public constructor() {
         super();
-        this.ConnectionString = "";
-        this.Environment = "";
+        this.ConnectionString = '';
+        this.Environment = '';
     }
 
 
@@ -40,7 +40,7 @@ export default class DatabaseConnection extends ConnectionBase<DatabaseConnectio
 
 
     public update(connection: DatabaseConnection): void {
-        if (!Utilities.hasValue(connection)) {
+        if (!ObjectUtils.hasValue(connection)) {
             return;
         }
 

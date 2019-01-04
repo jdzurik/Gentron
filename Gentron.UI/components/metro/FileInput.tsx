@@ -1,7 +1,7 @@
 ﻿const { dialog } = (window as any).require('electron').remote;
 import * as React from "react";
 import { MouseEvent } from "react";
-import { Utilities } from "../../../Gentron.Library";
+import { ObjectUtils } from "../../../Gentron.Library";
 
 type FileInputFilter = { name: string, extensions: string[] };
 
@@ -31,11 +31,11 @@ export default class FileInput extends React.Component<FileInputProps, FileInput
         const dialogOpts: Electron.OpenDialogOptions = {
             filters: this.props.filters,
             properties: [
-                "openFile",
-                "promptToCreate",
-                "showHiddenFiles",
+                'openFile',
+                'promptToCreate',
+                'showHiddenFiles',
             ],
-            title: "Select File",
+            title: 'Select File',
         };
 
         dialog.showOpenDialog(dialogOpts, function (this: FileInput, filePaths: string[], bookmarks: string[]) {
@@ -46,7 +46,7 @@ export default class FileInput extends React.Component<FileInputProps, FileInput
     }
 
     public render(): JSX.Element {
-        const showClearBtn: boolean = Utilities.isBoolean(this.props.includeClearButton)
+        const showClearBtn: boolean = ObjectUtils.isBoolean(this.props.includeClearButton)
             ? this.props.includeClearButton
             : true;
 
@@ -54,33 +54,33 @@ export default class FileInput extends React.Component<FileInputProps, FileInput
 
         if (showClearBtn) {
             clearBtn = (
-                <button className="button input-clear-button"
+                <button className='button input-clear-button'
                     tabIndex={-1}
-                    type="button"
+                    type='button'
                     onClick={(ev: React.MouseEvent<HTMLButtonElement>) => this.props.onFilePathChange(``)}>
-                    <span className="default-icon-cross"></span>
+                    <span className='default-icon-cross'></span>
                 </button>
             );
         }
 
         return (
-            <div className="input">
-                <input type="text"
-                    data-role="input"
+            <div className='input'>
+                <input type='text'
+                    data-role='input'
                     data-role-input={true}
                     onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.props.onFilePathChange(ev.target.value)}
                     placeholder={this.props.placeholder}
                     readOnly
                     value={this.props.value}
                 />
-                <div className="button-group">
+                <div className='button-group'>
                     {clearBtn}
 
-                    <button className="button input-custom-button"
+                    <button className='button input-custom-button'
                         tabIndex={-1}
-                        type="button"
+                        type='button'
                         onClick={(ev: MouseEvent<HTMLButtonElement>) => this.handleOpenDialogClick(ev)}>
-                        <span className="mif-files-empty"></span>
+                        <span className='mif-files-empty'></span>
                     </button>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 ﻿import { TDataSourceResult, Result } from "../results";
-import { Utilities } from "../";
+import { ObjectUtils, SerializationUtils } from "../";
 import { InfoMessages } from "../constants";
 
 import * as MsSql from "mssql/msnodesqlv8";
@@ -12,12 +12,7 @@ export default class MsSqlQueryProvider implements IQueryProvider {
     private static readonly _jsonColumnId: string = "JSON_F52E2B61-18A1-11d1-B105-00805F49916B";
     private static readonly _xmlColumnId: string = "XML_F52E2B61-18A1-11d1-B105-00805F49916B";
 
-
-    /*
-     *  Constructors 
-     */
-
-
+    
     /*
      *  Methods
      */
@@ -34,7 +29,7 @@ export default class MsSqlQueryProvider implements IQueryProvider {
                 ? JSON.stringify(error, null, 4)
                 : JSON.stringify(error),
             Object: null,
-            Xml: await Utilities.jsonToXmlStr(error, formatResults)
+            Xml: await SerializationUtils.jsonToXmlStr(error, formatResults)
         };
 
         return Result.fail<TDataSourceResult>(message, ret);
@@ -51,15 +46,15 @@ export default class MsSqlQueryProvider implements IQueryProvider {
             recordsets = await result.recordset;
         }
         catch (e) {
-            return await this.onExecuteQueryFail(queryStr, Utilities.getErrorMessage(e), formatResults);
+            return await this.onExecuteQueryFail(queryStr, ObjectUtils.getErrorMessage(e), formatResults);
         }
         finally {
-            if (Utilities.hasValue(connPool) && connPool.connected) {
+            if (ObjectUtils.hasValue(connPool) && connPool.connected) {
                 await connPool.close();
             }
         }
 
-        if (!Utilities.hasValue(recordsets)) {
+        if (!ObjectUtils.hasValue(recordsets)) {
             return await this.onExecuteQueryFail(queryStr, InfoMessages.QUERY_RESULTS_NULL, formatResults);
         }
 
@@ -67,21 +62,21 @@ export default class MsSqlQueryProvider implements IQueryProvider {
             const recordset: any = recordsets[0];
 
             const resultAsJson: any = recordset[MsSqlQueryProvider._jsonColumnId];
-            if (Utilities.hasValue(resultAsJson)) {
+            if (ObjectUtils.hasValue(resultAsJson)) {
                 const ret: TDataSourceResult = {
                     Json: (formatResults)
                         ? JSON.stringify(resultAsJson, null, 4)
                         : JSON.stringify(resultAsJson),
                     Object: resultAsJson,
-                    Xml: await Utilities.jsonStrToXmlStr(JSON.stringify(resultAsJson), formatResults)
+                    Xml: await SerializationUtils.jsonStrToXmlStr(JSON.stringify(resultAsJson), formatResults)
                 };
 
                 return Result.ok<TDataSourceResult>(ret);
             }
 
             const resultAsXml: any = recordset[MsSqlQueryProvider._xmlColumnId];
-            if (Utilities.hasValue(resultAsXml)) {
-                const jsonStr: string = Utilities.xmlStrToJsonStr(resultAsXml, formatResults);
+            if (ObjectUtils.hasValue(resultAsXml)) {
+                const jsonStr: string = SerializationUtils.xmlStrToJsonStr(resultAsXml, formatResults);
 
                 let jsonObj: any;
                 try {
@@ -96,7 +91,7 @@ export default class MsSqlQueryProvider implements IQueryProvider {
                     Json: jsonStr,
                     Object: jsonObj,
                     Xml: (formatResults)
-                        ? await Utilities.formatXml(resultAsXml)
+                        ? await SerializationUtils.formatXml(resultAsXml)
                         : resultAsXml
                 };
 
@@ -109,7 +104,7 @@ export default class MsSqlQueryProvider implements IQueryProvider {
                 ? JSON.stringify(recordsets, null, 4)
                 : JSON.stringify(recordsets),
             Object: recordsets,
-            Xml: await Utilities.jsonStrToXmlStr(JSON.stringify(recordsets), formatResults)
+            Xml: await SerializationUtils.jsonStrToXmlStr(JSON.stringify(recordsets), formatResults)
         };
 
         return Result.ok<TDataSourceResult>(ret);

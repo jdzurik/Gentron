@@ -1,9 +1,8 @@
 ﻿import { Cloneable } from "./abstract";
-import { DatabaseConnection } from "./";
+import { DatabaseConnection, ObjectUtils } from "./";
 import { IModifiable } from "./interfaces";
 import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 import ConnectionBase from "./ConnectionBase";
-import Utilities from "./Utilities";
 
 @JsonObject()
 export default class ConnectionGroup<TConnection extends ConnectionBase<TConnection>> extends Cloneable<ConnectionGroup<TConnection>> implements IModifiable<ConnectionGroup<TConnection>> {
@@ -24,7 +23,7 @@ export default class ConnectionGroup<TConnection extends ConnectionBase<TConnect
     public constructor() {
         super();
         this.Connections = [];
-        this.Name = "";
+        this.Name = '';
     }
 
 
@@ -55,7 +54,7 @@ export default class ConnectionGroup<TConnection extends ConnectionBase<TConnect
 
 
     public update(connectionGroup: ConnectionGroup<TConnection>): void {
-        if (!Utilities.hasValue(connectionGroup)) {
+        if (!ObjectUtils.hasValue(connectionGroup)) {
             return;
         }
 

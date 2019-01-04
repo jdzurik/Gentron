@@ -6,7 +6,7 @@ import { ButtonHelpers } from "../helpers";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row, Switch } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, DatabaseSource, Utilities } from "../../Gentron.Library";
+import { IGentron, DatabaseSource, ObjectUtils } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -78,11 +78,11 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
 
     public render(): JSX.Element {
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-database" title="Database Sources" />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-database' title='Database Sources' />
 
-                    <table className="table striped table-border mt-4">
+                    <table className='table striped table-border mt-4'>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -94,8 +94,8 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>
-                                        <span className="mif-add"></span>
+                                    <button className='button' onClick={this.handleAddSourceClick.bind(this)}>
+                                        <span className='mif-add'></span>
                                     </button>
                                 </td>
                                 <td>{` `}</td>
@@ -118,19 +118,19 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                             />
                                         </td>
                                         <td>
-                                            <a href="#">
-                                                <button className="button"
+                                            <a href='#'>
+                                                <button className='button'
                                                     onClick={() => this.handleOpenEditSourceClick(source)}>
-                                                    <span className="mif-pencil"></span>
+                                                    <span className='mif-pencil'></span>
                                                 </button>
-                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
-                                                    <span className="mif-arrow-down"></span>
+                                                <button className='button ml-2' onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, 'down')} {...ButtonHelpers.swapBtnProps(array, i, 'down')}>
+                                                    <span className='mif-arrow-down'></span>
                                                 </button>
-                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
-                                                    <span className="mif-arrow-up"></span>
+                                                <button className='button ml-2' onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, 'up')} {...ButtonHelpers.swapBtnProps(array, i, 'up')}>
+                                                    <span className='mif-arrow-up'></span>
                                                 </button>
-                                                <button className="button ml-2" onClick={this.handleRemoveSourceClick.bind(this, source)}>
-                                                    <span className="mif-bin"></span>
+                                                <button className='button ml-2' onClick={this.handleRemoveSourceClick.bind(this, source)}>
+                                                    <span className='mif-bin'></span>
                                                 </button>
                                             </a>
                                         </td>
@@ -142,22 +142,22 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                 </Grid>
 
                 {
-                    Utilities.hasValue(this.state.EditingSource)
+                    ObjectUtils.hasValue(this.state.EditingSource)
                         ? (
                             <Dialog>
                                 <DialogTitle>Edit Database Source</DialogTitle>
                                 <DialogContent>
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
                                             <label>Source Name</label>
                                         </Cell>
                                     </Row>
 
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
-                                            <input type="text"
-                                                data-role="input"
-                                                data-role-input="true"
+                                            <input type='text'
+                                                data-role='input'
+                                                data-role-input='true'
                                                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditSourceNameChange(ev.target.value)}
                                                 value={this.state.EditingSource.Name}
                                             />
@@ -165,8 +165,8 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                     </Row>
                                 </DialogContent>
                                 <DialogAction>
-                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, false)}>Cancel</button>
-                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, true)}>Save</button>
+                                    <button className='button' onClick={this.handleCloseEditSourceClick.bind(this, false)}>Cancel</button>
+                                    <button className='button' onClick={this.handleCloseEditSourceClick.bind(this, true)}>Save</button>
                                 </DialogAction>
                             </Dialog>
                         )

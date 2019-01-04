@@ -47,19 +47,19 @@ export default class FileSource extends React.Component<FileSourceProps> {
 
     public render(): JSX.Element {
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-file-code" title={this.props.FileSource.Name} />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-file-code' title={this.props.FileSource.Name} />
 
-                    <Row className="mt-2 mb-2">
+                    <Row className='mt-2 mb-2'>
                         <Cell>
-                            <LinkButton iconClassName="mif-arrow-left" linkTo="/sources/file" buttonText="View All Sources"></LinkButton>
+                            <LinkButton iconClassName='mif-arrow-left' linkTo='/sources/file' buttonText='View All Sources'></LinkButton>
                         </Cell>
                     </Row>
 
-                    <Row className="mt-2 mb-2">
+                    <Row className='mt-2 mb-2'>
                         <Cell colSpan={4}>
-                            <div className="pos-center text-right">JSON File:</div>
+                            <div className='pos-center text-right'>JSON File:</div>
                         </Cell>
                         <Cell colSpan={8}>
                             <FileInput filters={FileSource.fileInputFilters}
@@ -69,13 +69,13 @@ export default class FileSource extends React.Component<FileSourceProps> {
                         </Cell>
                     </Row>
 
-                    <Row className="h-100 mt-2">
+                    <Row className='h-100 mt-2'>
                         <Cell>
-                            <div className="h-100 w-100 border bd-grayWhite border-size-2">
+                            <div className='h-100 w-100 border bd-grayWhite border-size-2'>
                                 <MonacoEditor
                                     language="json"
-                                    value={this.props.FileSource.DataFile.Contents || `{\n}`}
-                                    options={{ automaticLayout: true, wordWrap: `on` }}
+                                    value={this.props.FileSource.DataFile.Contents || '{\n}'}
+                                    options={{ automaticLayout: true, wordWrap: 'on' }}
                                     onChange={() => { }}
                                     editorDidMount={() => { }}
                                 />
@@ -90,7 +90,7 @@ export default class FileSource extends React.Component<FileSourceProps> {
 
 function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ id: string }>): HashedFileSource {
     const id: string = routeComponentProps.match.params.id;
-    const _hash: string = hash(state.PackageSettings.FileSources[id] || "")
+    const _hash: string = hash(state.PackageSettings.FileSources[id] || '')
     return {
         FileSource: state.PackageSettings.FileSources[id],
         _hash: _hash

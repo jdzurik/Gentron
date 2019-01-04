@@ -6,7 +6,7 @@ import { Reducer } from 'redux';
 
 type GentronProps = string;
 
-const _unloadedGentronState: string = "";
+const _unloadedGentronState: string = '';
 
 export const reducer: Reducer<GentronProps> = (state: string, action: GentronActions.KnownGentronAction) => {
     switch (action.type) {

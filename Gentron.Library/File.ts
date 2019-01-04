@@ -4,7 +4,7 @@ import { Cloneable } from "./abstract";
 import { Result } from "./results";
 import { IModifiable } from "./interfaces"
 import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from "./";
+import { ObjectUtils, IOUtils } from "./";
 
 @JsonObject()
 export default class File extends Cloneable<File> implements IModifiable<File> {
@@ -26,9 +26,9 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
      */
     public constructor() {
         super();
-        this.Contents = "";
+        this.Contents = '';
         this.LastModified = undefined;
-        this.Path = "";
+        this.Path = '';
     }
 
 
@@ -62,7 +62,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
     public static write(filePath: string, fileContents: string, mkDirIfNotExists: boolean = false): Result<void> {
         try {
             if (mkDirIfNotExists && !fs.existsSync(filePath.substring(0, filePath.lastIndexOf(path.sep)))) {
-                Utilities.mkDirByPathSync(filePath.substring(0, filePath.lastIndexOf(path.sep)));
+                IOUtils.mkDirByPathSync(filePath.substring(0, filePath.lastIndexOf(path.sep)));
             }
             fs.writeFileSync(filePath, fileContents);
             return Result.ok();
@@ -95,7 +95,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
     }
 
     public loadContents(): void {
-        if (!Utilities.hasStringValue(this.Path)) {
+        if (!ObjectUtils.hasStringValue(this.Path)) {
             return;
         }
 
@@ -112,7 +112,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
     }
 
     public async loadContentsAsync(): Promise<void> {
-        if (!Utilities.hasStringValue(this.Path)) {
+        if (!ObjectUtils.hasStringValue(this.Path)) {
             return;
         }
 
@@ -128,34 +128,38 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
         }
     }
 
-    public writeContents(): void {
-        if (!Utilities.hasStringValue(this.Path)) {
-            return;
+    public writeContents(): Result<void> {
+        if (!ObjectUtils.hasStringValue(this.Path)) {
+            return Result.ok();
         }
 
         try {
             fs.writeFileSync(this.Path, this.Contents);
+            return Result.ok();
         }
         catch (e) {
             console.error(e);
+            return Result.fail(ObjectUtils.getErrorMessage(e));
         }
     }
 
-    public async writeContentsAsync(): Promise<void> {
-        if (!Utilities.hasStringValue(this.Path)) {
-            return;
+    public async writeContentsAsync(): Promise<Result<void>> {
+        if (!ObjectUtils.hasStringValue(this.Path)) {
+            return Result.ok();
         }
 
         try {
             await fs.promises.writeFile(this.Path, this.Contents);
+            return Result.ok();
         }
         catch (e) {
             console.error(e);
+            return Result.fail(ObjectUtils.getErrorMessage(e));
         }
     }
 
     public update(file: File): void {
-        if (!Utilities.hasValue(file)) {
+        if (!ObjectUtils.hasValue(file)) {
             return;
         }
 
@@ -164,12 +168,16 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
         if (this.Path !== file.Path) {
             this.Path = file.Path;
 
-            if (!Utilities.hasStringValue(this.Path.trim())) {
+            if (!ObjectUtils.hasStringValue(this.Path.trim())) {
                 this.Contents = "";
             }
             else {
                 this.loadContents();
             }
+        }
+
+        if (this.Contents !== file.Contents && ObjectUtils.hasStringValue(file.Contents)) {
+            this.Contents = file.Contents;
         }
     }
 }

@@ -16,10 +16,10 @@ export default class Row extends React.PureComponent<RowProps> {
      *  Methods
      */
     public render(): JSX.Element {
-        let className: string = "";
+        let className: string = '';
 
         if (className.length === 0) {
-            className = `row`;
+            className = 'row';
         }
 
         if (this.props.className && this.props.className.length > 0) {

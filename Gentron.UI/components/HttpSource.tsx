@@ -34,31 +34,31 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
      */
     public render(): JSX.Element {
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-http" title={this.props.HttpSource.Name} />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-http' title={this.props.HttpSource.Name} />
 
-                    <Row className="mt-2 mb-2">
+                    <Row className='mt-2 mb-2'>
                         <Cell>
-                            <LinkButton iconClassName="mif-arrow-left" linkTo="/sources/http" buttonText="View All Sources"></LinkButton>
+                            <LinkButton iconClassName='mif-arrow-left' linkTo='/sources/http' buttonText='View All Sources'></LinkButton>
                         </Cell>
                     </Row>
 
-                    <SplitPane splitPaneProps={{ split: `vertical`, size: `calc(50% - 15px)` }}>
-                        <div className="h-100 w-100">
+                    <SplitPane splitPaneProps={{ split: 'vertical', size: 'calc(50% - 15px)' }}>
+                        <div className='h-100 w-100'>
                             <MonacoEditor
-                                language="javascript"
+                                language='javascript'
                                 value={(() => { }).toString()}
-                                options={{ automaticLayout: true, readOnly: true, wordWrap: `on` }}
+                                options={{ automaticLayout: true, readOnly: true, wordWrap: 'on' }}
                                 onChange={() => { }}
                                 editorDidMount={() => {}}
                             />
                         </div>
-                        <div className="h-100 w-100">
+                        <div className='h-100 w-100'>
                             <MonacoEditor
-                                language="json"
+                                language='json'
                                 value={(() => { }).toString()}
-                                options={{ automaticLayout: true, readOnly: true, wordWrap: `on` }}
+                                options={{ automaticLayout: true, readOnly: true, wordWrap: 'on' }}
                                 onChange={() => { }}
                                 editorDidMount={() => {}}
                             />
@@ -72,7 +72,7 @@ export default class HttpSource extends React.Component<HttpSourceProps> {
 
 function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentProps<{ id: string }>): HashedHttpSource {
     const id: string = routeComponentProps.match.params.id;
-    const _hash: string = hash(state.PackageSettings.HttpSources[id] || "")
+    const _hash: string = hash(state.PackageSettings.HttpSources[id] || '')
     return {
         HttpSource: state.PackageSettings.HttpSources[id],
         _hash: _hash

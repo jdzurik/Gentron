@@ -7,7 +7,7 @@ import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } fro
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
 import { ButtonHelpers } from "../helpers";
-import { IGentron, Environment, Utilities, OutputPathGroup, OutputPath } from "../../Gentron.Library";
+import { IGentron, Environment, ObjectUtils, OutputPathGroup, OutputPath } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -87,11 +87,11 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
 
     public render(): JSX.Element {
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-folder-open" title="Output Paths" />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-folder-open' title='Output Paths' />
 
-                    <table className="table striped table-border mt-4">
+                    <table className='table striped table-border mt-4'>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -102,8 +102,8 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddOutputPathGroupClick.bind(this)}>
-                                        <span className="mif-add"></span>
+                                    <button className='button' onClick={this.handleAddOutputPathGroupClick.bind(this)}>
+                                        <span className='mif-add'></span>
                                     </button>
                                 </td>
                                 <td>{` `}</td>
@@ -119,18 +119,18 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
                                             {outputPathGroup.Paths.length}
                                         </td>
                                         <td>
-                                            <button className="button"
+                                            <button className='button'
                                                 onClick={() => this.handleOpenEditOutputPathGroupClick(outputPathGroup)}>
-                                                <span className="mif-pencil"></span>
+                                                <span className='mif-pencil'></span>
                                             </button>
-                                            <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
-                                                <span className="mif-arrow-down"></span>
+                                            <button className='button ml-2' onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, 'down')} {...ButtonHelpers.swapBtnProps(array, i, 'down')}>
+                                                <span className='mif-arrow-down'></span>
                                             </button>
-                                            <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
-                                                <span className="mif-arrow-up"></span>
+                                            <button className='button ml-2' onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, 'up')} {...ButtonHelpers.swapBtnProps(array, i, 'up')}>
+                                                <span className='mif-arrow-up'></span>
                                             </button>
-                                            <button className="button ml-2" onClick={this.handleRemoveOutputPathGroupClick.bind(this, outputPathGroup)}>
-                                                <span className="mif-bin"></span>
+                                            <button className='button ml-2' onClick={this.handleRemoveOutputPathGroupClick.bind(this, outputPathGroup)}>
+                                                <span className='mif-bin'></span>
                                             </button>
                                         </td>
                                     </tr>
@@ -141,22 +141,22 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
                 </Grid>
 
                 {
-                    Utilities.hasValue(this.state.EditingOutputPathGroup)
+                    ObjectUtils.hasValue(this.state.EditingOutputPathGroup)
                         ? (
                             <Dialog>
                                 <DialogTitle>Edit Output Path</DialogTitle>
                                 <DialogContent>
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
                                             <label>Group Name</label>
                                         </Cell>
                                     </Row>
 
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
-                                            <input type="text"
-                                                data-role="input"
-                                                data-role-input="true"
+                                            <input type='text'
+                                                data-role='input'
+                                                data-role-input='true'
                                                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditOutputPathGroupNameChange(ev.target.value)}
                                                 value={this.state.EditingOutputPathGroup.Name}
                                             />
@@ -167,7 +167,7 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
                                         this.props.Environments.map((env: Environment, i: number) => {
                                             let currOutputPath: OutputPath = this.state.EditingOutputPathGroup.Paths.find(conn => conn.Environment === env.Name);
 
-                                            if (!Utilities.hasValue(currOutputPath)) {
+                                            if (!ObjectUtils.hasValue(currOutputPath)) {
                                                 currOutputPath = new OutputPath();
                                                 currOutputPath.Environment = env.Name;
                                                 this.state.EditingOutputPathGroup.addOrUpdatePath(currOutputPath);
@@ -175,17 +175,17 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
 
                                             return (
                                                 <React.Fragment key={i}>
-                                                    <Row className="mb-2 mt-2">
+                                                    <Row className='mb-2 mt-2'>
                                                         <Cell>
                                                             <label>{env.Name} Output Path</label>
                                                         </Cell>
                                                     </Row>
 
-                                                    <Row className="mb-2 mt-2">
+                                                    <Row className='mb-2 mt-2'>
                                                         <Cell>
-                                                            <input type="text"
-                                                                data-role="input"
-                                                                data-role-input="true"
+                                                            <input type='text'
+                                                                data-role='input'
+                                                                data-role-input='true'
                                                                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditOutputPathGroupPathChange(env, ev.target.value)}
                                                                 value={currOutputPath.Path}
                                                             />
@@ -198,8 +198,8 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
 
                                 </DialogContent>
                                 <DialogAction>
-                                    <button className="button" onClick={this.handleCloseEditOutputPathGroupClick.bind(this, false)}>Cancel</button>
-                                    <button className="button" onClick={this.handleCloseEditOutputPathGroupClick.bind(this, true)}>Save</button>
+                                    <button className='button' onClick={this.handleCloseEditOutputPathGroupClick.bind(this, false)}>Cancel</button>
+                                    <button className='button' onClick={this.handleCloseEditOutputPathGroupClick.bind(this, true)}>Save</button>
                                 </DialogAction>
                             </Dialog>
                         )

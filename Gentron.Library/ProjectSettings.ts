@@ -26,13 +26,8 @@ export default class ProjectSettings {
      */
     public constructor() {
         this.DatabaseConnections = [];
-        this.LocalPackageFolder = "";
+        this.LocalPackageFolder = '';
         this.OutputPathGroups = [];
-        this.RemotePackageLocation = "";
+        this.RemotePackageLocation = '';
     }
-
-
-    /*
-     *  Methods
-     */
 }

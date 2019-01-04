@@ -8,3 +8,20 @@ export type NonFunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Functio
 export type NonFunctionProperties<T> = Pick<T, NonFunctionPropertyNames<T>>;
 export type PrimitivePropertyNames<T> = { [K in keyof T]: T[K] extends number | string | boolean ? K : never }[keyof T];
 export type PrimitiveProperties<T> = Pick<T, PrimitivePropertyNames<T>>;
+
+export type ModuleList = {
+    IncludeConsole: boolean;
+    IncludeDirname: boolean;
+    IncludeFilename: boolean;
+    IncludeRequires: boolean;
+    PackageList: ModulePackage[];
+}
+
+export type QuotationChar = '\'' | '"';
+
+export type ModulePackage = {
+    Delimeter: QuotationChar;
+    IsBuiltInNodeModule: boolean;
+    ModuleName: string;
+    RelativeModulePath?: string;
+}

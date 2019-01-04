@@ -1,6 +1,6 @@
-﻿import { JsonObject } from "ta-json";
-import SourceBase from "./SourceBase";
-import Utilities from "./Utilities";
+﻿import SourceBase from './SourceBase';
+import { JsonObject } from 'ta-json';
+import { ObjectUtils } from './';
 
 @JsonObject()
 export default class HttpSource extends SourceBase<HttpSource> {
@@ -20,7 +20,7 @@ export default class HttpSource extends SourceBase<HttpSource> {
 
 
     public update(httpSource: HttpSource): void {
-        if (!Utilities.hasValue(httpSource)) {
+        if (!ObjectUtils.hasValue(httpSource)) {
             return;
         }
 

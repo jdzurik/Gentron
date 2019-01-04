@@ -56,7 +56,7 @@ export const ActionCreators = {
     },
     addOrUpdateLocalPackageFolder: (value?: string) => {
         return <AddOrUpdateLocalPackageFolderAction>{
-            localPackageFolder: value || "",
+            localPackageFolder: value || '',
             type: ProjectSettingsActionNames.AddOrUpdateLocalPackageFolderAction
         };
     },

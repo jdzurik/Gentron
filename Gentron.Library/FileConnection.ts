@@ -1,5 +1,5 @@
 ﻿import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from "./";
+import { ObjectUtils } from "./";
 import ConnectionBase from "./ConnectionBase";
 
 @JsonObject()
@@ -16,7 +16,7 @@ export default class FileConnection extends ConnectionBase<FileConnection> {
      */
     public constructor() {
         super();
-        this.Environment = "";
+        this.Environment = '';
     }
 
 
@@ -35,7 +35,7 @@ export default class FileConnection extends ConnectionBase<FileConnection> {
 
 
     public update(connection: FileConnection): void {
-        if (!Utilities.hasValue(connection)) {
+        if (!ObjectUtils.hasValue(connection)) {
             return;
         }
 

@@ -10,6 +10,8 @@ export interface AddOrUpdateDatabaseSourceAction {
 }
 
 export interface AddOrUpdateEngineAction {
+    // dirname?: string;
+    // localPackageFolder?: string;
     source: Engine;
     type: PackageSettingsActionNames.AddOrUpdateEngine;
 }
@@ -126,8 +128,10 @@ export const ActionCreators = {
             type: PackageSettingsActionNames.AddOrUpdateDatabaseSource
         };
     },
-    addOrUpdateEngine: (source: Engine) => {
+    addOrUpdateEngine: (source: Engine /*, dirname?: string, localPackageFolder?: string */) => {
         return <AddOrUpdateEngineAction>{
+            // dirname: dirname,
+            // localPackageFolder: localPackageFolder,
             source: source,
             type: PackageSettingsActionNames.AddOrUpdateEngine
         };

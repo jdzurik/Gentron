@@ -4,7 +4,7 @@ type EditableTextInputProps = {
     confirm?: boolean;
     onTextChanged: (value: boolean) => any;
     text?: string;
-    wrapper?: keyof JSX.IntrinsicElements;
+    wrapper?: React.ComponentClass;
     wrapperProps?: any;
 };
 
@@ -68,7 +68,7 @@ export default class EditableTextInput extends React.Component<EditableTextInput
                     {
                         (this.state.hovering)
                             ? <button onClick={this.handleEditClick.bind(this)}>
-                                <span className="mif-pencil"></span>
+                                <span className='mif-pencil'></span>
                             </button>
                             : null
                     }

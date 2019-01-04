@@ -1,5 +1,5 @@
-﻿import { File, Utilities } from "../";
-import { IPropertyConverter, JsonValue } from "ta-json";
+﻿import { File, ObjectUtils } from '../';
+import { IPropertyConverter, JsonValue } from 'ta-json';
 
 export default class FileJsonConverter implements IPropertyConverter {
     public serialize(property: File): JsonValue {
@@ -9,8 +9,9 @@ export default class FileJsonConverter implements IPropertyConverter {
         ret.ID = property.ID;
         ret.Path = property.Path;
 
-        if (Utilities.hasValue(property.LastModified)) {
-            let dateStr: string = "";
+        if (ObjectUtils.hasValue(property.LastModified)) {
+            let dateStr: string = '';
+
             try {
                 dateStr = (property.LastModified as Date).toDateString();
             }
@@ -28,10 +29,12 @@ export default class FileJsonConverter implements IPropertyConverter {
         const value: File = _value as any as File;
         const file: File = new File();
         (file as any)._id = value.ID;
+
         try {
             file.LastModified = new Date(Date.parse((_value as any).LastModified as string));
         }
         catch { }
+
         file.Path = value.Path;
         file.loadContents();
 

@@ -1,4 +1,4 @@
-﻿import { File, Utilities } from "./";
+﻿import { File, ObjectUtils } from "./";
 import { FileJsonConverter } from "./converters";
 import { JsonConverter, JsonObject, JsonProperty, JsonType, OnDeserialized } from "ta-json";
 import SourceBase from "./SourceBase";
@@ -42,21 +42,21 @@ export default class FileSource extends SourceBase<FileSource> {
     @OnDeserialized()
     public onDeserialized(): void {
         this.Result = {
-            Json: "",
+            Json: '',
             Object: null,
-            Xml: ""
+            Xml: ''
         };
 
-        if (Utilities.hasObjectValue(this.DataFile)
-            && Utilities.hasStringValue(this.DataFile.Path)
-            && Utilities.hasStringValue(this.DataFile.Contents)) {
+        if (ObjectUtils.hasObjectValue(this.DataFile)
+            && ObjectUtils.hasStringValue(this.DataFile.Path)
+            && ObjectUtils.hasStringValue(this.DataFile.Contents)) {
 
             try {
                 const parsed: any = JSON.parse(this.DataFile.Contents);
                 this.Result = {
                     Json: JSON.stringify(parsed, null, 4),
                     Object: parsed,
-                    Xml: ""
+                    Xml: ''
                 };
             }
             catch { }
@@ -65,7 +65,7 @@ export default class FileSource extends SourceBase<FileSource> {
 
 
     public update(fileSource: FileSource): void {
-        if (!Utilities.hasValue(fileSource)) {
+        if (!ObjectUtils.hasValue(fileSource)) {
             return;
         }
 
@@ -81,7 +81,10 @@ export default class FileSource extends SourceBase<FileSource> {
             }
             catch (e) {
                 this.Result = {
-                    Json: "", Object: null, Xml: "" };
+                    Json: '', 
+                    Object: null, 
+                    Xml: ''
+                };
             }
         }
     }

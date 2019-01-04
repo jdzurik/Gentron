@@ -40,10 +40,10 @@ syncHistoryWithStore(store, history);
 
 setupMenu(store);
 
-const root: HTMLDivElement = document.createElement("div");
+const root: HTMLDivElement = document.createElement('div');
 const rootId: string = `appRoot${Date.now()}`;
 root.id = rootId;
-root.className = "h-100 w-100";
+root.className = 'h-100 w-100';
 document.body.appendChild(root);
 
 (DatabaseSource as any)._msSqlQueryProvider = new (window as any).MsSqlQueryProvider();
@@ -55,9 +55,9 @@ ReactDOM.render(
     document.getElementById(rootId)
 );
 
-if (process.env.toString() !== "production" && (module as any).hot) {
-    (module as any).hot.accept("./components/App", () => {
-        const NewApp: typeof App = require("./components/App").default;
+if (process.env.toString() !== 'production' && (module as any).hot) {
+    (module as any).hot.accept('./components/App', () => {
+        const NewApp: typeof App = require('./components/App').default;
         ReactDOM.render(
             <Provider store={store}>
                 <NewApp history={history} />

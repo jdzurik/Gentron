@@ -1,5 +1,5 @@
-﻿import { ConnectionGroup, DatabaseConnection } from "../";
-import { IPropertyConverter, JsonValue } from "ta-json";
+﻿import { ConnectionGroup, DatabaseConnection } from '../';
+import { IPropertyConverter, JsonValue } from 'ta-json';
 
 export default class ActiveConnectionGroupConverter implements IPropertyConverter {
     public serialize(property: ConnectionGroup<DatabaseConnection>): JsonValue {

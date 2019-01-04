@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, LinkButton, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, Template, Utilities } from "../../Gentron.Library";
+import { IGentron, Template, ObjectUtils } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -72,17 +72,17 @@ export default class Templates extends React.Component<TemplatesProps, Templates
 
     public render(): JSX.Element {
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-embed2" title="Engine Templates" />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-embed2' title='Engine Templates' />
 
-                    <Row className="mt-2 mb-2">
+                    <Row className='mt-2 mb-2'>
                         <Cell>
-                            <LinkButton iconClassName="mif-arrow-left" linkTo={`/engines/manage/${this.props.match.params.engineid}`} buttonText="View Template Engine"></LinkButton>
+                            <LinkButton iconClassName='mif-arrow-left' linkTo={`/engines/manage/${this.props.match.params.engineid}`} buttonText='View Template Engine'></LinkButton>
                         </Cell>
                     </Row>
 
-                    <table className="table striped table-border mt-4">
+                    <table className='table striped table-border mt-4'>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -92,8 +92,8 @@ export default class Templates extends React.Component<TemplatesProps, Templates
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddSourceClick.bind(this)}>
-                                        <span className="mif-add"></span>
+                                    <button className='button' onClick={this.handleAddSourceClick.bind(this)}>
+                                        <span className='mif-add'></span>
                                     </button>
                                 </td>
                                 <td>{` `}</td>
@@ -107,13 +107,13 @@ export default class Templates extends React.Component<TemplatesProps, Templates
                                             </Link>
                                         </td>
                                         <td>
-                                            <a href="#">
-                                                <button className="button"
+                                            <a href='#'>
+                                                <button className='button'
                                                     onClick={() => this.handleOpenEditSourceClick(source)}>
-                                                    <span className="mif-pencil"></span>
+                                                    <span className='mif-pencil'></span>
                                                 </button>
-                                                <button className="button ml-2" onClick={this.handleRemoveSourceClick.bind(this, source)}>
-                                                    <span className="mif-bin"></span>
+                                                <button className='button ml-2' onClick={this.handleRemoveSourceClick.bind(this, source)}>
+                                                    <span className='mif-bin'></span>
                                                 </button>
                                             </a>
                                         </td>
@@ -125,22 +125,22 @@ export default class Templates extends React.Component<TemplatesProps, Templates
                 </Grid>
 
                 {
-                    Utilities.hasValue(this.state.EditingSource)
+                    ObjectUtils.hasValue(this.state.EditingSource)
                         ? (
                             <Dialog>
                                 <DialogTitle>Edit Engine Template</DialogTitle>
                                 <DialogContent>
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
                                             <label>Template Name</label>
                                         </Cell>
                                     </Row>
 
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
-                                            <input type="text"
-                                                data-role="input"
-                                                data-role-input="true"
+                                            <input type='text'
+                                                data-role='input'
+                                                data-role-input='true'
                                                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditSourceNameChange(ev.target.value)}
                                                 value={this.state.EditingSource.Name}
                                             />
@@ -148,8 +148,8 @@ export default class Templates extends React.Component<TemplatesProps, Templates
                                     </Row>
                                 </DialogContent>
                                 <DialogAction>
-                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, false)}>Cancel</button>
-                                    <button className="button" onClick={this.handleCloseEditSourceClick.bind(this, true)}>Save</button>
+                                    <button className='button' onClick={this.handleCloseEditSourceClick.bind(this, false)}>Cancel</button>
+                                    <button className='button' onClick={this.handleCloseEditSourceClick.bind(this, true)}>Save</button>
                                 </DialogAction>
                             </Dialog>
                         )

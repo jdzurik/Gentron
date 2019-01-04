@@ -107,13 +107,13 @@ export const reducer: Reducer<ProjectSettingsProps> = (state: ProjectSettingsPro
             const swapIndex: number = action.index;
             const swapDirection: string = action.direction;
 
-            if (swapDirection === "down" && (swapIndex >= 0 && swapIndex < (swapArray.length - 1))) {
+            if (swapDirection === 'down' && (swapIndex >= 0 && swapIndex < (swapArray.length - 1))) {
                 const source = swapArray[swapIndex];
                 const swap = swapArray[swapIndex + 1];
                 swapArray[swapIndex] = swap;
                 swapArray[swapIndex + 1] = source;
             }
-            else if (swapDirection === "up" && (swapIndex > 0 && swapIndex <= (swapArray.length - 1))) {
+            else if (swapDirection === 'up' && (swapIndex > 0 && swapIndex <= (swapArray.length - 1))) {
                 const source = swapArray[swapIndex];
                 const swap = swapArray[swapIndex - 1];
                 swapArray[swapIndex] = swap;

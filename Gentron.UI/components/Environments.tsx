@@ -6,7 +6,7 @@ import { ButtonHelpers } from "../helpers";
 import { Cell, Dialog, DialogAction, DialogContent, DialogTitle, Grid, Row, Switch } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, Environment, Utilities } from "../../Gentron.Library";
+import { IGentron, Environment, ObjectUtils } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -77,11 +77,11 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
 
     public render(): JSX.Element {
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-earth" title="Environments" />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-earth' title='Environments' />
 
-                    <table className="table striped table-border mt-4">
+                    <table className='table striped table-border mt-4'>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -92,8 +92,8 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddEnvironmentClick.bind(this)}>
-                                        <span className="mif-add"></span>
+                                    <button className='button' onClick={this.handleAddEnvironmentClick.bind(this)}>
+                                        <span className='mif-add'></span>
                                     </button>
                                 </td>
                                 <td>{` `}</td>
@@ -112,18 +112,18 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
                                             />
                                         </td>
                                         <td>
-                                            <button className="button"
+                                            <button className='button'
                                                 onClick={() => this.handleOpenEditEnvironmentClick(environment)}>
-                                                <span className="mif-pencil"></span>
+                                                <span className='mif-pencil'></span>
                                             </button>
-                                            <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
-                                                <span className="mif-arrow-down"></span>
+                                            <button className='button ml-2' onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, 'down')} {...ButtonHelpers.swapBtnProps(array, i, 'down')}>
+                                                <span className='mif-arrow-down'></span>
                                             </button>
-                                            <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
-                                                <span className="mif-arrow-up"></span>
+                                            <button className='button ml-2' onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, 'up')} {...ButtonHelpers.swapBtnProps(array, i, 'up')}>
+                                                <span className='mif-arrow-up'></span>
                                             </button>
-                                            <button className="button ml-2" onClick={this.handleRemoveEnvironmentClick.bind(this, environment)}>
-                                                <span className="mif-bin"></span>
+                                            <button className='button ml-2' onClick={this.handleRemoveEnvironmentClick.bind(this, environment)}>
+                                                <span className='mif-bin'></span>
                                             </button>
                                         </td>
                                     </tr>
@@ -134,22 +134,22 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
                 </Grid>
 
                 {
-                    Utilities.hasValue(this.state.EditingEnvironment)
+                    ObjectUtils.hasValue(this.state.EditingEnvironment)
                         ? (
                             <Dialog>
                                 <DialogTitle>Edit Environment</DialogTitle>
                                 <DialogContent>
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
                                             <label>Environment Name</label>
                                         </Cell>
                                     </Row>
 
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
-                                            <input type="text"
-                                                data-role="input"
-                                                data-role-input="true"
+                                            <input type='text'
+                                                data-role='input'
+                                                data-role-input='true'
                                                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditEnvironmentNameChange(ev.target.value)}
                                                 value={this.state.EditingEnvironment.Name}
                                             />
@@ -157,8 +157,8 @@ export default class Environments extends React.Component<EnvironmentsProps, Env
                                     </Row>
                                 </DialogContent>
                                 <DialogAction>
-                                    <button className="button" onClick={this.handleCloseEditEnvironmentClick.bind(this, false)}>Cancel</button>
-                                    <button className="button" onClick={this.handleCloseEditEnvironmentClick.bind(this, true)}>Save</button>
+                                    <button className='button' onClick={this.handleCloseEditEnvironmentClick.bind(this, false)}>Cancel</button>
+                                    <button className='button' onClick={this.handleCloseEditEnvironmentClick.bind(this, true)}>Save</button>
                                 </DialogAction>
                             </Dialog>
                         )

@@ -1,5 +1,5 @@
 ﻿import { ActiveConnectionGroupConverter, FileJsonConverter } from "./converters";
-import { ConnectionGroup, DatabaseConnection, File, Utilities } from "./";
+import { ConnectionGroup, DatabaseConnection, File, ObjectUtils } from "./";
 import { JsonConverter, JsonElementType, JsonObject, JsonProperty, JsonType } from "ta-json";
 import { Result, TDataSourceResult } from "./results";
 import IQueryProvider from "./queryProviders/IQueryProvider";
@@ -57,7 +57,7 @@ export default class DatabaseSource extends SourceBase<DatabaseSource> {
             result = await DatabaseSource._msSqlQueryProvider.executeQuery(this.ActiveConnectionGroup.Connections[0].ConnectionString, this.Script.Contents, true);
         }
         catch (e) {
-            result = await DatabaseSource._msSqlQueryProvider.onExecuteQueryFail(this.Script.Contents, Utilities.getErrorMessage(e), true);
+            result = await DatabaseSource._msSqlQueryProvider.onExecuteQueryFail(this.Script.Contents, ObjectUtils.getErrorMessage(e), true);
         }
 
         this.Result = result.Result;
@@ -65,7 +65,7 @@ export default class DatabaseSource extends SourceBase<DatabaseSource> {
 
 
     public update(databaseSource: DatabaseSource): void {
-        if (!Utilities.hasValue(databaseSource)) {
+        if (!ObjectUtils.hasValue(databaseSource)) {
             return;
         }
 

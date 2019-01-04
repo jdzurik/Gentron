@@ -24,16 +24,17 @@ function createWindow() {
         win = null;
     });
 
+    console.log('Dirname' + __dirname);
 
     try {
         //  React
         BrowserWindow.addDevToolsExtension(
-            "C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.4.2_0"
+            'C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.4.2_0'
         );
 
         //  Redux
         BrowserWindow.addDevToolsExtension(
-            "C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\lmhkpmbekcpmknklioeibfkpmmfibljd\\2.15.3_0"
+            'C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\lmhkpmbekcpmknklioeibfkpmmfibljd\\2.15.3_0'
         );
     }
     catch (e) {
@@ -65,3 +66,4 @@ app.on('activate', (): void => {
 
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+console.log('Dirname' + __dirname);
