@@ -20,7 +20,7 @@ export default class App extends React.PureComponent<AppProps> {
      */
     public render(): JSX.Element {
         return (
-            <div className="h-100 w-100">
+            <div className='h-100 w-100'>
                 <NavView history={this.props.history} />
             </div>
         );

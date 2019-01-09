@@ -23,7 +23,7 @@ export default class Cell extends React.PureComponent<CellProps> {
      *  Methods
      */
     public render(): JSX.Element {
-        let className: string = "";
+        let className: string = '';
 
         if (this.props.colSpan && this.props.colSpan.toString().length > 0) {
             className += `cell-${this.props.colSpan}`;
@@ -50,7 +50,7 @@ export default class Cell extends React.PureComponent<CellProps> {
         }
 
         if (className.length === 0) {
-            className = `cell`;
+            className = 'cell';
         }
 
         if (this.props.className && this.props.className.length > 0) {

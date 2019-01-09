@@ -7,7 +7,7 @@ import { ButtonHelpers } from "../helpers";
 import { Hash } from "../../Gentron.Library/types";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { IGentron, ConnectionGroup, DatabaseConnection, Environment, Utilities } from "../../Gentron.Library";
+import { IGentron, ConnectionGroup, DatabaseConnection, Environment, ObjectUtils } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
@@ -92,11 +92,11 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
 
     public render(): JSX.Element {
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-settings-ethernet" title="Database Connections" />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-settings-ethernet' title='Database Connections' />
                     
-                    <table className="table striped table-border mt-4">
+                    <table className='table striped table-border mt-4'>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -107,8 +107,8 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                         <tbody>
                             <tr>
                                 <td>
-                                    <button className="button" onClick={this.handleAddConnectionClick.bind(this)}>
-                                        <span className="mif-add"></span>
+                                    <button className='button' onClick={this.handleAddConnectionClick.bind(this)}>
+                                        <span className='mif-add'></span>
                                     </button>
                                 </td>
                                 <td>{` `}</td>
@@ -122,19 +122,19 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                         </td>
                                         <td>{connection.Connections.length}</td>
                                         <td>
-                                            <a href="#">
-                                                <button className="button"
+                                            <a href='#'>
+                                                <button className='button'
                                                     onClick={() => this.handleOpenEditConnectionClick(connection)}>
-                                                    <span className="mif-pencil"></span>
+                                                    <span className='mif-pencil'></span>
                                                 </button>
-                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `down`)} {...ButtonHelpers.swapBtnProps(array, i, `down`)}>
-                                                    <span className="mif-arrow-down"></span>
+                                                <button className='button ml-2' onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, 'down')} {...ButtonHelpers.swapBtnProps(array, i, 'down')}>
+                                                    <span className='mif-arrow-down'></span>
                                                 </button>
-                                                <button className="button ml-2" onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, `up`)} {...ButtonHelpers.swapBtnProps(array, i, `up`)}>
-                                                    <span className="mif-arrow-up"></span>
+                                                <button className='button ml-2' onClick={this.props.swapProjectItemSourceOrder.bind(null, array, i, 'up')} {...ButtonHelpers.swapBtnProps(array, i, 'up')}>
+                                                    <span className='mif-arrow-up'></span>
                                                 </button>
-                                                <button className="button ml-2" onClick={this.handleRemoveConnectionClick.bind(this, connection)}>
-                                                    <span className="mif-bin"></span>
+                                                <button className='button ml-2' onClick={this.handleRemoveConnectionClick.bind(this, connection)}>
+                                                    <span className='mif-bin'></span>
                                                 </button>
                                             </a>
                                         </td>
@@ -146,22 +146,22 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                 </Grid>
 
                 {
-                    Utilities.hasValue(this.state.EditingConnectionGroup)
+                    ObjectUtils.hasValue(this.state.EditingConnectionGroup)
                         ? (
                             <Dialog>
                                 <DialogTitle>Edit Connection</DialogTitle>
                                 <DialogContent>
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
                                             <label>Connection Name</label>
                                         </Cell>
                                     </Row>
 
-                                    <Row className="mb-2 mt-2">
+                                    <Row className='mb-2 mt-2'>
                                         <Cell>
-                                            <input type="text"
-                                                data-role="input"
-                                                data-role-input="true"
+                                            <input type='text'
+                                                data-role='input'
+                                                data-role-input='true'
                                                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditConnectionNameChange(ev.target.value)}
                                                 value={this.state.EditingConnectionGroup.Name}
                                             />
@@ -172,7 +172,7 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
                                         this.props.Environments.map((env: Environment, i: number) => {
                                             let currConnection: DatabaseConnection = this.state.EditingConnectionGroup.Connections.find(conn => conn.Environment === env.Name);
 
-                                            if (!Utilities.hasValue(currConnection)) {
+                                            if (!ObjectUtils.hasValue(currConnection)) {
                                                 currConnection = new DatabaseConnection();
                                                 currConnection.Environment = env.Name;
                                                 this.state.EditingConnectionGroup.addOrUpdateConnection(currConnection);
@@ -180,17 +180,17 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
 
                                             return (
                                                 <React.Fragment key={i}>
-                                                    <Row className="mb-2 mt-2">
+                                                    <Row className='mb-2 mt-2'>
                                                         <Cell>
                                                             <label>{env.Name} Connection String</label>
                                                         </Cell>
                                                     </Row>
 
-                                                    <Row className="mb-2 mt-2">
+                                                    <Row className='mb-2 mt-2'>
                                                         <Cell>
-                                                            <input type="text"
-                                                                data-role="input"
-                                                                data-role-input="true"
+                                                            <input type='text'
+                                                                data-role='input'
+                                                                data-role-input='true'
                                                                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditConnectionStringChange(env, ev.target.value)}
                                                                 value={currConnection.ConnectionString}
                                                             />
@@ -203,8 +203,8 @@ export default class DatabaseConnections extends React.Component<DatabaseConnect
 
                                 </DialogContent>
                                 <DialogAction>
-                                    <button className="button" onClick={this.handleCloseEditConnectionClick.bind(this, false)}>Cancel</button>
-                                    <button className="button" onClick={this.handleCloseEditConnectionClick.bind(this, true)}>Save</button>
+                                    <button className='button' onClick={this.handleCloseEditConnectionClick.bind(this, false)}>Cancel</button>
+                                    <button className='button' onClick={this.handleCloseEditConnectionClick.bind(this, true)}>Save</button>
                                 </DialogAction>
                             </Dialog>
                         )

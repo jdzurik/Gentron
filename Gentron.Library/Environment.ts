@@ -1,7 +1,7 @@
 ﻿import { Cloneable } from "./abstract";
 import { IActivateable, ICloneable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from "./";
+import { ObjectUtils } from "./";
 
 @JsonObject()
 export default class Environment extends Cloneable<Environment> implements IActivateable, ICloneable<Environment>, IModifiable<Environment> {
@@ -21,7 +21,7 @@ export default class Environment extends Cloneable<Environment> implements IActi
     public constructor() {
         super();
         this.IsActive = false;
-        this.Name = "";
+        this.Name = '';
     }
 
 
@@ -39,7 +39,7 @@ export default class Environment extends Cloneable<Environment> implements IActi
     }
 
     public update(environment: Environment): void {
-        if (!Utilities.hasValue(environment)) {
+        if (!ObjectUtils.hasValue(environment)) {
             return;
         }
 

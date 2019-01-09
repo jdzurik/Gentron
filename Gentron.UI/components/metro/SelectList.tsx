@@ -22,8 +22,8 @@ export default class SelectList<T> extends React.Component<SelectListProps<T>> {
      */
     public render(): JSX.Element {
         return (
-            <label className="select dropdown-toggle">
-                <select data-role="select" data-role-select="true" onChange={console.log} onSelect={console.log}>
+            <label className='select dropdown-toggle'>
+                <select data-role='select' data-role-select='true' onChange={console.log} onSelect={console.log}>
                     {
                         this.props.collection.map((item, i) => {
                             const value: string = item[this.props.valueField.toString()];
@@ -39,27 +39,27 @@ export default class SelectList<T> extends React.Component<SelectListProps<T>> {
                         })
                     }
                 </select>
-                <div className="button-group"></div>
-                <div className="select-input">{this.props.value}</div>
-                <div className="drop-container" data-role="dropdown" data-role-dropdown="true" style={{ display: `none` }}>
-                    <div className="input">
-                        <input type="text" data-role="input" placeholder="" className="" data-role-input="true" />
-                        <div className="button-group">
-                            <button className="button input-clear-button" tabIndex={-1} type="button">
-                                <span className="default-icon-cross"></span>
+                <div className='button-group'></div>
+                <div className='select-input'>{this.props.value}</div>
+                <div className='drop-container' data-role='dropdown' data-role-dropdown='true' style={{ display: 'none' }}>
+                    <div className='input'>
+                        <input type='text' data-role='input' placeholder='' className='' data-role-input='true' />
+                        <div className='button-group'>
+                            <button className='button input-clear-button' tabIndex={-1} type='button'>
+                                <span className='default-icon-cross'></span>
                             </button>
                         </div>
                     </div>
-                    <ul className="d-menu" style={{ maxHeight: `200px` }}>
+                    <ul className='d-menu' style={{ maxHeight: '200px' }}>
                         {
                             this.props.collection.map((item, i) => {
                                 const value: string = item[this.props.valueField.toString()];
                                 const className = (value === this.props.value)
-                                    ? `active`
+                                    ? 'active'
                                     : null
 
                                 return (
-                                    <li key={i} data-text={item[this.props.textField]} data-value={item[this.props.valueField.toString()]} className="active">
+                                    <li key={i} data-text={item[this.props.textField]} data-value={item[this.props.valueField.toString()]} className='active'>
                                         <a>CAUtils</a>
                                     </li>
                                 );

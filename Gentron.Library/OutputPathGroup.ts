@@ -1,7 +1,7 @@
 ﻿import { Cloneable } from "./abstract";
 import { IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty, JsonElementType } from "ta-json";
-import { OutputPath, Utilities } from "./";
+import { OutputPath, ObjectUtils } from "./";
 
 @JsonObject()
 export default class OutputPathGroup<TOutputPath extends OutputPath> extends Cloneable<OutputPathGroup<TOutputPath>> implements IModifiable<OutputPathGroup<TOutputPath>> {
@@ -21,7 +21,7 @@ export default class OutputPathGroup<TOutputPath extends OutputPath> extends Clo
      */
     public constructor() {
         super();
-        this.Name = "";
+        this.Name = '';
         this.Paths = [];
     }
 
@@ -53,7 +53,7 @@ export default class OutputPathGroup<TOutputPath extends OutputPath> extends Clo
 
 
     public update(connection: OutputPathGroup<TOutputPath>): void {
-        if (!Utilities.hasValue(connection)) {
+        if (!ObjectUtils.hasValue(connection)) {
             return;
         }
 

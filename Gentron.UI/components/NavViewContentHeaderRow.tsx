@@ -20,7 +20,7 @@ export default class NavViewContentHeaderRow extends React.Component<NavViewCont
      */
     public render(): JSX.Element {
         return (
-            <Row className="mb-2">
+            <Row className='mb-2'>
                 <Cell colSpan={12}>
                     <h3>
                         {

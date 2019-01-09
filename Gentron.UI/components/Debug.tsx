@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { Cell, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, Utilities, Gentron } from "../../Gentron.Library";
+import { IGentron, SerializationUtils, Gentron } from "../../Gentron.Library";
 import { RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 import Inspector, { chromeLight } from 'react-inspector';
@@ -40,24 +40,24 @@ export default class Debug extends React.Component<DebugProps> {
             ProjectSettings: this.props.Gentron.ProjectSettings
         };
 
-        const state: Gentron = Utilities.TaJson.deserialize(stateObj, Gentron);
+        const state: Gentron = SerializationUtils.TaJson.deserialize(stateObj, Gentron);
 
         return (
-            <Cell className="h-100">
-                <Grid className="w-100 h-100 p-3">
-                    <NavViewContentHeaderRow iconClassName="mif-database" title="Debug" />
+            <Cell className='h-100'>
+                <Grid className='w-100 h-100 p-3'>
+                    <NavViewContentHeaderRow iconClassName='mif-database' title='Debug' />
 
-                    <Row className="h-100 w-100">
+                    <Row className='h-100 w-100'>
                         <Cell>
                             <Inspector
-                                data={Utilities.TaJson.serialize(state)}
+                                data={SerializationUtils.TaJson.serialize(state)}
                                 theme={{
                                     ...chromeLight,
                                     ...({
-                                        BASE_FONT_SIZE: `14px`,
-                                        BASE_LINE_HEIGHT: `18px`,
-                                        TREENODE_FONT_SIZE: `14px`,
-                                        TREENODE_LINE_HEIGHT: `18px`,
+                                        BASE_FONT_SIZE: '14px',
+                                        BASE_LINE_HEIGHT: '18px',
+                                        TREENODE_FONT_SIZE: '14px',
+                                        TREENODE_LINE_HEIGHT: '18px',
                                     })
                                 }}
                             />

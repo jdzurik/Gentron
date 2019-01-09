@@ -23,7 +23,7 @@ export default class NavView extends React.Component<NavViewProps> {
     public render(): JSX.Element {
         return (
             <ConnectedRouter history={this.props.history}>
-                <div data-role="navview">
+                <div data-role='navview'>
                     <NavViewPane />
                     <NavViewContent />
                 </div>

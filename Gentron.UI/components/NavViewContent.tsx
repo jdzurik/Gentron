@@ -33,23 +33,23 @@ export default class NavViewContent extends React.Component<NavViewContentProps>
      */
     public render(): JSX.Element {
         return (
-            <div className="navview-content d-flex flex-align-center flex-justify-center h-100">
-                <Route exact path="/settings/project" component={ProjectSettings} />
-                <Route exact path="/connections/db" component={DatabaseConnections} />
-                <Route exact path="/environments" component={Environments} />
-                <Route exact path="/output/paths" component={OutputPaths} />
-                <Route exact path="/settings/package" component={PackageSettings} />
-                <Route exact path="/sources/db" component={DatabaseSources} />
-                <Route exact path="/sources/db/:id" component={DatabaseSource} />
-                <Route exact path="/sources/http" component={HttpSources} />
-                <Route exact path="/sources/http/:id" component={HttpSource} />
-                <Route exact path="/sources/file" component={FileSources} />
-                <Route exact path="/sources/file/:id" component={FileSource} />
-                <Route exact path="/engines/manage" component={Engines} />
-                <Route exact path="/engines/manage/:id" component={Engine} />
-                <Route exact path="/engines/manage/:engineid/templates" component={Templates} />
-                <Route exact path="/engines/manage/:engineid/templates/:templateid" component={Template} />
-                <Route exact path="/" component={Debug} />
+            <div className='navview-content d-flex flex-align-center flex-justify-center h-100'>
+                <Route exact path='/settings/project' component={ProjectSettings} />
+                <Route exact path='/connections/db' component={DatabaseConnections} />
+                <Route exact path='/environments' component={Environments} />
+                <Route exact path='/output/paths' component={OutputPaths} />
+                <Route exact path='/settings/package' component={PackageSettings} />
+                <Route exact path='/sources/db' component={DatabaseSources} />
+                <Route exact path='/sources/db/:id' component={DatabaseSource} />
+                <Route exact path='/sources/http' component={HttpSources} />
+                <Route exact path='/sources/http/:id' component={HttpSource} />
+                <Route exact path='/sources/file' component={FileSources} />
+                <Route exact path='/sources/file/:id' component={FileSource} />
+                <Route exact path='/engines/manage' component={Engines} />
+                <Route exact path='/engines/manage/:id' component={Engine} />
+                <Route exact path='/engines/manage/:engineid/templates' component={Templates} />
+                <Route exact path='/engines/manage/:engineid/templates/:templateid' component={Template} />
+                <Route exact path='/' component={Debug} />
             </div>
         );
     }

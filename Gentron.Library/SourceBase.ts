@@ -23,11 +23,11 @@ export default abstract class SourceBase<T> extends Cloneable<T> implements IAct
     public constructor() {
         super();
         this.IsActive = true;
-        this.Name = "";
+        this.Name = '';
         this.Result = {
-            Json: "",
+            Json: '',
             Object: null,
-            Xml: ""
+            Xml: ''
         };
     }
 

@@ -1,7 +1,7 @@
 ﻿import { Cloneable } from "./abstract";
 import { IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from "./";
+import { ObjectUtils } from "./";
 
 @JsonObject()
 export default class OutputPath extends Cloneable<OutputPath> implements IModifiable<OutputPath> {
@@ -20,8 +20,8 @@ export default class OutputPath extends Cloneable<OutputPath> implements IModifi
      */
     public constructor() {
         super();
-        this.Environment = "";
-        this.Path = "";
+        this.Environment = '';
+        this.Path = '';
     }
 
 
@@ -39,7 +39,7 @@ export default class OutputPath extends Cloneable<OutputPath> implements IModifi
     }
 
     public update(outputPath: OutputPath): void {
-        if (!Utilities.hasValue(outputPath)) {
+        if (!ObjectUtils.hasValue(outputPath)) {
             return;
         }
 

@@ -1,6 +1,6 @@
-﻿import { IIdentifiable } from "../interfaces";
-import { JsonObject, JsonProperty } from "ta-json";
-import { Utilities } from "../";
+﻿import { IIdentifiable } from '../interfaces';
+import { JsonObject, JsonProperty } from 'ta-json';
+import { GuidUtils } from '../';
 
 @JsonObject()
 export default abstract class Identifiable implements IIdentifiable {
@@ -19,6 +19,6 @@ export default abstract class Identifiable implements IIdentifiable {
      *  Constructors
      */
     public constructor() {
-        this._id = Utilities.newCryptoGuid();
+        this._id = GuidUtils.newCryptoGuid();
     }
 }

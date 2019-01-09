@@ -52,6 +52,13 @@
                 "Electron: Main",
                 "Electron: Renderer",
             ]
-        }
+        },
+        {
+            "name": "Electron: All 2",
+            "configurations": [
+                "Electron: Main",
+                "Electron: Renderer",
+            ]
+        },        
     ]
 }

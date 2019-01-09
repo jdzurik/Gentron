@@ -7,9 +7,10 @@ const config: webpack.Configuration = {
     //  fixes webpack compilation error,
     //  see: https://github.com/webpack-contrib/css-loader/issues/447
     node: {
-        fs: "empty"
+        fs: 'empty',
+        path: true
     },
-    mode: "development",
+    mode: 'development',
     entry: {
         app: ['webpack/hot/dev-server', './index.js'],
     },
@@ -44,12 +45,12 @@ const config: webpack.Configuration = {
     },
     plugins: [
         new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery"
+            $: 'jquery',
+            jQuery: 'jquery'
         }),
         new MonacoWebpackPlugin({}),
     ],
-    target: "electron-renderer"
+    target: 'electron-renderer'
 }
 
 export default config;

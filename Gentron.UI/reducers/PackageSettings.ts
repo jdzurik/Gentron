@@ -38,7 +38,7 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             let engineFound: boolean = false;
             for (let i: number = 0; i < state.Engines.length; ++i) {
                 if (state.Engines[i].ID === action.source.ID) {
-                    state.Engines[i].update(action.source);
+                    state.Engines[i].update(action.source /*, action.dirname, action.localPackageFolder */);
                     engineFound= true;
                     break;
                 }
@@ -334,13 +334,13 @@ export const reducer: Reducer<PackageSettingsProps> = (state: PackageSettingsPro
             const swapIndex: number = action.index;
             const swapDirection: string = action.direction;
 
-            if (swapDirection === "down" && (swapIndex >= 0 && swapIndex < (swapArray.length - 1))) {
+            if (swapDirection === 'down' && (swapIndex >= 0 && swapIndex < (swapArray.length - 1))) {
                 const source = swapArray[swapIndex];
                 const swap = swapArray[swapIndex + 1];
                 swapArray[swapIndex] = swap;
                 swapArray[swapIndex + 1] = source;
             }
-            else if (swapDirection === "up" && (swapIndex > 0 && swapIndex <= (swapArray.length - 1))) {
+            else if (swapDirection === 'up' && (swapIndex > 0 && swapIndex <= (swapArray.length - 1))) {
                 const source = swapArray[swapIndex];
                 const swap = swapArray[swapIndex - 1];
                 swapArray[swapIndex] = swap;

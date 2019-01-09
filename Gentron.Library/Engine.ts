@@ -1,7 +1,9 @@
-﻿import { File, Template, Utilities } from "./";
-import { FileJsonConverter } from "./converters";
+﻿import SourceBase from "./SourceBase";
+import { File, Template, VMUtils, ObjectUtils, EngineCodeFile } from "./";
+import { CodeEngineFileJsonConverter } from "./converters";
 import { JsonConverter, JsonObject, JsonProperty, JsonType } from "ta-json";
-import SourceBase from "./SourceBase";
+import { ModuleList, ModulePackage } from "./types";
+import * as vm from "vm";
 
 @JsonObject()
 export default class Engine extends SourceBase<Engine> {
@@ -9,9 +11,9 @@ export default class Engine extends SourceBase<Engine> {
      *  Properties & Fields 
      */
     @JsonProperty()
-    @JsonType(File)
-    @JsonConverter(FileJsonConverter)
-    public EngineCode: File;
+    @JsonType(EngineCodeFile)
+    @JsonConverter(CodeEngineFileJsonConverter)
+    public EngineCode: EngineCodeFile;
 
     @JsonProperty()
     @JsonType(Template)
@@ -23,7 +25,7 @@ export default class Engine extends SourceBase<Engine> {
      */
     public constructor() {
         super();
-        this.EngineCode = new File();
+        this.EngineCode = new EngineCodeFile();
         this.Templates = [];
     }
 
@@ -47,8 +49,31 @@ export default class Engine extends SourceBase<Engine> {
     }
 
 
+    public execute(dirname: string, localPackageFolder: string, results: any): void {
+        this.EngineCode.resolveModulesRelativePaths(dirname, localPackageFolder);
+
+        for (let i: number = 0; i < this.Templates.length; ++i) {
+            const ctx = VMUtils.createContext(
+                this.EngineCode.toModuleListOptions(),
+                {
+                    templateText: this.Templates[i].TemplateCode.Contents,
+                    jsonObj: results
+                }
+            );
+
+            vm.runInNewContext(this.EngineCode.ModifiedContents, ctx);
+        }
+    }
+
+
+    public testScript(moduleSource: string): void {
+        const ctx = VMUtils.createContext(this.EngineCode.toModuleListOptions(), {});
+        vm.runInNewContext(moduleSource, ctx);
+    }
+
+
     public update(engine: Engine): void {
-        if (!Utilities.hasValue(engine)) {
+        if (!ObjectUtils.hasValue(engine)) {
             return;
         }
 

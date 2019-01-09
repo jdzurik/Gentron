@@ -1,4 +1,4 @@
-﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource, Utilities } from "./";
+﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource, ObjectUtils } from "./";
 import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 import { TDataSourceResult } from "./results";
 import SourceBase from "./SourceBase";
@@ -44,8 +44,8 @@ export default class PackageSettings {
         this.Environments = [];
         this.FileSources = [];
         this.HttpSources = [];
-        this.PackageName = "";
-        this.ReadMe = "";
+        this.PackageName = '';
+        this.ReadMe = '';
     }
 
 
@@ -62,7 +62,7 @@ export default class PackageSettings {
                 }
 
                 const source: SourceBase<T> = sources[i];
-                if (Utilities.hasObjectValue(source.Result) && Utilities.hasObjectValue(source.Result.Object)) {
+                if (ObjectUtils.hasObjectValue(source.Result) && ObjectUtils.hasObjectValue(source.Result.Object)) {
                     builder[source.Name] = source.Result.Object;
                 }
             }
@@ -77,12 +77,12 @@ export default class PackageSettings {
 
 
     public mergeResults(packageSettingsJson: PackageSettings): void {
-        if (!Utilities.hasObjectValue(packageSettingsJson)) {
+        if (!ObjectUtils.hasObjectValue(packageSettingsJson)) {
             return;
         }
 
         const mergeSourceResults = (thisSources: any[], thatSources: any[]): void => {
-            if (Utilities.hasObjectValue(thisSources) && Utilities.hasObjectValue(thatSources)) {
+            if (ObjectUtils.hasObjectValue(thisSources) && ObjectUtils.hasObjectValue(thatSources)) {
                 for (let i: number = 0; i < thisSources.length; ++i) {
                     const thisSource: DatabaseSource = thisSources[i];
 
@@ -90,7 +90,7 @@ export default class PackageSettings {
                         const thatSource: DatabaseSource = thatSources[j];
 
                         if (thisSource.ID === thatSource.ID)  {
-                            if (!Utilities.hasObjectValue(thisSource.Result) && Utilities.hasObjectValue(thatSource.Result)) {
+                            if (!ObjectUtils.hasObjectValue(thisSource.Result) && ObjectUtils.hasObjectValue(thatSource.Result)) {
                                 thisSource.Result = thatSource.Result;
                             }
                         }

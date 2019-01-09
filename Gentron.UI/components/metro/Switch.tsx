@@ -27,8 +27,8 @@ export default class Switch extends React.Component<SwitchProps, SwitchState> {
 
     public render(): JSX.Element {
         return (
-            <input type="checkbox"
-                data-role="switch"
+            <input type='checkbox'
+                data-role='switch'
                 checked={this.props.checked}
                 onChange={this.handleChange.bind(this)}
             />
