@@ -110,8 +110,15 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
 
                     <Row className='mt-2 mb-2'>
                         <Cell>
+                            <label>Connection String</label>
+                        </Cell>
+                    </Row>                    
+
+                    <Row className='mt-2 mb-2'>
+                        <Cell>
                             <select
                                 onChange={this.handleActiveConnectionChange.bind(this)}
+                                style={{ WebkitAppearance: 'menulist' }}
                                 value={this.props.DatabaseSource.ActiveConnectionGroup.ID}>
                                 {
                                     this.props.DatabaseConnections.map((connectionGroup: ConnectionGroup<DatabaseConnection>, i: number) => {

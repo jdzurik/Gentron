@@ -58,10 +58,10 @@ export default class FileSource extends React.Component<FileSourceProps> {
                     </Row>
 
                     <Row className='mt-2 mb-2'>
-                        <Cell colSpan={4}>
-                            <div className='pos-center text-right'>JSON File:</div>
+                        <Cell>
+                            <div className='pos-center'>JSON File:</div>
                         </Cell>
-                        <Cell colSpan={8}>
+                        <Cell colSpan={11}>
                             <FileInput filters={FileSource.fileInputFilters}
                                 onFilePathChange={(value: string) => this.handleDataFileNameChange(value)}
                                 value={this.props.FileSource.DataFile.Path}

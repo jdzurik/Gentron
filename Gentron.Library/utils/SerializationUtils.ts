@@ -13,9 +13,9 @@ export default class SerializationUtils {
      */
     private static readonly parser: Parser = new Parser({ explicitArray: false });
     private static readonly x2js: X2JS = new X2JS();
-    
-    public static readonly TaJson: typeof TaJson = TaJson;
 
+    public static readonly TaJson: typeof TaJson = TaJson;
+    
 
     /*
      *  Methods

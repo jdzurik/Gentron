@@ -1,5 +1,6 @@
 ﻿export type SwapSourcesDirection = "down" | "up";
 
+export type KeyValuePair<K, V> = { Key: K, Value: V };
 export type Nullable<T> = { [P in keyof T]: T[P] | null };
 export type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T];
 export type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>;
@@ -25,3 +26,14 @@ export type ModulePackage = {
     ModuleName: string;
     RelativeModulePath?: string;
 }
+
+export enum TemplateTypes {
+    Partial,
+    Primary,
+}
+
+const TemplateTypesCatalogKeys: string[] = Object.keys(TemplateTypes).filter(k => typeof TemplateTypes[k as any] === 'number');
+const TemplateTypesCatalogValues: number[] = TemplateTypesCatalogKeys.map(k => TemplateTypes[k as any] as unknown as number);
+export const TemplateTypesCatalog: KeyValuePair<string, number>[] = TemplateTypesCatalogKeys.map((key: string, index: number, arr: string[]) => {
+    return { Key: key, Value: TemplateTypesCatalogValues[index] };
+});

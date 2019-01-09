@@ -4,7 +4,7 @@ import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, LinkButton, Grid, Row } from "./metro";
 import { connect } from "../connect";
-import { Hash } from "../../Gentron.Library/types";
+import { Hash, TemplateTypesCatalog, KeyValuePair, TemplateTypes } from "../../Gentron.Library/types";
 import { IGentron, Template, ObjectUtils } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
@@ -38,8 +38,18 @@ export default class Templates extends React.Component<TemplatesProps, Templates
     /*
      *  Methods
      */
+    private hasPrimaryTemplate(templates: Template[]): boolean {
+        return (templates || []).filter(x => x.Type === TemplateTypes.Primary).length > 0;
+    }
+
     private handleAddSourceClick(): void {
-        this.handleOpenEditSourceClick(new Template());
+        const newTemplate: Template = new Template();
+
+        newTemplate.Type = this.hasPrimaryTemplate(this.props.Templates)
+            ? TemplateTypes.Partial
+            : TemplateTypes.Primary;
+        
+        this.handleOpenEditSourceClick(newTemplate);
     }
 
     private handleRemoveSourceClick(source: Template): void {
@@ -55,6 +65,14 @@ export default class Templates extends React.Component<TemplatesProps, Templates
     private handleEditSourceNameChange(name: string): void {
         const editingSource: Template = this.state.EditingSource;
         editingSource.Name = name;
+        this.setState((prevState: Readonly<TemplatesState>) => {
+            return Object.assign({}, prevState, { EditingSource: editingSource });
+        });
+    }
+
+    private handleEditSourceTypeChange(ev: React.ChangeEvent<HTMLSelectElement>): void {
+        const editingSource: Template = this.state.EditingSource;
+        editingSource.Type = parseInt(ev.target.value, 10);
         this.setState((prevState: Readonly<TemplatesState>) => {
             return Object.assign({}, prevState, { EditingSource: editingSource });
         });
@@ -144,6 +162,32 @@ export default class Templates extends React.Component<TemplatesProps, Templates
                                                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditSourceNameChange(ev.target.value)}
                                                 value={this.state.EditingSource.Name}
                                             />
+                                        </Cell>
+                                    </Row>
+
+                                    <Row className='mb-2 mt-2'>
+                                        <Cell>
+                                            <select
+                                                onChange={(ev: React.ChangeEvent<HTMLSelectElement>) => this.handleEditSourceTypeChange(ev)}
+                                                style={{ WebkitAppearance: 'menulist' }}
+                                                value={this.state.EditingSource.Type}>
+                                                {
+                                                    TemplateTypesCatalog.map((pair: KeyValuePair<string, number>, i: number) => {
+                                                        let opts: any = {};
+
+                                                        if (pair.Value === TemplateTypes.Primary
+                                                            && pair.Value !== this.state.EditingSource.Type
+                                                            && this.hasPrimaryTemplate(this.props.Templates)) {
+                                                            opts.disabled = true;
+                                                            opts.readOnly = true;
+                                                        }
+
+                                                        return (
+                                                            <option key={i} value={pair.Value} {...opts}>{pair.Key}</option>
+                                                        );
+                                                    })
+                                                }
+                                            </select>
                                         </Cell>
                                     </Row>
                                 </DialogContent>

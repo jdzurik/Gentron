@@ -3,11 +3,7 @@ import { IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty, JsonType, JsonConverter } from "ta-json";
 import { File, ObjectUtils } from "./";
 import { FileJsonConverter } from "./converters";
-
-enum TemplateTypes {
-    Partial,
-    Primary,
-}
+import { TemplateTypes } from "./types";
 
 @JsonObject()
 export default class Template extends Cloneable<Template> implements IModifiable<Template> {

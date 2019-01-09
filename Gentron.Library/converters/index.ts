@@ -1,5 +1,6 @@
 ﻿import ActiveConnectionGroupConverter from "./ActiveConnectionGroupConverter";
-import FileJsonConverter from "./FileJsonConverter";
+import ActiveOutputPathGroupConverter from "./ActiveOutputPathGroupConverter";
 import EngineCodeFileJsonConverter from "./EngineCodeFileJsonConverter";
+import FileJsonConverter from "./FileJsonConverter";
 
-export { ActiveConnectionGroupConverter, FileJsonConverter, EngineCodeFileJsonConverter as CodeEngineFileJsonConverter };
+export { ActiveOutputPathGroupConverter, ActiveConnectionGroupConverter, FileJsonConverter, EngineCodeFileJsonConverter as CodeEngineFileJsonConverter };
