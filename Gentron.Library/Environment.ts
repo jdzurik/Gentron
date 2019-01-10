@@ -2,6 +2,7 @@
 import { IActivateable, ICloneable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
 import { ObjectUtils } from "./";
+import { Nullable, NonFunctionProperties } from "./types";
 
 @JsonObject()
 export default class Environment extends Cloneable<Environment> implements IActivateable, ICloneable<Environment>, IModifiable<Environment> {
@@ -18,10 +19,13 @@ export default class Environment extends Cloneable<Environment> implements IActi
     /*
      *  Constructors
      */
-    public constructor() {
+    public constructor();
+    public constructor(props: Nullable<NonFunctionProperties<Environment>>);
+    public constructor(props: Nullable<NonFunctionProperties<Environment>> = { IsActive: false, Name: '' }) {
         super();
-        this.IsActive = false;
-        this.Name = '';
+        
+        this.IsActive = props.IsActive;
+        this.Name = props.Name;
     }
 
 

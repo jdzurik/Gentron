@@ -42,14 +42,11 @@ export default class PackageSettings {
         this.DatabaseSources = [];
         this.Engines = [];
 
-        const devEnv: Environment = new Environment();
-        devEnv.Name = 'Dev';
-        devEnv.IsActive = true;
+        this.Environments = [
+            new Environment({ IsActive: true, Name: 'Dev' }),
+            new Environment({ Name: 'Prod' })
+        ];
 
-        const prodEnv: Environment = new Environment();
-        prodEnv.Name = 'Prod';
-
-        this.Environments = [devEnv, prodEnv];
         this.FileSources = [];
         this.HttpSources = [];
         this.PackageName = '';

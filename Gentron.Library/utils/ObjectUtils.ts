@@ -89,7 +89,7 @@ export default class ObjectUtils {
     }
 
 
-    public static hasStringValue(obj: any, ...objs: any): boolean {
+    public static hasStringValue(obj: any, ...objs: any[]): boolean {
         const isValid = (_obj: any) => this.hasValue(_obj) && _obj.toString().length > 0;
 
         if (!isValid(obj)) {
