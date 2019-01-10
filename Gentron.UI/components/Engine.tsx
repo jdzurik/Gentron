@@ -10,7 +10,7 @@ import { ActionCreators as ProjectSettingsActionCreators } from '../actions/Proj
 import { bindActionCreators } from 'redux';
 import { Cell, FileInput, Grid, LinkButton, Row } from './metro';
 import { connect } from '../connect';
-import { Engine as LibEngine, IGentron, SerializationUtils, PackageSettings, OutputPathGroup, OutputPath } from '../../Gentron.Library';
+import { Engine as LibEngine, IGentron, SerializationUtils, PackageSettings, OutputPathGroup, OutputPath, ObjectUtils } from '../../Gentron.Library';
 import { Hash } from '../../Gentron.Library/types';
 import { RouteComponentProps } from 'react-router';
 import { Result } from '../../Gentron.Library/results';
@@ -93,6 +93,14 @@ export default class Engine extends React.Component<EngineProps> {
     }
 
     public render(): JSX.Element {
+        const hasOutputPathGroups: boolean = (ObjectUtils.isArray(this.props.OutputPathGroups) && this.props.OutputPathGroups.length > 0);
+        const activeOutputPathGroup: OutputPathGroup<OutputPath> = this.props.Engine.ActiveOutputPathGroup;
+        const selectedOutputPathId: string = (ObjectUtils.hasObjectValue(activeOutputPathGroup)
+            && hasOutputPathGroups
+            && this.props.OutputPathGroups.filter(o => o.ID === activeOutputPathGroup.ID).length === 1)
+            ? activeOutputPathGroup.ID
+            : '';
+
         return (
             <Cell className='h-100'>
                 <Grid className='w-100 h-100 p-3'>
@@ -133,13 +141,16 @@ export default class Engine extends React.Component<EngineProps> {
                             <select
                                 onChange={this.handleActiveOutputPathGroupChange.bind(this)}
                                 style={{ WebkitAppearance: 'menulist' }}
-                                value={this.props.Engine.ActiveOutputPathGroup.ID}>
+                                value={selectedOutputPathId}>
+                                <option value=''>--- Select Output Path ---</option>
                                 {
-                                    this.props.OutputPathGroups.map((connectionGroup: OutputPathGroup<OutputPath>, i: number) => {
-                                        return (
-                                            <option key={i} value={connectionGroup.ID}>{connectionGroup.Name}</option>
-                                        );
-                                    })
+                                    (hasOutputPathGroups)
+                                        ? this.props.OutputPathGroups.map((connectionGroup: OutputPathGroup<OutputPath>, i: number) => {
+                                            return (
+                                                <option key={i} value={connectionGroup.ID}>{connectionGroup.Name}</option>
+                                            );
+                                        })
+                                        : null
                                 }
                             </select>
                         </Cell>

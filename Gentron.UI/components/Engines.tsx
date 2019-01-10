@@ -7,7 +7,7 @@ import { ButtonHelpers } from "../helpers";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, Engine, ObjectUtils } from "../../Gentron.Library";
+import { IGentron, Engine, ObjectUtils, OutputPathGroup, OutputPath } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 import { remote } from "electron";
@@ -15,6 +15,7 @@ import { remote } from "electron";
 type NullableEngines = Hash & {
     Engines?: Engine[];
     LocalPackageFolder?: string;
+    OutputPathGroups?: OutputPathGroup<OutputPath>[];
 };
 
 type EnginesProps = NullableEngines
@@ -67,6 +68,24 @@ export default class Engines extends React.Component<EnginesProps, EnginesState>
 
     private handleCloseEditSourceClick(save: boolean): void {
         if (save) {
+            /*
+             *  IF (current editing source's Active Output Path Group does not exist
+             *      AND project's Output Paths are not null
+             *      AND project's Output Path list contains at least 1 entry)
+             * 
+             *      OR (current editing source's Active Output Path is not a valid
+             *          group in the project's Output Path list)
+             * 
+             *  THEN (set current editing source's Active Output Path to the first
+             *        group we find in the project's Output Paths list)
+             */
+            if ((!ObjectUtils.hasObjectValue(this.state.EditingSource.ActiveOutputPathGroup)
+                && ObjectUtils.isArray(this.props.OutputPathGroups)
+                && this.props.OutputPathGroups.length > 0)
+                || this.props.OutputPathGroups.filter(d => d.ID === this.state.EditingSource.ActiveOutputPathGroup.ID).length === 0) {
+                this.state.EditingSource.ActiveOutputPathGroup = this.props.OutputPathGroups[0];
+            }
+
             this.props.addOrUpdateEngine(this.state.EditingSource);
         }
 
@@ -172,6 +191,7 @@ function mapStateToProps(state: IGentron): NullableEngines {
     return {
         Engines: state.PackageSettings.Engines,
         LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
+        OutputPathGroups: state.ProjectSettings.OutputPathGroups,
         _hash: _hash
     };
 }

@@ -77,7 +77,7 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
         source.Script.Contents = (this.monacoEditorRef.current as any).editor.model.getValue();
         this.props.addOrUpdateDatabaseSource(source);
         const saveResult: Result<void> = source.Script.writeContents();
-        
+
         if (saveResult.IsError) {
             Metro.toast.create(saveResult.ErrorMessage, null, 7500, 'warning');
         }
@@ -87,6 +87,14 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
     }
 
     public render(): JSX.Element {
+        const hasDbConnectionGroups: boolean = (ObjectUtils.isArray(this.props.DatabaseConnections) && this.props.DatabaseConnections.length > 0);
+        const activeConnectionGroup: ConnectionGroup<DatabaseConnection> = this.props.DatabaseSource.ActiveConnectionGroup;
+        const selectedConnectionGroupId: string = (ObjectUtils.hasObjectValue(activeConnectionGroup)
+            && hasDbConnectionGroups
+            && this.props.DatabaseConnections.filter(o => o.ID === activeConnectionGroup.ID).length === 1)
+            ? activeConnectionGroup.ID
+            : '';
+
         const jsonEditorContainerId: string = `databaseSourceJsonResultsEditorContainer${this.props.match.params.id}`;
         const jsonResult: string = (ObjectUtils.isObject(this.props.DatabaseSource.Result))
             ? this.props.DatabaseSource.Result.Json || '{\n\t"Data": "Execute Query to view JSON results"\n}'
@@ -112,20 +120,23 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
                         <Cell>
                             <label>Connection String</label>
                         </Cell>
-                    </Row>                    
+                    </Row>
 
                     <Row className='mt-2 mb-2'>
                         <Cell>
                             <select
                                 onChange={this.handleActiveConnectionChange.bind(this)}
                                 style={{ WebkitAppearance: 'menulist' }}
-                                value={this.props.DatabaseSource.ActiveConnectionGroup.ID}>
+                                value={selectedConnectionGroupId}>
+                                <option value=''>--- Select Database Connection ---</option>
                                 {
-                                    this.props.DatabaseConnections.map((connectionGroup: ConnectionGroup<DatabaseConnection>, i: number) => {
-                                        return (
-                                            <option key={i} value={connectionGroup.ID}>{connectionGroup.Name}</option>
-                                        );
-                                    })
+                                    (hasDbConnectionGroups)
+                                        ? this.props.DatabaseConnections.map((connectionGroup: ConnectionGroup<DatabaseConnection>, i: number) => {
+                                            return (
+                                                <option key={i} value={connectionGroup.ID}>{connectionGroup.Name}</option>
+                                            );
+                                        })
+                                        : null
                                 }
                             </select>
                         </Cell>
@@ -191,11 +202,11 @@ export default class DatabaseSource extends React.Component<DatabaseSourceProps>
 
                     <Row className='mt-2 mb-2'>
                         <Cell colSpan={6}>
-                            <button className='button' 
+                            <button className='button'
                                 onClick={(ev: React.MouseEvent<HTMLButtonElement>) => this.handleExecuteQueryClick()}>
                                 Execute Query
                             </button>
-                            <button className='button' 
+                            <button className='button'
                                 style={{ marginLeft: '5px' }}
                                 onClick={(ev: React.MouseEvent<HTMLButtonElement>) => this.handleSaveQueryClick()}>
                                 Save Query

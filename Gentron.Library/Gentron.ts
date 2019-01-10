@@ -127,18 +127,23 @@ export class Gentron implements IGentron {
             ret.PackageSettings = SerializationUtils.TaJson.parse(packageReadResult.Result, PackageSettings);
 
             ret.PackageSettings.DatabaseSources.forEach((source: DatabaseSource, index: number) => {
-                const connection: ConnectionGroup<DatabaseConnection> = ret.ProjectSettings.DatabaseConnections.filter((connection: ConnectionGroup<DatabaseConnection>) => {
+                const connections: ConnectionGroup<DatabaseConnection>[] = ret.ProjectSettings.DatabaseConnections.filter((connection: ConnectionGroup<DatabaseConnection>) => {
                     return connection.ID === source.ActiveConnectionGroup.ID;
-                })[0];
-                source.ActiveConnectionGroup = connection;
+                });
 
+                if (connections.length > 0) {
+                    source.ActiveConnectionGroup = connections[0];
+                }
             });
 
             ret.PackageSettings.Engines.forEach((source: Engine, index: number) => {
-                const outputPathGroup: OutputPathGroup<OutputPath> = ret.ProjectSettings.OutputPathGroups.filter((outputPath: OutputPathGroup<OutputPath>) => {
+                const outputPathGroups: OutputPathGroup<OutputPath>[] = ret.ProjectSettings.OutputPathGroups.filter((outputPath: OutputPathGroup<OutputPath>) => {
                     return outputPath.ID === source.ActiveOutputPathGroup.ID;
-                })[0];
-                source.ActiveOutputPathGroup = outputPathGroup;
+                });
+
+                if (outputPathGroups.length > 0) {
+                    source.ActiveOutputPathGroup = outputPathGroups[0];
+                }
             });            
         }
         catch (e) {
