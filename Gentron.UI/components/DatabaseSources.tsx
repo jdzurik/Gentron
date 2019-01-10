@@ -6,11 +6,12 @@ import { ButtonHelpers } from "../helpers";
 import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row, Switch } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
-import { IGentron, DatabaseSource, ObjectUtils } from "../../Gentron.Library";
+import { IGentron, ConnectionGroup, DatabaseConnection, DatabaseSource, ObjectUtils } from "../../Gentron.Library";
 import { Link, RouteComponentProps } from 'react-router-dom'
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
 
 type NullableDatabaseSources = Hash & {
+    DatabaseConnections?: ConnectionGroup<DatabaseConnection>[];
     DatabaseSources?: DatabaseSource[];
 };
 
@@ -68,6 +69,24 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
 
     private handleCloseEditSourceClick(save: boolean): void {
         if (save) {
+            /*
+             *  IF (current editing source's Active Connection Group does not exist
+             *      AND project's Database Connections are not null
+             *      AND project's Database Connection list contains at least 1 entry)
+             * 
+             *      OR (current editing source's Active Connection Group is not a valid
+             *          group in the project's Database Connection's list)
+             * 
+             *  THEN (set current editing source's Active Connection Group to the first
+             *        group we find in the project's Database Connection list)
+             */
+            if ((!ObjectUtils.hasObjectValue(this.state.EditingSource.ActiveConnectionGroup)
+                && ObjectUtils.isArray(this.props.DatabaseConnections)
+                && this.props.DatabaseConnections.length > 0)
+                || this.props.DatabaseConnections.filter(d => d.ID === this.state.EditingSource.ActiveConnectionGroup.ID).length === 0) {
+                this.state.EditingSource.ActiveConnectionGroup = this.props.DatabaseConnections[0];
+            }
+
             this.props.addOrUpdateDatabaseSource(this.state.EditingSource);
         }
 
@@ -110,7 +129,13 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                                 <span>{source.Name}</span>
                                             </Link>
                                         </td>
-                                        <td>{source.ActiveConnectionGroup.Name}</td>
+                                        <td>
+                                            {
+                                                ObjectUtils.hasObjectValue(source.ActiveConnectionGroup)
+                                                    ? source.ActiveConnectionGroup.Name
+                                                    : ''
+                                            }
+                                        </td>
                                         <td>
                                             <Switch
                                                 checked={source.IsActive}
@@ -134,7 +159,7 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
                                                 </button>
                                             </a>
                                         </td>
-                                    </tr>   
+                                    </tr>
                                 )
                             }
                         </tbody>
@@ -180,6 +205,7 @@ export default class DatabaseSources extends React.Component<DatabaseSourcesProp
 function mapStateToProps(state: IGentron): NullableDatabaseSources {
     const _hash: string = hash(state.PackageSettings.DatabaseSources);
     return {
+        DatabaseConnections: state.ProjectSettings.DatabaseConnections,
         DatabaseSources: state.PackageSettings.DatabaseSources,
         _hash: _hash
     };
