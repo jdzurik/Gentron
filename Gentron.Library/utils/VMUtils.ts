@@ -38,12 +38,12 @@ export default class VMUtils {
 
         if (moduleList.IncludeDirname) {
             obj['__dirname'] = __dirname;
-        }        
-    
+        }
+
         if (moduleList.IncludeFilename) {
             obj['__filename'] = __filename;
         }
-    
+
         //  TODO: find a workaround for this,
         //  __non_webpack_require__ won't be
         //  defined in a CLI environment so
@@ -52,7 +52,7 @@ export default class VMUtils {
         if (moduleList.IncludeRequires) {
             obj['require'] = __non_webpack_require__;
         }
-    
+
         return vm.createContext(obj);
     }
 
@@ -67,13 +67,13 @@ export default class VMUtils {
         };
 
         let match: RegExpMatchArray | null;
-        
+
         const regexStr: string = '(' + this.requireRegex.source + ')'
             + '|' + '(' + this.consoleRegex.source + ')'
             + '|' + '(' + this.dirnameRegex.source + ')'
             + '|' + '(' + this.filenameRegex.source + ')';
         const regex: RegExp = new RegExp(regexStr, 'gm');
-        
+
 
         while ((match = regex.exec(moduleSource)) !== null) {
             if (match.length === 0) {
@@ -131,12 +131,8 @@ export default class VMUtils {
         }
 
         const absoluteLocalPackageFolder: string = path.join(localPackageFolder, 'node_modules', module.ModuleName);
-        const dotSep = `..${path.sep}${path.sep}`;
-        const _dirname = path.join(dirname, dotSep, dotSep, dotSep, dotSep, dotSep, dotSep, dotSep, dotSep);
         let relativeModulePath = path.relative(dirname, absoluteLocalPackageFolder);
         module.RelativeModulePath = relativeModulePath.replace(new RegExp(this.doublePathSep, 'g'), this.doublePathSep);
-        //console.log(module.RelativeModulePath, fs.existsSync(module.RelativeModulePath));
-        //console.log(path.join(module.RelativeModulePath, '..'), fs.existsSync(path.join(module.RelativeModulePath, '..')));
     }
 
 
@@ -146,28 +142,38 @@ export default class VMUtils {
 
         const regexStr: string = '(' + this.requireRegex.source + ')';
         const regex: RegExp = new RegExp(regexStr, 'gm');
-        
+
         while ((match = regex.exec(moduleSource)) !== null) {
             if (match.length === 0) {
                 continue;
             }
-    
+
             const fullMatch: string = match[0];
-    
+
             if (new RegExp(regexStr, 'gm').test(fullMatch)
                 && ObjectUtils.hasStringValue(match[1], match[2], match[3], match[4])) {
                 for (let i: number = 0; i < modulePackages.length; ++i) {
-                    if (match[3] === modulePackages[i].ModuleName) {
-                        replacers[fullMatch] = `require(${modulePackages[i].Delimeter}${modulePackages[i].RelativeModulePath}${modulePackages[i].Delimeter});`;
+                    const modulePackage: ModulePackage = modulePackages[i];
+
+                    if (modulePackage.IsBuiltInNodeModule) {
+                        continue;
+                    }
+
+                    if (match[3] === modulePackage.ModuleName) {
+                        replacers[fullMatch] = 'require(' +
+                            modulePackage.Delimeter +
+                            modulePackage.RelativeModulePath +
+                            modulePackage.Delimeter +
+                            ');';
                     }
                 }
             }
         }
-    
+
         for (let key in replacers) {
             moduleSource = moduleSource.replace(key, replacers[key]);
         }
-    
+
         return moduleSource;
-    }    
+    }
 }

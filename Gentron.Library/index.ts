@@ -4,14 +4,14 @@ import EngineCodeFile from "./EngineCodeFile";
 import DatabaseConnection from "./DatabaseConnection";
 import ConnectionGroup from "./ConnectionGroup";
 import DatabaseSource from "./DatabaseSource";
+import OutputPath from "./OutputPath";
+import OutputPathGroup from "./OutputPathGroup";
 import Template from "./Template";
 import Engine from "./Engine";
 import FileConnection from "./FileConnection";
 import FileSource from "./FileSource";
 import HttpConnection from "./HttpConnection";
 import HttpSource from "./HttpSource";
-import OutputPath from "./OutputPath";
-import OutputPathGroup from "./OutputPathGroup";
 import PackageSettings from "./PackageSettings";
 import ProjectSettings from "./ProjectSettings";
 import { Gentron, IGentron } from "./Gentron";
@@ -30,6 +30,10 @@ export {
 
     DatabaseSource,
 
+    OutputPath,
+
+    OutputPathGroup,
+
     Template,
 
     Engine,
@@ -41,10 +45,6 @@ export {
     HttpConnection,
 
     HttpSource,
-
-    OutputPath,
-
-    OutputPathGroup,
 
     PackageSettings,
 

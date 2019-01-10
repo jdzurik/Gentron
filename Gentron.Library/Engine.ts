@@ -1,9 +1,10 @@
-﻿import SourceBase from "./SourceBase";
-import { File, Template, VMUtils, ObjectUtils, EngineCodeFile } from "./";
-import { CodeEngineFileJsonConverter } from "./converters";
-import { JsonConverter, JsonObject, JsonProperty, JsonType } from "ta-json";
-import { ModuleList, ModulePackage } from "./types";
-import * as vm from "vm";
+﻿import * as vm from "vm";
+import SourceBase from "./SourceBase";
+import { CodeEngineFileJsonConverter, ActiveOutputPathGroupConverter } from "./converters";
+import { JsonConverter, JsonObject, JsonProperty, JsonType, JsonElementType } from "ta-json";
+import { TemplateTypes } from "./types";
+import { Template, VMUtils, ObjectUtils, EngineCodeFile, OutputPathGroup, OutputPath } from "./";
+import { FileParserUtils } from "./utils";
 
 @JsonObject()
 export default class Engine extends SourceBase<Engine> {
@@ -11,9 +12,23 @@ export default class Engine extends SourceBase<Engine> {
      *  Properties & Fields 
      */
     @JsonProperty()
+    @JsonElementType(OutputPathGroup)
+    @JsonConverter(ActiveOutputPathGroupConverter)
+    public ActiveOutputPathGroup: OutputPathGroup<OutputPath>;
+
+
+    @JsonProperty()
     @JsonType(EngineCodeFile)
     @JsonConverter(CodeEngineFileJsonConverter)
     public EngineCode: EngineCodeFile;
+
+    public get HasPrimaryTemplate(): boolean {
+        return (this.Templates || []).filter(t => t.Type === TemplateTypes.Primary).length === 1;
+    }
+
+    public get HasPartialTemplates(): boolean {
+        return (this.Templates || []).filter(t => t.Type === TemplateTypes.Partial).length >= 1;
+    }
 
     @JsonProperty()
     @JsonType(Template)
@@ -25,6 +40,7 @@ export default class Engine extends SourceBase<Engine> {
      */
     public constructor() {
         super();
+        this.ActiveOutputPathGroup = new OutputPathGroup<OutputPath>();
         this.EngineCode = new EngineCodeFile();
         this.Templates = [];
     }
@@ -37,6 +53,7 @@ export default class Engine extends SourceBase<Engine> {
         const ret: Engine = new Engine();
 
         ret._id = this._id;
+        ret.ActiveOutputPathGroup = this.ActiveOutputPathGroup.clone();
         ret.EngineCode = this.EngineCode.clone();
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
@@ -52,17 +69,33 @@ export default class Engine extends SourceBase<Engine> {
     public execute(dirname: string, localPackageFolder: string, results: any): void {
         this.EngineCode.resolveModulesRelativePaths(dirname, localPackageFolder);
 
-        for (let i: number = 0; i < this.Templates.length; ++i) {
-            const ctx = VMUtils.createContext(
-                this.EngineCode.toModuleListOptions(),
-                {
-                    templateText: this.Templates[i].TemplateCode.Contents,
-                    jsonObj: results
-                }
-            );
+        let vmState: any = {
+            jsonObj: results,
+            globalScope: {
+                templateResult: ''
+            }
+        };
 
-            vm.runInNewContext(this.EngineCode.ModifiedContents, ctx);
+        if ((this.Templates || []).length > 0 && this.HasPrimaryTemplate && this.HasPartialTemplates) {
+            vmState.templateTexts = this.Templates.map(t => {
+                return {
+                    Contents: t.TemplateCode.Contents,
+                    Name: t.Name,
+                    Type: t.Type,
+                }
+            });
         }
+        else {
+            vmState.templateText = this.Templates[0].TemplateCode.Contents;
+        }
+
+        const ctx: vm.Context = VMUtils.createContext(this.EngineCode.toModuleListOptions(), vmState);
+        vm.runInNewContext(this.EngineCode.ModifiedContents, ctx);
+
+        //  TODO
+        //  this.ActiveOutputPathGroup.Paths[0].Path is hardcoded to grab the first environment (Dev)
+        //  from the active output path group. Need to figure out some way to pass in environment
+        FileParserUtils.parseAndWriteFiles(vmState.globalScope.templateResult, this.ActiveOutputPathGroup.Paths[0].Path);
     }
 
 
@@ -77,6 +110,7 @@ export default class Engine extends SourceBase<Engine> {
             return;
         }
 
+        this.ActiveOutputPathGroup = engine.ActiveOutputPathGroup;
         this.EngineCode.update(engine.EngineCode);
         this.IsActive = engine.IsActive;
         this.Name = engine.Name;

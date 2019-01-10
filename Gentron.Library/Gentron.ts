@@ -1,5 +1,5 @@
 ﻿import * as path from 'path';
-import { ConnectionGroup, DatabaseConnection, DatabaseSource, File, ObjectUtils, PackageSettings, ProjectSettings, SerializationUtils } from './';
+import { ConnectionGroup, DatabaseConnection, DatabaseSource, File, ObjectUtils, PackageSettings, ProjectSettings, SerializationUtils, Engine, OutputPathGroup, OutputPath } from './';
 import { Gentron as GentronConstants, InfoMessages } from './constants';
 import { JsonElementType, JsonObject, JsonProperty } from 'ta-json';
 import { Result, TGentronFsResult } from './results';
@@ -127,6 +127,7 @@ export class Gentron implements IGentron {
 
         try {
             ret.PackageSettings = SerializationUtils.TaJson.parse(packageReadResult.Result, PackageSettings);
+
             ret.PackageSettings.DatabaseSources.forEach((source: DatabaseSource, index: number) => {
                 const connection: ConnectionGroup<DatabaseConnection> = ret.ProjectSettings.DatabaseConnections.filter((connection: ConnectionGroup<DatabaseConnection>) => {
                     return connection.ID === source.ActiveConnectionGroup.ID;
@@ -134,6 +135,13 @@ export class Gentron implements IGentron {
                 source.ActiveConnectionGroup = connection;
 
             });
+
+            ret.PackageSettings.Engines.forEach((source: Engine, index: number) => {
+                const outputPathGroup: OutputPathGroup<OutputPath> = ret.ProjectSettings.OutputPathGroups.filter((outputPath: OutputPathGroup<OutputPath>) => {
+                    return outputPath.ID === source.ActiveOutputPathGroup.ID;
+                })[0];
+                source.ActiveOutputPathGroup = outputPathGroup;
+            });            
         }
         catch (e) {
             return Result.fail((e as NodeJS.ErrnoException).message);

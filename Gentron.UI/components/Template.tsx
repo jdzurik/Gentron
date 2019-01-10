@@ -1,4 +1,7 @@
-﻿import * as hash from "object-hash";
+﻿declare type TMetro = typeof import('metro4');
+declare const Metro: TMetro;
+
+import * as hash from "object-hash";
 import * as React from "react";
 import { ActionCreators } from "../actions/PackageSettings";
 import { bindActionCreators } from "redux";
@@ -10,6 +13,7 @@ import { RouteComponentProps } from "react-router";
 import SplitPane from "./SplitPane";
 import MonacoEditor from 'react-monaco-editor';
 import NavViewContentHeaderRow from "./NavViewContentHeaderRow";
+import { Result } from "../../Gentron.Library/results";
 
 type HashedTemplate = Hash & {
     Results: any;
@@ -23,10 +27,18 @@ type TemplateProps = HashedTemplate
 @connect<HashedTemplate, {}, TemplateProps>(mapStateToProps, mapDispatchToProps)
 export default class Template extends React.Component<TemplateProps> {
     /*
+     *  Properties & Fields
+     */
+    private monacoEditorRef: React.RefObject<MonacoEditor>;
+    
+    
+    /*
      *  Constructors
      */
     public constructor(props: TemplateProps) {
         super(props);
+
+        this.monacoEditorRef = React.createRef();
     }
 
 
@@ -83,6 +95,20 @@ export default class Template extends React.Component<TemplateProps> {
         this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, source);
     }
 
+    private handleSaveQueryClick(ev: React.MouseEvent<HTMLButtonElement>): void {
+        const source: LibTemplate = this.props.Template.clone();
+        source.TemplateCode.Contents = (this.monacoEditorRef.current as any).editor.model.getValue();
+        this.props.addOrUpdateEngineTemplate(this.props.match.params.engineid, source);
+        const saveResult: Result<void> = source.TemplateCode.writeContents();
+
+        if (saveResult.IsError) {
+            Metro.toast.create(saveResult.ErrorMessage, null, 7500, 'warning');
+        }
+        else {
+            Metro.toast.create('Saved Successfully!', null, 3000, 'success');
+        }
+    }    
+
     public render(): JSX.Element {
         const results: string = (ObjectUtils.hasValue(this.props.Results) && this.props.Results.toString().trim().length > 2)
             ? JSON.stringify(this.props.Results, null, 4)
@@ -100,10 +126,10 @@ export default class Template extends React.Component<TemplateProps> {
                     </Row>
 
                     <Row className='mt-2 mb-2'>
-                        <Cell colSpan={4}>
-                            <div className='pos-center text-right'>Template Code File:</div>
+                        <Cell>
+                            <div className='pos-center'>Template File:</div>
                         </Cell>
-                        <Cell colSpan={8}>
+                        <Cell colSpan={11}>
                             <FileInput onFilePathChange={(value: string) => this.handleDataFileNameChange(value)}
                                 value={this.props.Template.TemplateCode.Path}
                             />
@@ -113,6 +139,7 @@ export default class Template extends React.Component<TemplateProps> {
                     <SplitPane splitPaneProps={{ split: 'vertical', size: 'calc(50% - 15px)' }}>
                         <div className='h-100 w-100'>
                             <MonacoEditor
+                                ref={this.monacoEditorRef}
                                 language='plaintext'
                                 value={this.props.Template.TemplateCode.Contents || ''}
                                 options={{ automaticLayout: true, wordWrap: 'on' }}
@@ -130,6 +157,15 @@ export default class Template extends React.Component<TemplateProps> {
                             />
                         </div>
                     </SplitPane>
+
+                    <Row className='mt-2 mb-2'>
+                        <Cell colSpan={6}>
+                            <button className='button'
+                                onClick={(ev: React.MouseEvent<HTMLButtonElement>) => this.handleSaveQueryClick(ev)}>
+                                Save Template Code
+                            </button>
+                        </Cell>
+                    </Row>                    
                 </Grid>
             </Cell>
         );

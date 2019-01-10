@@ -122,7 +122,7 @@ export default class ObjectUtils {
 
 
     public static isArray(obj: any): boolean {
-        return Array.isArray(obj) || obj instanceof Array;
+        return this.hasValue(obj) && Array.isArray(obj) || obj instanceof Array;
     }
 
 

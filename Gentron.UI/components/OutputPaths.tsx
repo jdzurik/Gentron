@@ -3,7 +3,7 @@ import * as React from "react";
 import { ActionCreators as PackageSettingsActionCreators } from "../actions/PackageSettings";
 import { ActionCreators as ProjectSettingsActionCreators } from "../actions/ProjectSettings";
 import { bindActionCreators } from "redux";
-import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row } from "./metro";
+import { Cell, Dialog, DialogTitle, DialogContent, DialogAction, Grid, Row, FolderInput } from "./metro";
 import { connect } from "../connect";
 import { Hash } from "../../Gentron.Library/types";
 import { ButtonHelpers } from "../helpers";
@@ -183,12 +183,11 @@ export default class OutputPaths extends React.Component<OutputPathsProps, Outpu
 
                                                     <Row className='mb-2 mt-2'>
                                                         <Cell>
-                                                            <input type='text'
-                                                                data-role='input'
-                                                                data-role-input='true'
-                                                                onChange={(ev: React.ChangeEvent<HTMLInputElement>) => this.handleEditOutputPathGroupPathChange(env, ev.target.value)}
+                                                            <FolderInput 
+                                                                onFolderPathChange={(value: string) => this.handleEditOutputPathGroupPathChange(env, value)} 
+                                                                placeholder={`${env.Name} Output Path`}
                                                                 value={currOutputPath.Path}
-                                                            />
+                                                                />
                                                         </Cell>
                                                     </Row>
                                                 </React.Fragment>

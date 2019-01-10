@@ -10,7 +10,7 @@ import { ActionCreators as ProjectSettingsActionCreators } from '../actions/Proj
 import { bindActionCreators } from 'redux';
 import { Cell, FileInput, Grid, LinkButton, Row } from './metro';
 import { connect } from '../connect';
-import { Engine as LibEngine, IGentron, SerializationUtils, PackageSettings } from '../../Gentron.Library';
+import { Engine as LibEngine, IGentron, SerializationUtils, PackageSettings, OutputPathGroup, OutputPath } from '../../Gentron.Library';
 import { Hash } from '../../Gentron.Library/types';
 import { RouteComponentProps } from 'react-router';
 import { Result } from '../../Gentron.Library/results';
@@ -19,6 +19,7 @@ import { remote } from "electron";
 type HashedEngine = Hash & {
     Engine?: LibEngine;
     LocalPackageFolder?: string;
+    OutputPathGroups?: OutputPathGroup<OutputPath>[];
     Results: any;
 };
 
@@ -58,15 +59,23 @@ export default class Engine extends React.Component<EngineProps> {
         this.props.addOrUpdateEngine(source);
     }
 
+    private handleActiveOutputPathGroupChange(ev: React.ChangeEvent<HTMLSelectElement>): void {
+        this.props.Engine.ActiveOutputPathGroup = this.props.OutputPathGroups.find(x => x.ID === ev.target.value);
+        this.props.addOrUpdateEngine(this.props.Engine);
+    }
+
+    private handleTestScriptClick(ev: React.MouseEvent<HTMLButtonElement>): void {
+        this.props.Engine.testScript(
+            (this.monacoEditorRef.current as any).editor.model.getValue()
+        );
+    }
+
     private handleExecuteTemplateEngineClick(ev: React.MouseEvent<HTMLButtonElement>): void {
         this.props.Engine.execute(
-            remote.app.getAppPath(), 
-            this.props.LocalPackageFolder, 
+            remote.app.getAppPath(),
+            this.props.LocalPackageFolder,
             this.props.Results
         );
-        // this.props.Engine.testScript(
-        //     (this.monacoEditorRef.current as any).editor.model.getValue()
-        // );        
     }
 
     private handleSaveQueryClick(ev: React.MouseEvent<HTMLButtonElement>): void {
@@ -105,14 +114,34 @@ export default class Engine extends React.Component<EngineProps> {
                     </Row>
 
                     <Row className='mt-2 mb-2'>
-                        <Cell colSpan={4}>
+                        <Cell>
                             <div className='pos-center text-right'>Engine Code:</div>
                         </Cell>
-                        <Cell colSpan={8}>
+                        <Cell colSpan={11}>
                             <FileInput filters={Engine.fileInputFilters}
                                 onFilePathChange={(value: string) => this.handleDataFileNameChange(value)}
                                 value={this.props.Engine.EngineCode.Path}
                             />
+                        </Cell>
+                    </Row>
+
+                    <Row className='mt-2 mb-2'>
+                        <Cell>
+                            <div className='pos-center text-right'>Output Path:</div>
+                        </Cell>
+                        <Cell colSpan={11}>
+                            <select
+                                onChange={this.handleActiveOutputPathGroupChange.bind(this)}
+                                style={{ WebkitAppearance: 'menulist' }}
+                                value={this.props.Engine.ActiveOutputPathGroup.ID}>
+                                {
+                                    this.props.OutputPathGroups.map((connectionGroup: OutputPathGroup<OutputPath>, i: number) => {
+                                        return (
+                                            <option key={i} value={connectionGroup.ID}>{connectionGroup.Name}</option>
+                                        );
+                                    })
+                                }
+                            </select>
                         </Cell>
                     </Row>
 
@@ -134,6 +163,12 @@ export default class Engine extends React.Component<EngineProps> {
                     <Row className='mt-2 mb-2'>
                         <Cell colSpan={6}>
                             <button className='button'
+                                onClick={(ev: React.MouseEvent<HTMLButtonElement>) => this.handleTestScriptClick(ev)}>
+                                Test Script
+                            </button>
+
+                            <button className='button'
+                                style={{ marginLeft: '5px' }}
                                 onClick={(ev: React.MouseEvent<HTMLButtonElement>) => this.handleExecuteTemplateEngineClick(ev)}>
                                 Execute Template Engine
                             </button>
@@ -158,11 +193,12 @@ function mapStateToProps(state: IGentron, routeComponentProps: RouteComponentPro
     const _hash: string = hash(_localPkgFolderHash + _engineHash);
 
     const packageSettings: PackageSettings = SerializationUtils.TaJson.deserialize(state.PackageSettings, PackageSettings);
-    packageSettings.mergeResults(state.PackageSettings);    
+    packageSettings.mergeResults(state.PackageSettings);
 
     return {
         Engine: state.PackageSettings.Engines[id],
         LocalPackageFolder: state.ProjectSettings.LocalPackageFolder,
+        OutputPathGroups: state.ProjectSettings.OutputPathGroups,
         Results: packageSettings.buildDataSourceResults(),
         _hash: _hash
     };

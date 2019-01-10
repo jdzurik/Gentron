@@ -18,7 +18,6 @@ interface MyConnect {
         mergeProps?: MergeProps<TStateProps, TDispatchProps, TOwnProps, TMergedProps>,
         options?: Options<TStateProps, TOwnProps, TMergedProps>
     ): InferableComponentEnhancerWithProps<TMergedProps, TOwnProps>;
-
 }
 
 export const connect = originalConnect as MyConnect;

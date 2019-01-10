@@ -1,4 +1,7 @@
-﻿import { app, BrowserWindow } from "electron";
+﻿import * as fs from 'fs';
+import * as path from 'path';
+import { app, BrowserWindow } from 'electron';
+import { homedir } from 'os';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -24,21 +27,24 @@ function createWindow() {
         win = null;
     });
 
-    console.log('Dirname' + __dirname);
-
-    try {
-        //  React
-        BrowserWindow.addDevToolsExtension(
-            'C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\3.4.2_0'
-        );
-
-        //  Redux
-        BrowserWindow.addDevToolsExtension(
-            'C:\\Users\\foleyt\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\lmhkpmbekcpmknklioeibfkpmmfibljd\\2.15.3_0'
-        );
+    const reactDevToolsLocation: string = path.join(homedir(), 'AppData', 'Local', 'Google', 'Chrome', 'User Data', 'Default', 'Extensions', 'fmkadmapgofadopljbjfkapdkoienihi', '3.4.2_0');
+    if (fs.existsSync(reactDevToolsLocation)) {
+        try {
+            BrowserWindow.addDevToolsExtension(reactDevToolsLocation);
+        }
+        catch (e) {
+            console.log((e as NodeJS.ErrnoException).message);
+        }        
     }
-    catch (e) {
-        console.log((e as NodeJS.ErrnoException).message);
+    
+    const reduxDevToolsLocation: string = path.join(homedir(), 'AppData', 'Local', 'Google', 'Chrome', 'User Data', 'Default', 'Extensions', 'lmhkpmbekcpmknklioeibfkpmmfibljd', '2.15.3_0');
+    if (fs.existsSync(reduxDevToolsLocation)) {
+        try {
+            BrowserWindow.addDevToolsExtension(reduxDevToolsLocation);
+        }
+        catch (e) {
+            console.log((e as NodeJS.ErrnoException).message);
+        }
     }
 }
 
