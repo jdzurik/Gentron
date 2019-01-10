@@ -41,7 +41,15 @@ export default class PackageSettings {
     public constructor() {
         this.DatabaseSources = [];
         this.Engines = [];
-        this.Environments = [];
+
+        const devEnv: Environment = new Environment();
+        devEnv.Name = 'Dev';
+        devEnv.IsActive = true;
+
+        const prodEnv: Environment = new Environment();
+        prodEnv.Name = 'Prod';
+
+        this.Environments = [devEnv, prodEnv];
         this.FileSources = [];
         this.HttpSources = [];
         this.PackageName = '';
@@ -71,7 +79,7 @@ export default class PackageSettings {
         buildSourceResults(ret, this.DatabaseSources);
         buildSourceResults(ret, this.FileSources);
         buildSourceResults(ret, this.HttpSources);
-        
+
         return ret;
     }
 
@@ -89,7 +97,7 @@ export default class PackageSettings {
                     for (let j: number = 0; j < thatSources.length; ++j) {
                         const thatSource: DatabaseSource = thatSources[j];
 
-                        if (thisSource.ID === thatSource.ID)  {
+                        if (thisSource.ID === thatSource.ID) {
                             if (!ObjectUtils.hasObjectValue(thisSource.Result) && ObjectUtils.hasObjectValue(thatSource.Result)) {
                                 thisSource.Result = thatSource.Result;
                             }
