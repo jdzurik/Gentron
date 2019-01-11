@@ -7,8 +7,8 @@ export default class FileParserUtils {
     /*
      *  Properties & Fields
      */
-    private static readonly bofRegex: RegExp = /####_BOF_ filename=([\w\d\-\_\s]*\.[\w\d]+)\s####/gm;
-    private static readonly eofRegex: RegExp = /####_EOF_ filename=([\w\d\-\_\s]*\.[\w\d]+)\s####/gm;
+    private static readonly bofRegex: RegExp = /####_BOF_ filename=([\w\d\-\_\s]*\.[\w\d]+)(?:\s+|\r\n)####/gm;
+    private static readonly eofRegex: RegExp = /####_EOF_ filename=([\w\d\-\_\s]*\.[\w\d]+)(?:\s+|\r\n)####/gm;
 
 
     /*
