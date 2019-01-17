@@ -99,6 +99,12 @@ bld/
 # Visual Studio 2017 auto generated files
 Generated\ Files/
 
+# VS user, project files, and typescript files
+.njsproj
+.njsproj.*
+.ts
+
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
@@ -395,17 +401,3 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 
-# Gentron.Library/*.js
-# Gentron.Library/**/*.js
-Gentron.Library/*.js.map
-Gentron.Library/**/*.js.map
-
-Gentron.Library.Tests/*.js
-Gentron.Library.Tests/**/*.js
-Gentron.Library.Tests/*.js.map
-Gentron.Library.Tests/**/*.js.map
-
-Gentron.UI/*.js
-Gentron.UI/**/*.js
-Gentron.UI/*.js.map
-Gentron.UI/**/*.js.map
