@@ -1,5 +1,5 @@
 
-## Gentron
+# Gentron
 
 This is a library to assist with code generation.
 
