@@ -90,6 +90,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+bin/
+[Oo]bj/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -102,7 +104,10 @@ Generated\ Files/
 # VS user, project files, and typescript files
 .njsproj
 .njsproj.*
+
+# typescript fils
 .ts
+*/*.ts
 
 
 # MSTest test Results

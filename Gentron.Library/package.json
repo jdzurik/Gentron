@@ -1,8 +1,7 @@
 {
   "name": "gentron",
-  "version": "0.0.61",
-  "description": "Gentron.Library",
-  "main": "app.js",
+  "version": "0.0.64",
+  "description": "Gentron Library for CLI",
   "author": {
     "name": "John Dzurik"
   },
