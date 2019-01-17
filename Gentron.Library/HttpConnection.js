@@ -16,7 +16,7 @@ const ConnectionBase_1 = require("./ConnectionBase");
 let HttpConnection = HttpConnection_1 = class HttpConnection extends ConnectionBase_1.default {
     constructor() {
         super();
-        this.Environment = "";
+        this.Environment = '';
     }
     clone() {
         const ret = new HttpConnection_1();
@@ -26,7 +26,7 @@ let HttpConnection = HttpConnection_1 = class HttpConnection extends ConnectionB
         return ret;
     }
     update(connection) {
-        if (!_1.Utilities.hasValue(connection)) {
+        if (!_1.ObjectUtils.hasValue(connection)) {
             return;
         }
         this.Environment = connection.Environment;

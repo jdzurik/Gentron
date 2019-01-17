@@ -45,13 +45,13 @@ let DatabaseSource = DatabaseSource_1 = class DatabaseSource extends SourceBase_
                 result = yield DatabaseSource_1._msSqlQueryProvider.executeQuery(this.ActiveConnectionGroup.Connections[0].ConnectionString, this.Script.Contents, true);
             }
             catch (e) {
-                result = yield DatabaseSource_1._msSqlQueryProvider.onExecuteQueryFail(this.Script.Contents, _1.Utilities.getErrorMessage(e), true);
+                result = yield DatabaseSource_1._msSqlQueryProvider.onExecuteQueryFail(this.Script.Contents, _1.ObjectUtils.getErrorMessage(e), true);
             }
             this.Result = result.Result;
         });
     }
     update(databaseSource) {
-        if (!_1.Utilities.hasValue(databaseSource)) {
+        if (!_1.ObjectUtils.hasValue(databaseSource)) {
             return;
         }
         this.ActiveConnectionGroup = databaseSource.ActiveConnectionGroup;

@@ -15,11 +15,14 @@ let PackageSettings = class PackageSettings {
     constructor() {
         this.DatabaseSources = [];
         this.Engines = [];
-        this.Environments = [];
+        this.Environments = [
+            new _1.Environment({ IsActive: true, Name: 'Dev' }),
+            new _1.Environment({ Name: 'Prod' })
+        ];
         this.FileSources = [];
         this.HttpSources = [];
-        this.PackageName = "";
-        this.ReadMe = "";
+        this.PackageName = '';
+        this.ReadMe = '';
     }
     buildDataSourceResults() {
         let ret = {};
@@ -29,7 +32,7 @@ let PackageSettings = class PackageSettings {
                     continue;
                 }
                 const source = sources[i];
-                if (_1.Utilities.hasObjectValue(source.Result) && _1.Utilities.hasObjectValue(source.Result.Object)) {
+                if (_1.ObjectUtils.hasObjectValue(source.Result) && _1.ObjectUtils.hasObjectValue(source.Result.Object)) {
                     builder[source.Name] = source.Result.Object;
                 }
             }
@@ -40,17 +43,17 @@ let PackageSettings = class PackageSettings {
         return ret;
     }
     mergeResults(packageSettingsJson) {
-        if (!_1.Utilities.hasObjectValue(packageSettingsJson)) {
+        if (!_1.ObjectUtils.hasObjectValue(packageSettingsJson)) {
             return;
         }
         const mergeSourceResults = (thisSources, thatSources) => {
-            if (_1.Utilities.hasObjectValue(thisSources) && _1.Utilities.hasObjectValue(thatSources)) {
+            if (_1.ObjectUtils.hasObjectValue(thisSources) && _1.ObjectUtils.hasObjectValue(thatSources)) {
                 for (let i = 0; i < thisSources.length; ++i) {
                     const thisSource = thisSources[i];
                     for (let j = 0; j < thatSources.length; ++j) {
                         const thatSource = thatSources[j];
                         if (thisSource.ID === thatSource.ID) {
-                            if (!_1.Utilities.hasObjectValue(thisSource.Result) && _1.Utilities.hasObjectValue(thatSource.Result)) {
+                            if (!_1.ObjectUtils.hasObjectValue(thisSource.Result) && _1.ObjectUtils.hasObjectValue(thatSource.Result)) {
                                 thisSource.Result = thatSource.Result;
                             }
                         }

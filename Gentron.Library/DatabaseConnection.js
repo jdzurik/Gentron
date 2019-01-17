@@ -16,8 +16,8 @@ const ConnectionBase_1 = require("./ConnectionBase");
 let DatabaseConnection = DatabaseConnection_1 = class DatabaseConnection extends ConnectionBase_1.default {
     constructor() {
         super();
-        this.ConnectionString = "";
-        this.Environment = "";
+        this.ConnectionString = '';
+        this.Environment = '';
     }
     clone() {
         const ret = new DatabaseConnection_1();
@@ -28,7 +28,7 @@ let DatabaseConnection = DatabaseConnection_1 = class DatabaseConnection extends
         return ret;
     }
     update(connection) {
-        if (!_1.Utilities.hasValue(connection)) {
+        if (!_1.ObjectUtils.hasValue(connection)) {
             return;
         }
         this.ConnectionString = connection.ConnectionString;

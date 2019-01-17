@@ -16,7 +16,7 @@ const ConnectionBase_1 = require("./ConnectionBase");
 let FileConnection = FileConnection_1 = class FileConnection extends ConnectionBase_1.default {
     constructor() {
         super();
-        this.Environment = "";
+        this.Environment = '';
     }
     clone() {
         const ret = new FileConnection_1();
@@ -26,7 +26,7 @@ let FileConnection = FileConnection_1 = class FileConnection extends ConnectionB
         return ret;
     }
     update(connection) {
-        if (!_1.Utilities.hasValue(connection)) {
+        if (!_1.ObjectUtils.hasValue(connection)) {
             return;
         }
         this.Environment = connection.Environment;

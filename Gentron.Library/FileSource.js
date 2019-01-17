@@ -30,26 +30,26 @@ let FileSource = FileSource_1 = class FileSource extends SourceBase_1.default {
     }
     onDeserialized() {
         this.Result = {
-            Json: "",
+            Json: '',
             Object: null,
-            Xml: ""
+            Xml: ''
         };
-        if (_1.Utilities.hasObjectValue(this.DataFile)
-            && _1.Utilities.hasStringValue(this.DataFile.Path)
-            && _1.Utilities.hasStringValue(this.DataFile.Contents)) {
+        if (_1.ObjectUtils.hasObjectValue(this.DataFile)
+            && _1.ObjectUtils.hasStringValue(this.DataFile.Path)
+            && _1.ObjectUtils.hasStringValue(this.DataFile.Contents)) {
             try {
                 const parsed = JSON.parse(this.DataFile.Contents);
                 this.Result = {
                     Json: JSON.stringify(parsed, null, 4),
                     Object: parsed,
-                    Xml: ""
+                    Xml: ''
                 };
             }
             catch (_a) { }
         }
     }
     update(fileSource) {
-        if (!_1.Utilities.hasValue(fileSource)) {
+        if (!_1.ObjectUtils.hasValue(fileSource)) {
             return;
         }
         this.IsActive = fileSource.IsActive;
@@ -63,7 +63,9 @@ let FileSource = FileSource_1 = class FileSource extends SourceBase_1.default {
             }
             catch (e) {
                 this.Result = {
-                    Json: "", Object: null, Xml: ""
+                    Json: '',
+                    Object: null,
+                    Xml: ''
                 };
             }
         }

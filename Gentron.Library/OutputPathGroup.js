@@ -16,7 +16,7 @@ const _1 = require("./");
 let OutputPathGroup = OutputPathGroup_1 = class OutputPathGroup extends abstract_1.Cloneable {
     constructor() {
         super();
-        this.Name = "";
+        this.Name = '';
         this.Paths = [];
     }
     addOrUpdatePath(path) {
@@ -34,7 +34,7 @@ let OutputPathGroup = OutputPathGroup_1 = class OutputPathGroup extends abstract
         return ret;
     }
     update(connection) {
-        if (!_1.Utilities.hasValue(connection)) {
+        if (!_1.ObjectUtils.hasValue(connection)) {
             return;
         }
         this.Name = connection.Name;

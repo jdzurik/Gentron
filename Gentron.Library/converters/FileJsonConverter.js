@@ -7,8 +7,8 @@ class FileJsonConverter {
         const ret = {};
         ret.ID = property.ID;
         ret.Path = property.Path;
-        if (__1.Utilities.hasValue(property.LastModified)) {
-            let dateStr = "";
+        if (__1.ObjectUtils.hasValue(property.LastModified)) {
+            let dateStr = '';
             try {
                 dateStr = property.LastModified.toDateString();
             }

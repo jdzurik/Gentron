@@ -27,9 +27,9 @@ const _1 = require("./");
 let File = File_1 = class File extends abstract_1.Cloneable {
     constructor() {
         super();
-        this.Contents = "";
+        this.Contents = '';
         this.LastModified = undefined;
-        this.Path = "";
+        this.Path = '';
     }
     static read(filePath) {
         try {
@@ -56,7 +56,7 @@ let File = File_1 = class File extends abstract_1.Cloneable {
     static write(filePath, fileContents, mkDirIfNotExists = false) {
         try {
             if (mkDirIfNotExists && !fs.existsSync(filePath.substring(0, filePath.lastIndexOf(path.sep)))) {
-                _1.Utilities.mkDirByPathSync(filePath.substring(0, filePath.lastIndexOf(path.sep)));
+                _1.IOUtils.mkDirByPathSync(filePath.substring(0, filePath.lastIndexOf(path.sep)));
             }
             fs.writeFileSync(filePath, fileContents);
             return results_1.Result.ok();
@@ -86,7 +86,7 @@ let File = File_1 = class File extends abstract_1.Cloneable {
         return ret;
     }
     loadContents() {
-        if (!_1.Utilities.hasStringValue(this.Path)) {
+        if (!_1.ObjectUtils.hasStringValue(this.Path)) {
             return;
         }
         try {
@@ -101,7 +101,7 @@ let File = File_1 = class File extends abstract_1.Cloneable {
     }
     loadContentsAsync() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!_1.Utilities.hasStringValue(this.Path)) {
+            if (!_1.ObjectUtils.hasStringValue(this.Path)) {
                 return;
             }
             try {
@@ -116,42 +116,49 @@ let File = File_1 = class File extends abstract_1.Cloneable {
         });
     }
     writeContents() {
-        if (!_1.Utilities.hasStringValue(this.Path)) {
-            return;
+        if (!_1.ObjectUtils.hasStringValue(this.Path)) {
+            return results_1.Result.ok();
         }
         try {
             fs.writeFileSync(this.Path, this.Contents);
+            return results_1.Result.ok();
         }
         catch (e) {
             console.error(e);
+            return results_1.Result.fail(_1.ObjectUtils.getErrorMessage(e));
         }
     }
     writeContentsAsync() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!_1.Utilities.hasStringValue(this.Path)) {
-                return;
+            if (!_1.ObjectUtils.hasStringValue(this.Path)) {
+                return results_1.Result.ok();
             }
             try {
                 yield fs.promises.writeFile(this.Path, this.Contents);
+                return results_1.Result.ok();
             }
             catch (e) {
                 console.error(e);
+                return results_1.Result.fail(_1.ObjectUtils.getErrorMessage(e));
             }
         });
     }
     update(file) {
-        if (!_1.Utilities.hasValue(file)) {
+        if (!_1.ObjectUtils.hasValue(file)) {
             return;
         }
         this.LastModified = file.LastModified;
         if (this.Path !== file.Path) {
             this.Path = file.Path;
-            if (!_1.Utilities.hasStringValue(this.Path.trim())) {
+            if (!_1.ObjectUtils.hasStringValue(this.Path.trim())) {
                 this.Contents = "";
             }
             else {
                 this.loadContents();
             }
+        }
+        if (this.Contents !== file.Contents && _1.ObjectUtils.hasStringValue(file.Contents)) {
+            this.Contents = file.Contents;
         }
     }
 };

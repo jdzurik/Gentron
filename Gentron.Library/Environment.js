@@ -14,10 +14,10 @@ const abstract_1 = require("./abstract");
 const ta_json_1 = require("ta-json");
 const _1 = require("./");
 let Environment = Environment_1 = class Environment extends abstract_1.Cloneable {
-    constructor() {
+    constructor(props = { IsActive: false, Name: '' }) {
         super();
-        this.IsActive = false;
-        this.Name = "";
+        (props.IsActive) ? this.IsActive = true : this.IsActive = false;
+        this.Name = String(props.Name);
     }
     clone() {
         const ret = new Environment_1();
@@ -27,7 +27,7 @@ let Environment = Environment_1 = class Environment extends abstract_1.Cloneable
         return ret;
     }
     update(environment) {
-        if (!_1.Utilities.hasValue(environment)) {
+        if (!_1.ObjectUtils.hasValue(environment)) {
             return;
         }
         this.IsActive = environment.IsActive;
@@ -44,7 +44,7 @@ __decorate([
 ], Environment.prototype, "Name", void 0);
 Environment = Environment_1 = __decorate([
     ta_json_1.JsonObject(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [Object])
 ], Environment);
 exports.default = Environment;
 //# sourceMappingURL=Environment.js.map

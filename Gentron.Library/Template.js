@@ -14,17 +14,13 @@ const abstract_1 = require("./abstract");
 const ta_json_1 = require("ta-json");
 const _1 = require("./");
 const converters_1 = require("./converters");
-var TemplateTypes;
-(function (TemplateTypes) {
-    TemplateTypes[TemplateTypes["Partial"] = 0] = "Partial";
-    TemplateTypes[TemplateTypes["Primary"] = 1] = "Primary";
-})(TemplateTypes || (TemplateTypes = {}));
+const types_1 = require("./types");
 let Template = Template_1 = class Template extends abstract_1.Cloneable {
     constructor() {
         super();
-        this.Name = "";
+        this.Name = '';
         this.TemplateCode = new _1.File();
-        this.Type = TemplateTypes.Partial;
+        this.Type = types_1.TemplateTypes.Partial;
     }
     clone() {
         const ret = new Template_1();
@@ -35,7 +31,7 @@ let Template = Template_1 = class Template extends abstract_1.Cloneable {
         return ret;
     }
     update(template) {
-        if (!_1.Utilities.hasValue(template)) {
+        if (!_1.ObjectUtils.hasValue(template)) {
             return;
         }
         this.Name = template.Name;

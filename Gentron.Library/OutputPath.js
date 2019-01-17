@@ -16,8 +16,8 @@ const _1 = require("./");
 let OutputPath = OutputPath_1 = class OutputPath extends abstract_1.Cloneable {
     constructor() {
         super();
-        this.Environment = "";
-        this.Path = "";
+        this.Environment = '';
+        this.Path = '';
     }
     clone() {
         const ret = new OutputPath_1();
@@ -27,7 +27,7 @@ let OutputPath = OutputPath_1 = class OutputPath extends abstract_1.Cloneable {
         return ret;
     }
     update(outputPath) {
-        if (!_1.Utilities.hasValue(outputPath)) {
+        if (!_1.ObjectUtils.hasValue(outputPath)) {
             return;
         }
         this.Environment = outputPath.Environment;

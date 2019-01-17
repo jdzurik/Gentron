@@ -14,9 +14,9 @@ const ta_json_1 = require("ta-json");
 let ProjectSettings = class ProjectSettings {
     constructor() {
         this.DatabaseConnections = [];
-        this.LocalPackageFolder = "";
+        this.LocalPackageFolder = '';
         this.OutputPathGroups = [];
-        this.RemotePackageLocation = "";
+        this.RemotePackageLocation = '';
     }
 };
 __decorate([

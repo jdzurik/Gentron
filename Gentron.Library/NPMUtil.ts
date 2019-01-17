@@ -12,7 +12,7 @@ type NPMInstallOptions = {
     saveDev?: boolean;
 };
 
-export default class NPM {
+export default class NPMUtil {
     private static optOrEmpty(possibleOpt: boolean | undefined, trueValue: string, falseValue?: string): string {
         if (ObjectUtils.isBoolean(possibleOpt) && possibleOpt) {
             return trueValue;

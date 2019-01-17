@@ -13,7 +13,7 @@ const ta_json_1 = require("ta-json");
 const __1 = require("../");
 let Identifiable = class Identifiable {
     constructor() {
-        this._id = __1.Utilities.newCryptoGuid();
+        this._id = __1.GuidUtils.newCryptoGuid();
     }
     get ID() {
         return this._id;

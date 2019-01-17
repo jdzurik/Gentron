@@ -7,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var HttpSource_1;
-const ta_json_1 = require("ta-json");
 const SourceBase_1 = require("./SourceBase");
-const Utilities_1 = require("./Utilities");
+const ta_json_1 = require("ta-json");
+const _1 = require("./");
 let HttpSource = HttpSource_1 = class HttpSource extends SourceBase_1.default {
     clone() {
         const ret = new HttpSource_1();
@@ -20,7 +20,7 @@ let HttpSource = HttpSource_1 = class HttpSource extends SourceBase_1.default {
         return ret;
     }
     update(httpSource) {
-        if (!Utilities_1.default.hasValue(httpSource)) {
+        if (!_1.ObjectUtils.hasValue(httpSource)) {
             return;
         }
         this.IsActive = httpSource.IsActive;

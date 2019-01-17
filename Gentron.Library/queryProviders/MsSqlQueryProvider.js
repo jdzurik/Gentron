@@ -26,7 +26,7 @@ class MsSqlQueryProvider {
                     ? JSON.stringify(error, null, 4)
                     : JSON.stringify(error),
                 Object: null,
-                Xml: yield __1.Utilities.jsonToXmlStr(error, formatResults)
+                Xml: yield __1.SerializationUtils.jsonToXmlStr(error, formatResults)
             };
             return results_1.Result.fail(message, ret);
         });
@@ -42,32 +42,32 @@ class MsSqlQueryProvider {
                 recordsets = yield result.recordset;
             }
             catch (e) {
-                return yield this.onExecuteQueryFail(queryStr, __1.Utilities.getErrorMessage(e), formatResults);
+                return yield this.onExecuteQueryFail(queryStr, __1.ObjectUtils.getErrorMessage(e), formatResults);
             }
             finally {
-                if (__1.Utilities.hasValue(connPool) && connPool.connected) {
+                if (__1.ObjectUtils.hasValue(connPool) && connPool.connected) {
                     yield connPool.close();
                 }
             }
-            if (!__1.Utilities.hasValue(recordsets)) {
+            if (!__1.ObjectUtils.hasValue(recordsets)) {
                 return yield this.onExecuteQueryFail(queryStr, constants_1.InfoMessages.QUERY_RESULTS_NULL, formatResults);
             }
             if (recordsets.length === 1) {
                 const recordset = recordsets[0];
                 const resultAsJson = recordset[MsSqlQueryProvider._jsonColumnId];
-                if (__1.Utilities.hasValue(resultAsJson)) {
+                if (__1.ObjectUtils.hasValue(resultAsJson)) {
                     const ret = {
                         Json: (formatResults)
                             ? JSON.stringify(resultAsJson, null, 4)
                             : JSON.stringify(resultAsJson),
                         Object: resultAsJson,
-                        Xml: yield __1.Utilities.jsonStrToXmlStr(JSON.stringify(resultAsJson), formatResults)
+                        Xml: yield __1.SerializationUtils.jsonStrToXmlStr(JSON.stringify(resultAsJson), formatResults)
                     };
                     return results_1.Result.ok(ret);
                 }
                 const resultAsXml = recordset[MsSqlQueryProvider._xmlColumnId];
-                if (__1.Utilities.hasValue(resultAsXml)) {
-                    const jsonStr = __1.Utilities.xmlStrToJsonStr(resultAsXml, formatResults);
+                if (__1.ObjectUtils.hasValue(resultAsXml)) {
+                    const jsonStr = __1.SerializationUtils.xmlStrToJsonStr(resultAsXml, formatResults);
                     let jsonObj;
                     try {
                         jsonObj = JSON.parse(jsonStr);
@@ -79,7 +79,7 @@ class MsSqlQueryProvider {
                         Json: jsonStr,
                         Object: jsonObj,
                         Xml: (formatResults)
-                            ? yield __1.Utilities.formatXml(resultAsXml)
+                            ? yield __1.SerializationUtils.formatXml(resultAsXml)
                             : resultAsXml
                     };
                     return results_1.Result.ok(ret);
@@ -90,7 +90,7 @@ class MsSqlQueryProvider {
                     ? JSON.stringify(recordsets, null, 4)
                     : JSON.stringify(recordsets),
                 Object: recordsets,
-                Xml: yield __1.Utilities.jsonStrToXmlStr(JSON.stringify(recordsets), formatResults)
+                Xml: yield __1.SerializationUtils.jsonStrToXmlStr(JSON.stringify(recordsets), formatResults)
             };
             return results_1.Result.ok(ret);
         });

@@ -13,12 +13,11 @@ var ConnectionGroup_1;
 const abstract_1 = require("./abstract");
 const _1 = require("./");
 const ta_json_1 = require("ta-json");
-const Utilities_1 = require("./Utilities");
 let ConnectionGroup = ConnectionGroup_1 = class ConnectionGroup extends abstract_1.Cloneable {
     constructor() {
         super();
         this.Connections = [];
-        this.Name = "";
+        this.Name = '';
     }
     addOrUpdateConnection(connection) {
         this.Connections.push(connection);
@@ -35,7 +34,7 @@ let ConnectionGroup = ConnectionGroup_1 = class ConnectionGroup extends abstract
         return ret;
     }
     update(connectionGroup) {
-        if (!Utilities_1.default.hasValue(connectionGroup)) {
+        if (!_1.ObjectUtils.hasValue(connectionGroup)) {
             return;
         }
         this.Connections = connectionGroup.Connections.map((conn, i) => {

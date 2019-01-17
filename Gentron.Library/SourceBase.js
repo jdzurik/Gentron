@@ -15,11 +15,11 @@ let SourceBase = class SourceBase extends abstract_1.Cloneable {
     constructor() {
         super();
         this.IsActive = true;
-        this.Name = "";
+        this.Name = '';
         this.Result = {
-            Json: "",
+            Json: '',
             Object: null,
-            Xml: ""
+            Xml: ''
         };
     }
 };
