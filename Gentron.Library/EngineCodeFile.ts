@@ -2,6 +2,8 @@ import { JsonObject, JsonProperty } from "ta-json";
 import { File, VMUtils, ObjectUtils } from "./";
 import { ModulePackage, ModuleList } from "./types";
 
+
+
 @JsonObject()
 export default class EngineCodeFile extends File {
     /*

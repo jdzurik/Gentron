@@ -13,7 +13,9 @@ export interface IGentron {
     ProjectSettings: ProjectSettings;
 }
 
-
+process.argv.forEach(function (val, index, array) {
+    console.log(index + ': ' + val);
+});
 
 @JsonObject()
 export class Gentron implements IGentron {
@@ -156,15 +158,19 @@ export class Gentron implements IGentron {
     }
 
 
-    //public static Run(Gen: Gentron): Result<TGentronFsResult> {
+    public static Run(Gen: Gentron, ProjectPath:string) {
 
-    //    if (Gen.ActiveProjectPath != "") {
-    //        this.op
-    //    }
-    //    if (this.ActiveProjectPath != "") {
+       if (ProjectPath != undefined && Gen == undefined) {
+        var rg: Result<TGentronFsResult>;
+        rg = this.open(ProjectPath);
+        console.log(rg.Result.Gentron);
+       }
+       if (Gen != undefined){
 
-    //    }
-    //}
+
+
+       }
+    }
     
 }
 

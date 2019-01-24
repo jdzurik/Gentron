@@ -71,11 +71,16 @@ export default class Engine extends React.Component<EngineProps> {
     }
 
     private handleExecuteTemplateEngineClick(ev: React.MouseEvent<HTMLButtonElement>): void {
-        this.props.Engine.execute(
+        this.props.Engine.run(
             remote.app.getAppPath(),
             this.props.LocalPackageFolder,
             this.props.Results
         );
+        // this.props.Engine.execute(
+        //     remote.app.getAppPath(),
+        //     this.props.LocalPackageFolder,
+        //     this.props.Results
+        // );
     }
 
     private handleSaveQueryClick(ev: React.MouseEvent<HTMLButtonElement>): void {
