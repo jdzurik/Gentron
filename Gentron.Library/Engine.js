@@ -17,6 +17,7 @@ const ta_json_1 = require("ta-json");
 const types_1 = require("./types");
 const _1 = require("./");
 const utils_1 = require("./utils");
+const { fork } = require('child_process');
 let Engine = Engine_1 = class Engine extends SourceBase_1.default {
     constructor() {
         super();
@@ -42,6 +43,33 @@ let Engine = Engine_1 = class Engine extends SourceBase_1.default {
             return template.clone();
         });
         return ret;
+    }
+    run(dirname, localPackageFolder, results) {
+        let forkSubState = {
+            jsonObj: results
+        };
+        const forked = fork(_1.EngineCodeFile.name, null, { cdw: localPackageFolder });
+        let ForkResults = "";
+        if ((this.Templates || []).length > 0) {
+            if (this.HasPrimaryTemplate && this.HasPartialTemplates) {
+                forkSubState.templateTexts = this.Templates.map(t => {
+                    return {
+                        Contents: t.TemplateCode.Contents,
+                        Name: t.Name,
+                        Type: t.Type,
+                    };
+                });
+            }
+            else {
+                forkSubState.templateTexts.push(this.Templates[0].TemplateCode.Contents);
+            }
+        }
+        forked.send(forkSubState);
+        forked.on('message', (m) => {
+            console.log(m);
+            utils_1.FileParserUtils.parseAndWriteFiles(m, this.ActiveOutputPathGroup.Paths[0].Path);
+        });
+        console.log(ForkResults);
     }
     execute(dirname, localPackageFolder, results) {
         this.EngineCode.resolveModulesRelativePaths(dirname, localPackageFolder);

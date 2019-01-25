@@ -15,6 +15,9 @@ const _1 = require("./");
 const constants_1 = require("./constants");
 const ta_json_1 = require("ta-json");
 const results_1 = require("./results");
+process.argv.forEach(function (val, index, array) {
+    console.log(index + ': ' + val);
+});
 let Gentron = Gentron_1 = class Gentron {
     constructor() {
         this.ActiveProjectPath = '';
@@ -108,6 +111,15 @@ let Gentron = Gentron_1 = class Gentron {
             return results_1.Result.fail(e.message);
         }
         return results_1.Result.ok({ Gentron: ret });
+    }
+    static Run(Gen, ProjectPath) {
+        if (ProjectPath != undefined && Gen == undefined) {
+            var rg;
+            rg = this.open(ProjectPath);
+            console.log(rg.Result.Gentron);
+        }
+        if (Gen != undefined) {
+        }
     }
 };
 __decorate([

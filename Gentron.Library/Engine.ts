@@ -66,38 +66,42 @@ export default class Engine extends SourceBase<Engine> {
         return ret;
     }
 
-    public run(dirname: string, localPackageFolder: string, results: any){
+    public run(dirname: string, localPackageFolder: string, results: any) {
 
-        //const forked = fork(localPackageFolder+ EngineCodeFile.name);
-        let OldWD : string;
-        OldWD = process.cwd();
-        process.chdir(localPackageFolder); // reset the working directory to package folder
 
-        let vmState: any = {
+        //let OldWD : string;
+        //OldWD = process.cwd();
+        // process.chdir(localPackageFolder); // reset the working directory to package folder
+        let forkSubState: any = {
             jsonObj: results,
-            globalScope: {
-                templateResult: ''
-            }
+            templateTexts:[]
         };
-
-        if ((this.Templates || []).length > 0 && this.HasPrimaryTemplate && this.HasPartialTemplates) {
-            vmState.templateTexts = this.Templates.map(t => {
-                return {
-                    Contents: t.TemplateCode.Contents,
-                    Name: t.Name,
-                    Type: t.Type,
-                }
-            });
+        const forked = fork(this.EngineCode.Path, null, { cdw: localPackageFolder });
+        let ForkResults: string = "";
+        if ((this.Templates || []).length > 0) {
+            if (this.HasPrimaryTemplate && this.HasPartialTemplates) {
+                forkSubState.templateTexts = this.Templates.map(t => {
+                    return {
+                        Contents: t.TemplateCode.Contents,
+                        Name: t.Name,
+                        Type: t.Type,
+                    }
+                });
+            }
+            else{
+                forkSubState.templateTexts.push(this.Templates[0].TemplateCode.Contents);
+            }
         }
-        else {
-            vmState.templateText = this.Templates[0].TemplateCode.Contents;
-        }
+       
+        forked.send(forkSubState);
+        forked.on('message', (m: string) => {
+            console.log(m);
+            FileParserUtils.parseAndWriteFiles(m, this.ActiveOutputPathGroup.Paths[0].Path);
+        });
 
-        const ctx: vm.Context = VMUtils.createContext(this.EngineCode.toModuleListOptions(), vmState);
-        vm.runInNewContext(this.EngineCode.Contents, ctx);
-        FileParserUtils.parseAndWriteFiles(vmState.globalScope.templateResult, this.ActiveOutputPathGroup.Paths[0].Path);
-        
-        process.chdir(OldWD); // reset the working directory
+        console.log(ForkResults);
+
+        // process.chdir(OldWD); // reset the working directory
 
     }
 
