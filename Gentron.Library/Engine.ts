@@ -35,6 +35,8 @@ export default class Engine extends SourceBase<Engine> {
     @JsonType(Template)
     public Templates: Template[];
 
+    public OutputResult: string;
+
 
     /*
      *  Constructors
@@ -44,6 +46,7 @@ export default class Engine extends SourceBase<Engine> {
         this.ActiveOutputPathGroup = new OutputPathGroup<OutputPath>();
         this.EngineCode = new EngineCodeFile();
         this.Templates = [];
+        this.OutputResult = "";
     }
 
 
@@ -59,6 +62,7 @@ export default class Engine extends SourceBase<Engine> {
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
         ret.Result = this.Result;
+        ret.OutputResult = this.OutputResult
         ret.Templates = this.Templates.map((template: Template, index: number) => {
             return template.clone();
         });
@@ -66,17 +70,13 @@ export default class Engine extends SourceBase<Engine> {
         return ret;
     }
 
-    public run(dirname: string, localPackageFolder: string, results: any) {
+    public run(dirname: string, localPackageFolder: string, results: any, callback:any) {
 
-
-        //let OldWD : string;
-        //OldWD = process.cwd();
-        // process.chdir(localPackageFolder); // reset the working directory to package folder
         let forkSubState: any = {
             jsonObj: results,
             templateTexts:[]
         };
-        const forked = fork(this.EngineCode.Path, null, { cdw: localPackageFolder });
+        const forked = fork(this.EngineCode.Path, [], { cdw: localPackageFolder,  silent: true}); //, stdio: [process.stdin, process.stdout, process.stderr, 'ipc']
         let ForkResults: string = "";
         if ((this.Templates || []).length > 0) {
             if (this.HasPrimaryTemplate && this.HasPartialTemplates) {
@@ -92,17 +92,36 @@ export default class Engine extends SourceBase<Engine> {
                 forkSubState.templateTexts.push(this.Templates[0].TemplateCode.Contents);
             }
         }
-       
-        forked.send(forkSubState);
+        let errordata:any = [];
         forked.on('message', (m: string) => {
-            console.log(m);
+            console.log("message return");
+            this.OutputResult = m;
             FileParserUtils.parseAndWriteFiles(m, this.ActiveOutputPathGroup.Paths[0].Path);
+            callback(m);
         });
 
-        console.log(ForkResults);
+        forked.send(forkSubState,null,{keepOpen :true}, () => {
+            console.log("Sent fork substate");
+        });
 
-        // process.chdir(OldWD); // reset the working directory
+        forked.stderr.on('data', function(data:any) {
+            console.log('stderr: ' + data);
+            errordata.push(data);
+            //callback(data);
+        });
 
+        // forked.stdout.on('data', (data:any) => {
+        //     console.log(`stdout: ${data}`);
+        //   });
+       
+        forked.on('exit', function(code:any) {
+           if (code !== 0) {
+               console.log('Failed: ' + code);
+               callback(errordata);
+            }
+            
+        });
+        //console.log( this.OutputResult);
     }
 
     public execute(dirname: string, localPackageFolder: string, results: any): void {

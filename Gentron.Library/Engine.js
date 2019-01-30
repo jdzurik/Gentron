@@ -46,9 +46,10 @@ let Engine = Engine_1 = class Engine extends SourceBase_1.default {
     }
     run(dirname, localPackageFolder, results) {
         let forkSubState = {
-            jsonObj: results
+            jsonObj: results,
+            templateTexts: []
         };
-        const forked = fork(_1.EngineCodeFile.name, null, { cdw: localPackageFolder });
+        const forked = fork(this.EngineCode.Path, null, { cdw: localPackageFolder });
         let ForkResults = "";
         if ((this.Templates || []).length > 0) {
             if (this.HasPrimaryTemplate && this.HasPartialTemplates) {

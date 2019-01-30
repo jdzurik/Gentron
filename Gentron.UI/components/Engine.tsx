@@ -5,6 +5,7 @@ import * as hash from 'object-hash';
 import * as React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import NavViewContentHeaderRow from './NavViewContentHeaderRow';
+import SplitPane from './SplitPane';
 import { ActionCreators as PackageSettingsActionCreators } from '../actions/PackageSettings';
 import { ActionCreators as ProjectSettingsActionCreators } from '../actions/ProjectSettings';
 import { bindActionCreators } from 'redux';
@@ -15,6 +16,7 @@ import { Hash } from '../../Gentron.Library/types';
 import { RouteComponentProps } from 'react-router';
 import { Result } from '../../Gentron.Library/results';
 import { remote } from "electron";
+import { render } from 'react-dom';
 
 type HashedEngine = Hash & {
     Engine?: LibEngine;
@@ -34,6 +36,7 @@ export default class Engine extends React.Component<EngineProps> {
      *  Properties & Fields
      */
     private monacoEditorRef: React.RefObject<MonacoEditor>;
+    private monacoEditorRefResult: React.RefObject<MonacoEditor>;
 
     private static readonly fileInputFilters = [
         { name: 'JavaScript', extensions: ['js'] }
@@ -47,6 +50,7 @@ export default class Engine extends React.Component<EngineProps> {
         super(props);
 
         this.monacoEditorRef = React.createRef();
+        this.monacoEditorRefResult = React.createRef();
     }
 
 
@@ -71,10 +75,19 @@ export default class Engine extends React.Component<EngineProps> {
     }
 
     private handleExecuteTemplateEngineClick(ev: React.MouseEvent<HTMLButtonElement>): void {
+        
+        
         this.props.Engine.run(
             remote.app.getAppPath(),
             this.props.LocalPackageFolder,
-            this.props.Results
+            this.props.Results, 
+            (outputdata) => {
+               console.log("run:"+outputdata);
+               if(outputdata != null){
+                   var ou = outputdata.toString();
+               (this.monacoEditorRefResult.current as any).editor.setValue(ou);
+                }
+            }
         );
         // this.props.Engine.execute(
         //     remote.app.getAppPath(),
@@ -100,6 +113,10 @@ export default class Engine extends React.Component<EngineProps> {
     public render(): JSX.Element {
         const hasOutputPathGroups: boolean = (ObjectUtils.isArray(this.props.OutputPathGroups) && this.props.OutputPathGroups.length > 0);
         const activeOutputPathGroup: OutputPathGroup<OutputPath> = this.props.Engine.ActiveOutputPathGroup;
+        const engineOutputResultsContainerId: string = `engineOutputResultsEditorContainer${this.props.match.params.id}`;
+        const engineResult: string = (ObjectUtils.isObject(this.props.Engine.OutputResult))
+            ? this.props.Engine.OutputResult || '{\n\t"Data": "Execute Engine to view results"\n}'
+            : '{\n\t"Data": "Execute Engine to view results"\n}';
         const selectedOutputPathId: string = (ObjectUtils.hasObjectValue(activeOutputPathGroup)
             && hasOutputPathGroups
             && this.props.OutputPathGroups.filter(o => o.ID === activeOutputPathGroup.ID).length === 1)
@@ -160,7 +177,8 @@ export default class Engine extends React.Component<EngineProps> {
                             </select>
                         </Cell>
                     </Row>
-
+                    <SplitPane splitPaneProps={{ split: 'vertical', size: 'calc(50% - 15px)' }}>
+                        <div className='h-100 w-100'>
                     <Row className='h-100 mt-2'>
                         <Cell>
                             <div className='h-100 w-100 border bd-grayWhite border-size-2'>
@@ -175,6 +193,23 @@ export default class Engine extends React.Component<EngineProps> {
                             </div>
                         </Cell>
                     </Row>
+                    </div>
+                    <div className='h-100 w-100'>
+                    <Row className='h-100 mt-2'>
+                        <Cell>
+                        <div className='h-100' id={engineOutputResultsContainerId}>
+                                    <MonacoEditor
+                                        ref={this.monacoEditorRefResult}
+                                        editorDidMount={() => { }}
+                                        language='json'
+                                        options={{ automaticLayout: true, readOnly: true, wordWrap: 'on' }}
+                                        value={engineResult}
+                                    />
+                        </div>
+                        </Cell>
+                    </Row>
+                    </div>
+                    </SplitPane>
 
                     <Row className='mt-2 mb-2'>
                         <Cell colSpan={6}>
