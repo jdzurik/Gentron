@@ -105,7 +105,7 @@ export default class Template extends React.Component<TemplateProps> {
             Metro.toast.create(saveResult.ErrorMessage, null, 7500, 'warning');
         }
         else {
-            Metro.toast.create('Saved Successfully!', null, 3000, 'success');
+            Metro.toast.create('Template Code Saved Successfully!', null, 3000, 'success');
         }
     }    
 

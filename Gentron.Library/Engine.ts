@@ -70,7 +70,7 @@ export default class Engine extends SourceBase<Engine> {
         return ret;
     }
 
-    public run(dirname: string, localPackageFolder: string, results: any, callback:any) {
+    public run(localPackageFolder: string, results: any, callback:any) {
 
         let forkSubState: any = {
             jsonObj: results,

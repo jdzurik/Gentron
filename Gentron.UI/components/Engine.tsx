@@ -78,7 +78,6 @@ export default class Engine extends React.Component<EngineProps> {
         
         
         this.props.Engine.run(
-            remote.app.getAppPath(),
             this.props.LocalPackageFolder,
             this.props.Results, 
             (outputdata) => {
@@ -106,7 +105,7 @@ export default class Engine extends React.Component<EngineProps> {
             Metro.toast.create(saveResult.ErrorMessage, null, 7500, 'warning');
         }
         else {
-            Metro.toast.create('Saved Successfully!', null, 3000, 'success');
+            Metro.toast.create('Engine Code Saved Successfully!', null, 3000, 'success');
         }
     }
 
