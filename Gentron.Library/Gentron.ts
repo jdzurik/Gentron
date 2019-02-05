@@ -13,10 +13,6 @@ export interface IGentron {
     ProjectSettings: ProjectSettings;
 }
 
-process.argv.forEach(function (val, index, array) {
-    console.log(index + ': ' + val);
-});
-
 @JsonObject()
 export class Gentron implements IGentron {
     /*
@@ -148,7 +144,7 @@ export class Gentron implements IGentron {
                 if (outputPathGroups.length > 0) {
                     source.ActiveOutputPathGroup = outputPathGroups[0];
                 }
-            });            
+            });
         }
         catch (e) {
             return Result.fail((e as NodeJS.ErrnoException).message);
@@ -158,19 +154,30 @@ export class Gentron implements IGentron {
     }
 
 
-    public static Run(Gen: Gentron, ProjectPath:string) {
+    public Run() {
 
-       if (ProjectPath != undefined && Gen == undefined) {
-        var rg: Result<TGentronFsResult>;
-        rg = this.open(ProjectPath);
-        console.log(rg.Result.Gentron);
-       }
-       if (Gen != undefined){
+        let  dataResult: any = '';
+        this.PackageSettings.DatabaseSources.forEach(DbSource => {
+            DbSource.executeScript().then(() => {
+                dataResult =  DbSource.Result;       
+            })
+            .catch((err) => {
+               console.warn(err.toString());
+            })
+        });
+
+        this.PackageSettings.Engines.forEach(engine => {
+            engine.run(this.ProjectSettings.LocalPackageFolder, dataResult, (outputData:any)=>{
+                if(outputData){console.log('Engine: '+engine.Name+" error");}
+                else{
+                    console.log('Engine'+engine.Name+" Complete");
+                }
+            } )
+        });
 
 
 
-       }
+        
     }
-    
-}
 
+}
