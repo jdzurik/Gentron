@@ -1,10 +1,10 @@
-import { Gentron } from './Gentron';
+import { Gentron, IGentron } from './Gentron';
 import { Result, TGentronFsResult } from './results';
 
 console.log('Start Gentron');
 if (process.argv != undefined && process.argv != null) {
     
-    let gObj : Gentron = new Gentron();
+    let gObj: Gentron = new Gentron();
     process.argv.forEach(function (val, index, array) {
         console.log(index + ': ' + val);
 
@@ -19,9 +19,13 @@ if (process.argv != undefined && process.argv != null) {
     if (gObj.ActiveProjectPath != '') {
         var rg: Result<TGentronFsResult>;
         rg = Gentron.open(gObj.ActiveProjectPath);
-        console.log(rg.Result.Gentron);
+        if(rg.Result.Gentron != undefined){
+          let g : Gentron = <Gentron> rg.Result.Gentron;
+          g.Run();
+        }
+        
     }
 
-    gObj.Run();
     
 }
+

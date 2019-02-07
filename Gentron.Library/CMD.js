@@ -13,8 +13,10 @@ if (process.argv != undefined && process.argv != null) {
     if (gObj.ActiveProjectPath != '') {
         var rg;
         rg = Gentron_1.Gentron.open(gObj.ActiveProjectPath);
-        console.log(rg.Result.Gentron);
+        if (rg.Result.Gentron != undefined) {
+            let g = rg.Result.Gentron;
+            g.Run();
+        }
     }
-    gObj.Run();
 }
 //# sourceMappingURL=CMD.js.map

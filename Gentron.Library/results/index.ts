@@ -1,6 +1,6 @@
 ﻿import Result from "./Result";
 import FileResult from "./FileResult";
-import { IGentron, File } from "../";
+import { Gentron, IGentron, File } from "../";
 
 export type TGentronFsResult = {
     InfoMessage?: string;

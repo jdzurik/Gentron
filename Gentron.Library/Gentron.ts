@@ -154,22 +154,29 @@ export class Gentron implements IGentron {
     }
 
 
-    public Run() {
+    public async Run() {
         console.log(' Start Run ...');
-        console.log(' this.PackageSettings.DatabaseSources' );
+        
         console.log(this.PackageSettings.DatabaseSources );
         
-        let  dataResult: any = '';
+        
         this.PackageSettings.DatabaseSources.forEach(DbSource => {
             console.log(DbSource.Name + ' Start.')
-            DbSource.executeScript().then(() => {
-                console.log(DbSource.Name + ' Data Loaded.' );                       
+            //DbSource.Script.loadContents();
+           DbSource.executeScript().then(() => {
+                console.log(DbSource.Name + ' Data Loaded.' );      
+                this.StartEngines();                 
             })
             .catch((err) => {
-               console.warn(err.toString());
+               console.log('DB Source load error: ' + err.toString()); 
             })
         });
         
+        
+    }
+
+    private StartEngines(){
+        let  dataResult: any = '';
         dataResult = this.PackageSettings.buildDataSourceResults();
         console.log(dataResult);
 
@@ -183,6 +190,6 @@ export class Gentron implements IGentron {
             } )
         });
         console.log(' End Run.')
-    }
 
+    }
 }
