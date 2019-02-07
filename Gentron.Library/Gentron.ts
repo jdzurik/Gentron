@@ -155,29 +155,34 @@ export class Gentron implements IGentron {
 
 
     public Run() {
-
+        console.log(' Start Run ...');
+        console.log(' this.PackageSettings.DatabaseSources' );
+        console.log(this.PackageSettings.DatabaseSources );
+        
         let  dataResult: any = '';
         this.PackageSettings.DatabaseSources.forEach(DbSource => {
+            console.log(DbSource.Name + ' Start.')
             DbSource.executeScript().then(() => {
-                dataResult =  DbSource.Result;       
+                console.log(DbSource.Name + ' Data Loaded.' );                       
             })
             .catch((err) => {
                console.warn(err.toString());
             })
         });
+        
+        dataResult = this.PackageSettings.buildDataSourceResults();
+        console.log(dataResult);
 
         this.PackageSettings.Engines.forEach(engine => {
             engine.run(this.ProjectSettings.LocalPackageFolder, dataResult, (outputData:any)=>{
-                if(outputData){console.log('Engine: '+engine.Name+" error");}
+                if(outputData){
+                    console.log('Engine: '+engine.Name+' error');}
                 else{
-                    console.log('Engine'+engine.Name+" Complete");
+                    console.log('Engine: '+engine.Name+' Complete');
                 }
             } )
         });
-
-
-
-        
+        console.log(' End Run.')
     }
 
 }

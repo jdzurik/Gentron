@@ -24,6 +24,7 @@ let Engine = Engine_1 = class Engine extends SourceBase_1.default {
         this.ActiveOutputPathGroup = new _1.OutputPathGroup();
         this.EngineCode = new _1.EngineCodeFile();
         this.Templates = [];
+        this.OutputResult = "";
     }
     get HasPrimaryTemplate() {
         return (this.Templates || []).filter(t => t.Type === types_1.TemplateTypes.Primary).length === 1;
@@ -39,17 +40,18 @@ let Engine = Engine_1 = class Engine extends SourceBase_1.default {
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
         ret.Result = this.Result;
+        ret.OutputResult = this.OutputResult;
         ret.Templates = this.Templates.map((template, index) => {
             return template.clone();
         });
         return ret;
     }
-    run(dirname, localPackageFolder, results) {
+    run(localPackageFolder, results, callback) {
         let forkSubState = {
             jsonObj: results,
             templateTexts: []
         };
-        const forked = fork(this.EngineCode.Path, null, { cdw: localPackageFolder });
+        const forked = fork(this.EngineCode.Path, [], { cdw: localPackageFolder, silent: true });
         let ForkResults = "";
         if ((this.Templates || []).length > 0) {
             if (this.HasPrimaryTemplate && this.HasPartialTemplates) {
@@ -65,12 +67,26 @@ let Engine = Engine_1 = class Engine extends SourceBase_1.default {
                 forkSubState.templateTexts.push(this.Templates[0].TemplateCode.Contents);
             }
         }
-        forked.send(forkSubState);
+        let errordata = [];
         forked.on('message', (m) => {
-            console.log(m);
+            console.log("message return");
+            this.OutputResult = m;
             utils_1.FileParserUtils.parseAndWriteFiles(m, this.ActiveOutputPathGroup.Paths[0].Path);
+            callback(m);
         });
-        console.log(ForkResults);
+        forked.send(forkSubState, null, { keepOpen: true }, () => {
+            console.log("Sent fork substate");
+        });
+        forked.stderr.on('data', function (data) {
+            console.log('stderr: ' + data);
+            errordata.push(data);
+        });
+        forked.on('exit', function (code) {
+            if (code !== 0) {
+                console.log('Failed: ' + code);
+                callback(errordata);
+            }
+        });
     }
     execute(dirname, localPackageFolder, results) {
         this.EngineCode.resolveModulesRelativePaths(dirname, localPackageFolder);
