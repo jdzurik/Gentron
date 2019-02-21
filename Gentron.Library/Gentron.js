@@ -26,6 +26,7 @@ const results_1 = require("./results");
 let Gentron = Gentron_1 = class Gentron {
     constructor() {
         this.ActiveProjectPath = '';
+        this.ActiveEnvironment = '';
         this.PackageSettings = new _1.PackageSettings();
         this.ProjectSettings = new _1.ProjectSettings();
     }
@@ -128,7 +129,7 @@ let Gentron = Gentron_1 = class Gentron {
                     this.StartEngines();
                 })
                     .catch((err) => {
-                    console.log('DB Source load error' + err.toString());
+                    console.log('DB Source load error: ' + err.toString());
                 });
             });
         });
@@ -154,6 +155,10 @@ __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
 ], Gentron.prototype, "ActiveProjectPath", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], Gentron.prototype, "ActiveEnvironment", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     ta_json_1.JsonElementType(_1.PackageSettings),

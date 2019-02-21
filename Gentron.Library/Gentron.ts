@@ -20,6 +20,8 @@ export class Gentron implements IGentron {
      */
     @JsonProperty()
     public ActiveProjectPath: string;
+    @JsonProperty()
+    public ActiveEnvironment: string;
 
     @JsonProperty()
     @JsonElementType(PackageSettings)
@@ -35,6 +37,7 @@ export class Gentron implements IGentron {
      */
     public constructor() {
         this.ActiveProjectPath = '';
+        this.ActiveEnvironment = '';
         this.PackageSettings = new PackageSettings();
         this.ProjectSettings = new ProjectSettings();
     }
