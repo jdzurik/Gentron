@@ -16,14 +16,18 @@ let ProjectSettings = class ProjectSettings {
         this.DatabaseConnections = [];
         this.LocalPackageFolder = '';
         this.OutputPathGroups = [];
+        this.Environments = [
+            new _1.Environment({ IsActive: true, Name: 'Dev' }),
+            new _1.Environment({ Name: 'Prod' })
+        ];
         this.RemotePackageLocation = '';
     }
 };
 __decorate([
     ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(_1.ConnectionGroup),
+    ta_json_1.JsonElementType(_1.Environment),
     __metadata("design:type", Array)
-], ProjectSettings.prototype, "DatabaseConnections", void 0);
+], ProjectSettings.prototype, "Environments", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
@@ -33,6 +37,11 @@ __decorate([
     ta_json_1.JsonElementType(_1.OutputPathGroup),
     __metadata("design:type", Array)
 ], ProjectSettings.prototype, "OutputPathGroups", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.ConnectionGroup),
+    __metadata("design:type", Array)
+], ProjectSettings.prototype, "DatabaseConnections", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)

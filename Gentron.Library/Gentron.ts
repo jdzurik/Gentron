@@ -20,6 +20,7 @@ export class Gentron implements IGentron {
      */
     @JsonProperty()
     public ActiveProjectPath: string;
+    
     @JsonProperty()
     public ActiveEnvironment: string;
 

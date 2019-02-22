@@ -17,10 +17,6 @@ export default class PackageSettings {
     public Engines: Engine[];
 
     @JsonProperty()
-    @JsonElementType(Environment)
-    public Environments: Environment[];
-
-    @JsonProperty()
     @JsonElementType(FileSource)
     public FileSources: FileSource[];
 
@@ -42,10 +38,7 @@ export default class PackageSettings {
         this.DatabaseSources = [];
         this.Engines = [];
 
-        this.Environments = [
-            new Environment({ IsActive: true, Name: 'Dev' }),
-            new Environment({ Name: 'Prod' })
-        ];
+
 
         this.FileSources = [];
         this.HttpSources = [];

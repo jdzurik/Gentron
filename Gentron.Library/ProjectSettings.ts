@@ -1,4 +1,4 @@
-﻿import { ConnectionGroup, DatabaseConnection, OutputPath, OutputPathGroup } from "./";
+﻿import { ConnectionGroup, DatabaseConnection, OutputPath, OutputPathGroup, Environment } from "./";
 import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 
 @JsonObject()
@@ -7,8 +7,8 @@ export default class ProjectSettings {
      *  Properties & Fields 
      */
     @JsonProperty()
-    @JsonElementType(ConnectionGroup)
-    public DatabaseConnections: ConnectionGroup<DatabaseConnection>[];
+    @JsonElementType(Environment)
+    public Environments: Environment[];
 
     @JsonProperty()
     public LocalPackageFolder: string;
@@ -16,6 +16,10 @@ export default class ProjectSettings {
     @JsonProperty()
     @JsonElementType(OutputPathGroup)
     public OutputPathGroups: OutputPathGroup<OutputPath>[];
+
+    @JsonProperty()
+    @JsonElementType(ConnectionGroup)
+    public DatabaseConnections: ConnectionGroup<DatabaseConnection>[];
 
     @JsonProperty()
     public RemotePackageLocation: string;
@@ -28,6 +32,10 @@ export default class ProjectSettings {
         this.DatabaseConnections = [];
         this.LocalPackageFolder = '';
         this.OutputPathGroups = [];
+        this.Environments = [
+            new Environment({ IsActive: true, Name: 'Dev' }),
+            new Environment({ Name: 'Prod' })
+        ];
         this.RemotePackageLocation = '';
     }
 }

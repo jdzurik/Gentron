@@ -49,7 +49,6 @@ export default class DatabaseSource extends SourceBase<DatabaseSource> {
         return ret;
     }
 
-
     public async executeScript(): Promise<void> {
         let result: Result<TDataSourceResult>;
 
