@@ -49,6 +49,8 @@ export default class Environment extends Cloneable<Environment> implements IActi
         ret._id = this._id;
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
+        ret.OutputPathGroups = this.OutputPathGroups;
+        ret.DatabaseConnections = this.DatabaseConnections;
 
         return ret;
     }

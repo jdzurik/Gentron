@@ -13,38 +13,42 @@ const _1 = require("./");
 const ta_json_1 = require("ta-json");
 let ProjectSettings = class ProjectSettings {
     constructor() {
-        this.DatabaseConnections = [];
         this.LocalPackageFolder = '';
-        this.OutputPathGroups = [];
-        this.Environments = [
-            new _1.Environment({ IsActive: true, Name: 'Dev' }),
-            new _1.Environment({ Name: 'Prod' })
-        ];
-        this.RemotePackageLocation = '';
+        this.DatabaseConnections = new Array();
+        this.InputSourcePaths = new Array();
+        this.HttpConnections = new Array();
+        this.OutputPaths = Array();
+        this.RemotePackageLocation = new _1.HttpConnection();
     }
 };
-__decorate([
-    ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(_1.Environment),
-    __metadata("design:type", Array)
-], ProjectSettings.prototype, "Environments", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
 ], ProjectSettings.prototype, "LocalPackageFolder", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(_1.OutputPathGroup),
+    ta_json_1.JsonElementType(Array),
     __metadata("design:type", Array)
-], ProjectSettings.prototype, "OutputPathGroups", void 0);
+], ProjectSettings.prototype, "OutputPaths", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(_1.ConnectionGroup),
+    ta_json_1.JsonElementType(Array),
     __metadata("design:type", Array)
 ], ProjectSettings.prototype, "DatabaseConnections", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
-    __metadata("design:type", String)
+    ta_json_1.JsonElementType(Array),
+    __metadata("design:type", Array)
+], ProjectSettings.prototype, "InputSourcePaths", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(Array),
+    __metadata("design:type", Array)
+], ProjectSettings.prototype, "HttpConnections", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.HttpConnection),
+    __metadata("design:type", _1.HttpConnection)
 ], ProjectSettings.prototype, "RemotePackageLocation", void 0);
 ProjectSettings = __decorate([
     ta_json_1.JsonObject(),

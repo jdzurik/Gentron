@@ -2,6 +2,7 @@
 import { IActivateable, ICloneable, IModifiable } from "./interfaces";
 import { JsonObject, JsonProperty } from "ta-json";
 import { TDataSourceResult } from "./results";
+import SourceDriverFile from "./SourceDriverFile";
 
 @JsonObject()
 export default abstract class SourceBase<T> extends Cloneable<T> implements IActivateable, ICloneable<T>, IModifiable<T> {
@@ -16,6 +17,9 @@ export default abstract class SourceBase<T> extends Cloneable<T> implements IAct
 
     public Result: TDataSourceResult;
 
+    @JsonProperty()
+    public DataDriver: SourceDriverFile;
+
 
     /*
      *  Constructors
@@ -24,6 +28,7 @@ export default abstract class SourceBase<T> extends Cloneable<T> implements IAct
         super();
         this.IsActive = true;
         this.Name = '';
+        this.DataDriver = new SourceDriverFile();
         this.Result = {
             Json: '',
             Object: null,

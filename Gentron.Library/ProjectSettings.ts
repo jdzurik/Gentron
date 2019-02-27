@@ -1,4 +1,4 @@
-﻿import { ConnectionGroup, DatabaseConnection, OutputPath, OutputPathGroup, Environment } from "./";
+﻿import { HttpConnection, FileConnection, DatabaseConnection, OutputPath, OutputPathGroup, Environment } from "./";
 import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 
 @JsonObject()
@@ -6,36 +6,41 @@ export default class ProjectSettings {
     /*
      *  Properties & Fields 
      */
-    @JsonProperty()
-    @JsonElementType(Environment)
-    public Environments: Environment[];
-
+    
     @JsonProperty()
     public LocalPackageFolder: string;
 
     @JsonProperty()
-    @JsonElementType(OutputPathGroup)
-    public OutputPathGroups: OutputPathGroup<OutputPath>[];
+    @JsonElementType(Array)
+    public OutputPaths: Array<OutputPath>;
 
     @JsonProperty()
-    @JsonElementType(ConnectionGroup)
-    public DatabaseConnections: ConnectionGroup<DatabaseConnection>[];
+    @JsonElementType(Array)
+    public DatabaseConnections: Array<DatabaseConnection>;
 
     @JsonProperty()
-    public RemotePackageLocation: string;
+    @JsonElementType(Array)
+    public InputSourcePaths: Array<FileConnection>;
+
+    @JsonProperty()
+    @JsonElementType(Array)
+    public HttpConnections: Array<HttpConnection>;
+
+    @JsonProperty()
+    @JsonElementType(HttpConnection)
+    public RemotePackageLocation: HttpConnection;
 
 
     /*
      *  Constructors
      */
     public constructor() {
-        this.DatabaseConnections = [];
         this.LocalPackageFolder = '';
-        this.OutputPathGroups = [];
-        this.Environments = [
-            new Environment({ IsActive: true, Name: 'Dev' }),
-            new Environment({ Name: 'Prod' })
-        ];
-        this.RemotePackageLocation = '';
+        this.DatabaseConnections = new Array<DatabaseConnection>();
+        this.InputSourcePaths = new Array<FileConnection>();
+        this.HttpConnections = new Array<HttpConnection>();
+        this.OutputPaths = Array<OutputPath>();
+        this.RemotePackageLocation = new HttpConnection();
+
     }
 }
