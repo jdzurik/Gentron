@@ -10,6 +10,8 @@ export default abstract class ConnectionBase<T> extends Cloneable<T> implements 
     @JsonProperty()
     public IsActive: boolean;
 
+    @JsonProperty()
+    public Name: string;
 
     /*
      *  Constructors
@@ -17,6 +19,7 @@ export default abstract class ConnectionBase<T> extends Cloneable<T> implements 
     public constructor() {
         super();
         this.IsActive = true;
+        this.Name = '';
     }
 
 

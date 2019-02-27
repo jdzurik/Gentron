@@ -11,23 +11,22 @@ export default class ProjectSettings {
     public LocalPackageFolder: string;
 
     @JsonProperty()
-    @JsonElementType(Array)
-    public OutputPaths: Array<OutputPath>;
+    @JsonElementType(OutputPath)
+    public OutputPaths: OutputPath[];
 
     @JsonProperty()
-    @JsonElementType(Array)
-    public DatabaseConnections: Array<DatabaseConnection>;
+    @JsonElementType(DatabaseConnection)
+    public DatabaseConnections: DatabaseConnection[];
 
     @JsonProperty()
-    @JsonElementType(Array)
-    public InputSourcePaths: Array<FileConnection>;
-
-    @JsonProperty()
-    @JsonElementType(Array)
-    public HttpConnections: Array<HttpConnection>;
+    @JsonElementType(FileConnection)
+    public InputSourcePaths: FileConnection[];
 
     @JsonProperty()
     @JsonElementType(HttpConnection)
+    public HttpConnections: HttpConnection[];
+
+    @JsonProperty()
     public RemotePackageLocation: HttpConnection;
 
 
