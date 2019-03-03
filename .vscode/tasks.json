@@ -13,6 +13,14 @@
         },
         {
             "type": "typescript",
+            "label": "Build -- Fiddle",
+            "tsconfig": "Gentron.Fiddle\\tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "type": "typescript",
             "label": "Build -- UI",
             "tsconfig": "Gentron.UI\\tsconfig.json",
             "problemMatcher": [
@@ -33,6 +41,14 @@
             "type": "typescript",
             "label": "Watch -- Library",
             "tsconfig": "Gentron.Library\\tsconfig.json",
+            "option": "watch",
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        },{
+            "type": "typescript",
+            "label": "Watch -- Fiddle",
+            "tsconfig": "Gentron.Fiddle\\tsconfig.json",
             "option": "watch",
             "problemMatcher": [
                 "$tsc-watch"
@@ -85,33 +101,31 @@
             "promptOnClose": false,
             "script": "build",
             "path": "Gentron.UI/",
-            "problemMatcher": [],
+            "problemMatcher": []
         },
         {
             "label": "Webpack -- Build All",
             "dependsOn": [
                 "Build -- All",
-                // "Webpack -- Set Environment",
                 "Webpack -- Build"
             ],
-            "problemMatcher": [],
-        },        
+            "problemMatcher": []
+        },
         {
             "label": "Webpack -- Serve",
             "type": "npm",
             "script": "start",
             "path": "Gentron.UI/",
-            "problemMatcher": [],
+            "problemMatcher": []
         },
         {
             "label": "Webpack -- All",
             "dependsOn": [
                 "Watch -- All",
-                // "Webpack -- Set Environment",
                 "Webpack -- Serve"
             ],
-            "problemMatcher": [],
-        },
+            "problemMatcher": []
+        }
     ]
 }
 //cmd /c SET NODE_ENV=development&& webpack-dev-server --hot --colors

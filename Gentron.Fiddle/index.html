@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Gentron - Project</title>
+  <style type="text/css">
+    html {
+      height: 100%;
+    }
+
+    .split,
+    .gutter.gutter-horizontal {
+      float: left;
+    }
+
+    .gutter.gutter-horizontal {
+      cursor: ew-resize;
+    }
+  </style>
+  <link rel="stylesheet" href="./node_modules/metro4/build/css/metro-all.min.css" />
+  <script>
+    window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');
+  </script>
+</head>
+
+<body class="h-100 w-100">
+  <div class="h-100 w-100">
+    <div data-role="navview" class="h-100">
+      <div class="navview-pane h-100">
+        <button class="pull-button">
+          <span class="default-icon-menu"></span>
+        </button>
+        <ul class="navview-menu h-100">
+          <li class="item-header">Project Settings</li>
+
+          <li>
+            <a href="#">
+              <span class="icon"><span class="mif-apps"></span></span>
+              <span class="caption">General</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon"><span class="mif-apps"></span></span>
+              <span class="caption">Database Connections</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon"><span class="mif-apps"></span></span>
+              <span class="caption">File Base Paths</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon"><span class="mif-apps"></span></span>
+              <span class="caption">File Base Paths</span>
+            </a>
+          </li>
+          <li class="item-separator"></li>
+
+          <li class="item-header">Recent Projects</li>
+
+          <li>
+            <a href="#">
+              <span class="icon"><span class="mif-file-word"></span></span>
+              <span class="caption">Word</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="icon"><span class="mif-file-excel"></span></span>
+              <span class="caption">Excel</span>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+      <div class="navview-content h-100 w-100">
+        <div class="h-100">
+          <div class="split h-100" id="left">
+            Left
+          </div>
+          <div class="split h-100" id="right">
+            right
+          </div>
+          <div class="split h-100" id="bottom">
+            bottom
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./node_modules/metro4/build/js/metro.min.js');
+    require('./node_modules/split.js/dist/split.min.js');
+    require('./renderer.js');
+  </script>
+
+</body>
+<script>
+  var sizes = localStorage.getItem('split-sizes');
+
+  if (sizes) {
+    sizes = JSON.parse(sizes);
+  } else {
+    sizes = [50, 50]; // default sizes
+  }
+
+  var split = Split(['#one', '#two'], {
+    sizes: sizes,
+    onDragEnd: function (sizes) {
+      localStorage.setItem('split-sizes', JSON.stringify(sizes))
+    },
+  });
+</script>
+
+</html>

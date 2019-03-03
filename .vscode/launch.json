@@ -4,6 +4,20 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Gentron: Fiddle",
+            "protocol": "inspector",
+            "program": "${workspaceFolder}/Gentron.Fiddle/main.js",
+            "runtimeExecutable": "${workspaceFolder}/Gentron.Fiddle/node_modules/.bin/electron",
+            "runtimeArgs": [
+                "--remote-debugging-port=9223",
+            ],
+            "windows": {
+                "runtimeExecutable": "${workspaceFolder}\\Gentron.Fiddle\\node_modules\\.bin\\electron.cmd"
+            },
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Electron: Main",
             "protocol": "inspector",
             "program": "${workspaceFolder}/Gentron.UI/main.js",
