@@ -9,24 +9,44 @@
       height: 100%;
     }
 
-    .split,
-    .gutter.gutter-horizontal {
-      float: left;
+    #flex {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    }
+
+    .gutter {
+    background-color: #eee;
+    background-repeat: no-repeat; 
+    background-position: 50%;
+    }
+
+    .gutter.gutter-vertical {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
     }
 
     .gutter.gutter-horizontal {
-      cursor: ew-resize;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+    }
+    #footer{
+      height: 25px; 
+      width: 100%;
+      background: rgb(31, 29, 158);
+      padding:1px;
+      font-size: 14px;
+      color: azure;
     }
   </style>
   <link rel="stylesheet" href="./node_modules/metro4/build/css/metro-all.min.css" />
   <script>
+   
     window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.min.js');
   </script>
 </head>
 
 <body class="h-100 w-100">
-  <div class="h-100 w-100">
-    <div data-role="navview" class="h-100">
+  <div class="h-100 w-100" style="padding-bottom: 25px;">
+    <div data-role="navview" class="h-100" >
       <div class="navview-pane h-100">
         <button class="pull-button">
           <span class="default-icon-menu"></span>
@@ -80,44 +100,73 @@
 
       <div class="navview-content h-100 w-100">
         <div class="h-100">
-          <div class="split h-100" id="left">
-            Left
+            <div class="split" id="topContainer">
+              <div id="flex">
+                <div class="split" id="dataSourceContainer">
+                    Left
+                  </div>
+                  <div class="split" style="width:100%" id="templateContainer">
+                    right
+                  </div>
+                </div>
+              </div>
+              <div class="split" id="outputContainer">
+                Bottom
+              </div>
           </div>
-          <div class="split h-100" id="right">
-            right
-          </div>
-          <div class="split h-100" id="bottom">
-            bottom
-          </div>
-        </div>
-
+          
       </div>
+    </div>
+    <div id="footer">
+          <div>asd
+            </div>       
     </div>
   </div>
 
   <script>
-    // You can also require other files to run in this process
+    
     require('./node_modules/metro4/build/js/metro.min.js');
-    require('./node_modules/split.js/dist/split.min.js');
+    var Split = require('./node_modules/split.js/dist/split.min.js');
+    require('../Gentron.Library/Gentron.js'); 
     require('./renderer.js');
+    var em = require('./electronMenu.js');
+   
+   //var em = electronMenu();
+    //em();
+    var vSizes = localStorage.getItem('split-vSizes');
+    if (vSizes) {
+      vSizes = JSON.parse(vSizes);
+    } else {
+      vSizes = [50, 50]; // default sizes
+    }
+
+    var vSplit = Split(['#topContainer', '#outputContainer'], {
+      sizes: vSizes,
+      direction: 'vertical',
+      onDragEnd: function (sizes) {
+        localStorage.setItem('split-vSizes', JSON.stringify(sizes))
+      },
+    });
+
+
+    var hSizes = localStorage.getItem('split-hSizes');
+    if (hSizes) {
+      hSizes = JSON.parse(hSizes);
+    } else {
+      hSizes = [50, 50]; // default sizes
+    }
+
+    var hSplit = Split(['#dataSourceContainer', '#templateContainer'], {
+      sizes: hSizes,
+      minSize: [100, 10],
+      onDragEnd: function (sizes) {
+        localStorage.setItem('split-hSizes', JSON.stringify(sizes))
+      },
+    });
+
   </script>
 
 </body>
-<script>
-  var sizes = localStorage.getItem('split-sizes');
 
-  if (sizes) {
-    sizes = JSON.parse(sizes);
-  } else {
-    sizes = [50, 50]; // default sizes
-  }
-
-  var split = Split(['#one', '#two'], {
-    sizes: sizes,
-    onDragEnd: function (sizes) {
-      localStorage.setItem('split-sizes', JSON.stringify(sizes))
-    },
-  });
-</script>
 
 </html>

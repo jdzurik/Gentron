@@ -4,7 +4,6 @@
     "allowJs": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
