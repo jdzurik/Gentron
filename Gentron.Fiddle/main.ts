@@ -14,7 +14,7 @@ function createWindow() {
         width: 1920,
         webPreferences: {
             nodeIntegration: true
-        }
+        } 
     };
 
     win = new BrowserWindow(windowOpts);
@@ -35,7 +35,7 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
-
+ 
 // Quit when all windows are closed.
 app.on('window-all-closed', (): void => {
     // On macOS it is common for applications and their menu bar
