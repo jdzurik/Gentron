@@ -11,11 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const abstract_1 = require("./abstract");
 const ta_json_1 = require("ta-json");
+const SourceDriverFile_1 = require("./SourceDriverFile");
 let SourceBase = class SourceBase extends abstract_1.Cloneable {
     constructor() {
         super();
         this.IsActive = true;
         this.Name = '';
+        this.DataDriver = new SourceDriverFile_1.default();
         this.Result = {
             Json: '',
             Object: null,
@@ -31,6 +33,10 @@ __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
 ], SourceBase.prototype, "Name", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", SourceDriverFile_1.default)
+], SourceBase.prototype, "DataDriver", void 0);
 SourceBase = __decorate([
     ta_json_1.JsonObject(),
     __metadata("design:paramtypes", [])

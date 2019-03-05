@@ -13,16 +13,12 @@ const _1 = require("./");
 const ta_json_1 = require("ta-json");
 let PackageSettings = class PackageSettings {
     constructor() {
-        this.DatabaseSources = [];
-        this.Engines = [];
-        this.Environments = [
-            new _1.Environment({ IsActive: true, Name: 'Dev' }),
-            new _1.Environment({ Name: 'Prod' })
-        ];
-        this.FileSources = [];
-        this.HttpSources = [];
         this.PackageName = '';
         this.ReadMe = '';
+        this.DatabaseSources = [];
+        this.FileSources = [];
+        this.HttpSources = [];
+        this.Engines = [];
     }
     buildDataSourceResults() {
         let ret = {};
@@ -68,19 +64,17 @@ let PackageSettings = class PackageSettings {
 };
 __decorate([
     ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], PackageSettings.prototype, "PackageName", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], PackageSettings.prototype, "ReadMe", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
     ta_json_1.JsonElementType(_1.DatabaseSource),
     __metadata("design:type", Array)
 ], PackageSettings.prototype, "DatabaseSources", void 0);
-__decorate([
-    ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(_1.Engine),
-    __metadata("design:type", Array)
-], PackageSettings.prototype, "Engines", void 0);
-__decorate([
-    ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(_1.Environment),
-    __metadata("design:type", Array)
-], PackageSettings.prototype, "Environments", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     ta_json_1.JsonElementType(_1.FileSource),
@@ -93,12 +87,9 @@ __decorate([
 ], PackageSettings.prototype, "HttpSources", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
-    __metadata("design:type", String)
-], PackageSettings.prototype, "PackageName", void 0);
-__decorate([
-    ta_json_1.JsonProperty(),
-    __metadata("design:type", String)
-], PackageSettings.prototype, "ReadMe", void 0);
+    ta_json_1.JsonElementType(_1.Engine),
+    __metadata("design:type", Array)
+], PackageSettings.prototype, "Engines", void 0);
 PackageSettings = __decorate([
     ta_json_1.JsonObject(),
     __metadata("design:paramtypes", [])

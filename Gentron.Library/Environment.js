@@ -10,24 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Environment_1;
+const _1 = require("./");
 const abstract_1 = require("./abstract");
 const ta_json_1 = require("ta-json");
-const _1 = require("./");
+const _2 = require("./");
 let Environment = Environment_1 = class Environment extends abstract_1.Cloneable {
     constructor(props = { IsActive: false, Name: '' }) {
         super();
         (props.IsActive) ? this.IsActive = true : this.IsActive = false;
         this.Name = String(props.Name);
+        this.DatabaseConnections = [];
+        this.OutputPathGroups = [];
     }
     clone() {
         const ret = new Environment_1();
         ret._id = this._id;
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
+        ret.OutputPathGroups = this.OutputPathGroups;
+        ret.DatabaseConnections = this.DatabaseConnections;
         return ret;
     }
     update(environment) {
-        if (!_1.ObjectUtils.hasValue(environment)) {
+        if (!_2.ObjectUtils.hasValue(environment)) {
             return;
         }
         this.IsActive = environment.IsActive;
@@ -42,6 +47,16 @@ __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
 ], Environment.prototype, "Name", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.OutputPathGroup),
+    __metadata("design:type", Array)
+], Environment.prototype, "OutputPathGroups", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    ta_json_1.JsonElementType(_1.ConnectionGroup),
+    __metadata("design:type", Array)
+], Environment.prototype, "DatabaseConnections", void 0);
 Environment = Environment_1 = __decorate([
     ta_json_1.JsonObject(),
     __metadata("design:paramtypes", [Object])

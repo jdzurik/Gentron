@@ -9,10 +9,10 @@ export default class OutputPath extends Cloneable<OutputPath> implements IModifi
      *  Properties & Fields
      */
     @JsonProperty()
-    public Environment: string;
+    public Name: string;
 
     @JsonProperty()
-    public Path: string;
+    public BasePath: string;
 
 
     /*
@@ -20,8 +20,8 @@ export default class OutputPath extends Cloneable<OutputPath> implements IModifi
      */
     public constructor() {
         super();
-        this.Environment = '';
-        this.Path = '';
+        this.Name = '';
+        this.BasePath = '';
     }
 
 
@@ -32,8 +32,8 @@ export default class OutputPath extends Cloneable<OutputPath> implements IModifi
         const ret: OutputPath = new OutputPath();
 
         ret._id = this._id;
-        ret.Environment = this.Environment;
-        ret.Path = this.Path;
+        ret.Name = this.Name;
+        ret.BasePath = this.BasePath;
 
         return ret;
     }
@@ -43,7 +43,7 @@ export default class OutputPath extends Cloneable<OutputPath> implements IModifi
             return;
         }
 
-        this.Environment = outputPath.Environment;
-        this.Path = outputPath.Path;
+        this.Name = outputPath.Name;
+        this.BasePath = outputPath.BasePath;
     }
 }

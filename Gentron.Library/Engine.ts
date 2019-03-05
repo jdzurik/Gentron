@@ -96,7 +96,7 @@ export default class Engine extends SourceBase<Engine> {
         forked.on('message', (m: string) => {
             console.log("message return");
             this.OutputResult = m;
-            FileParserUtils.parseAndWriteFiles(m, this.ActiveOutputPathGroup.Paths[0].Path);
+            FileParserUtils.parseAndWriteFiles(m, this.ActiveOutputPathGroup.Paths[0].BasePath);
             callback(m);
         });
 
@@ -153,7 +153,7 @@ export default class Engine extends SourceBase<Engine> {
         //  TODO
         //  this.ActiveOutputPathGroup.Paths[0].Path is hardcoded to grab the first environment (Dev)
         //  from the active output path group. Need to figure out some way to pass in environment
-        FileParserUtils.parseAndWriteFiles(vmState.globalScope.templateResult, this.ActiveOutputPathGroup.Paths[0].Path);
+        FileParserUtils.parseAndWriteFiles(vmState.globalScope.templateResult, this.ActiveOutputPathGroup.Paths[0].BasePath);
     }
 
 

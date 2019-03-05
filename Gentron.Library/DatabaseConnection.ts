@@ -10,17 +10,12 @@ export default class DatabaseConnection extends ConnectionBase<DatabaseConnectio
     @JsonProperty()
     public ConnectionString: string;
 
-    @JsonProperty()
-    public Environment: string;
-
-
     /*
      *  Constructors
      */
     public constructor() {
         super();
         this.ConnectionString = '';
-        this.Environment = '';
     }
 
 
@@ -32,9 +27,8 @@ export default class DatabaseConnection extends ConnectionBase<DatabaseConnectio
 
         ret._id = this._id;
         ret.ConnectionString = this.ConnectionString;
-        ret.Environment = this.Environment;
         ret.IsActive = this.IsActive;
-
+        ret.Name = this.Name;
         return ret;
     }
 
@@ -45,7 +39,7 @@ export default class DatabaseConnection extends ConnectionBase<DatabaseConnectio
         }
 
         this.ConnectionString = connection.ConnectionString;
-        this.Environment = connection.Environment;
         this.IsActive = connection.IsActive;
+        this.Name = connection.Name;
     }
 }

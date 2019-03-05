@@ -26,7 +26,6 @@ const results_1 = require("./results");
 let Gentron = Gentron_1 = class Gentron {
     constructor() {
         this.ActiveProjectPath = '';
-        this.ActiveEnvironment = '';
         this.PackageSettings = new _1.PackageSettings();
         this.ProjectSettings = new _1.ProjectSettings();
     }
@@ -97,20 +96,8 @@ let Gentron = Gentron_1 = class Gentron {
         try {
             ret.PackageSettings = _1.SerializationUtils.TaJson.parse(packageReadResult.Result, _1.PackageSettings);
             ret.PackageSettings.DatabaseSources.forEach((source, index) => {
-                const connections = ret.ProjectSettings.DatabaseConnections.filter((connection) => {
-                    return connection.ID === source.ActiveConnectionGroup.ID;
-                });
-                if (connections.length > 0) {
-                    source.ActiveConnectionGroup = connections[0];
-                }
             });
             ret.PackageSettings.Engines.forEach((source, index) => {
-                const outputPathGroups = ret.ProjectSettings.OutputPathGroups.filter((outputPath) => {
-                    return outputPath.ID === source.ActiveOutputPathGroup.ID;
-                });
-                if (outputPathGroups.length > 0) {
-                    source.ActiveOutputPathGroup = outputPathGroups[0];
-                }
             });
         }
         catch (e) {
@@ -155,10 +142,6 @@ __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
 ], Gentron.prototype, "ActiveProjectPath", void 0);
-__decorate([
-    ta_json_1.JsonProperty(),
-    __metadata("design:type", String)
-], Gentron.prototype, "ActiveEnvironment", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     ta_json_1.JsonElementType(_1.PackageSettings),

@@ -1,6 +1,7 @@
-﻿import { Cloneable } from "./abstract";
+﻿import { ConnectionGroup, DatabaseConnection, OutputPath, OutputPathGroup } from "./";
+import { Cloneable } from "./abstract";
 import { IActivateable, ICloneable, IModifiable } from "./interfaces";
-import { JsonObject, JsonProperty } from "ta-json";
+import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 import { ObjectUtils } from "./";
 import { Nullable, NonFunctionProperties } from "./types";
 import { stringify } from "querystring";
@@ -16,6 +17,13 @@ export default class Environment extends Cloneable<Environment> implements IActi
     @JsonProperty()
     public Name: string;
 
+    @JsonProperty()
+    @JsonElementType(OutputPathGroup)
+    public OutputPathGroups: OutputPathGroup<OutputPath>[];
+
+    @JsonProperty()
+    @JsonElementType(ConnectionGroup)
+    public DatabaseConnections: ConnectionGroup<DatabaseConnection>[];
 
     /*
      *  Constructors
@@ -26,6 +34,8 @@ export default class Environment extends Cloneable<Environment> implements IActi
         super();
        (props.IsActive)?this.IsActive = true:this.IsActive = false;
        this.Name = String(props.Name);
+       this.DatabaseConnections = [];
+       this.OutputPathGroups = [];
 
     }
 
@@ -39,6 +49,8 @@ export default class Environment extends Cloneable<Environment> implements IActi
         ret._id = this._id;
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
+        ret.OutputPathGroups = this.OutputPathGroups;
+        ret.DatabaseConnections = this.DatabaseConnections;
 
         return ret;
     }

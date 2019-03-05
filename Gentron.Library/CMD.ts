@@ -19,14 +19,6 @@ if (process.argv != undefined && process.argv != null) {
             gObj.ActiveProjectPath = process.argv[index+1];
         }
 
-        if ((val.toLowerCase() == '-e' ||
-        val.toLowerCase() == '-env' ||
-        val.toLowerCase() == '-environment') 
-        && process.argv[index+1] != undefined 
-        && process.argv[index+1] != null) {
-            ActiveEnvironment = process.argv[index+1];
-        }
-
         if ((val.toLowerCase() == '-g' ||
         val.toLowerCase() == '-gobj' ||
         val.toLowerCase() == '-gentronobject' ||
@@ -44,10 +36,6 @@ if (process.argv != undefined && process.argv != null) {
 
         if(rg.Result.Gentron != undefined){
           let g : Gentron = <Gentron> rg.Result.Gentron;
-          if(ActiveEnvironment!= '')
-          {
-              g.ActiveEnvironment = ActiveEnvironment;
-          }
           g.Run();
         }
         

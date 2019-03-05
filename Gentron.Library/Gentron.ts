@@ -20,9 +20,7 @@ export class Gentron implements IGentron {
      */
     @JsonProperty()
     public ActiveProjectPath: string;
-    @JsonProperty()
-    public ActiveEnvironment: string;
-
+    
     @JsonProperty()
     @JsonElementType(PackageSettings)
     public PackageSettings: PackageSettings;
@@ -37,7 +35,6 @@ export class Gentron implements IGentron {
      */
     public constructor() {
         this.ActiveProjectPath = '';
-        this.ActiveEnvironment = '';
         this.PackageSettings = new PackageSettings();
         this.ProjectSettings = new ProjectSettings();
     }
@@ -130,23 +127,23 @@ export class Gentron implements IGentron {
             ret.PackageSettings = SerializationUtils.TaJson.parse(packageReadResult.Result, PackageSettings);
 
             ret.PackageSettings.DatabaseSources.forEach((source: DatabaseSource, index: number) => {
-                const connections: ConnectionGroup<DatabaseConnection>[] = ret.ProjectSettings.DatabaseConnections.filter((connection: ConnectionGroup<DatabaseConnection>) => {
-                    return connection.ID === source.ActiveConnectionGroup.ID;
-                });
+                // const connections: Array<DatabaseConnection>[] = ret.ProjectSettings.DatabaseConnections.filter((connection: Array<DatabaseConnection>) => {
+                //     return connection.ID === source.ActiveConnectionGroup.ID;
+                // });
 
-                if (connections.length > 0) {
-                    source.ActiveConnectionGroup = connections[0];
-                }
+                // if (connections.length > 0) {
+                //     source.ActiveConnectionGroup = connections[0];
+                // }
             });
 
             ret.PackageSettings.Engines.forEach((source: Engine, index: number) => {
-                const outputPathGroups: OutputPathGroup<OutputPath>[] = ret.ProjectSettings.OutputPathGroups.filter((outputPath: OutputPathGroup<OutputPath>) => {
-                    return outputPath.ID === source.ActiveOutputPathGroup.ID;
-                });
+                // const outputPathGroups: OutputPathGroup<OutputPath>[] = ret.ProjectSettings.OutputPathGroups.filter((outputPath: OutputPathGroup<OutputPath>) => {
+                //     return outputPath.ID === source.ActiveOutputPathGroup.ID;
+                // });
 
-                if (outputPathGroups.length > 0) {
-                    source.ActiveOutputPathGroup = outputPathGroups[0];
-                }
+                // if (outputPathGroups.length > 0) {
+                //     source.ActiveOutputPathGroup = outputPathGroups[0];
+                // }
             });
         }
         catch (e) {

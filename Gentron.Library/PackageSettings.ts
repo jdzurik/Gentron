@@ -9,16 +9,14 @@ export default class PackageSettings {
      *  Properties & Fields 
      */
     @JsonProperty()
+    public PackageName: string;
+
+    @JsonProperty()
+    public ReadMe: string;
+
+    @JsonProperty()
     @JsonElementType(DatabaseSource)
     public DatabaseSources: DatabaseSource[];
-
-    @JsonProperty()
-    @JsonElementType(Engine)
-    public Engines: Engine[];
-
-    @JsonProperty()
-    @JsonElementType(Environment)
-    public Environments: Environment[];
 
     @JsonProperty()
     @JsonElementType(FileSource)
@@ -29,28 +27,22 @@ export default class PackageSettings {
     public HttpSources: HttpSource[];
 
     @JsonProperty()
-    public PackageName: string;
-
-    @JsonProperty()
-    public ReadMe: string;
+    @JsonElementType(Engine)
+    public Engines: Engine[];
 
 
     /*
      *  Constructors
      */
     public constructor() {
-        this.DatabaseSources = [];
-        this.Engines = [];
-
-        this.Environments = [
-            new Environment({ IsActive: true, Name: 'Dev' }),
-            new Environment({ Name: 'Prod' })
-        ];
-
-        this.FileSources = [];
-        this.HttpSources = [];
         this.PackageName = '';
         this.ReadMe = '';
+
+        this.DatabaseSources = [];
+        this.FileSources = [];
+        this.HttpSources = [];
+
+        this.Engines = [];
     }
 
 
