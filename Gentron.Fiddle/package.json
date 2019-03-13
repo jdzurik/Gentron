@@ -2,11 +2,28 @@
   "name": "electron-quick-start",
   "version": "1.0.0",
   "description": "A minimal Electron application",
-  "main": "main.js",
+  "author": "GitHub",
   "scripts": {
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "main": "background.js",
+  "dependencies": {
+    "@vue/cli": "^3.5.0",
+    "jquery": "^3.3.1",
+    "metro4": "^4.2.37",
+    "node": "^10.15.2",
+    "split.js": "^1.5.10",
+    "typescript": "^3.3.3333",
+    "vue-cli": "^2.9.6"
+  },
+  "devDependencies": {
+    "electron": "^4.0.6",
+    "vue-cli-plugin-electron-builder": "^1.1.2"
+  },
   "keywords": [
     "Electron",
     "quick",
@@ -14,16 +31,6 @@
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
   "license": "CC0-1.0",
-  "devDependencies": {
-    "electron": "^4.0.6"
-  },
-  "dependencies": {
-    "jquery": "^3.3.1",
-    "metro4": "^4.2.37",
-    "node": "^10.15.2",
-    "split.js": "^1.5.10",
-    "typescript": "^3.3.3333"
-  }
+  "repository": "https://github.com/electron/electron-quick-start"
 }
