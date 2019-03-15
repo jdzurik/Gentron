@@ -27,27 +27,26 @@ __decorate([
 ], ProjectSettings.prototype, "LocalPackageFolder", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(Array),
+    ta_json_1.JsonElementType(_1.OutputPath),
     __metadata("design:type", Array)
 ], ProjectSettings.prototype, "OutputPaths", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(Array),
+    ta_json_1.JsonElementType(_1.DatabaseConnection),
     __metadata("design:type", Array)
 ], ProjectSettings.prototype, "DatabaseConnections", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(Array),
+    ta_json_1.JsonElementType(_1.FileConnection),
     __metadata("design:type", Array)
 ], ProjectSettings.prototype, "InputSourcePaths", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(Array),
+    ta_json_1.JsonElementType(_1.HttpConnection),
     __metadata("design:type", Array)
 ], ProjectSettings.prototype, "HttpConnections", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
-    ta_json_1.JsonElementType(_1.HttpConnection),
     __metadata("design:type", _1.HttpConnection)
 ], ProjectSettings.prototype, "RemotePackageLocation", void 0);
 ProjectSettings = __decorate([

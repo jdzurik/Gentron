@@ -16,32 +16,32 @@ const _1 = require("./");
 let OutputPath = OutputPath_1 = class OutputPath extends abstract_1.Cloneable {
     constructor() {
         super();
-        this.Environment = '';
-        this.Path = '';
+        this.Name = '';
+        this.BasePath = '';
     }
     clone() {
         const ret = new OutputPath_1();
         ret._id = this._id;
-        ret.Environment = this.Environment;
-        ret.Path = this.Path;
+        ret.Name = this.Name;
+        ret.BasePath = this.BasePath;
         return ret;
     }
     update(outputPath) {
         if (!_1.ObjectUtils.hasValue(outputPath)) {
             return;
         }
-        this.Environment = outputPath.Environment;
-        this.Path = outputPath.Path;
+        this.Name = outputPath.Name;
+        this.BasePath = outputPath.BasePath;
     }
 };
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
-], OutputPath.prototype, "Environment", void 0);
+], OutputPath.prototype, "Name", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
-], OutputPath.prototype, "Path", void 0);
+], OutputPath.prototype, "BasePath", void 0);
 OutputPath = OutputPath_1 = __decorate([
     ta_json_1.JsonObject(),
     __metadata("design:paramtypes", [])

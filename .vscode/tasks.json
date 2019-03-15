@@ -3,7 +3,7 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
-        {
+       {
             "type": "typescript",
             "label": "Build -- Library",
             "tsconfig": "Gentron.Library\\tsconfig.json",
@@ -15,6 +15,14 @@
             "type": "typescript",
             "label": "Build -- Fiddle",
             "tsconfig": "Gentron.Fiddle\\tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "type": "typescript",
+            "label": "Build -- vue",
+            "tsconfig": "gentron.vue\\tsconfig.json",
             "problemMatcher": [
                 "$tsc"
             ]
@@ -45,7 +53,8 @@
             "problemMatcher": [
                 "$tsc-watch"
             ]
-        },{
+        },
+        {
             "type": "typescript",
             "label": "Watch -- Fiddle",
             "tsconfig": "Gentron.Fiddle\\tsconfig.json",
@@ -124,6 +133,13 @@
                 "Watch -- All",
                 "Webpack -- Serve"
             ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Gentron Vue Electron Build",
+            "type": "npm",
+            "script": "electron:build",
+            "path": "gentron.vue/",
             "problemMatcher": []
         }
     ]

@@ -13,6 +13,12 @@ export default abstract class ConnectionBase<T> extends Cloneable<T> implements 
     @JsonProperty()
     public Name: string;
 
+    @JsonProperty()
+    public Username: string;
+
+    @JsonProperty()
+    public Password: string;
+
     /*
      *  Constructors
      */
@@ -20,6 +26,8 @@ export default abstract class ConnectionBase<T> extends Cloneable<T> implements 
         super();
         this.IsActive = true;
         this.Name = '';
+        this.Username = '';
+        this.Password = '';
     }
 
 
@@ -29,4 +37,7 @@ export default abstract class ConnectionBase<T> extends Cloneable<T> implements 
     public abstract clone(): T;
 
     public abstract update(connection: T): void;
+
+
+
 }

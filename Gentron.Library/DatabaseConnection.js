@@ -17,14 +17,13 @@ let DatabaseConnection = DatabaseConnection_1 = class DatabaseConnection extends
     constructor() {
         super();
         this.ConnectionString = '';
-        this.Environment = '';
     }
     clone() {
         const ret = new DatabaseConnection_1();
         ret._id = this._id;
         ret.ConnectionString = this.ConnectionString;
-        ret.Environment = this.Environment;
         ret.IsActive = this.IsActive;
+        ret.Name = this.Name;
         return ret;
     }
     update(connection) {
@@ -32,18 +31,14 @@ let DatabaseConnection = DatabaseConnection_1 = class DatabaseConnection extends
             return;
         }
         this.ConnectionString = connection.ConnectionString;
-        this.Environment = connection.Environment;
         this.IsActive = connection.IsActive;
+        this.Name = connection.Name;
     }
 };
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
 ], DatabaseConnection.prototype, "ConnectionString", void 0);
-__decorate([
-    ta_json_1.JsonProperty(),
-    __metadata("design:type", String)
-], DatabaseConnection.prototype, "Environment", void 0);
 DatabaseConnection = DatabaseConnection_1 = __decorate([
     ta_json_1.JsonObject(),
     __metadata("design:paramtypes", [])

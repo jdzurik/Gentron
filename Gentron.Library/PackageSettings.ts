@@ -1,4 +1,4 @@
-﻿import { DatabaseSource, Engine, Environment, FileSource, HttpSource, ObjectUtils } from "./";
+﻿import { DatabaseSource, Engine, FileSource, HttpSource, ObjectUtils, ProjectSettings } from "./";
 import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
 import { TDataSourceResult } from "./results";
 import SourceBase from "./SourceBase";
@@ -8,6 +8,10 @@ export default class PackageSettings {
     /*
      *  Properties & Fields 
      */
+
+    //non serialized property - populated by constructor
+    public Project: ProjectSettings;
+
     @JsonProperty()
     public PackageName: string;
 
@@ -34,7 +38,8 @@ export default class PackageSettings {
     /*
      *  Constructors
      */
-    public constructor() {
+    public constructor(project:ProjectSettings) {
+        this.Project = project;
         this.PackageName = '';
         this.ReadMe = '';
 

@@ -8,3 +8,9 @@ It will alow you to connect to a database and spider the schema to output as jso
 A UI tool will be avalibale to create local projects and give you a way to import/publish Gentron packages to share with other gentron users.
 
 This is the CLI version and is currently in development. 
+
+{
+    gentron:{
+        "LocalPackageFolde":
+    }
+}

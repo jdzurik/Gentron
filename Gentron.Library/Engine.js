@@ -71,7 +71,7 @@ let Engine = Engine_1 = class Engine extends SourceBase_1.default {
         forked.on('message', (m) => {
             console.log("message return");
             this.OutputResult = m;
-            utils_1.FileParserUtils.parseAndWriteFiles(m, this.ActiveOutputPathGroup.Paths[0].Path);
+            utils_1.FileParserUtils.parseAndWriteFiles(m, this.ActiveOutputPathGroup.Paths[0].BasePath);
             callback(m);
         });
         forked.send(forkSubState, null, { keepOpen: true }, () => {
@@ -110,7 +110,7 @@ let Engine = Engine_1 = class Engine extends SourceBase_1.default {
         }
         const ctx = _1.VMUtils.createContext(this.EngineCode.toModuleListOptions(), vmState);
         vm.runInNewContext(this.EngineCode.ModifiedContents, ctx);
-        utils_1.FileParserUtils.parseAndWriteFiles(vmState.globalScope.templateResult, this.ActiveOutputPathGroup.Paths[0].Path);
+        utils_1.FileParserUtils.parseAndWriteFiles(vmState.globalScope.templateResult, this.ActiveOutputPathGroup.Paths[0].BasePath);
     }
     testScript(moduleSource) {
         const ctx = _1.VMUtils.createContext(this.EngineCode.toModuleListOptions(), {});

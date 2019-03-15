@@ -15,12 +15,17 @@ let ConnectionBase = class ConnectionBase extends abstract_1.Cloneable {
     constructor() {
         super();
         this.IsActive = true;
+        this.Name = '';
     }
 };
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", Boolean)
 ], ConnectionBase.prototype, "IsActive", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], ConnectionBase.prototype, "Name", void 0);
 ConnectionBase = __decorate([
     ta_json_1.JsonObject(),
     __metadata("design:paramtypes", [])

@@ -4,6 +4,33 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Launch via NPM",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run", 
+                "electron:serve",
+                "debug"
+            ],
+            "port": 9229
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Gentron: Vue",
+            "protocol": "inspector",
+            "program": "${workspaceFolder}/gentron.vue/main.js",
+            "runtimeExecutable": "${workspaceFolder}/gentron.vue/node_modules/.bin/electron",
+            "runtimeArgs": [
+                "--remote-debugging-port=9223",
+            ],
+            "windows": {
+                "runtimeExecutable": "${workspaceFolder}\\gentron.vue\\node_modules\\.bin\\electron.cmd"
+            },
+        },
+        
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Gentron: Fiddle",
             "protocol": "inspector",
             "program": "${workspaceFolder}/Gentron.Fiddle/main.js",

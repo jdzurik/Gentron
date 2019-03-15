@@ -35,8 +35,8 @@ export class Gentron implements IGentron {
      */
     public constructor() {
         this.ActiveProjectPath = '';
-        this.PackageSettings = new PackageSettings();
         this.ProjectSettings = new ProjectSettings();
+        this.PackageSettings = new PackageSettings(this.ProjectSettings);
     }
 
 

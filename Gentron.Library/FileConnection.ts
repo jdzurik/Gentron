@@ -8,14 +8,14 @@ export default class FileConnection extends ConnectionBase<FileConnection> {
      *  Properties & Fields 
      */
     @JsonProperty()
-    public BasePath: string;
+    public DirectoryPath: string;
 
     /*
      *  Constructors
      */
     public constructor() {
         super();
-        this.BasePath = '';
+        this.DirectoryPath = '';
     }
 
 
@@ -24,11 +24,12 @@ export default class FileConnection extends ConnectionBase<FileConnection> {
      */
     public clone(): FileConnection {
         const ret: FileConnection = new FileConnection();
-
+        ret.DirectoryPath = this.DirectoryPath;
         ret._id = this._id;
-        ret.BasePath = this.BasePath;
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
+        ret.Username = this.Username;
+        ret.Password = this.Password;
         return ret;
     }
 
@@ -38,8 +39,11 @@ export default class FileConnection extends ConnectionBase<FileConnection> {
             return;
         }
 
-        this.BasePath = connection.BasePath;
+        this.DirectoryPath = connection.DirectoryPath;
         this.IsActive = connection.IsActive;
         this.Name = connection.Name;
+        this.Username = connection.Username;
+        this.Password = connection.Password;
+        
     }
 }

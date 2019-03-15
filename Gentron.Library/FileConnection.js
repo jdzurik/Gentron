@@ -16,27 +16,29 @@ const ConnectionBase_1 = require("./ConnectionBase");
 let FileConnection = FileConnection_1 = class FileConnection extends ConnectionBase_1.default {
     constructor() {
         super();
-        this.Environment = '';
+        this.BasePath = '';
     }
     clone() {
         const ret = new FileConnection_1();
         ret._id = this._id;
-        ret.Environment = this.Environment;
+        ret.BasePath = this.BasePath;
         ret.IsActive = this.IsActive;
+        ret.Name = this.Name;
         return ret;
     }
     update(connection) {
         if (!_1.ObjectUtils.hasValue(connection)) {
             return;
         }
-        this.Environment = connection.Environment;
+        this.BasePath = connection.BasePath;
         this.IsActive = connection.IsActive;
+        this.Name = connection.Name;
     }
 };
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
-], FileConnection.prototype, "Environment", void 0);
+], FileConnection.prototype, "BasePath", void 0);
 FileConnection = FileConnection_1 = __decorate([
     ta_json_1.JsonObject(),
     __metadata("design:paramtypes", [])

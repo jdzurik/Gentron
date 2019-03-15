@@ -12,19 +12,19 @@ export default class ProjectSettings {
 
     @JsonProperty()
     @JsonElementType(OutputPath)
-    public OutputPaths: OutputPath[];
+    public OutputDirectories: OutputPath[];
 
     @JsonProperty()
     @JsonElementType(DatabaseConnection)
-    public DatabaseConnections: DatabaseConnection[];
+    public DatabaseConnectSettings: DatabaseConnection[];
 
     @JsonProperty()
     @JsonElementType(FileConnection)
-    public InputSourcePaths: FileConnection[];
+    public InputSourceDirectories: FileConnection[];
 
     @JsonProperty()
     @JsonElementType(HttpConnection)
-    public HttpConnections: HttpConnection[];
+    public HttpConnectSettings: HttpConnection[];
 
     @JsonProperty()
     public RemotePackageLocation: HttpConnection;
@@ -35,10 +35,10 @@ export default class ProjectSettings {
      */
     public constructor() {
         this.LocalPackageFolder = '';
-        this.DatabaseConnections = new Array<DatabaseConnection>();
-        this.InputSourcePaths = new Array<FileConnection>();
-        this.HttpConnections = new Array<HttpConnection>();
-        this.OutputPaths = Array<OutputPath>();
+        this.DatabaseConnectSettings = new Array<DatabaseConnection>();
+        this.InputSourceDirectories = new Array<FileConnection>();
+        this.HttpConnectSettings = new Array<HttpConnection>();
+        this.OutputDirectories = Array<OutputPath>();
         this.RemotePackageLocation = new HttpConnection();
 
     }
