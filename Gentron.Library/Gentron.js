@@ -26,8 +26,8 @@ const results_1 = require("./results");
 let Gentron = Gentron_1 = class Gentron {
     constructor() {
         this.ActiveProjectPath = '';
-        this.PackageSettings = new _1.PackageSettings();
         this.ProjectSettings = new _1.ProjectSettings();
+        this.PackageSettings = new _1.PackageSettings(this.ProjectSettings);
     }
     static deserialize(gentron) {
         return _1.SerializationUtils.TaJson.deserialize({

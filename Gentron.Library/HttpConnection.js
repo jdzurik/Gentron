@@ -16,27 +16,40 @@ const ConnectionBase_1 = require("./ConnectionBase");
 let HttpConnection = HttpConnection_1 = class HttpConnection extends ConnectionBase_1.default {
     constructor() {
         super();
-        this.Environment = '';
+        this.Url = '';
+        this.PostBody = '';
     }
     clone() {
         const ret = new HttpConnection_1();
+        ret.Url = this.Url;
+        ret.PostBody = this.PostBody;
         ret._id = this._id;
-        ret.Environment = this.Environment;
         ret.IsActive = this.IsActive;
+        ret.Name = this.Name;
+        ret.Username = this.Username;
+        ret.Password = this.Password;
         return ret;
     }
     update(connection) {
         if (!_1.ObjectUtils.hasValue(connection)) {
             return;
         }
-        this.Environment = connection.Environment;
+        this.Url = connection.Url;
+        this.PostBody = connection.PostBody;
         this.IsActive = connection.IsActive;
+        this.Name = connection.Name;
+        this.Username = connection.Username;
+        this.Password = connection.Password;
     }
 };
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", String)
-], HttpConnection.prototype, "Environment", void 0);
+], HttpConnection.prototype, "Url", void 0);
+__decorate([
+    ta_json_1.JsonProperty(),
+    __metadata("design:type", String)
+], HttpConnection.prototype, "PostBody", void 0);
 HttpConnection = HttpConnection_1 = __decorate([
     ta_json_1.JsonObject(),
     __metadata("design:paramtypes", [])

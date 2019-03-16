@@ -20,10 +20,12 @@ let DatabaseConnection = DatabaseConnection_1 = class DatabaseConnection extends
     }
     clone() {
         const ret = new DatabaseConnection_1();
-        ret._id = this._id;
         ret.ConnectionString = this.ConnectionString;
+        ret._id = this._id;
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
+        ret.Username = this.Username;
+        ret.Password = this.Password;
         return ret;
     }
     update(connection) {
@@ -33,6 +35,8 @@ let DatabaseConnection = DatabaseConnection_1 = class DatabaseConnection extends
         this.ConnectionString = connection.ConnectionString;
         this.IsActive = connection.IsActive;
         this.Name = connection.Name;
+        this.Username = connection.Username;
+        this.Password = connection.Password;
     }
 };
 __decorate([

@@ -14,10 +14,10 @@ const ta_json_1 = require("ta-json");
 let ProjectSettings = class ProjectSettings {
     constructor() {
         this.LocalPackageFolder = '';
-        this.DatabaseConnections = new Array();
-        this.InputSourcePaths = new Array();
-        this.HttpConnections = new Array();
-        this.OutputPaths = Array();
+        this.DatabaseConnectSettings = new Array();
+        this.InputSourceDirectories = new Array();
+        this.HttpConnectSettings = new Array();
+        this.OutputDirectories = Array();
         this.RemotePackageLocation = new _1.HttpConnection();
     }
 };
@@ -29,22 +29,22 @@ __decorate([
     ta_json_1.JsonProperty(),
     ta_json_1.JsonElementType(_1.OutputPath),
     __metadata("design:type", Array)
-], ProjectSettings.prototype, "OutputPaths", void 0);
+], ProjectSettings.prototype, "OutputDirectories", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     ta_json_1.JsonElementType(_1.DatabaseConnection),
     __metadata("design:type", Array)
-], ProjectSettings.prototype, "DatabaseConnections", void 0);
+], ProjectSettings.prototype, "DatabaseConnectSettings", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     ta_json_1.JsonElementType(_1.FileConnection),
     __metadata("design:type", Array)
-], ProjectSettings.prototype, "InputSourcePaths", void 0);
+], ProjectSettings.prototype, "InputSourceDirectories", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     ta_json_1.JsonElementType(_1.HttpConnection),
     __metadata("design:type", Array)
-], ProjectSettings.prototype, "HttpConnections", void 0);
+], ProjectSettings.prototype, "HttpConnectSettings", void 0);
 __decorate([
     ta_json_1.JsonProperty(),
     __metadata("design:type", _1.HttpConnection)
