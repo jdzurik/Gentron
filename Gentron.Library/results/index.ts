@@ -1,6 +1,6 @@
-﻿import Result from "./Result";
-import FileResult from "./FileResult";
-import { Gentron, IGentron, File } from "../";
+﻿import Result from './Result';
+import FileResult from './FileResult';
+import { Gentron, IGentron, File } from '../';
 
 export type TGentronFsResult = {
     InfoMessage?: string;
@@ -11,7 +11,7 @@ export type TDataSourceResult = {
     Json: string;
     Object: any;
     Xml: string;
-}
+};
 
 export type TGentronResult = {
     InfoMessage?: string;
@@ -19,5 +19,5 @@ export type TGentronResult = {
 };
 
 export {
-    Result
+    Result,
 };

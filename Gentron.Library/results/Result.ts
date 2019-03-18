@@ -11,7 +11,7 @@
      *  Constructors
      */
     public constructor() {
-        this.ErrorMessage = "";
+        this.ErrorMessage = '';
         this.IsError = false;
         this.Result = null as any as T;
     }
@@ -22,7 +22,7 @@
      */
     public static fail<T>(errorMessage?: string, result?: T): Result<T> {
         const ret: Result<T> = new Result<T>();
-        ret.ErrorMessage = errorMessage || "Application Error";
+        ret.ErrorMessage = errorMessage || 'Application Error';
         ret.IsError = true;
         ret.Result = result as any as T;
 
@@ -31,7 +31,7 @@
 
     public static ok<T>(result?: T): Result<T> {
         const ret: Result<T> = new Result<T>();
-        ret.ErrorMessage = "";
+        ret.ErrorMessage = '';
         ret.IsError = false;
         ret.Result = result as any as T;
 

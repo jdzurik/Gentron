@@ -1,11 +1,11 @@
-﻿import { JsonObject, JsonProperty } from "ta-json";
-import { ObjectUtils } from ".";
-import ConnectionBase from "./ConnectionBase";
+﻿import { JsonObject, JsonProperty } from 'ta-json';
+import { ObjectUtils } from '.';
+import ConnectionBase from './ConnectionBase';
 
 @JsonObject()
 export default class DatabaseConnection extends ConnectionBase<DatabaseConnection> {
     /*
-     *  Properties & Fields 
+     *  Properties & Fields
      */
     @JsonProperty()
     public ConnectionString: string;
@@ -45,9 +45,5 @@ export default class DatabaseConnection extends ConnectionBase<DatabaseConnectio
         this.Name = connection.Name;
         this.Username = connection.Username;
         this.Password = connection.Password;
-        
     }
-
-
-
 }

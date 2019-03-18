@@ -1,7 +1,7 @@
-﻿import { File, ObjectUtils } from "./";
-import { FileJsonConverter } from "./converters";
-import { JsonConverter, JsonObject, JsonProperty, JsonType, OnDeserialized } from "ta-json";
-import SourceBase from "./SourceBase";
+﻿import { File, ObjectUtils } from './';
+import { FileJsonConverter } from './converters';
+import { JsonConverter, JsonObject, JsonProperty, JsonType, OnDeserialized } from 'ta-json';
+import SourceBase from './SourceBase';
 
 @JsonObject()
 export default class FileSource extends SourceBase<FileSource> {
@@ -44,7 +44,7 @@ export default class FileSource extends SourceBase<FileSource> {
         this.Result = {
             Json: '',
             Object: null,
-            Xml: ''
+            Xml: '',
         };
 
         if (ObjectUtils.hasObjectValue(this.DataFile)
@@ -56,10 +56,11 @@ export default class FileSource extends SourceBase<FileSource> {
                 this.Result = {
                     Json: JSON.stringify(parsed, null, 4),
                     Object: parsed,
-                    Xml: ''
+                    Xml: '',
                 };
+            } catch {
+                console.log('error with result');
             }
-            catch { }
         }
     }
 
@@ -78,12 +79,11 @@ export default class FileSource extends SourceBase<FileSource> {
             try {
                 this.Result.Json = this.DataFile.Contents;
                 this.Result.Object = JSON.parse(this.Result.Json);
-            }
-            catch (e) {
+            } catch (e) {
                 this.Result = {
-                    Json: '', 
-                    Object: null, 
-                    Xml: ''
+                    Json: '',
+                    Object: null,
+                    Xml: '',
                 };
             }
         }

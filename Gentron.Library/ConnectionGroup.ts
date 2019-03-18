@@ -1,13 +1,16 @@
-﻿import { Cloneable } from "./abstract";
-import { DatabaseConnection, ObjectUtils } from "./";
-import { IModifiable } from "./interfaces";
-import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
-import ConnectionBase from "./ConnectionBase";
+﻿import { Cloneable } from './abstract';
+import { DatabaseConnection, ObjectUtils } from './';
+import { IModifiable } from './interfaces';
+import { JsonElementType, JsonObject, JsonProperty } from 'ta-json';
+import ConnectionBase from './ConnectionBase';
 
 @JsonObject()
-export default class ConnectionGroup<TConnection extends ConnectionBase<TConnection>> extends Cloneable<ConnectionGroup<TConnection>> implements IModifiable<ConnectionGroup<TConnection>> {
+export default class ConnectionGroup<TConnection
+extends ConnectionBase<TConnection>>
+extends Cloneable<ConnectionGroup<TConnection>>
+implements IModifiable<ConnectionGroup<TConnection>> {
     /*
-     *  Properties & Fields 
+     *  Properties & Fields
      */
     @JsonProperty()
     @JsonElementType(DatabaseConnection)
@@ -36,7 +39,7 @@ export default class ConnectionGroup<TConnection extends ConnectionBase<TConnect
 
 
     public removeConnection(connection: TConnection): void {
-
+        this.Connections.push(connection); // needs to remove.
     }
 
 

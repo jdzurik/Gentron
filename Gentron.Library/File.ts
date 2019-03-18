@@ -1,13 +1,14 @@
-﻿import * as fs from "fs";
-import * as path from "path";
-import { Cloneable } from "./abstract";
-import { Result } from "./results";
-import { IModifiable } from "./interfaces"
-import { JsonObject, JsonProperty } from "ta-json";
-import { ObjectUtils, IOUtils } from "./";
+﻿import * as fs from 'fs';
+import * as path from 'path';
+import { Cloneable } from './abstract';
+import { Result } from './results';
+import { IModifiable } from './interfaces';
+import { JsonObject, JsonProperty } from 'ta-json';
+import { ObjectUtils, IOUtils } from './';
 
 @JsonObject()
 export default class File extends Cloneable<File> implements IModifiable<File> {
+
     /*
      *  Properties & Fields
      */
@@ -20,7 +21,6 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
     @JsonProperty()
     public Path: string;
 
-
     /*
      *  Constructors
      */
@@ -31,8 +31,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
         this.Path = '';
     }
 
-
-    /*
+     /*
      *  Methods
      */
     public static read(filePath: string): Result<string> {
@@ -41,8 +40,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
             const contents: string = buf.toString();
 
             return Result.ok(contents);
-        }
-        catch (e) {
+        } catch (e) {
             return Result.fail((e as NodeJS.ErrnoException).message.toString());
         }
     }
@@ -53,8 +51,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
             const contents: string = buf.toString();
 
             return Result.ok(contents);
-        }
-        catch (e) {
+        } catch (e) {
             return Result.fail((e as NodeJS.ErrnoException).message.toString());
         }
     }
@@ -66,8 +63,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
             }
             fs.writeFileSync(filePath, fileContents);
             return Result.ok();
-        }
-        catch (e) {
+        } catch (e) {
             console.error(e);
             return Result.fail((e as NodeJS.ErrnoException).message.toString());
         }
@@ -77,8 +73,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
         try {
             await fs.promises.writeFile(filePath, fileContents);
             return Result.ok();
-        }
-        catch (e) {
+        } catch (e) {
             return Result.fail((e as NodeJS.ErrnoException).message.toString());
         }
     }
@@ -105,8 +100,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
 
             const stats: fs.Stats = fs.statSync(this.Path);
             this.LastModified = stats.mtime;
-        }
-        catch (e) {
+        } catch (e) {
             console.error(e);
         }
     }
@@ -122,8 +116,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
 
             const stats: fs.Stats = await fs.promises.stat(this.Path);
             this.LastModified = stats.mtime;
-        }
-        catch (e) {
+        } catch (e) {
             console.error(e);
         }
     }
@@ -136,8 +129,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
         try {
             fs.writeFileSync(this.Path, this.Contents);
             return Result.ok();
-        }
-        catch (e) {
+        } catch (e) {
             console.error(e);
             return Result.fail(ObjectUtils.getErrorMessage(e));
         }
@@ -151,8 +143,7 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
         try {
             await fs.promises.writeFile(this.Path, this.Contents);
             return Result.ok();
-        }
-        catch (e) {
+        } catch (e) {
             console.error(e);
             return Result.fail(ObjectUtils.getErrorMessage(e));
         }
@@ -169,9 +160,8 @@ export default class File extends Cloneable<File> implements IModifiable<File> {
             this.Path = file.Path;
 
             if (!ObjectUtils.hasStringValue(this.Path.trim())) {
-                this.Contents = "";
-            }
-            else {
+                this.Contents = '';
+            } else {
                 this.loadContents();
             }
         }

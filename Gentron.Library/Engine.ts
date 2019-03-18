@@ -1,16 +1,16 @@
-﻿import * as vm from "vm";
-import SourceBase from "./SourceBase";
-import { CodeEngineFileJsonConverter, ActiveOutputPathGroupConverter } from "./converters";
-import { JsonConverter, JsonObject, JsonProperty, JsonType, JsonElementType } from "ta-json";
-import { TemplateTypes } from "./types";
-import { Template, VMUtils, ObjectUtils, EngineCodeFile, OutputPathGroup, OutputPath, Gentron } from "./";
-import { FileParserUtils } from "./utils";
+﻿import * as vm from 'vm';
+import SourceBase from './SourceBase';
+import { CodeEngineFileJsonConverter, ActiveOutputPathGroupConverter } from './converters';
+import { JsonConverter, JsonObject, JsonProperty, JsonType, JsonElementType } from 'ta-json';
+import { TemplateTypes } from './types';
+import { Template, VMUtils, ObjectUtils, EngineCodeFile, OutputPathGroup, OutputPath, Gentron } from './';
+import { FileParserUtils } from './utils';
 const { fork } = require('child_process');
 
 @JsonObject()
 export default class Engine extends SourceBase<Engine> {
     /*
-     *  Properties & Fields 
+     *  Properties & Fields
      */
     @JsonProperty()
     @JsonElementType(OutputPathGroup)
@@ -24,11 +24,11 @@ export default class Engine extends SourceBase<Engine> {
     public EngineCode: EngineCodeFile;
 
     public get HasPrimaryTemplate(): boolean {
-        return (this.Templates || []).filter(t => t.Type === TemplateTypes.Primary).length === 1;
+        return (this.Templates || []).filter((t) => t.Type === TemplateTypes.Primary).length === 1;
     }
 
     public get HasPartialTemplates(): boolean {
-        return (this.Templates || []).filter(t => t.Type === TemplateTypes.Partial).length >= 1;
+        return (this.Templates || []).filter((t) => t.Type === TemplateTypes.Partial).length >= 1;
     }
 
     @JsonProperty()
@@ -46,7 +46,7 @@ export default class Engine extends SourceBase<Engine> {
         this.ActiveOutputPathGroup = new OutputPathGroup<OutputPath>();
         this.EngineCode = new EngineCodeFile();
         this.Templates = [];
-        this.OutputResult = "";
+        this.OutputResult = '';
     }
 
 
@@ -62,7 +62,7 @@ export default class Engine extends SourceBase<Engine> {
         ret.IsActive = this.IsActive;
         ret.Name = this.Name;
         ret.Result = this.Result;
-        ret.OutputResult = this.OutputResult
+        ret.OutputResult = this.OutputResult;
         ret.Templates = this.Templates.map((template: Template, index: number) => {
             return template.clone();
         });
@@ -70,80 +70,79 @@ export default class Engine extends SourceBase<Engine> {
         return ret;
     }
 
-    public run(localPackageFolder: string, results: any, callback:any) {
+    public run(localPackageFolder: string, results: any, callback: any) {
 
-        let forkSubState: any = {
+        const forkSubState: any = {
             jsonObj: results,
-            templateTexts:[]
+            templateTexts: [],
         };
-        const forked = fork(this.EngineCode.Path, [], { cdw: localPackageFolder,  silent: true}); //, stdio: [process.stdin, process.stdout, process.stderr, 'ipc']
-        let ForkResults: string = "";
+        // , stdio: [process.stdin, process.stdout, process.stderr, 'ipc']
+        const forked = fork(this.EngineCode.Path, [], { cdw: localPackageFolder,  silent: true});
+        const ForkResults: string = '';
         if ((this.Templates || []).length > 0) {
             if (this.HasPrimaryTemplate && this.HasPartialTemplates) {
-                forkSubState.templateTexts = this.Templates.map(t => {
+                forkSubState.templateTexts = this.Templates.map((t) => {
                     return {
                         Contents: t.TemplateCode.Contents,
                         Name: t.Name,
                         Type: t.Type,
-                    }
+                    };
                 });
-            }
-            else{
+            } else {
                 forkSubState.templateTexts.push(this.Templates[0].TemplateCode.Contents);
             }
         }
-        let errordata:any = [];
+        const errordata: any = [];
         forked.on('message', (m: string) => {
-            console.log("message return");
+            console.log('message return');
             this.OutputResult = m;
             FileParserUtils.parseAndWriteFiles(m, this.ActiveOutputPathGroup.Paths[0].BasePath);
             callback(m);
         });
 
-        forked.send(forkSubState,null,{keepOpen :true}, () => {
-            console.log("Sent fork substate");
+        forked.send(forkSubState, null, {keepOpen : true}, () => {
+            console.log('Sent fork substate');
         });
 
-        forked.stderr.on('data', function(data:any) {
+        forked.stderr.on('data', (data: any) => {
             console.log('stderr: ' + data);
             errordata.push(data);
-            //callback(data);
+            // callback(data);
         });
 
         // forked.stdout.on('data', (data:any) => {
         //     console.log(`stdout: ${data}`);
         //   });
-       
-        forked.on('exit', function(code:any) {
+
+        forked.on('exit', (code: any) => {
            if (code !== 0) {
                console.log('Failed: ' + code);
                callback(errordata);
             }
-            
+
         });
-        //console.log( this.OutputResult);
+        // console.log( this.OutputResult);
     }
 
     public execute(dirname: string, localPackageFolder: string, results: any): void {
         this.EngineCode.resolveModulesRelativePaths(dirname, localPackageFolder);
 
-        let vmState: any = {
+        const vmState: any = {
             jsonObj: results,
             globalScope: {
-                templateResult: ''
-            }
+                templateResult: '',
+            },
         };
 
         if ((this.Templates || []).length > 0 && this.HasPrimaryTemplate && this.HasPartialTemplates) {
-            vmState.templateTexts = this.Templates.map(t => {
+            vmState.templateTexts = this.Templates.map((t) => {
                 return {
                     Contents: t.TemplateCode.Contents,
                     Name: t.Name,
                     Type: t.Type,
-                }
+                };
             });
-        }
-        else {
+        } else {
             vmState.templateText = this.Templates[0].TemplateCode.Contents;
         }
 
@@ -153,7 +152,9 @@ export default class Engine extends SourceBase<Engine> {
         //  TODO
         //  this.ActiveOutputPathGroup.Paths[0].Path is hardcoded to grab the first environment (Dev)
         //  from the active output path group. Need to figure out some way to pass in environment
-        FileParserUtils.parseAndWriteFiles(vmState.globalScope.templateResult, this.ActiveOutputPathGroup.Paths[0].BasePath);
+        FileParserUtils.parseAndWriteFiles(
+            vmState.globalScope.templateResult,
+            this.ActiveOutputPathGroup.Paths[0].BasePath);
     }
 
 

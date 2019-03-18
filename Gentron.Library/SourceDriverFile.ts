@@ -1,6 +1,6 @@
-import { JsonObject, JsonProperty } from "ta-json";
-import { File, VMUtils, ObjectUtils } from "./";
-import { ModulePackage, ModuleList } from "./types";
+import { JsonObject, JsonProperty } from 'ta-json';
+import { File, VMUtils, ObjectUtils } from './';
+import { ModulePackage, ModuleList } from './types';
 
 
 

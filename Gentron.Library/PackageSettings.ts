@@ -1,15 +1,15 @@
-﻿import { DatabaseSource, Engine, FileSource, HttpSource, ObjectUtils, ProjectSettings } from "./";
-import { JsonElementType, JsonObject, JsonProperty } from "ta-json";
-import { TDataSourceResult } from "./results";
-import SourceBase from "./SourceBase";
+﻿import { DatabaseSource, Engine, FileSource, HttpSource, ObjectUtils, ProjectSettings } from './';
+import { JsonElementType, JsonObject, JsonProperty } from 'ta-json';
+import { TDataSourceResult } from './results';
+import SourceBase from './SourceBase';
 
 @JsonObject()
 export default class PackageSettings {
     /*
-     *  Properties & Fields 
+     *  Properties & Fields
      */
 
-    //non serialized property - populated by constructor
+    // non serialized property - populated by constructor
     public Project: ProjectSettings;
 
     @JsonProperty()
@@ -38,7 +38,7 @@ export default class PackageSettings {
     /*
      *  Constructors
      */
-    public constructor(project:ProjectSettings) {
+    public constructor(project: ProjectSettings) {
         this.Project = project;
         this.PackageName = '';
         this.ReadMe = '';
@@ -55,20 +55,22 @@ export default class PackageSettings {
      *  Methods
      */
     public buildDataSourceResults(): any {
-        let ret: { [s: string]: any } = {};
+        const ret: { [s: string]: any } = {};
 
-        const buildSourceResults = <T extends SourceBase<T>>(builder: { [s: string]: TDataSourceResult }, sources: SourceBase<T>[]) => {
-            for (let i: number = 0; i < sources.length; ++i) {
-                if (!sources[i].IsActive) {
-                    continue;
-                }
+        const buildSourceResults = <T extends SourceBase<T>>(
+            builder: {[s: string]: TDataSourceResult },
+            sources: Array<SourceBase<T>>) => {
+                for (let i: number = 0; i < sources.length; ++i) {
+                    if (!sources[i].IsActive) {
+                        continue;
+                    }
 
-                const source: SourceBase<T> = sources[i];
-                if (ObjectUtils.hasObjectValue(source.Result) && ObjectUtils.hasObjectValue(source.Result.Object)) {
-                    builder[source.Name] = source.Result.Object;
+                    const source: SourceBase<T> = sources[i];
+                    if (ObjectUtils.hasObjectValue(source.Result) && ObjectUtils.hasObjectValue(source.Result.Object)) {
+                        builder[source.Name] = source.Result.Object;
+                    }
                 }
-            }
-        }
+            };
 
         buildSourceResults(ret, this.DatabaseSources);
         buildSourceResults(ret, this.FileSources);
@@ -92,7 +94,8 @@ export default class PackageSettings {
                         const thatSource: DatabaseSource = thatSources[j];
 
                         if (thisSource.ID === thatSource.ID) {
-                            if (!ObjectUtils.hasObjectValue(thisSource.Result) && ObjectUtils.hasObjectValue(thatSource.Result)) {
+                            if (!ObjectUtils.hasObjectValue(thisSource.Result)
+                                && ObjectUtils.hasObjectValue(thatSource.Result)) {
                                 thisSource.Result = thatSource.Result;
                             }
                         }

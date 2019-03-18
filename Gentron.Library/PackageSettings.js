@@ -12,7 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require("./");
 const ta_json_1 = require("ta-json");
 let PackageSettings = class PackageSettings {
-    constructor() {
+    constructor(project) {
+        this.Project = project;
         this.PackageName = '';
         this.ReadMe = '';
         this.DatabaseSources = [];
@@ -92,7 +93,7 @@ __decorate([
 ], PackageSettings.prototype, "Engines", void 0);
 PackageSettings = __decorate([
     ta_json_1.JsonObject(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [_1.ProjectSettings])
 ], PackageSettings);
 exports.default = PackageSettings;
 //# sourceMappingURL=PackageSettings.js.map

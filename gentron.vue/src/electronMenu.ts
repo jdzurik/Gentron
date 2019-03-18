@@ -11,24 +11,24 @@ Menu.setApplicationMenu(Menu.buildFromTemplate([
                 label: 'Open',
                 accelerator: 'CmdOrCtrl+O',
                 click() {
-                    //open();
-                    alert("Open");
+                    // open();
+                    alert('Open');
                 }
             },
             {
                 label: 'Save',
                 accelerator: 'CmdOrCtrl+S',
                 click() {
-                    //save();
-                    alert("save");
+                    // save();
+                    alert('save');
                 }
             },
             {
                 label: 'Save As',
                 accelerator: 'CmdOrCtrl+Shift+S',
                 click() {
-                    //saveAs();
-                    alert("save as");
+                    // saveAs();
+                    alert('save as');
                 }
             },
             { role: 'quit' }
